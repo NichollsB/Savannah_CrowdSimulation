@@ -18,8 +18,21 @@ public class BoidManager extends Manager {
     static final float radius = 10f;
     
     public BoidManager () {
-        
+        createBoid();
     }
+    
+    
+    public void createBoid(){
+        Boid boid = new Boid();
+        
+        boid.position.set(10,10,0);
+        boid.orientation.set(10,10,0);
+        boid.velocity.set(10,10,0);
+    }
+    
+    
+    
+    
     /**
      * called by the update in SimulationManager
      * 
