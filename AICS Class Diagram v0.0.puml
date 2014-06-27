@@ -1,0 +1,49 @@
+@startuml
+title Class Diagram\nProject Savannah\nv0.0
+
+package core <<Folder>> {
+Simulation --> SimulationScreen
+Manager <|-- BoidManager
+Manager <|-- WorldManager
+Manager <|-- SimulationManager
+Boid "0..*" -- "1 " BoidManager
+SimulationManager "1"-- "1 " SimulationScreen:  simulationManager
+SimulationManager "1" --> "1" WorldManager
+SimulationManager "1" --> "1" BoidManager
+
+class Simulation
+
+class SimulationScreen {
+Camera camera
+Environment Environment
+}
+
+abstract class Manager {
+{abstract} update()
+}
+
+class BoidManager {
+}
+
+class SimulationManager {
+}
+
+class WorldManager {
+}
+
+class Boid {
+}
+
+class WorldObject {
+byte type
+Vector3 position
+}
+}
+
+package desktop <<Folder>> {
+Simulation <-- DesktopLauncher
+class DesktopLauncher{
+}
+}
+
+@enduml
