@@ -14,16 +14,26 @@ public class BoidManager extends Manager {
 
     static final ArrayList<Boid> boids = new ArrayList<Boid>();
     
+    //TEMP: each boid type will have its own.
+    static final float radius = 10f;
     
     public BoidManager () {
-        
-        
         
     }
     /**
      * called by the update in SimulationManager
+     * 
+     * this will loop through the boids and update them
+     * 
      */
     public void update() {
+    	
         //loop through boids and ask them to do their thing.
+    	for(Boid boid : boids) {
+    		// find relevant boids
+    		//crudely ask each one if it's inside the radius
+    		SimulationManager.tempSpeciesData.get("zebra").get("cohesion");
+    		//do stuff
+    	}
     }
 }

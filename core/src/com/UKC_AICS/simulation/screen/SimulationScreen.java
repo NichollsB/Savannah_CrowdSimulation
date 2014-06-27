@@ -17,7 +17,7 @@ public class SimulationScreen implements Screen {
 
     private Camera camera;
     
-    private Environment environment;
+    private Environment environment; //lighting things
     
     private SimulationManager simulationManager;
 
@@ -76,6 +76,7 @@ public class SimulationScreen implements Screen {
         simulationManager = new SimulationManager();
         setupCameraController();
     }
+    
     private void setupCameraController() {
         //blah blah create the controller
         //set the controller
@@ -103,8 +104,8 @@ public class SimulationScreen implements Screen {
     }
 
     private void tickPhysics(float delta) {
-        //send delta to camera controller using update.
-        //send delta to camera using update
+        //send delta to camera controller using its update.
+        //send delta to camera using its update
     }
 
 

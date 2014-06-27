@@ -1,5 +1,10 @@
 package com.UKC_AICS.simulation.managers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.UKC_AICS.simulation.entity.Boid;
+
 
 /**
  *
@@ -14,6 +19,8 @@ public class SimulationManager extends Manager{
     static public int days = 0;
     static public int weeks = 0;
     
+    //monstrous things.
+    static final HashMap<String, HashMap<String, Float>> tempSpeciesData = new HashMap<String, HashMap<String, Float>>();
     
     /**
      * Sends appropriate calls to the world and boid manager to update for this frame.
@@ -23,8 +30,12 @@ public class SimulationManager extends Manager{
      * 
      * 
      */
-    public void SimulationManager() {
-        
+    public SimulationManager() {
+    	HashMap<String,Float> zebra = new HashMap<String,Float>();
+    	zebra.put("cohesion", 0.5f);
+    	zebra.put("alignment", 0.5f);
+    	zebra.put("seperation", 0.5f);
+        tempSpeciesData.put("zebra", zebra);
     }
     
     public void update() {
@@ -52,4 +63,8 @@ public class SimulationManager extends Manager{
 //        System.out.println(minutes + " mins; " + hours + " hrs; " + days + " days; " + weeks + " wks.");
     }
     
+    
+    public ArrayList<Boid> getBoids() {
+    	return (ArrayList<Boid>) boidManager.boids.clone();
+    }
 }
