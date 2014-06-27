@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 
@@ -18,7 +20,11 @@ public class SimulationScreen implements Screen {
     private Environment environment;
     
     private SimulationManager simulationManager;
-    
+
+    private BitmapFont font = new BitmapFont();
+    private SpriteBatch spriteBatch = new SpriteBatch();
+
+
     @Override
     public void render(float delta) {
         //kind of the update loop.
@@ -26,12 +32,21 @@ public class SimulationScreen implements Screen {
         
         tickPhysics(delta);
         clearOpenGL();
-        
+        renderSpriteBatches();
         //do render calls for models, sprites, whatever. 
         //(probably done in another class)
-        
+
         //draw models
         //draw hud/ui etc
+    }
+
+    private void renderSpriteBatches() {
+        spriteBatch.begin();
+        font.draw(spriteBatch, "fps: " + Gdx.graphics.getFramesPerSecond() +
+                        "; Time " + simulationManager.minutes + " mins; " + simulationManager.hours + " hrs; "
+                        + simulationManager.days + " days; " + simulationManager.weeks + " wks.",
+                0, 20);
+        spriteBatch.end();
     }
 
     /**

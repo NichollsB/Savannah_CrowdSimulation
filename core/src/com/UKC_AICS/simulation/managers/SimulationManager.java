@@ -9,6 +9,10 @@ public class SimulationManager extends Manager{
     
     static final BoidManager boidManager = new BoidManager();
     static final WorldManager worldManager = new WorldManager();
+    static public int minutes = 0;
+    static public int hours = 0;
+    static public int days = 0;
+    static public int weeks = 0;
     
     
     /**
@@ -26,6 +30,26 @@ public class SimulationManager extends Manager{
     public void update() {
         boidManager.update();
         worldManager.update();
+        tick();
+    }
+
+    private void tick() {
+        if(minutes < 59) {
+            minutes += 1;
+        }
+        else if (hours < 23) {
+            minutes = 0;
+            hours += 1;
+        }
+        else if (days < 6) {
+            hours = 0;
+            days += 1;
+        }
+        else {
+            days = 0;
+            weeks += 1;
+        }
+//        System.out.println(minutes + " mins; " + hours + " hrs; " + days + " days; " + weeks + " wks.");
     }
     
 }
