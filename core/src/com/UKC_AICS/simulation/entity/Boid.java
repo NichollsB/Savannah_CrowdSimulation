@@ -36,8 +36,20 @@ public class Boid {
         return velocity;
     }
 
+    /**
+     * explicit setting to a defined velocity.
+     * @param velocity the speed the boid's velocity will be set to.
+     */
     public void setVelocity(Vector3 velocity) {
         this.velocity = velocity;
+    }
+
+    /**
+     * This will be added to the boids velocity, but there will be checks to make sure of max acceleration etc.
+     * @param change the velocity to add
+     */
+    public void changeVelocity(Vector3 change) {
+        //TODO: implement the change.
     }
 
     public Vector3 getOrientation() {

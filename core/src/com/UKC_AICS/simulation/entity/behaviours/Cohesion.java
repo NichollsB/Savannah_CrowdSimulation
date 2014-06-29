@@ -1,9 +1,9 @@
 package com.UKC_AICS.simulation.entity.behaviours;
 
-import java.util.ArrayList;
-
 import com.UKC_AICS.simulation.entity.Boid;
 import com.badlogic.gdx.math.Vector3;
+
+import java.util.ArrayList;
 
 public class Cohesion extends Behaviour {
 

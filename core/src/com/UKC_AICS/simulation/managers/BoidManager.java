@@ -14,11 +14,11 @@ public class BoidManager extends Manager {
 
     static final ArrayList<Boid> boids = new ArrayList<Boid>();
     
-    //TEMP: each boid type will have its own.
+    //TEMP: each boid type will have its own sight radius
     static final float radius = 10f;
     
     public BoidManager () {
-        createBoid();
+
     }
     
     
@@ -28,9 +28,11 @@ public class BoidManager extends Manager {
         boid.position.set(10,10,0);
         boid.orientation.set(10,10,0);
         boid.velocity.set(10,10,0);
+
+        boids.add(boid);
     }
     
-    
+
     
     
     /**
@@ -45,8 +47,15 @@ public class BoidManager extends Manager {
     	for(Boid boid : boids) {
     		// find relevant boids
     		//crudely ask each one if it's inside the radius
-    		SimulationManager.tempSpeciesData.get("zebra").get("cohesion");
+
+
+            //get weights
+            float coh = SimulationManager.tempSpeciesData.get("zebra").get("cohesion");
+            float ali = SimulationManager.tempSpeciesData.get("zebra").get("alignment");
+            float sep = SimulationManager.tempSpeciesData.get("zebra").get("separation");
+
     		//do stuff
+
     	}
     }
 }
