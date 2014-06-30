@@ -66,7 +66,7 @@ public class SimulationManager extends Manager {
 
 
     public ArrayList<Boid> getBoids() {
-        return (ArrayList<Boid>) boidManager.boids.clone();
+        return boidManager.getBoids();
     }
 
     public Vector3 getMapSize() {

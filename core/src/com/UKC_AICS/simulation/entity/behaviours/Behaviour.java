@@ -1,6 +1,7 @@
 package com.UKC_AICS.simulation.entity.behaviours;
 
 import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.WorldObject;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public abstract class Behaviour {
 //    abstract Vector3 act(ArrayList<Boid> boids, Boid boid);
 
 
+
+
     /**
      * Boid manager will pass the behaviour the list of boids AND objects in sight and the boid in question.
      *
@@ -28,5 +31,5 @@ public abstract class Behaviour {
      * @param objects : this list will contain relevant(line of sight wise) objects.
      * @param boid : the boid that the behaviour is being run for.
      */
-    abstract Vector3 act(ArrayList<Boid> boids, ArrayList<Boid> objects, Boid boid);
+    abstract public Vector3 act(ArrayList<Boid> boids, ArrayList<WorldObject> objects, Boid boid);
 }

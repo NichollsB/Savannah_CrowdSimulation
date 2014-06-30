@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.screen;
 
+import com.UKC_AICS.simulation.Simulation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
@@ -15,6 +16,7 @@ import com.UKC_AICS.simulation.managers.SimulationManager;
  */
 public class SimulationScreen implements Screen {
 
+    private final Simulation simulation;
     private Camera camera;
     
     private Environment environment; //lighting things
@@ -25,7 +27,11 @@ public class SimulationScreen implements Screen {
     private SpriteBatch spriteBatch = new SpriteBatch();
     
     private BoidGraphics boidGraphics;
-    
+
+    public SimulationScreen(Simulation simulation) {
+        this.simulation = simulation;
+    }
+
 
     @Override
     public void render(float delta) {

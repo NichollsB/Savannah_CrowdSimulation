@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class Boid {
 
+    private static final float MAX_SPEED = 1f;
     public Vector3 position;
     public Vector3 velocity;
     public Vector3 orientation;
@@ -25,12 +26,15 @@ public class Boid {
 
 
     public void move(Vector3 velocityChange) {
-
+        //TODO: Add in better limiter for speed.
+        velocity.add(velocityChange).limit(MAX_SPEED);
+        position.add(velocity);
+        
     }
 
 
     public Vector3 getPosition() {
-        return position;
+        return position.cpy();
     }
 
     public void setPosition(Vector3 position) {
