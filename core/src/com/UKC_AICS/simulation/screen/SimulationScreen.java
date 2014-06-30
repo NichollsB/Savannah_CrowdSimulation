@@ -2,7 +2,6 @@ package com.UKC_AICS.simulation.screen;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.managers.SimulationManager;
-import com.UKC_AICS.simulation.render.tempRender;
 import com.UKC_AICS.simulation.utils.OrthoController;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

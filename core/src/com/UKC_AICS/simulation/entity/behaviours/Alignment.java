@@ -15,4 +15,9 @@ public class Alignment extends Behaviour {
 		return null;
 	}
 
+    @Override
+    Vector3 act(ArrayList<Boid> boids, ArrayList<Boid> objects, Boid boid) {
+        return null;
+    }
+
 }

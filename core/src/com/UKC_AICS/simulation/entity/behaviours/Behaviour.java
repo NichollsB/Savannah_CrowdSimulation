@@ -7,16 +7,25 @@ import java.util.ArrayList;
 
 public abstract class Behaviour {
 
-	protected Vector3 tmpVec = new Vector3();
+    protected Vector3 tmpVec = new Vector3();
+    protected Vector3 tmpVec2 = new Vector3();
 	
 	/**
 	 * Boid manager will pass the behaviour the list of boids in sight and the boid in question.
 	 * 
-	 * TODO: some behaviours will also need to know what objects are in sight.
-	 * 
-	 * @param list : this list will contain relevant(line of sight wise) boids.
+	 * @param boids : this list will contain relevant(line of sight wise) boids.
 	 * @param boid : the boid that the behaviour is being run for.
 	 */
-	
-	abstract Vector3 act(ArrayList<Boid> list, Boid boid);
+
+    abstract Vector3 act(ArrayList<Boid> boids, Boid boid);
+
+
+    /**
+     * Boid manager will pass the behaviour the list of boids AND objects in sight and the boid in question.
+     *
+     * @param boids : this list will contain relevant(line of sight wise) boids.
+     * @param objects : this list will contain relevant(line of sight wise) objects.
+     * @param boid : the boid that the behaviour is being run for.
+     */
+    abstract Vector3 act(ArrayList<Boid> boids, ArrayList<Boid> objects, Boid boid);
 }
