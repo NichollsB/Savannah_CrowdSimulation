@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 
 
 /**
