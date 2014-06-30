@@ -21,7 +21,7 @@ public class BoidGraphics {
 	
 	private SpriteBatch boidBatch;
 	private ObjectMap<Boid, Sprite> boidMap = new ObjectMap<Boid, Sprite>();
-	private Texture defaultTexture = new Texture(Gdx.files.internal("square.png"));
+	private Texture defaultTexture = new Texture(Gdx.files.internal("circle.png"));
 	
 
 	
