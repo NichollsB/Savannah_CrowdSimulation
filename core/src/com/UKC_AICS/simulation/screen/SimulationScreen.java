@@ -24,7 +24,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  */
 public class SimulationScreen implements Screen {
 
-    private boolean running = false;
+    private boolean running = true;  //for play pausing.
 
     private final Simulation simulation;
     private Camera camera;
@@ -116,6 +116,7 @@ public class SimulationScreen implements Screen {
 
         table.setFillParent(true);
 
+        // play/pause button
         final TextButton playButton = new TextButton("Play", skin, "default");
         playButton.addListener(new ClickListener() {
             @Override
@@ -130,8 +131,19 @@ public class SimulationScreen implements Screen {
             }
         });
 
+        //
+        final TextButton resetButton = new TextButton("Reset", skin, "default");
+        resetButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //TODO reset of simulation
+            }
+        });
+
         table.add(fps).bottom().left().expandY().width(500f).pad(0f, 10f, 10f, 0f);
-        table.add(playButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
+        table.add(playButton).size(100f, 30f).bottom().left().padLeft(20f).padBottom(10f);
+        table.add(resetButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
+
 
         Gdx.input.setInputProcessor(stage);
     }
