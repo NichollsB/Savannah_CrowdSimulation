@@ -44,10 +44,10 @@ public class BoidManager extends Manager {
         int maxYOrient = 720;
         int minYOrient = 0;
         
-        int maxXVel = 1280;
+        int maxXVel = 10;
         int minXVel = 0;
         
-        int maxYVel = 720;
+        int maxYVel = 10;
         int minYVel = 0;
         
         int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
