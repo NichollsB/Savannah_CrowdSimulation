@@ -11,6 +11,12 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.UKC_AICS.simulation.entity.*;
 
+
+/**
+ * 
+ * @author Ben Nicholls
+ *
+ */
 public class BoidGraphics {
 	
 	private SpriteBatch boidBatch;
