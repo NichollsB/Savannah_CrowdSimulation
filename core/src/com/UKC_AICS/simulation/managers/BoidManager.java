@@ -121,8 +121,8 @@ public class BoidManager extends Manager {
     		//do stuff
             tmpVec.set(0f,0f,0f);
 
-            tmpVec.add(behaviours.get("cohesion").act(boids, new Array<WorldObject>(), boid).scl(coh));
-            tmpVec.add(behaviours.get("alignment").act(boids, new Array<WorldObject>(), boid).scl(ali));
+            //tmpVec.add(behaviours.get("cohesion").act(boids, new Array<WorldObject>(), boid).scl(coh));
+            //tmpVec.add(behaviours.get("alignment").act(boids, new Array<WorldObject>(), boid).scl(ali));
             tmpVec.add(behaviours.get("separation").act(boids, new Array<WorldObject>(), boid).scl(sep));
             tmpVec.add(behaviours.get("wander").act(boids, new Array<WorldObject>(), boid).scl(wan));
 

@@ -16,14 +16,14 @@ public class BoidGraphics {
 	private SpriteBatch boidBatch;
 	private Sprite boidSprite;
 	private ObjectMap<Boid, Sprite> boidMap = new ObjectMap<Boid, Sprite>();
-	private ArrayList<Boid> boidsArray;
+	private Array<Boid> boidsArray;
 	private Texture defaultTexture = new Texture(Gdx.files.internal("square.png"));
 	
 
 	
 	public void update(SpriteBatch batch){
 		
-		if(boidsArray.size()>0){
+		if(boidsArray.size>0){
 			batch.begin();
 			for(Boid boid : boidsArray){
 				updateSpritePosition(boid);
@@ -42,10 +42,10 @@ public class BoidGraphics {
 		batch.end();
 	}
 	
-	public void initBoidSprites(ArrayList<Boid> arrayList){
-		boidsArray = new ArrayList<Boid>(arrayList);
+	public void initBoidSprites(Array<Boid> array){
+		boidsArray = new Array<Boid>(array);
 		boidSprite = new Sprite(defaultTexture);
-		for(Boid boid : arrayList){
+		for(Boid boid : array){
 			//boidsArray.add(boid);
 			updateSpritePosition(boid);
 		}
