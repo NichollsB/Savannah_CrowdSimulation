@@ -33,8 +33,8 @@ public class SimulationManager extends Manager {
         HashMap<String, Float> zebra = new HashMap<String, Float>();
         zebra.put("cohesion", 0.5f);
         zebra.put("alignment", 0.5f);
-        zebra.put("separation", 5f);
-        zebra.put("wander", 0.1f);
+        zebra.put("separation", 0.5f);
+        zebra.put("wander", 0.2f);
         tempSpeciesData.put("zebra", zebra);
 
         for (int i = 0; i < 100; i++) {

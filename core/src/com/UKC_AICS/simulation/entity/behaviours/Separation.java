@@ -26,13 +26,14 @@ public class Separation extends Behaviour {
         if(boids.size > 0) {
             for(Boid b : boids) {
                 if(boid.getSpecies() == b.getSpecies()) {
-                    tmpVec2.set(b.getPosition());
-                    tmpVec2.sub(boid.getPosition());
+                    tmpVec2.set(boid.getPosition());
+                    tmpVec2.sub(b.getPosition());
                     tmpVec.add(tmpVec2);
                     num++;
                 }
             }
             tmpVec.scl(1.0f/num);
+            //tmpVec.sub(boid.getPosition());
         }
 
 
