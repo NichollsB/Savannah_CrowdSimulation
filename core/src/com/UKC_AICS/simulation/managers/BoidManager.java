@@ -1,6 +1,7 @@
 package com.UKC_AICS.simulation.managers;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.UKC_AICS.simulation.entity.Boid;
 
@@ -18,16 +19,50 @@ public class BoidManager extends Manager {
     static final float radius = 10f;
     
     public BoidManager () {
-        createBoid();
+        
+    	for(int i = 0 ; i<101 ;i++){
+    	createBoid();
+    	}
     }
     
     
     public void createBoid(){
         Boid boid = new Boid();
         
-        boid.position.set(10,10,0);
-        boid.orientation.set(10,10,0);
-        boid.velocity.set(10,10,0);
+        Random rand = new Random();
+        
+        
+        int maxXPos = 1280;
+        int minXPos = 0;
+        
+        int maxYPos = 720;
+        int minYPos = 0;
+        
+        int maxXOrient = 1280;
+        int minXOrient = 0;
+        
+        int maxYOrient = 720;
+        int minYOrient = 0;
+        
+        int maxXVel = 1280;
+        int minXVel = 0;
+        
+        int maxYVel = 720;
+        int minYVel = 0;
+        
+        int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+        int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        
+        int xOrient = rand.nextInt((maxXOrient - minXOrient) + 1) + minXOrient;
+        int yOrient = rand.nextInt((maxYOrient - minYOrient) + 1) + minYOrient;
+        
+        int xVel = rand.nextInt((maxXVel - minXVel) + 1) + minXVel;
+        int yVel = rand.nextInt((maxYVel - minYVel) + 1) + minYVel;
+        
+        
+        boid.position.set(xPos,yPos,0);
+        boid.orientation.set(xOrient,yOrient,0);
+        boid.velocity.set(xVel,yVel,0);
         
         boids.add(boid);
         
