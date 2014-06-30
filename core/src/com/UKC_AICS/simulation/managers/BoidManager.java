@@ -31,6 +31,9 @@ public class BoidManager extends Manager {
 
     private HashMap<String, Behaviour> behaviours = new HashMap<String,Behaviour>();
 
+
+
+
     public BoidManager () {
 
         quadtree = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
@@ -39,15 +42,46 @@ public class BoidManager extends Manager {
         behaviours.put("alignment", new Alignment());
         behaviours.put("cohesion", new Cohesion());
         behaviours.put("wander", new Wander());
+
     }
     
     
     public void createBoid(){
         Boid boid = new Boid();
         
-        boid.setPosition(rand.nextInt(555), rand.nextInt(555), 0);
-        boid.setOrientation(10, 10, 0);
-        boid.setVelocity(randomVel());
+        int maxXPos = 1180;
+        int minXPos = 100;
+        
+        int maxYPos = 620;
+        int minYPos = 100;
+        
+        int maxXOrient = 10;
+        
+        
+        int maxYOrient = 10;
+        
+        
+        int maxXVel = 1;
+    
+        
+        int maxYVel = 1;
+        
+        
+        int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+        int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        
+        int xOrient = (rand.nextInt(2*maxXOrient) - maxXOrient);
+   
+        int yOrient = (rand.nextInt(2*maxYOrient) - maxYOrient);
+        
+        int xVel = (rand.nextInt(2*maxXVel) - maxXVel);
+  
+        int yVel = (rand.nextInt(2*maxYVel) - maxYVel);
+      
+        
+        boid.setPosition(xPos,yPos,0);
+        boid.setOrientation(xOrient,yOrient,0);
+        boid.setVelocity(xVel,yVel,0);
         
         boids.add(boid);
         quadtree.insert(boid);

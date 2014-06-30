@@ -36,6 +36,7 @@ public class SimulationManager extends Manager {
         zebra.put("separation", 5f);
         zebra.put("wander", 0.1f);
         tempSpeciesData.put("zebra", zebra);
+
         for (int i = 0; i < 100; i++) {
             boidManager.createBoid();
         }
