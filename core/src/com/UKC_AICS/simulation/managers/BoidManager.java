@@ -53,7 +53,7 @@ public class BoidManager extends Manager {
 
             //do stuff with weights
             tempVec.add(new Vector3()); //TODO: work out how to store the behaviours
-            // EG-> tempVec.add(behaviour.update(boids, boid).scl(behWeight));
+            // EG-> tempVec.add(behaviour.act(boids, boid).scl(behWeight));
         }
     }
 
