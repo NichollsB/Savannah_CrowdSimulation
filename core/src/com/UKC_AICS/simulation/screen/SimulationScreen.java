@@ -21,12 +21,12 @@ public class SimulationScreen implements Screen {
     
     private Environment environment; //lighting things
     
-    private SimulationManager simulationManager;
+    private SimulationManager simulationManager = new SimulationManager();
 
     private BitmapFont font = new BitmapFont();
     private SpriteBatch spriteBatch = new SpriteBatch();
     
-    private BoidGraphics boidGraphics;
+    private BoidGraphics boidGraphics = new BoidGraphics();
 
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
@@ -85,9 +85,7 @@ public class SimulationScreen implements Screen {
     }
 
     private void setup() {
-        simulationManager = new SimulationManager();
         setupCameraController();
-        boidGraphics = new BoidGraphics();
         boidGraphics.initBoidSprites(simulationManager.getBoids());
     }
     
