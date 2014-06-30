@@ -5,18 +5,19 @@ import com.badlogic.gdx.math.Vector3;
 /**
  * @author Emily
  */
-public class Boid {
+public class Boid extends Object {
 
     private static final float MAX_SPEED = 1f;
-    public Vector3 position;
-    public Vector3 velocity;
-    public Vector3 orientation;
+   //public Vector3 position;
+    private Vector3 velocity;
+    private Vector3 orientation;
 
 
     public static byte species;
 
 
     public Boid() {
+        type = 1; // this is for categorising it as a "boid" object.
         species = 0;
         position = new Vector3();
         velocity = new Vector3();
@@ -40,6 +41,9 @@ public class Boid {
     public void setPosition(Vector3 position) {
         this.position = position;
     }
+    public void setPosition( float x, float y, float z) {
+        this.position = new Vector3(x, y, z);
+    }
 
     public Vector3 getVelocity() {
         return velocity;
@@ -52,6 +56,9 @@ public class Boid {
      */
     public void setVelocity(Vector3 velocity) {
         this.velocity = velocity;
+    }
+    public void setVelocity(float x, float y, float z) {
+        this.velocity = new Vector3(x, y, z);
     }
 
     /**
@@ -69,6 +76,9 @@ public class Boid {
 
     public void setOrientation(Vector3 orientation) {
         this.orientation = orientation;
+    }
+    public void setOrientation(float x, float y, float z) {
+        this.orientation = new Vector3(x,y,z);
     }
 
     public byte getSpecies() {

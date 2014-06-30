@@ -35,10 +35,9 @@ public class SimulationManager extends Manager {
         zebra.put("alignment", 0.5f);
         zebra.put("separation", 0.5f);
         tempSpeciesData.put("zebra", zebra);
-        boidManager.createBoid();
-        boidManager.createBoid();
-        boidManager.createBoid();
-        boidManager.createBoid();
+        for (int i = 0; i < 100; i++) {
+            boidManager.createBoid();
+        }
         worldManager.createMap(20, 20);
     }
 

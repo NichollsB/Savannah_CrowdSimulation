@@ -10,7 +10,11 @@ import com.UKC_AICS.simulation.entity.behaviours.Alignment;
 import com.UKC_AICS.simulation.entity.behaviours.Behaviour;
 import com.UKC_AICS.simulation.entity.behaviours.Cohesion;
 import com.UKC_AICS.simulation.entity.behaviours.Separation;
+import com.UKC_AICS.simulation.utils.QuadTree;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 
 
 /**
@@ -21,6 +25,8 @@ public class BoidManager extends Manager {
 
 
     private ArrayList<Boid> boids = new ArrayList<Boid>();
+    private QuadTree quadtree;
+
     
     //TEMP: each boid type will have its own sight radius.
     static final float radius = 10f;
@@ -30,7 +36,8 @@ public class BoidManager extends Manager {
     private HashMap<String, Behaviour> behaviours = new HashMap<String,Behaviour>();
 
     public BoidManager () {
-        createBoid();
+
+        quadtree = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
         behaviours.put("separation", new Separation());
         behaviours.put("alignment", new Alignment());
@@ -41,11 +48,12 @@ public class BoidManager extends Manager {
     public void createBoid(){
         Boid boid = new Boid();
         
-        boid.position.set(rand.nextInt(30),rand.nextInt(30),rand.nextInt(30));
-        boid.orientation.set(10,10,0);
-        boid.velocity.set(10,10,0);
+        boid.setPosition(rand.nextInt(555), rand.nextInt(555), rand.nextInt(500));
+        boid.setOrientation(10, 10, 0);
+        boid.setVelocity(10, 10, 0);
         
         boids.add(boid);
+        quadtree.insert(boid);
         
     }
     
@@ -63,6 +71,7 @@ public class BoidManager extends Manager {
         //loop through boids and ask them to do their thing.
     	for(Boid boid : getBoids()) {
     		// find relevant boids
+            Array<Boid> nearBoids = quadtree.retrieveBoidsInRadius(boid.getPosition(), radius);
     		//crudely ask each one if it's inside the radius
     		float coh = SimulationManager.tempSpeciesData.get("zebra").get("cohesion");
             float ali = SimulationManager.tempSpeciesData.get("zebra").get("alignment");
@@ -70,9 +79,9 @@ public class BoidManager extends Manager {
     		//do stuff
             tmpVec.set(0f,0f,0f);
 
-            tmpVec.add(behaviours.get("cohesion").act(getBoids(), new ArrayList<WorldObject>(), boid).scl(coh));
-            tmpVec.add(behaviours.get("alignment").act(getBoids(), new ArrayList<WorldObject>(), boid).scl(ali));
-            tmpVec.add(behaviours.get("separation").act(getBoids(), new ArrayList<WorldObject>(), boid).scl(sep));
+            tmpVec.add(behaviours.get("cohesion").act(nearBoids, new Array<WorldObject>(), boid).scl(coh));
+            tmpVec.add(behaviours.get("alignment").act(nearBoids, new Array<WorldObject>(), boid).scl(ali));
+            tmpVec.add(behaviours.get("separation").act(nearBoids, new Array<WorldObject>(), boid).scl(sep));
 
             boid.move(tmpVec);
 
