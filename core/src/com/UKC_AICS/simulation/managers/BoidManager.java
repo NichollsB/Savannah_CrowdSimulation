@@ -43,33 +43,35 @@ public class BoidManager extends Manager {
         Boid boid = new Boid();
         
         
-        int maxXPos = 1280;
-        int minXPos = 0;
+        int maxXPos = 1180;
+        int minXPos = 100;
         
-        int maxYPos = 720;
-        int minYPos = 0;
+        int maxYPos = 620;
+        int minYPos = 100;
         
-        int maxXOrient = 1280;
-        int minXOrient = 0;
+        int maxXOrient = 10;
         
-        int maxYOrient = 720;
-        int minYOrient = 0;
         
-        int maxXVel = 10;
-        int minXVel = 0;
+        int maxYOrient = 10;
         
-        int maxYVel = 10;
-        int minYVel = 0;
+        
+        int maxXVel = 1;
+    
+        
+        int maxYVel = 1;
+        
         
         int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
         int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
         
-        int xOrient = rand.nextInt((maxXOrient - minXOrient) + 1) + minXOrient;
-        int yOrient = rand.nextInt((maxYOrient - minYOrient) + 1) + minYOrient;
+        int xOrient = (rand.nextInt(2*maxXOrient) - maxXOrient);
+   
+        int yOrient = (rand.nextInt(2*maxYOrient) - maxYOrient);
         
-        int xVel = rand.nextInt((maxXVel - minXVel) + 1) + minXVel;
-        int yVel = rand.nextInt((maxYVel - minYVel) + 1) + minYVel;
-        
+        int xVel = (rand.nextInt(2*maxXVel) - maxXVel);
+  
+        int yVel = (rand.nextInt(2*maxYVel) - maxYVel);
+      
         
         boid.position.set(xPos,yPos,0);
         boid.orientation.set(xOrient,yOrient,0);
