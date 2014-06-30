@@ -28,6 +28,9 @@ public class BoidManager extends Manager {
         boid.position.set(10,10,0);
         boid.orientation.set(10,10,0);
         boid.velocity.set(10,10,0);
+        
+        boids.add(boid);
+        
     }
     
     
