@@ -32,8 +32,8 @@ public class BoidGraphics {
 		}
 	}
 	
-	public void initBoidSprites(ArrayList<Boid> arrayList){
-		for(Boid boid : arrayList){
+	public void initBoidSprites(Array<Boid> array){
+		for(Boid boid : array){
 			if(!boidMap.containsKey(boid)){
 				boidMap.put(boid, new Sprite(defaultTexture));
 				updateSpritePosition(boid);

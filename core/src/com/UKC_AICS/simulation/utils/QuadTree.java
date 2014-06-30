@@ -3,6 +3,7 @@ package com.UKC_AICS.simulation.utils;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Object;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
@@ -58,7 +59,6 @@ public class QuadTree {
         nodes[1] = new QuadTree(level+1, new Rectangle(x, y, subWidth, subHeight));
         nodes[2] = new QuadTree(level+1, new Rectangle(x, y + subHeight, subWidth, subHeight));
         nodes[3] = new QuadTree(level+1, new Rectangle(x + subWidth, y + subHeight, subWidth, subHeight));
-
     }
 
     /**
@@ -86,6 +86,7 @@ public class QuadTree {
             int i = 0;
 
             int index;
+            //go through and move the objects that will fit in the smaller nodes
             while(i < objects.size) {
                 index = getIndex(objects.get(i));
                 if (index != -1) {
@@ -175,6 +176,48 @@ public class QuadTree {
     }
 
 
+    /**
+     * helper method to decide where in the quadtree the object can fit.
+     * @param point the containing point we are finding a location for in the tree
+     * @return returns the index of the node it can fit in, -1 means the object cannot fit completely within a child node and is part of the parent.
+     */
+    public int getIndex(Vector2 point) {
+        int index = -1;
+
+//        if(bounds.contains(point)) {
+//            return index;
+//        } else {
+            double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
+            double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
+
+            //        newOrigin.x += halfDimension.x * ((i & 4) == 4? 0.5f : -0.5f);
+            //        newOrigin.y += halfDimension.y * ((i & 2) == 2? 0.5f : -0.5f);
+
+            //object can completely fit in top quadrants.
+            boolean top = (point.y > verticalMidpoint);
+
+            if (point.x < horizontalMidpoint) {
+                //left
+                if (top) {
+                    //top-left
+                    index = 0;
+                } else {
+                    //bottom-left
+                    index = 1;
+                }
+            } else {
+                //right
+                if (top) {
+                    //top-right
+                    index = 3;
+                } else {
+                    //bottom-right
+                    index = 2;
+                }
+            }
+            return index;
+//        }
+    }
 
 
     /**
@@ -193,6 +236,7 @@ public class QuadTree {
         return returnObjects;
     }
 
+
     public Array<Boid> retrieveBoids(Array<Boid>returnObjects,  Rectangle rect) {
         int index = getIndex(rect);
         if (index != -1 && nodes[0] != null) {
@@ -200,12 +244,28 @@ public class QuadTree {
         }
 
         for(Object obj : objects) {
-            if(obj.getType() == 1){
+            if( obj.getType() == 1  ){
                 returnObjects.add((Boid)obj);
             }
         }
         return returnObjects;
     }
+
+    public Array<Boid> retrieveBoids(Array<Boid>returnObjects,  Vector2 point) {
+
+        int index = getIndex(point);
+        if (index != -1 && nodes[0] != null) {
+            nodes[index].retrieveBoids(returnObjects, point);
+        }
+
+        for(Object obj : objects) {
+            if(obj.getType() == 1 && !returnObjects.contains( (Boid)obj, true) ){
+                returnObjects.add((Boid)obj);
+            }
+        }
+        return returnObjects;
+    }
+
     public Array<Boid> retrieveBoidsInRadius( Vector3 pos, float range ) {
         Array<Boid> returnObjects = new Array<Boid>();
         Rectangle rect = new Rectangle(pos.x-range/2,pos.y-range/2, range, range);
@@ -213,6 +273,15 @@ public class QuadTree {
         int index = getIndex(rect);
         if (index != -1 && nodes[0] != null) {
             nodes[index].retrieveBoids(returnObjects, rect);
+        } else if (index == -1 && nodes[0] != null) {
+
+            retrieveBoids(returnObjects, rect.getCenter(new Vector2()));
+
+            retrieveBoids(returnObjects,new Vector2(rect.x, rect.y));
+            retrieveBoids(returnObjects,new Vector2(rect.x + rect.width, rect.y));
+            retrieveBoids(returnObjects,new Vector2(rect.x, rect.y + rect.height));
+            retrieveBoids(returnObjects,new Vector2(rect.x + rect.width, rect.y + rect.height));
+
         }
 
         for(Object obj : objects) {

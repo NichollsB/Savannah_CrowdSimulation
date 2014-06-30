@@ -52,9 +52,11 @@ public class Cohesion extends Behaviour {
                 }
             }
 
-
             //find the average position.
             tmpVec.scl(1.0f / num);
+
+            //subtract the boids position to find the "difference"
+            tmpVec.sub(boid.getPosition());
         }
 
         return tmpVec.cpy();

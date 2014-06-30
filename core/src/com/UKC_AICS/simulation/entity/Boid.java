@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -30,7 +31,18 @@ public class Boid extends Object {
         //TODO: Add in better limiter for speed.
         velocity.add(velocityChange).limit(MAX_SPEED);
         position.add(velocity);
-        
+
+        if(position.x > Gdx.graphics.getWidth()) {
+            position.x -= Gdx.graphics.getWidth();
+        } else if(position.x < 0) {
+            position.x += Gdx.graphics.getWidth();
+        }
+
+        if(position.y > Gdx.graphics.getHeight()) {
+            position.y -= Gdx.graphics.getHeight();
+        } else if(position.y < 0) {
+            position.y += Gdx.graphics.getHeight();
+        }
     }
 
 
