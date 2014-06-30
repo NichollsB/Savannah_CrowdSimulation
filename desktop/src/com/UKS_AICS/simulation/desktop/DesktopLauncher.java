@@ -7,9 +7,9 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.height = 720;
+        config.title = "Project Savannah Simulation";
         config.width = 1280;
-
+        config.height = 720;
 		new LwjglApplication(new Simulation(), config);
 	}
 }
