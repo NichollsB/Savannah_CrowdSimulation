@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.screen;
 
+import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.UKC_AICS.simulation.utils.OrthoController;
@@ -19,6 +20,8 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class SimulationScreen extends InputMultiplexer implements Screen {
 
+    private Simulation simulation;
+
     public Camera camera;
     
     private Environment environment; //lighting things
@@ -30,6 +33,10 @@ public class SimulationScreen extends InputMultiplexer implements Screen {
 
     private ShapeRenderer shRend = new ShapeRenderer();
     private OrthoController camController;
+
+    public SimulationScreen(Simulation sim) {
+        this.simulation = sim;
+    }
 
     @Override
     public void render(float delta) {
