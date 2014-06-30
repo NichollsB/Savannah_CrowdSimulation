@@ -23,7 +23,9 @@ public class SimulationScreen implements Screen {
 
     private BitmapFont font = new BitmapFont();
     private SpriteBatch spriteBatch = new SpriteBatch();
-
+    
+    private BoidGraphics boidGraphics;
+    
 
     @Override
     public void render(float delta) {
@@ -32,7 +34,11 @@ public class SimulationScreen implements Screen {
         
         tickPhysics(delta);
         clearOpenGL();
+        boidGraphics.update(spriteBatch);
         renderSpriteBatches();
+        
+        
+        
         //do render calls for models, sprites, whatever. 
         //(probably done in another class)
 
@@ -75,6 +81,8 @@ public class SimulationScreen implements Screen {
     private void setup() {
         simulationManager = new SimulationManager();
         setupCameraController();
+        boidGraphics = new BoidGraphics();
+        boidGraphics.initBoidSprites(simulationManager.getBoids());
     }
     
     private void setupCameraController() {
