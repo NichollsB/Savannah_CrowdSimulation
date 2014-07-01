@@ -45,22 +45,24 @@ public class Cohesion extends Behaviour {
 
         if(boids.size > 0) {
             for (Boid otherBoid : boids) {
-                //check to see if same species. TODO: multi - species herding.
-                if (otherBoid.species == boid.species) {
-                    //added because its already been checked if it's in sight
-                    tmpVec.add(otherBoid.getPosition());
-                    num++;
+                if (boid != otherBoid) {
+                    //check to see if same species. TODO: multi - species herding.
+                    if (otherBoid.species == boid.species) {
+                        //added because its already been checked if it's in sight
+                        tmpVec.add(otherBoid.getPosition());
+                        num++;
+                    }
+
                 }
             }
-
             //find the average position.
             tmpVec.scl(1.0f / num);
 
             //subtract the boids position to find the "difference"
             //tmpVec.sub(boid.getPosition());
-
             tmpVec2.set(Seek.act(boid, tmpVec));
-//            tmpVec2.set(boid.getPosition()).sub(tmpVec);
+            //            tmpVec2.set(boid.getPosition()).sub(tmpVec);
+
         }
 
         return tmpVec2.cpy();

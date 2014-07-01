@@ -116,20 +116,21 @@ public class BoidManager extends Manager {
             Array<Boid> nearBoids = new Array<Boid>();
             Array<Boid> closeBoids = new Array<Boid>();
             for (Boid b : boids) {
-                steering.set(boid.getPosition());
-                steering.sub(b.getPosition());
-                if (steering.len() < FLOCK_RADIUS) {
-                    if(!nearBoids.contains(b, true)){
-                        nearBoids.add(b);
+                if (boid != b) {
+                    steering.set(boid.getPosition());
+                    steering.sub(b.getPosition());
+                    if (steering.len() < FLOCK_RADIUS) {
+                        if (!nearBoids.contains(b, true)) {
+                            nearBoids.add(b);
+                        }
+                    } else {
+                        if (nearBoids.contains(b, true)) {
+                            nearBoids.removeValue(b, true);
+                        }
                     }
-                }
-                else{
-                    if(nearBoids.contains(b, true)){
-                        nearBoids.removeValue(b, true);
+                    if (steering.len() < SEP_RADIUS) {
+                        closeBoids.add(b);
                     }
-                }
-                if (steering.len() < SEP_RADIUS) {
-                    closeBoids.add(b);
                 }
             }
 
