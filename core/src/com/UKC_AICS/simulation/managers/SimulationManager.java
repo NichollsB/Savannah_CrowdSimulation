@@ -42,7 +42,7 @@ public class SimulationManager extends Manager {
     public void reset(){
     	boidManager.clearBoidList();
     	generateBoids();
-    	
+    	resetTime();
     	 
     }
     
@@ -73,6 +73,13 @@ public class SimulationManager extends Manager {
             weeks += 1;
         }
 //        System.out.println(minutes + " mins; " + hours + " hrs; " + days + " days; " + weeks + " wks.");
+    }
+
+    public void resetTime() {
+        minutes = 0;
+        hours = 0;
+        days = 0;
+        weeks = 0;
     }
 
 
