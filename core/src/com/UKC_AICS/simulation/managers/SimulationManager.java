@@ -75,6 +75,13 @@ public class SimulationManager extends Manager {
 //        System.out.println(minutes + " mins; " + hours + " hrs; " + days + " days; " + weeks + " wks.");
     }
 
+    public void resetTime() {
+        minutes = 0;
+        hours = 0;
+        days = 0;
+        weeks = 0;
+    }
+
 
     public Array<Boid> getBoids() {
         return boidManager.getBoids();
