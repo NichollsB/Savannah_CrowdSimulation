@@ -3,8 +3,8 @@ package com.UKC_AICS.simulation.entity.behaviours;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.WorldObject;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 
-import java.util.ArrayList;
 
 public abstract class Behaviour {
 
@@ -31,5 +31,8 @@ public abstract class Behaviour {
      * @param objects : this list will contain relevant(line of sight wise) objects.
      * @param boid : the boid that the behaviour is being run for.
      */
-    abstract public Vector3 act(ArrayList<Boid> boids, ArrayList<WorldObject> objects, Boid boid);
+    abstract public Vector3 act(Array<Boid> boids, Array<WorldObject> objects, Boid boid);
+//    static public Vector3 act(Array<Boid> boids, Array<WorldObject> objects, Boid boid) {
+//        return new Vector3();
+//    }
 }
