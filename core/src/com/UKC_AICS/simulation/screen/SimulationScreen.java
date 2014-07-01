@@ -136,7 +136,12 @@ public class SimulationScreen implements Screen {
         resetButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+            
+            	simulationManager.reset();
+            	setup();
                 //TODO reset of simulation
+            	
+            	
             }
         });
 
