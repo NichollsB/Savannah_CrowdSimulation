@@ -46,6 +46,8 @@ public class SimulationScreen implements Screen {
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
         setStage();
+        
+        setup();
     }
 
     @Override
@@ -80,13 +82,14 @@ public class SimulationScreen implements Screen {
      */
     private void clearOpenGL() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
     }
 
     @Override
     public void resize(int width, int height) {
         createCamera(width, height);
         stage.getViewport().update(width, height, true);
-        setup();
+        //setup();
     }
 
     /**
