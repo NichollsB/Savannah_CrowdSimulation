@@ -55,8 +55,8 @@ public class SimulationScreen implements Screen {
         //kind of the update loop.
         if (running) {
             simulationManager.update();
-            fps.setText(getFPSString());
         }
+        fps.setText(getFPSString());
         tickPhysics(delta);
         clearOpenGL();
         boidGraphics.update(spriteBatch);
