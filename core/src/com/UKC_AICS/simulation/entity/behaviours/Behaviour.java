@@ -32,4 +32,7 @@ public abstract class Behaviour {
      * @param boid : the boid that the behaviour is being run for.
      */
     abstract public Vector3 act(Array<Boid> boids, Array<WorldObject> objects, Boid boid);
+//    static public Vector3 act(Array<Boid> boids, Array<WorldObject> objects, Boid boid) {
+//        return new Vector3();
+//    }
 }

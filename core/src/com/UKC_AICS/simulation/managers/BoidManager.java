@@ -19,13 +19,14 @@ import com.badlogic.gdx.utils.Array;
 public class BoidManager extends Manager {
 
 
-    private static final float RADIUS = 50f;
+    private static final float FLOCK_RADIUS = 100f;
+    private static final float SEP_RADIUS = 20f;
     private Array<Boid> boids = new Array<Boid>();
     private QuadTree quadtree;
 
 
     //TEMP: each boid type will have its own sight radius.
-    private Vector3 tmpVec = new Vector3();
+    private Vector3 steering = new Vector3();
     private Random rand = new Random();
 
     private HashMap<String, Behaviour> behaviours = new HashMap<String, Behaviour>();
@@ -104,13 +105,13 @@ public class BoidManager extends Manager {
             boid = boids.get(i);
 //        for(Boid boid : boids) {
             // find relevant boids
-            Array<Boid> nearBoids = quadtree.retrieveBoidsInRadius(boid.getPosition(), RADIUS);
-
-
+//            Array<Boid> nearBoids = quadtree.retrieveBoidsInRadius(boid.getPosition(), FLOCK_RADIUS);
+            Array<Boid> nearBoids = new Array<Boid>();
+            Array<Boid> closeBoids = new Array<Boid>();
             for (Boid b : boids) {
-                tmpVec.set(boid.getPosition());
-                tmpVec.sub(b.getPosition() );
-                if (tmpVec.len() < RADIUS) {
+                steering.set(boid.getPosition());
+                steering.sub(b.getPosition());
+                if (steering.len() < FLOCK_RADIUS) {
                     if(!nearBoids.contains(b, true)){
                         nearBoids.add(b);
                     }
@@ -120,6 +121,9 @@ public class BoidManager extends Manager {
                         nearBoids.removeValue(b, true);
                     }
                 }
+                if (steering.len() < SEP_RADIUS) {
+                    closeBoids.add(b);
+                }
             }
 
             //crudely ask each one if it's inside the radius
@@ -128,14 +132,14 @@ public class BoidManager extends Manager {
             float sep = SimulationManager.tempSpeciesData.get("zebra").get("separation");
             float wan = SimulationManager.tempSpeciesData.get("zebra").get("wander");
             //do stuff
-            tmpVec.set(0f, 0f, 0f);
+            steering.set(0f, 0f, 0f);
 
-            tmpVec.add(behaviours.get("cohesion").act(nearBoids, new Array<WorldObject>(), boid).scl(coh));
-            tmpVec.add(behaviours.get("alignment").act(nearBoids, new Array<WorldObject>(), boid).scl(ali));
-            tmpVec.add(behaviours.get("separation").act(nearBoids, new Array<WorldObject>(), boid).scl(sep));
-            tmpVec.add(behaviours.get("wander").act(nearBoids, new Array<WorldObject>(), boid).scl(wan));
+//            steering.add(behaviours.get("cohesion").act(nearBoids, new Array<WorldObject>(), boid).scl(coh));
+            steering.add(behaviours.get("alignment").act(nearBoids, new Array<WorldObject>(), boid).scl(ali));
+//            steering.add(behaviours.get("separation").act(closeBoids, new Array<WorldObject>(), boid).scl(sep));
+//            steering.add(behaviours.get("wander").act(nearBoids, new Array<WorldObject>(), boid).scl(wan));
 
-            boid.move(tmpVec);
+            boid.move(steering);
 
         }
     }

@@ -17,12 +17,7 @@ public class Wander extends Behaviour {
 
     @Override
     public Vector3 act(Array<Boid> boids, Array<WorldObject> objects, Boid boid) {
-        tmpVec.set(boid.getPosition());
-        if(rand.nextInt(100) > 50) {
-            tmpVec.add(rand.nextFloat(),rand.nextFloat(),rand.nextFloat());
-        } else {
-            tmpVec.add(-rand.nextFloat(),-rand.nextFloat(),-rand.nextFloat());
-        }
+        tmpVec.set(rand.nextFloat() - rand.nextFloat(), rand.nextFloat() - rand.nextFloat(), 0);
 
 
         return tmpVec.cpy();

@@ -38,6 +38,7 @@ public class Cohesion extends Behaviour {
     @Override
     public Vector3 act(Array<Boid> boids, Array<WorldObject> objects, Boid boid) {
         tmpVec.set(0, 0, 0);
+        tmpVec2.set(0, 0, 0);
 
         int num = 0; //hold how many same specie boids in list.
         //loop through boids and add their position to the vector
@@ -56,9 +57,12 @@ public class Cohesion extends Behaviour {
             tmpVec.scl(1.0f / num);
 
             //subtract the boids position to find the "difference"
-            tmpVec.sub(boid.getPosition());
+            //tmpVec.sub(boid.getPosition());
+
+            tmpVec2.set(Seek.act(boid, tmpVec));
+//            tmpVec2.set(boid.getPosition()).sub(tmpVec);
         }
 
-        return tmpVec.cpy();
+        return tmpVec2.cpy();
     }
 }

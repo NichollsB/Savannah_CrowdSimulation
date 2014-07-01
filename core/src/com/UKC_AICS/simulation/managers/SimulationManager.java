@@ -1,10 +1,9 @@
 package com.UKC_AICS.simulation.managers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.UKC_AICS.simulation.entity.Boid;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 
@@ -34,10 +33,10 @@ public class SimulationManager extends Manager {
         zebra.put("cohesion", 0.5f);
         zebra.put("alignment", 0.5f);
         zebra.put("separation", 0.5f);
-        zebra.put("wander", 0.2f);
+        zebra.put("wander", 0.1f);
         tempSpeciesData.put("zebra", zebra);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 200; i++) {
             boidManager.createBoid();
         }
         worldManager.createMap(20, 20);
@@ -70,7 +69,7 @@ public class SimulationManager extends Manager {
         return boidManager.getBoids();
     }
 
-    public Vector3 getMapSize() {
-        return worldManager.getSize();
-    }
+//    public Vector2 getMapSize() {
+//        return worldManager.getSize();
+//    }
 }

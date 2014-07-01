@@ -8,13 +8,14 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class Boid extends Object {
 
-    private static final float MAX_SPEED = 1f;
+    public static float MAX_SPEED = 2f;
    //public Vector3 position;
     private Vector3 velocity;
     private Vector3 orientation;
 
 
     public static byte species;
+    public float maxSpeed = 2f;
 
 
     public Boid() {
