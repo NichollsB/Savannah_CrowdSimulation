@@ -39,7 +39,7 @@ public class Alignment extends Behaviour {
         if(boids.size > 0) {
             for(Boid b : boids) {
                 if(b.getSpecies() == boid.getSpecies()) {
-                    //tmpVec2.set(b.getVelocity()).sub(boid.getVelocity()); //using velocity for now until orientation is done properly.
+                    tmpVec2.set(b.getVelocity());//.sub(boid.getVelocity()); //using velocity for now until orientation is done properly.
                     tmpVec.add(tmpVec2);
                     num++;
                 }

@@ -48,7 +48,7 @@ public class SimulationManager extends Manager {
     
     public void generateBoids(){
     	
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 600; i++) {
             boidManager.createBoid();
         }
     }

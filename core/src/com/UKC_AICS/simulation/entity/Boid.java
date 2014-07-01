@@ -1,6 +1,7 @@
 package com.UKC_AICS.simulation.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -9,9 +10,11 @@ import com.badlogic.gdx.math.Vector3;
 public class Boid extends Object {
 
     public static float MAX_SPEED = 2f;
+    public static float MAX_TURNING = 45f;
    //public Vector3 position;
     private Vector3 velocity;
     private Vector3 orientation;
+    private float f_orientation;
 
 
     public static byte species;
@@ -26,13 +29,25 @@ public class Boid extends Object {
         orientation = new Vector3();
     }
 
-
-
     public void move(Vector3 velocityChange) {
         //TODO: Add in better limiter for speed.
+
         velocity.add(velocityChange).limit(MAX_SPEED);
+
+        //move
         position.add(velocity);
 
+        //TODO: Better orientation maths.
+        f_orientation = getNewOrientation();
+
+        //check for out of bounds
+        checkInBounds();
+    }
+
+    float velMagSq = 0;
+
+    private void checkInBounds() {
+        //TODO make this access the simulation map size, as this will be different from screen size eventually.
         if(position.x > Gdx.graphics.getWidth()) {
             position.x -= Gdx.graphics.getWidth();
         } else if(position.x < 0) {
@@ -86,6 +101,15 @@ public class Boid extends Object {
     public Vector3 getOrientation() {
         return orientation;
     }
+    public float getNewOrientation() {
+        if(velocity.len() > 0){
+            return (float)Math.toDegrees(MathUtils.atan2(velocity.y,velocity.x));
+        }
+        return f_orientation;
+    }
+
+
+
 
     public void setOrientation(Vector3 orientation) {
         this.orientation = orientation;

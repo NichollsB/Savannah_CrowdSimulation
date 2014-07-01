@@ -23,7 +23,7 @@ public class BoidGraphics {
 	private Sprite boidSprite;
 	private ObjectMap<Boid, Sprite> boidMap = new ObjectMap<Boid, Sprite>();
 	private Array<Boid> boidsArray;
-	private Texture defaultTexture = new Texture(Gdx.files.internal("triangle.png"));
+	private Texture defaultTexture = new Texture(Gdx.files.internal("triangle2.png"));
 	
 	private Boid testBoid;
 
@@ -87,9 +87,10 @@ public class BoidGraphics {
 	public void updateSpritePosition(Boid boid){
 		//for(Iterator<Boid> boids = boidMap.keys(); boids.hasNext();){
 			Vector3 position = boid.getPosition();
-			boidSprite.setPosition(position.x, position.y);
+			boidSprite.setPosition( position.x, position.y);
 			position = boid.getVelocity();
-			double rot = Math.toDegrees(Math.atan2(position.x, position.y));
+			double rot = Math.toDegrees(Math.atan2( - position.x, position.y)); //made x negative.
+
 			boidSprite.setRotation((float) rot);
 			//boidSprite.rotate((float) rot);
 //			boidMap.get(boid).setPosition(position.x, position.y);
