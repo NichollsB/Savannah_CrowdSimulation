@@ -42,7 +42,7 @@ public class SimulationManager extends Manager {
     public void reset(){
     	boidManager.clearBoidList();
     	generateBoids();
-    	
+    	resetTime();
     	 
     }
     
