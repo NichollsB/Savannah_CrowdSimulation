@@ -84,6 +84,14 @@ public class BoidManager extends Manager {
         quadtree.insert(boid);
 
     }
+    
+    public void clearBoidList(){
+    	System.out.println(boids);
+    	boids.clear();
+    	System.out.println(boids);
+    	
+    	
+    }
 
     private Vector3 randomVel() {
         Vector3 vel = new Vector3(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
