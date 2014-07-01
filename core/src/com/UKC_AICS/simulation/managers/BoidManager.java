@@ -85,11 +85,10 @@ public class BoidManager extends Manager {
 
     }
     
-    public void clearBoidList(){
-    	System.out.println(boids);
+    public void clearBoidList() {
+    
     	boids.clear();
-    	System.out.println(boids);
-    	
+    
     	
     }
 
