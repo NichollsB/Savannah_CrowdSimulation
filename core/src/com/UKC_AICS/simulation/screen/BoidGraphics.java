@@ -25,6 +25,7 @@ public class BoidGraphics {
 	private Array<Boid> boidsArray;
 	private Texture defaultTexture = new Texture(Gdx.files.internal("triangle.png"));
 	
+	private Boid testBoid;
 
 	/**
 	 * Update and render the sprites representing the boids. Renders via the SpriteBatch passed in.
@@ -61,6 +62,9 @@ public class BoidGraphics {
 	public void initBoidSprites(Array<Boid> boidArray){
 		boidsArray = new Array<Boid>(boidArray);
 		boidSprite = new Sprite(defaultTexture);
+		boidSprite.setOrigin((defaultTexture.getWidth()/2), defaultTexture.getHeight()/2);
+		
+		testBoid = boidsArray.get(0);
 		/*for(Boid boid : array){
 			//boidsArray.add(boid);
 			updateSpritePosition(boid);
@@ -84,10 +88,15 @@ public class BoidGraphics {
 		//for(Iterator<Boid> boids = boidMap.keys(); boids.hasNext();){
 			Vector3 position = boid.getPosition();
 			boidSprite.setPosition(position.x, position.y);
-			
-			double rot = Math.toDegrees(Math.atan2(position.y, position.x)) - 90;
+			position = boid.getVelocity();
+			double rot = Math.toDegrees(Math.atan2(position.x, position.y));
 			boidSprite.setRotation((float) rot);
-			//boidMap.get(boid).setPosition(position.x, position.y);
+			//boidSprite.rotate((float) rot);
+//			boidMap.get(boid).setPosition(position.x, position.y);
+			/*if (boid.equals(boidsArray.get(0))){
+				System.out.println("Boid pos: " + boid.getPosition().toString() + " Boid Velocity: " + boid.getVelocity().toString() +
+						" boid rotation: " + rot);
+			}*/
 		//}
 	}
 	
