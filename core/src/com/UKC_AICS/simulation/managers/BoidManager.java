@@ -85,6 +85,14 @@ public class BoidManager extends Manager {
         quadtree.insert(boid);
 
     }
+    
+    public void clearBoidList(){
+    	System.out.println(boids);
+    	boids.clear();
+    	System.out.println(boids);
+    	
+    	
+    }
 
     private Vector3 randomVel() {
         Vector3 vel = new Vector3(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
@@ -134,10 +142,10 @@ public class BoidManager extends Manager {
             //do stuff
             steering.set(0f, 0f, 0f);
 
-//            steering.add(behaviours.get("cohesion").act(nearBoids, new Array<WorldObject>(), boid).scl(coh));
-            steering.add(behaviours.get("alignment").act(nearBoids, new Array<WorldObject>(), boid).scl(ali));
-//            steering.add(behaviours.get("separation").act(closeBoids, new Array<WorldObject>(), boid).scl(sep));
-//            steering.add(behaviours.get("wander").act(nearBoids, new Array<WorldObject>(), boid).scl(wan));
+            steering.add(behaviours.get("cohesion").act(nearBoids, new Array<WorldObject>(), boid).scl(coh));
+//            steering.add(behaviours.get("alignment").act(nearBoids, new Array<WorldObject>(), boid).scl(ali));
+            steering.add(behaviours.get("separation").act(closeBoids, new Array<WorldObject>(), boid).scl(sep));
+            steering.add(behaviours.get("wander").act(nearBoids, new Array<WorldObject>(), boid).scl(wan));
 
             boid.move(steering);
 
