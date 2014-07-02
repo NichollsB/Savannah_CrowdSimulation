@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
  * Created by James on 02/07/2014.
+ * Class for the creation of gui for simulationScreen
  */
 public class SimScreenGUI {
 
@@ -20,6 +21,10 @@ public class SimScreenGUI {
     Skin skin;
     public Label fps;
 
+    /**
+     *
+     * @param ss the simulationScreen creating the gui
+     */
     public SimScreenGUI (SimulationScreen ss) {
         simScreen = ss;
     }
@@ -60,9 +65,6 @@ public class SimScreenGUI {
 
                 simScreen.simulationManager.reset();
                 simScreen.setup();
-                //TODO reset of simulation
-
-
             }
         });
 

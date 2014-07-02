@@ -32,13 +32,7 @@ public class SimulationScreen implements Screen {
     
     private BoidGraphics boidGraphics = new BoidGraphics();
 
-    SimScreenGUI gui = new SimScreenGUI(this);
-
-    // GUI stuff
-//    private Stage stage;
-//    private Table table;
-//    private Skin skin;
-//    private Label fps;
+    SimScreenGUI gui = new SimScreenGUI(this); // Creates gui instance for this screen
 
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
@@ -54,6 +48,7 @@ public class SimulationScreen implements Screen {
         if (running) {
             simulationManager.update();
         }
+        // checks if simulation needs to be rendered or can be run "offline"
         if (render){
         gui.fps.setText(getFPSString() + simulationManager.getTime());
         tickPhysics(delta);
@@ -127,7 +122,7 @@ public class SimulationScreen implements Screen {
 
     /**
      *
-     * @return
+     * @return running boolean
      */
     public boolean getRunning() {
         return running;
