@@ -21,7 +21,7 @@ public class BoidGraphics {
 	
 	//private SpriteBatch boidBatch;
 	private Sprite boidSprite;
-	private ObjectMap<Boid, Sprite> boidMap = new ObjectMap<Boid, Sprite>();
+	//private ObjectMap<Boid, Sprite> boidMap = new ObjectMap<Boid, Sprite>();
 	private Array<Boid> boidsArray;
 	private Texture defaultTexture = new Texture(Gdx.files.internal("triangle2.png"));
 	
