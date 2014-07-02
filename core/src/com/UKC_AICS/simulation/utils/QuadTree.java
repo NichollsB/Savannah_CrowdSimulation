@@ -275,12 +275,15 @@ public class QuadTree {
             nodes[index].retrieveBoids(returnObjects, rect);
         } else if (index == -1 && nodes[0] != null) {
 
-            retrieveBoids(returnObjects, rect.getCenter(new Vector2()));
+                //find boids that the centre of the boids range sits in.
+                retrieveBoids(returnObjects, rect.getCenter(new Vector2()));
 
-            retrieveBoids(returnObjects,new Vector2(rect.x, rect.y));
-            retrieveBoids(returnObjects,new Vector2(rect.x + rect.width, rect.y));
-            retrieveBoids(returnObjects,new Vector2(rect.x, rect.y + rect.height));
-            retrieveBoids(returnObjects,new Vector2(rect.x + rect.width, rect.y + rect.height));
+                //find boids for each "corner" of the rectangle range.
+                retrieveBoids(returnObjects, new Vector2(rect.x, rect.y));
+                retrieveBoids(returnObjects, new Vector2(rect.x + rect.width, rect.y));
+                retrieveBoids(returnObjects, new Vector2(rect.x, rect.y + rect.height));
+                retrieveBoids(returnObjects, new Vector2(rect.x + rect.width, rect.y + rect.height));
+
 
         }
 

@@ -112,26 +112,47 @@ public class BoidManager extends Manager {
             boid = boids.get(i);
 //        for(Boid boid : boids) {
             // find relevant boids
-//            Array<Boid> nearBoids = quadtree.retrieveBoidsInRadius(boid.getPosition(), FLOCK_RADIUS);
+/*
+ SIMPLE LOOPING. HORRIBLE! :(
+ */
             Array<Boid> nearBoids = new Array<Boid>();
             Array<Boid> closeBoids = new Array<Boid>();
             for (Boid b : boids) {
-                steering.set(boid.getPosition());
-                steering.sub(b.getPosition());
-                if (steering.len() < FLOCK_RADIUS) {
-                    if(!nearBoids.contains(b, true)){
-                        nearBoids.add(b);
+                if (boid != b) {
+                    steering.set(boid.getPosition());
+                    steering.sub(b.getPosition());
+                    if (steering.len() < FLOCK_RADIUS) {
+                        if (!nearBoids.contains(b, true)) {
+                            nearBoids.add(b);
+                        }
+                    } else {
+                        if (nearBoids.contains(b, true)) {
+                            nearBoids.removeValue(b, true);
+                        }
                     }
-                }
-                else{
-                    if(nearBoids.contains(b, true)){
-                        nearBoids.removeValue(b, true);
+                    if (steering.len() < SEP_RADIUS) {
+                        closeBoids.add(b);
                     }
-                }
-                if (steering.len() < SEP_RADIUS) {
-                    closeBoids.add(b);
                 }
             }
+
+            /*
+             QUADTREE ATTEMPTS.
+             */
+//            Array<Boid> nearBoids = quadtree.retrieveBoidsInRadius(boid.getPosition(), FLOCK_RADIUS);
+            //For use with the quadtree lookup
+//            for(Boid b : nearBoids) {
+//                steering.set(boid.getPosition());
+//                steering.sub(b.getPosition());
+//                if (steering.len() > FLOCK_RADIUS) {
+//                    nearBoids.removeValue(b, true);
+//                }
+//                //if the boid is outside the flock radius it CANT be in the "too close" range
+//                else if (steering.len() < SEP_RADIUS) {
+//                    closeBoids.add(b);
+//                }
+//
+//            }
 
             //crudely ask each one if it's inside the radius
             float coh = SimulationManager.tempSpeciesData.get("zebra").get("cohesion");
@@ -142,7 +163,7 @@ public class BoidManager extends Manager {
             steering.set(0f, 0f, 0f);
 
             steering.add(behaviours.get("cohesion").act(nearBoids, new Array<WorldObject>(), boid).scl(coh));
-//            steering.add(behaviours.get("alignment").act(nearBoids, new Array<WorldObject>(), boid).scl(ali));
+            steering.add(behaviours.get("alignment").act(nearBoids, new Array<WorldObject>(), boid).scl(ali));
             steering.add(behaviours.get("separation").act(closeBoids, new Array<WorldObject>(), boid).scl(sep));
             steering.add(behaviours.get("wander").act(nearBoids, new Array<WorldObject>(), boid).scl(wan));
 

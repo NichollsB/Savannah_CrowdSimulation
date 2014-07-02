@@ -1,6 +1,7 @@
 package com.UKC_AICS.simulation.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -9,13 +10,19 @@ import com.badlogic.gdx.math.Vector3;
 public class Boid extends Object {
 
     public static float MAX_SPEED = 2f;
-   //public Vector3 position;
+    public static float MAX_TURNING = 45f;
+
+   //public Vector3 position; //now held in Super class.
+
     private Vector3 velocity;
+//    private Vector3 acceleration;
     private Vector3 orientation;
+    private float f_orientation;
 
 
     public static byte species;
     public float maxSpeed = 2f;
+    public float maxForce = 0.03f;
 
 
     public Boid() {
@@ -26,13 +33,45 @@ public class Boid extends Object {
         orientation = new Vector3();
     }
 
-
-
-    public void move(Vector3 velocityChange) {
+    public void move(Vector3 acceleration) {
         //TODO: Add in better limiter for speed.
-        velocity.add(velocityChange).limit(MAX_SPEED);
+//        limitVelocityChange(velocityChange);
+
+        velocity.add(acceleration).limit(MAX_SPEED);
+
+
+        //move
         position.add(velocity);
 
+        //TODO: Better orientation maths.
+        f_orientation = getNewOrientation();
+
+        //check for out of bounds
+        checkInBounds();
+    }
+
+    /**
+     * This will do checks to make sure the boid cannot turn too sharply or increase its speed too heavily.
+     *
+     * @param change the velocity that the boid wants to change by.
+     */
+    public void limitVelocityChange(Vector3 change) {
+        Vector3 oldVelTarget = new Vector3().set(position).add(velocity);
+        Vector3 newVelTarget = new Vector3().set(position).add(change);
+
+        float dotProd = oldVelTarget.dot(newVelTarget);
+
+        float cosA =  dotProd/ (newVelTarget.len() + oldVelTarget.len() );
+
+        float angle = MathUtils.cos(cosA);
+
+        System.out.println(angle);
+    }
+
+
+
+    private void checkInBounds() {
+        //TODO make this access the simulation map size, as this will be different from screen size eventually.
         if(position.x > Gdx.graphics.getWidth()) {
             position.x -= Gdx.graphics.getWidth();
         } else if(position.x < 0) {
@@ -74,18 +113,19 @@ public class Boid extends Object {
         this.velocity = new Vector3(x, y, z);
     }
 
-    /**
-     * This will be added to the boids velocity, but there will be checks to make sure of max acceleration etc.
-     *
-     * @param change the velocity to add
-     */
-    public void changeVelocity(Vector3 change) {
-        //TODO: implement the change.
-    }
 
     public Vector3 getOrientation() {
         return orientation;
     }
+    public float getNewOrientation() {
+        if(velocity.len() > 0){
+            return (float)Math.toDegrees(MathUtils.atan2(velocity.y,velocity.x));
+        }
+        return f_orientation;
+    }
+
+
+
 
     public void setOrientation(Vector3 orientation) {
         this.orientation = orientation;

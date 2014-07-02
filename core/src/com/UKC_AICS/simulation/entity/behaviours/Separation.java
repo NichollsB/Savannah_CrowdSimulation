@@ -18,14 +18,14 @@ public class Separation extends Behaviour {
 
     @Override
     public Vector3 act(Array<Boid> boids, Array<WorldObject> objects, Boid boid) {
-        tmpVec.set(0,0,0); //will hold returnable
-        tmpVec2.set(0,0,0); //will hold temporary value for
+        tmpVec.set(0, 0, 0); //will hold returnable
+        tmpVec2.set(0, 0, 0); //will hold temporary value for
 
         int num = 0; //holds counter for same species boids.
 
-        if(boids.size > 0) {
-            for(Boid b : boids) {
-                if(boid.getSpecies() == b.getSpecies()) {
+        if (boids.size > 0) {
+            for (Boid b : boids) {
+                if (boid.getSpecies() == b.getSpecies()) {
                     tmpVec2.set(boid.getPosition());
                     tmpVec2.sub(b.getPosition());
 //                    tmpVec2.nor();
@@ -33,9 +33,11 @@ public class Separation extends Behaviour {
                     num++;
                 }
             }
-            tmpVec.scl(1.0f/num);
-//            tmpVec.nor();
-//            tmpVec.scl(boid.maxSpeed);
+            tmpVec.scl(1.0f / num);
+            tmpVec.nor();
+            tmpVec.scl(boid.maxSpeed);
+            tmpVec.sub(boid.getVelocity());
+            tmpVec.limit(boid.maxForce);
 //            tmpVec.sub(boid.getVelocity());
             //tmpVec.sub(boid.getPosition());
         }
