@@ -43,12 +43,11 @@ public class SimulationManager extends Manager {
     	boidManager.clearBoidList();
     	generateBoids();
     	resetTime();
-    	 
     }
     
     public void generateBoids(){
     	
-        for (int i = 0; i < 600; i++) {
+        for (int i = 0; i < 20; i++) {
             boidManager.createBoid();
         }
     }

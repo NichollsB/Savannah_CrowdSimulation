@@ -34,8 +34,10 @@ public class Separation extends Behaviour {
                 }
             }
             tmpVec.scl(1.0f/num);
-//            tmpVec.nor();
-//            tmpVec.scl(boid.maxSpeed);
+            tmpVec.nor();
+            tmpVec.scl(boid.maxSpeed);
+            tmpVec.sub(boid.getVelocity());
+            tmpVec.limit(boid.maxForce);
 //            tmpVec.sub(boid.getVelocity());
             //tmpVec.sub(boid.getPosition());
         }

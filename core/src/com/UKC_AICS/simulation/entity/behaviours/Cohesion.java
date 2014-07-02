@@ -62,6 +62,7 @@ public class Cohesion extends Behaviour {
             //tmpVec.sub(boid.getPosition());
             tmpVec2.set(Seek.act(boid, tmpVec));
             //            tmpVec2.set(boid.getPosition()).sub(tmpVec);
+//            tmpVec2.nor();
 
         }
 

@@ -39,13 +39,18 @@ public class Alignment extends Behaviour {
         if(boids.size > 0) {
             for(Boid b : boids) {
                 if(b.getSpecies() == boid.getSpecies()) {
-                    tmpVec2.set(b.getVelocity());//.sub(boid.getVelocity()); //using velocity for now until orientation is done properly.
+                    tmpVec2.set(b.getVelocity());  //.sub(boid.getVelocity()); //the subtration *can* go here, but its probably more fficient to scale it once than subtract many times. .
                     tmpVec.add(tmpVec2);
                     num++;
                 }
             }
 //            tmpVec.sub(boid.getVelocity());
-            tmpVec.scl(1.0f/num);
+            tmpVec.scl(1.0f/num); //do scaling to find average boid velocity
+            tmpVec.nor();
+            tmpVec.scl(boid.maxSpeed);
+            tmpVec.sub(boid.getVelocity());
+            tmpVec.limit(boid.maxForce);
+//            tmpVec.nor();
         }
 
         return tmpVec.cpy();
