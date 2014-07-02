@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 
@@ -91,7 +92,7 @@ public class SimulationManager extends Manager {
         return boidManager.getBoids();
     }
 
-//    public Vector2 getMapSize() {
-//        return worldManager.getSize();
-//    }
+    public Vector3 getMapSize() {
+        return worldManager.getSize();
+    }
 }

@@ -25,21 +25,19 @@ public class Separation extends Behaviour {
 
         if (boids.size > 0) {
             for (Boid b : boids) {
-                if (boid.getSpecies() == b.getSpecies()) {
+                //no species check here for now as it wants to stay a certain distance away from all boids.
                     tmpVec2.set(boid.getPosition());
                     tmpVec2.sub(b.getPosition());
-//                    tmpVec2.nor();
                     tmpVec.add(tmpVec2);
                     num++;
-                }
             }
+
             tmpVec.scl(1.0f / num);
             tmpVec.nor();
             tmpVec.scl(boid.maxSpeed);
             tmpVec.sub(boid.getVelocity());
             tmpVec.limit(boid.maxForce);
-//            tmpVec.sub(boid.getVelocity());
-            //tmpVec.sub(boid.getPosition());
+
         }
 
 

@@ -8,18 +8,9 @@ import com.badlogic.gdx.utils.Array;
 
 public abstract class Behaviour {
 
+    //Temporary Vectors that the behaviours can use to do summing etc.
     protected Vector3 tmpVec = new Vector3();
     protected Vector3 tmpVec2 = new Vector3();
-
-//
-//	/**
-//	 * Boid manager will pass the behaviour the list of boids in sight and the boid in question.
-//	 *
-//	 * @param boids : this list will contain relevant(line of sight wise) boids.
-//	 * @param boid : the boid that the behaviour is being run for.
-//	 */
-//
-//    abstract Vector3 act(ArrayList<Boid> boids, Boid boid);
 
 
     /**
@@ -30,7 +21,5 @@ public abstract class Behaviour {
      * @param boid    : the boid that the behaviour is being run for.
      */
     abstract public Vector3 act(Array<Boid> boids, Array<WorldObject> objects, Boid boid);
-//    static public Vector3 act(Array<Boid> boids, Array<WorldObject> objects, Boid boid) {
-//        return new Vector3();
-//    }
+
 }
