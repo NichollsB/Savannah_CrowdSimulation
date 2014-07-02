@@ -25,7 +25,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class SimulationScreen implements Screen {
 
     private boolean running = true;  //for play pausing.
-
+    private boolean render = true;   // for render pausing
     private final Simulation simulation;
     private Camera camera;
     
@@ -56,12 +56,13 @@ public class SimulationScreen implements Screen {
         if (running) {
             simulationManager.update();
         }
+        if (render){
         fps.setText(getFPSString());
         tickPhysics(delta);
         clearOpenGL();
         boidGraphics.update(spriteBatch);
         renderSpriteBatches();
-
+        }
         //do render calls for models, sprites, whatever. 
         //(probably done in another class)
 
@@ -134,24 +135,32 @@ public class SimulationScreen implements Screen {
             }
         });
 
-        //
+        //Reset button
         final TextButton resetButton = new TextButton("Reset", skin, "default");
         resetButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
             
             	simulationManager.reset();
-            	setup();
-                //TODO reset of simulation
-            	
-            	
+            	setup();   	
             }
+        });
+        
+     // Switch mode button.    	
+        final TextButton switchButton = new TextButton("Switch", skin,"default");
+        switchButton.addListener(new ClickListener(){
+        	@Override
+        	public void clicked(InputEvent event, float x, float y) { 
+        		flipRender();
+        		//Switch running mode
+        		
+        	}
         });
 
         table.add(fps).bottom().left().expandY().width(500f).pad(0f, 10f, 10f, 0f);
         table.add(playButton).size(100f, 30f).bottom().left().padLeft(20f).padBottom(10f);
         table.add(resetButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
-
+        table.add(switchButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -175,7 +184,15 @@ public class SimulationScreen implements Screen {
         else
             running = true;
     }
-
+    /**
+     * flips the render boolean for simulation rendering.
+     */
+    private void flipRender() {
+    	if(render)
+    		render = false;
+    		else
+    		render = true;
+    }
     private void setupCameraController() {
         //blah blah create the controller
         //set the controller
