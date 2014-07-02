@@ -75,7 +75,7 @@ public class SimulationManager extends Manager {
 //        System.out.println(minutes + " mins; " + hours + " hrs; " + days + " days; " + weeks + " wks.");
     }
 
-    public String getTIme() {
+    public String getTime() {
         return " Time " + minutes + " mins; " + hours + " hrs; "
                 + days + " days; " + weeks + " wks.";
     }

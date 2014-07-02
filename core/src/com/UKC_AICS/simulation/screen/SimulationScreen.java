@@ -1,6 +1,7 @@
 package com.UKC_AICS.simulation.screen;
 
 import com.UKC_AICS.simulation.Simulation;
+import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
@@ -9,11 +10,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.UKC_AICS.simulation.managers.SimulationManager;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
  *
@@ -28,14 +24,14 @@ public class SimulationScreen implements Screen {
     
     private Environment environment; //lighting things
     
-    SimulationManager simulationManager = new SimulationManager();
+    public SimulationManager simulationManager = new SimulationManager();
 
     private BitmapFont font = new BitmapFont();
     private SpriteBatch spriteBatch = new SpriteBatch();
     
     private BoidGraphics boidGraphics = new BoidGraphics();
 
-    GUI gui = new GUI(this);
+    SimScreenGUI gui = new SimScreenGUI(this);
 
     // GUI stuff
 //    private Stage stage;
@@ -57,7 +53,7 @@ public class SimulationScreen implements Screen {
         if (running) {
             simulationManager.update();
         }
-        gui.fps.setText(getFPSString() + simulationManager.getTIme());
+        gui.fps.setText(getFPSString() + simulationManager.getTime());
         tickPhysics(delta);
         clearOpenGL();
         boidGraphics.update(spriteBatch);
@@ -103,7 +99,7 @@ public class SimulationScreen implements Screen {
         //create a camera. perspective? orthographic? etc etc.
     }
 
-    void setup() {
+    public void setup() {
         setupCameraController();
         boidGraphics.initBoidSprites(simulationManager.getBoids());
     }
@@ -112,7 +108,7 @@ public class SimulationScreen implements Screen {
      *
      * @return gives the current fps and current time count
      */
-     String getFPSString() {
+     public String getFPSString() {
         return "fps: " + Gdx.graphics.getFramesPerSecond();
 
     }
@@ -120,11 +116,15 @@ public class SimulationScreen implements Screen {
     /**
      * flips the running boolean for simulation updating.
      */
-    void flipRunning() {
+    public void flipRunning() {
         if (running)
             running = false;
         else
             running = true;
+    }
+
+    public boolean getRunning() {
+        return running;
     }
 
     private void setupCameraController() {

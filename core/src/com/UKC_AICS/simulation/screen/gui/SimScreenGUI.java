@@ -1,5 +1,6 @@
-package com.UKC_AICS.simulation.screen;
+package com.UKC_AICS.simulation.screen.gui;
 
+import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,28 +11,28 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 /**
  * Created by James on 02/07/2014.
  */
-public class GUI {
+public class SimScreenGUI {
 
     SimulationScreen simScreen;
 
-    Stage stage;
+    public Stage stage;
     Table table;
     Skin skin;
-    Label fps;
+    public Label fps;
 
-    public GUI (SimulationScreen ss) {
+    public SimScreenGUI (SimulationScreen ss) {
         simScreen = ss;
     }
 
     /**
      * setups up the UI.
      */
-    void setStage() {
+    public void setStage() {
         stage = new Stage(new ScreenViewport());
         table = new Table();
         table.debug();
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-        fps = new Label(simScreen.getFPSString()+ simScreen.simulationManager.getTIme(), skin);
+        fps = new Label(simScreen.getFPSString()+ simScreen.simulationManager.getTime(), skin);
         stage.addActor(table);
 
         table.setFillParent(true);
@@ -41,7 +42,7 @@ public class GUI {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(simScreen.running){
+                if(simScreen.getRunning()){
                     playButton.setText("Play");
                 }
                 else {
