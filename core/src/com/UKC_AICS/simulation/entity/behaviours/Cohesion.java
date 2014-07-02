@@ -19,20 +19,26 @@ public class Cohesion extends Behaviour {
         int num = 0; //hold how many same specie boids in list.
         //loop through boids and add their position to the vector
 
-        if (boids.size > 0) {
+        if (boids.size >= 1 ) {
             for (Boid otherBoid : boids) {
+
                 //check if its not you and check to see if same species. TODO: multi - species herding.
                 if (boid != otherBoid && otherBoid.species == boid.species) {
-                    tmpVec.add(otherBoid.getPosition());
+                    tmpVec2.add(otherBoid.getPosition());
                     num++;
                 }
             }
             //find the average position.
-            tmpVec.scl(1.0f / num);
+            if(num > 0) {
 
-            tmpVec2.set(Seek.act(boid, tmpVec));
+                tmpVec2.scl(1.0f / num);
+                tmpVec.set(Seek.act(boid, tmpVec2)); // limits and .scl() are done in seek.
+            }
         }
 
-        return tmpVec2.cpy();
+        if (tmpVec.x != tmpVec.x) {
+            System.out.println("blerpy");
+        }
+        return tmpVec.cpy();
     }
 }

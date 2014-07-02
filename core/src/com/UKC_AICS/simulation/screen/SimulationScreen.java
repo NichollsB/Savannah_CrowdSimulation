@@ -72,7 +72,7 @@ public class SimulationScreen implements Screen {
             renderSpriteBatches();
                    
             try	{
-            	Thread.sleep((long)(1000/70-Gdx.graphics.getDeltaTime()));
+            	Thread.sleep((long)(1000/60-Gdx.graphics.getDeltaTime()));
             }
             catch (InterruptedException e){
                 System.out.print("Error...");

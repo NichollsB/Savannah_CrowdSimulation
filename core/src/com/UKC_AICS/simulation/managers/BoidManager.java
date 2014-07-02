@@ -37,7 +37,7 @@ public class BoidManager extends Manager {
 
     public BoidManager() {
 
-        boidGrid = new BoidGrid(80,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        boidGrid = new BoidGrid(60,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         quadtree = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
@@ -59,14 +59,10 @@ public class BoidManager extends Manager {
         int minYPos = 100;
 
         int maxXOrient = 10;
-
-
         int maxYOrient = 10;
 
 
         int maxXVel = 1;
-
-
         int maxYVel = 1;
 
 
@@ -115,13 +111,14 @@ public class BoidManager extends Manager {
         Boid boid;
         for (int i = 0; i < boids.size; i++) {
             boid = boids.get(i);
-//        for(Boid boid : boids) {
+
             // find relevant boids
+
+            Array<Boid> nearBoids = new Array<Boid>();
+            Array<Boid> closeBoids = new Array<Boid>();
 /*
  SIMPLE LOOPING. HORRIBLE! :(
  */
-            Array<Boid> nearBoids = new Array<Boid>();
-            Array<Boid> closeBoids = new Array<Boid>();
 //            for (Boid b : boids) {
 //                if (boid != b) {
 //                    steering.set(boid.getPosition());
@@ -144,8 +141,8 @@ public class BoidManager extends Manager {
             /*
              QUADTREE ATTEMPTS.
              */
-//            Array<Boid> nearBoids = quadtree.retrieveBoidsInRadius(boid.getPosition(), FLOCK_RADIUS);
-//            For use with the quadtree lookup
+//            nearBoids = quadtree.retrieveBoidsInRadius(boid.getPosition(), FLOCK_RADIUS);
+////            For use with the quadtree lookup
 //            for(Boid b : nearBoids) {
 //                steering.set(boid.getPosition());
 //                steering.sub(b.getPosition());
@@ -158,7 +155,7 @@ public class BoidManager extends Manager {
 //                }
 //
 //            }
-//
+
 
             /*
             * CELL  ATTEMPTS.
@@ -171,18 +168,18 @@ public class BoidManager extends Manager {
                 if (steering.len() > FLOCK_RADIUS) {
                     nearBoids.removeValue(b, true);
                 }
-                //if the boid is outside the flock radius it CANT be in the "too close" range
+                //if the boid is outside the flock radius it CANT also be in the "too close" range
                 else if (steering.len() < SEP_RADIUS) {
                     closeBoids.add(b);
                 }
-
             }
 
-            //crudely ask each one if it's inside the radius
             float coh = SimulationManager.tempSpeciesData.get("zebra").get("cohesion");
             float ali = SimulationManager.tempSpeciesData.get("zebra").get("alignment");
             float sep = SimulationManager.tempSpeciesData.get("zebra").get("separation");
             float wan = SimulationManager.tempSpeciesData.get("zebra").get("wander");
+
+
             //do stuff
             steering.set(0f, 0f, 0f);
 
@@ -192,8 +189,12 @@ public class BoidManager extends Manager {
             steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
             steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
-//            Seek s = new Seek();
-//            s.act(nearBoids,dummyObjects, boid);
+
+            // NaN check
+//            if (steering.x != steering.x) {
+//                System.out.println("blerpy");
+//            }
+
 
             boid.move(steering);
             //tell the grid to update its position.

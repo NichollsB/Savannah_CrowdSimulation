@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.Array;
 public class QuadTree {
 
     private static final int MAX_OBJECTS = 15;
-    private static final int MAX_LEVELS = 6;
+    private static final int MAX_LEVELS = 4;
 
 
     private int level;
