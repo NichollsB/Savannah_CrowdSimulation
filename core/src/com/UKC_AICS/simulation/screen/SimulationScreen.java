@@ -50,11 +50,11 @@ public class SimulationScreen implements Screen {
         }
         // checks if simulation needs to be rendered or can be run "offline"
         if (render){
-        gui.fps.setText(getFPSString() + simulationManager.getTime());
-        tickPhysics(delta);
-        clearOpenGL();
-        boidGraphics.update(spriteBatch);
-        renderSpriteBatches();
+            gui.fps.setText(getFPSString() + simulationManager.getTime());
+            tickPhysics(delta);
+            clearOpenGL();
+            boidGraphics.update(spriteBatch);
+            renderSpriteBatches();
         }
         //do render calls for models, sprites, whatever. 
         //(probably done in another class)

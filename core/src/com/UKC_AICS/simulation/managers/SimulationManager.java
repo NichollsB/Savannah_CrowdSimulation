@@ -33,7 +33,7 @@ public class SimulationManager extends Manager {
         zebra.put("cohesion", 0.5f);
         zebra.put("alignment", 0.5f);
         zebra.put("separation", 0.5f);
-        zebra.put("wander", 0.1f);
+        zebra.put("wander", 0.2f);
         tempSpeciesData.put("zebra", zebra);
         generateBoids();
         worldManager.createMap(20, 20);
@@ -47,7 +47,7 @@ public class SimulationManager extends Manager {
     
     public void generateBoids(){
     	
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 200; i++) {
             boidManager.createBoid();
         }
     }
