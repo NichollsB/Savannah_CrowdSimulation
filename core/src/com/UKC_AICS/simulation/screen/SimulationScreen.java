@@ -21,30 +21,31 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  */
 public class SimulationScreen implements Screen {
 
-    private boolean running = true;  //for play pausing.
+    boolean running = true;  //for play pausing.
 
     private final Simulation simulation;
     private Camera camera;
     
     private Environment environment; //lighting things
     
-    private SimulationManager simulationManager = new SimulationManager();
+    SimulationManager simulationManager = new SimulationManager();
 
     private BitmapFont font = new BitmapFont();
     private SpriteBatch spriteBatch = new SpriteBatch();
     
     private BoidGraphics boidGraphics = new BoidGraphics();
 
+    private GUI gui = new GUI(this);
 
-    // GUI stuff
-    private Stage stage;
-    private Table table;
-    private Skin skin;
-    private Label fps;
+//    // GUI stuff
+//    private Stage stage;
+//    private Table table;
+//    private Skin skin;
+//    private Label fps;
 
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
-        setStage();  //sets up GUI
+        gui.setStage();  //sets up GUI
         
         setup();
     }
@@ -55,7 +56,7 @@ public class SimulationScreen implements Screen {
         if (running) {
             simulationManager.update();
         }
-        fps.setText(getFPSString());
+        gui.fps.setText(gui.getFPSString() + simulationManager.getTimeString());
         tickPhysics(delta);
         clearOpenGL();
         boidGraphics.update(spriteBatch);
@@ -71,7 +72,7 @@ public class SimulationScreen implements Screen {
     private void renderSpriteBatches() {
         spriteBatch.begin();
 
-        stage.draw();  //GUI stuff
+        gui.stage.draw();  //GUI stuff
 //        Table.drawDebug(stage);  //debug lines for UI
 //        font.draw(spriteBatch, getFPSString(), 0, 20);
         spriteBatch.end();
@@ -88,7 +89,7 @@ public class SimulationScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         createCamera(width, height);
-        stage.getViewport().update(width, height, true);
+        gui.stage.getViewport().update(width, height, true);
         //setup();
     }
 
@@ -101,7 +102,7 @@ public class SimulationScreen implements Screen {
         //create a camera. perspective? orthographic? etc etc.
     }
 
-    private void setup() {
+    protected void setup() {
         setupCameraController();
         boidGraphics.initBoidSprites(simulationManager.getBoids());
     }
@@ -109,72 +110,77 @@ public class SimulationScreen implements Screen {
     /**
      * setups up the UI.
      */
-    private void setStage() {
-        stage = new Stage(new ScreenViewport());
-        table = new Table();
-        table.debug();
-        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-        fps = new Label(getFPSString(), skin);
-        stage.addActor(table);
-
-        table.setFillParent(true);
-
-        // play/pause button
-        final TextButton playButton = new TextButton("Play", skin, "default");
-        playButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if(running){
-                    playButton.setText("Play");
-                }
-                else {
-                    playButton.setText("Pause");
-                }
-                flipRunning();
-            }
-        });
-
-        //
-        final TextButton resetButton = new TextButton("Reset", skin, "default");
-        resetButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-            
-            	simulationManager.reset();
-            	setup();
-                //TODO reset of simulation
-            	
-            	
-            }
-        });
-
-        //
-        TextArea console = new TextArea("console log",skin);
-
-        table.add(fps).bottom().left().expandY().width(500f).pad(0f, 10f, 10f, 0f);
-        table.add(playButton).size(100f, 30f).bottom().left().padLeft(20f).padBottom(10f);
-        table.add(resetButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
-        //
-        table.add(console).size(300f,30f).bottom();
-
-
-        Gdx.input.setInputProcessor(stage);
-    }
-
-    /**
-     *
-     * @return gives the current fps and current time count
-     */
-    private String getFPSString() {
-        return "fps: " + Gdx.graphics.getFramesPerSecond() +
-                "; Time " + simulationManager.minutes + " mins; " + simulationManager.hours + " hrs; "
-                + simulationManager.days + " days; " + simulationManager.weeks + " wks.";
-    }
+//    private void setStage() {
+//        stage = new Stage(new ScreenViewport());
+//        table = new Table();
+//        table.debug();
+//        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+//        fps = new Label(gui.getFPSString() + simulationManager.getTimeString(), skin);
+//        stage.addActor(table);
+//
+//
+//        table.setFillParent(true);
+//
+//        // play/pause button
+//        final TextButton playButton = new TextButton("Play", skin, "default");
+//        playButton.addListener(new ClickListener() {
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                if(running){
+//                    playButton.setText("Play");
+//                }
+//                else {
+//                    playButton.setText("Pause");
+//                }
+//                flipRunning();
+//            }
+//        });
+//
+//        //
+//        final TextButton resetButton = new TextButton("Reset", skin, "default");
+//        resetButton.addListener(new ClickListener() {
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//
+//            	simulationManager.reset();
+//            	setup();
+//                //TODO reset of simulation
+//
+//
+//            }
+//        });
+//
+//        //
+//        TextArea console = new TextArea("console log",skin);
+//
+//        table.add(fps).bottom().left().expandY().width(500f).pad(0f, 10f, 10f, 0f);
+//        table.add(playButton).size(100f, 30f).bottom().left().padLeft(20f).padBottom(10f);
+//        table.add(resetButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
+//        //
+//        table.add(console).size(300f,30f).bottom();
+//
+//
+//        Gdx.input.setInputProcessor(stage);
+//    }
+//
+//    /**
+//     *
+//     * @return gives the current fps and current time count
+//     */
+//    private String getFPSString() {
+//        return "fps: " + Gdx.graphics.getFramesPerSecond() +
+//                "; Time " + simulationManager.minutes + " mins; " + simulationManager.hours + " hrs; "
+//                + simulationManager.days + " days; " + simulationManager.weeks + " wks.";
+//    }
+//    public String getTimeString() {
+//       return "; Time " + simulationManager.minutes + " mins; " + simulationManager.hours + " hrs; "
+//                + simulationManager.days + " days; " + simulationManager.weeks + " wks."
+//    }
 
     /**
      * flips the running boolean for simulation updating.
      */
-    private void flipRunning() {
+    public void flipRunning() {
         if (running)
             running = false;
         else
@@ -206,7 +212,7 @@ public class SimulationScreen implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+        gui.stage.dispose();
     }
 
     private void tickPhysics(float delta) {
