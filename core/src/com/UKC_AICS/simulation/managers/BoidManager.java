@@ -162,10 +162,14 @@ public class BoidManager extends Manager {
             //do stuff
             steering.set(0f, 0f, 0f);
 
-            steering.add(behaviours.get("cohesion").act(nearBoids, new Array<WorldObject>(), boid).scl(coh));
-            steering.add(behaviours.get("alignment").act(nearBoids, new Array<WorldObject>(), boid).scl(ali));
-            steering.add(behaviours.get("separation").act(closeBoids, new Array<WorldObject>(), boid).scl(sep));
-            steering.add(behaviours.get("wander").act(nearBoids, new Array<WorldObject>(), boid).scl(wan));
+            Array<WorldObject> dummyObjects = new Array<WorldObject>();
+            steering.add(behaviours.get("cohesion").act(nearBoids, dummyObjects, boid).scl(coh));
+            steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
+            steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
+            steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
+
+            Seek s = new Seek();
+            s.act(nearBoids,dummyObjects, boid);
 
             boid.move(steering);
 
