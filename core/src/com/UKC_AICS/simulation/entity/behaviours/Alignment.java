@@ -17,6 +17,7 @@ public class Alignment extends Behaviour {
         int num = 0;
         if (boids.size > 0) {
             for (Boid b : boids) {
+                //check if the boid is the same species
                 if (b.getSpecies() == boid.getSpecies()) {
                     tmpVec2.set(b.getVelocity());
                     tmpVec.add(tmpVec2);
