@@ -1,3 +1,4 @@
+<!--xml file for species based information-->
 <species>
     <speciestype id="0" name="zebra">
         <cohesion cohesion ="0.5f"/>

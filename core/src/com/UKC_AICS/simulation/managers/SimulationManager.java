@@ -1,6 +1,8 @@
 package com.UKC_AICS.simulation.managers;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.badlogic.gdx.math.Vector2;
@@ -35,7 +37,17 @@ public class SimulationManager extends Manager {
         zebra.put("alignment", 0.5f);
         zebra.put("separation", 0.5f);
         zebra.put("wander", 0.2f);
+        zebra.put("species", 1f);
         tempSpeciesData.put("zebra", zebra);
+
+        HashMap<String, Float> Bison = new HashMap<String, Float>();
+        zebra.put("cohesion", 0.5f);
+        zebra.put("alignment", 0.5f);
+        zebra.put("separation", 0.5f);
+        zebra.put("wander", 0.2f);
+        zebra.put("species", 2f);
+        tempSpeciesData.put("bison", Bison);
+
         generateBoids();
         worldManager.createMap(20, 20);
     }
@@ -47,9 +59,14 @@ public class SimulationManager extends Manager {
     }
     
     public void generateBoids(){
-    	
-        for (int i = 0; i < 200; i++) {
-            boidManager.createBoid();
+        Iterator iterator = tempSpeciesData.entrySet().iterator();
+        while(iterator.hasNext()) {
+            Map.Entry pairs = (Map.Entry) iterator.next();  //TODO trying to make it iterate through the species hashmap to get species int
+//            float species = tempSpeciesData.get(pairs).get("species");
+
+//            for (int i = 0; i < 100; i++) {
+//                boidManager.createBoid((byte)species);  //TODO get the species int from xml file
+//            }
         }
     }
     

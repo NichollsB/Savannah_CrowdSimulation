@@ -44,8 +44,8 @@ public class BoidManager extends Manager {
     }
 
 
-    public void createBoid() {
-        Boid boid = new Boid();
+    public void createBoid(byte species) {
+        Boid boid = new Boid(species);
 
         int maxXPos = 1180;
         int minXPos = 100;
@@ -78,7 +78,7 @@ public class BoidManager extends Manager {
 
 
         boid.setPosition(xPos, yPos, 0);
-        boid.setOrientation(xOrient, yOrient, 0);
+//        boid.setOrientation(xOrient, yOrient, 0);
         boid.setVelocity(xVel, yVel, 0);
 
         boids.add(boid);
@@ -168,8 +168,6 @@ public class BoidManager extends Manager {
             steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
             steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
-            Seek s = new Seek();
-            s.act(nearBoids,dummyObjects, boid);
 
             boid.move(steering);
 
