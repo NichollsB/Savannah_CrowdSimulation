@@ -11,10 +11,7 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -38,6 +35,8 @@ public class SimulationScreen implements Screen {
     
     private BoidGraphics boidGraphics = new BoidGraphics();
 
+
+    // GUI stuff
     private Stage stage;
     private Table table;
     private Skin skin;
@@ -45,7 +44,7 @@ public class SimulationScreen implements Screen {
 
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
-        setStage();
+        setStage();  //sets up GUI
         
         setup();
     }
@@ -71,7 +70,8 @@ public class SimulationScreen implements Screen {
 
     private void renderSpriteBatches() {
         spriteBatch.begin();
-        stage.draw();
+
+        stage.draw();  //GUI stuff
 //        Table.drawDebug(stage);  //debug lines for UI
 //        font.draw(spriteBatch, getFPSString(), 0, 20);
         spriteBatch.end();
@@ -148,9 +148,14 @@ public class SimulationScreen implements Screen {
             }
         });
 
+        //
+        TextArea console = new TextArea("console log",skin);
+
         table.add(fps).bottom().left().expandY().width(500f).pad(0f, 10f, 10f, 0f);
         table.add(playButton).size(100f, 30f).bottom().left().padLeft(20f).padBottom(10f);
         table.add(resetButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
+        //
+        table.add(console).size(300f,30f).bottom();
 
 
         Gdx.input.setInputProcessor(stage);
