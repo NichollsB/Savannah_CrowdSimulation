@@ -3,6 +3,7 @@ package com.UKC_AICS.simulation.screen;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
@@ -34,11 +35,21 @@ public class SimulationScreen implements Screen {
     private BoidGraphics boidGraphics = new BoidGraphics();
 
     SimScreenGUI gui = new SimScreenGUI(this); // Creates gui instance for this screen
+    
+    private InputMultiplexer input;
+    private InputManager inputManager = new InputManager(this);
 
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
+        
+        input = new InputMultiplexer();
 
-        gui.setStage();  //sets up GUI
+        input.addProcessor(gui.setStage());  //sets up GUI
+        input.addProcessor(inputManager);
+        
+        Gdx.input.setInputProcessor(input);
+        //Gdx.input.setInputProcessor(inputManager);
+        
         
         setup();
     }
@@ -175,4 +186,13 @@ public class SimulationScreen implements Screen {
         //send delta to camera controller using its update.
         //send delta to camera using its update
     }
+    
+    /**
+     * Reacts to clicking on the simulations viewport - called by InputManagers touchDown method
+     */
+	public void pickPoint(int screenX, int screenY) {
+		//What should happen when clicking on the screen
+		gui.setConsole("x: " + screenX + " y: " + screenY);
+		
+	}
 }
