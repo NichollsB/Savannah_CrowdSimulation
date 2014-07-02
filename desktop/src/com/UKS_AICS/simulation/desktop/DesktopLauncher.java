@@ -10,6 +10,9 @@ public class DesktopLauncher {
         config.title = "Project Savannah Simulation";
         config.width = 1280;
         config.height = 720;
+        config.vSyncEnabled = false; 
+        config.foregroundFPS = 0; 
+        config.backgroundFPS = 0;
 		new LwjglApplication(new Simulation(), config);
 	}
 }

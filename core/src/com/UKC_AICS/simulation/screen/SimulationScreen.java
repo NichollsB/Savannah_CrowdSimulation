@@ -40,6 +40,7 @@ public class SimulationScreen implements Screen {
         gui.setStage();  //sets up GUI
         
         setup();
+        
     }
 
     @Override
@@ -48,20 +49,39 @@ public class SimulationScreen implements Screen {
         if (running) {
             simulationManager.update();
         }
+        
         // checks if simulation needs to be rendered or can be run "offline"
         if (render){
-            gui.fps.setText(getFPSString() + simulationManager.getTime());
+        	
+        	gui.fps.setText(getFPSString() + simulationManager.getTime());
             tickPhysics(delta);
             clearOpenGL();
             boidGraphics.update(spriteBatch);
             renderSpriteBatches();
+                   
+            try	{
+            	Thread.sleep((long)(1000/70-Gdx.graphics.getDeltaTime()));
+            }
+            catch (InterruptedException e){
+                System.out.print("Error...");
+                e.printStackTrace();
+            }
         }
+        else{
+         	clearOpenGL();
+           	gui.fps.setText(getFPSString() + simulationManager.getTime());
+            renderSpriteBatches();
+        }
+   }
+       
+        
+        
         //do render calls for models, sprites, whatever. 
         //(probably done in another class)
 
         //draw models
         //draw hud/ui etc
-    }
+    
 
     private void renderSpriteBatches() {
         spriteBatch.begin();
@@ -144,6 +164,7 @@ public class SimulationScreen implements Screen {
         //set the controller
         //Gdx.input.setInputProcessor(SOMECAMERCONTROLLER);
     }
+
 
     @Override
     public void show() {
