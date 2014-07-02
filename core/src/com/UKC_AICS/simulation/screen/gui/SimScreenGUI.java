@@ -13,6 +13,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * Class for the creation of gui for simulationScreen
  */
 public class SimScreenGUI {
+	
+	//Changing components:
+	 TextArea console;
 
     SimulationScreen simScreen;
 
@@ -32,7 +35,7 @@ public class SimScreenGUI {
     /**
      * setups up the UI.
      */
-    public void setStage() {
+    public Stage setStage() {
         stage = new Stage(new ScreenViewport());
         table = new Table();
         table.debug();
@@ -80,7 +83,7 @@ public class SimScreenGUI {
         });
 
         //
-        TextArea console = new TextArea("console log",skin);
+        console = new TextArea("console log",skin);
 
         table.add(fps).bottom().left().expandY().width(500f).pad(0f, 10f, 10f, 0f);
         table.add(playButton).size(100f, 30f).bottom().left().padLeft(20f).padBottom(10f);
@@ -89,7 +92,14 @@ public class SimScreenGUI {
         //
         table.add(console).size(300f,30f).bottom();
 
-
-        Gdx.input.setInputProcessor(stage);
+        return stage;
+        //Gdx.input.setInputProcessor(stage);
+    }
+    
+    public void setConsole(String log){
+    	if(log != null)
+    		console.setText(log);
+    	else
+    		console.setText("");
     }
 }

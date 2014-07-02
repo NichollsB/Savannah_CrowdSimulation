@@ -3,9 +3,11 @@ package com.UKC_AICS.simulation.screen;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
@@ -33,13 +35,24 @@ public class SimulationScreen implements Screen {
     private BoidGraphics boidGraphics = new BoidGraphics();
 
     SimScreenGUI gui = new SimScreenGUI(this); // Creates gui instance for this screen
+    
+    private InputMultiplexer input;
+    private InputManager inputManager = new InputManager(this);
 
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
+        
+        input = new InputMultiplexer();
 
-        gui.setStage();  //sets up GUI
+        input.addProcessor(gui.setStage());  //sets up GUI
+        input.addProcessor(inputManager);
+        
+        Gdx.input.setInputProcessor(input);
+        //Gdx.input.setInputProcessor(inputManager);
+        
         
         setup();
+        
     }
 
     @Override
@@ -48,20 +61,39 @@ public class SimulationScreen implements Screen {
         if (running) {
             simulationManager.update();
         }
+        
         // checks if simulation needs to be rendered or can be run "offline"
         if (render){
-            gui.fps.setText(getFPSString() + simulationManager.getTime());
+        	
+        	gui.fps.setText(getFPSString() + simulationManager.getTime());
             tickPhysics(delta);
             clearOpenGL();
             boidGraphics.update(spriteBatch);
             renderSpriteBatches();
+                   
+            try	{
+            	Thread.sleep((long)(1000/70-Gdx.graphics.getDeltaTime()));
+            }
+            catch (InterruptedException e){
+                System.out.print("Error...");
+                e.printStackTrace();
+            }
         }
+        else{
+         	clearOpenGL();
+           	gui.fps.setText(getFPSString() + simulationManager.getTime());
+            renderSpriteBatches();
+        }
+   }
+       
+        
+        
         //do render calls for models, sprites, whatever. 
         //(probably done in another class)
 
         //draw models
         //draw hud/ui etc
-    }
+    
 
     private void renderSpriteBatches() {
         spriteBatch.begin();
@@ -94,6 +126,9 @@ public class SimulationScreen implements Screen {
      */
     private void createCamera(int width, int height) {
         //create a camera. perspective? orthographic? etc etc.
+    	
+    	camera = new OrthographicCamera();
+    	
     }
 
     public void setup() {
@@ -145,6 +180,7 @@ public class SimulationScreen implements Screen {
         //Gdx.input.setInputProcessor(SOMECAMERCONTROLLER);
     }
 
+
     @Override
     public void show() {
     }
@@ -171,4 +207,13 @@ public class SimulationScreen implements Screen {
         //send delta to camera controller using its update.
         //send delta to camera using its update
     }
+    
+    /**
+     * Reacts to clicking on the simulations viewport - called by InputManagers touchDown method
+     */
+	public void pickPoint(int screenX, int screenY) {
+		//What should happen when clicking on the screen
+		gui.setConsole("x: " + screenX + " y: " + screenY);
+		
+	}
 }
