@@ -22,14 +22,12 @@ public abstract class Behaviour {
 //    abstract Vector3 act(ArrayList<Boid> boids, Boid boid);
 
 
-
-
     /**
      * Boid manager will pass the behaviour the list of boids AND objects in sight and the boid in question.
      *
-     * @param boids : this list will contain relevant(line of sight wise) boids.
+     * @param boids   : this list will contain relevant(line of sight wise) boids.
      * @param objects : this list will contain relevant(line of sight wise) objects.
-     * @param boid : the boid that the behaviour is being run for.
+     * @param boid    : the boid that the behaviour is being run for.
      */
     abstract public Vector3 act(Array<Boid> boids, Array<WorldObject> objects, Boid boid);
 //    static public Vector3 act(Array<Boid> boids, Array<WorldObject> objects, Boid boid) {
