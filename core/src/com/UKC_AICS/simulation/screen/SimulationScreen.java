@@ -212,7 +212,7 @@ public class SimulationScreen implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+        gui.stage.dispose();
     }
 
     private void tickPhysics(float delta) {
