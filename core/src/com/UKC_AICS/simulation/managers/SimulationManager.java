@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -42,7 +43,9 @@ public class SimulationManager extends Manager {
      * Possibly store the data lookup tables here? like subType data for example
      */
     public SimulationManager() {
-         newSpecieData = staXParser.readConfig("settings.xml");
+        newSpecieData = staXParser.readConfig("settings.xml");
+        File pathTest = new File("settings.xml");
+        System.out.println(pathTest.getAbsolutePath());
 
 //        System.out.println();
         // Hard coded zebra species
@@ -85,7 +88,7 @@ public class SimulationManager extends Manager {
         // Looks through tempSpeciesData Hashmap for each species hashmap.  extracts number for that species and byte reference.
         Iterator it = newSpecieData.keySet().iterator();
         while (it.hasNext()) {
-            byte spByte = (byte)it.next();
+            byte spByte = (Byte)it.next();
             Species species = newSpecieData.get(spByte);
             int number = species.getNumber();
 
