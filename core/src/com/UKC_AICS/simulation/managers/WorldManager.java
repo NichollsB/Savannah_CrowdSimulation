@@ -1,10 +1,12 @@
 package com.UKC_AICS.simulation.managers;
 
+import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.utils.QuadTree;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.UKC_AICS.simulation.entity.Entity;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.HashMap;
@@ -85,5 +87,14 @@ public class WorldManager extends Manager {
 
     public byte[][] getTiles() {
         return information_layers.get("map_tiles");
+    }
+
+    public Array<Entity> getObjectsNearby(int x, int y) {
+        return getObjectsNearby(new Vector2(x,y));
+    }
+    public Array<Entity> getObjectsNearby(Vector2 point) {
+        Array<Entity> returnObjects = new Array<Entity>();
+        objects_map.retrieveObjects(returnObjects, point);
+        return returnObjects;
     }
 }

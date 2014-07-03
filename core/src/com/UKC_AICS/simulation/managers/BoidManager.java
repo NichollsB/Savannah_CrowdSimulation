@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.Array;
 public class BoidManager extends Manager {
 
 
+
     private static final float FLOCK_RADIUS = 100f;
     private static final float SEP_RADIUS = 20f;
     private Array<Boid> boids = new Array<Boid>();
@@ -37,7 +38,7 @@ public class BoidManager extends Manager {
 
     public BoidManager() {
 
-        boidGrid = new BoidGrid(60,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        boidGrid = new BoidGrid(60, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         quadtree = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
@@ -86,12 +87,12 @@ public class BoidManager extends Manager {
 //        quadtree.insert(boid);
         boidGrid.addBoid(boid);
     }
-    
+
     public void clearBoidList() {
-    
-    	boids.clear();
-    
-    	
+
+        boids.clear();
+
+
     }
 
     private Vector3 randomVel() {
@@ -108,6 +109,9 @@ public class BoidManager extends Manager {
     public void update() {
 //        rebuildTree(boids);
         //loop through boids and ask them to do their thing.
+
+        //TODO: Look into making this so it can be threaded.
+
         Boid boid;
         for (int i = 0; i < boids.size; i++) {
             boid = boids.get(i);
@@ -163,7 +167,7 @@ public class BoidManager extends Manager {
             */
 
             nearBoids = boidGrid.findNearby(boid.getPosition());
-            for(Boid b : nearBoids) {
+            for (Boid b : nearBoids) {
                 steering.set(boid.getPosition());
                 steering.sub(b.getPosition());
                 if (steering.len() > FLOCK_RADIUS) {
@@ -195,6 +199,7 @@ public class BoidManager extends Manager {
 //            if (steering.x != steering.x) {
 //                System.out.println("blerpy");
 //            }
+
 
 
             boid.move(steering);

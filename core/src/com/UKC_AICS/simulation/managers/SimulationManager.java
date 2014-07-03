@@ -126,8 +126,11 @@ public class SimulationManager extends Manager {
     public Array<Boid> getBoids() {
         return boidManager.getBoids();
     }
-    public Array<Entity> getObject() {
+    public Array<Entity> getObjects() {
         return worldManager.getObjects();
+    }
+    public Array<Entity> getObjectsNearby(Vector2 point) {
+        return worldManager.getObjectsNearby(point);
     }
 
     public byte[][] getMapTiles() {
