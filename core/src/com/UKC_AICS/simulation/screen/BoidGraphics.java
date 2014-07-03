@@ -64,7 +64,7 @@ public class BoidGraphics {
 		boidSprite = new Sprite(defaultTexture);
 		boidSprite.setOrigin((defaultTexture.getWidth()/2), defaultTexture.getHeight()/2);
 		
-		testBoid = boidsArray.get(0);
+//		testBoid = boidsArray.get(0);
 		/*for(Boid boid : array){
 			//boidsArray.add(boid);
 			updateSpritePosition(boid);
