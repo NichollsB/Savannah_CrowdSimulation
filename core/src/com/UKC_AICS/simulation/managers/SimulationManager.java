@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -44,7 +45,9 @@ public class SimulationManager extends Manager {
      * Possibly store the data lookup tables here? like subType data for example
      */
     public SimulationManager() {
-         newSpecieData = staXParser.readConfig("settings.xml");
+        newSpecieData = staXParser.readConfig("settings.xml");
+        File pathTest = new File("settings.xml");
+        System.out.println(pathTest.getAbsolutePath());
 
         generateBoids();
 
