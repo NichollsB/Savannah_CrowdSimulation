@@ -25,7 +25,7 @@ public class BoidManager extends Manager {
     private static final float SEP_RADIUS = 20f;
     private Array<Boid> boids = new Array<Boid>();
     private QuadTree quadtree;
-
+    
 
     //TEMP: each boid type will have its own sight radius.
     private Vector3 steering = new Vector3();
@@ -78,6 +78,8 @@ public class BoidManager extends Manager {
 
         int yVel = (rand.nextInt(2 * maxYVel) - maxYVel);
 
+        
+        boid.setBirthDay(SimulationManager.getDay());
 
         boid.setPosition(xPos, yPos, 0);
 //        boid.setOrientation(xOrient, yOrient, 0);
@@ -207,6 +209,21 @@ public class BoidManager extends Manager {
             boidGrid.update(boid);
         }
     }
+    
+    
+    	
+    	
+    public void updateAge(){
+    	for(Boid b : boids){
+    	int bday = Boid.getBirthDay();
+    	int day = SimulationManager.getDay();
+    	int newAge = bday + (day - bday);
+    	Boid.setAge(newAge);
+    	}
+    }
+    
+    
+    
 
     public void rebuildTree(Array<Boid> boids) {
         quadtree = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));

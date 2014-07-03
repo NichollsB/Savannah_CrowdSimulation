@@ -11,8 +11,9 @@ public class Boid extends Entity {
     //boids own specific variants on the species.
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //30 degree?
-
-
+    public static int Age = 0;
+    public static int birthDay = 0;
+    
     public Boid() {
         type = 1; // this is for categorising it as a "boid" object.
         subType = 1;
@@ -72,6 +73,49 @@ public class Boid extends Entity {
         } else if(position.y < 0) {
             position.y += Gdx.graphics.getHeight();
         }
+    }
+
+
+
+    public Vector3 getPosition() {
+        return position;//.cpy();
+    }
+
+    public void setPosition(Vector3 position) {
+        this.position = position;
+    }
+    public void setPosition( float x, float y, float z) {
+        this.position = new Vector3(x, y, z);
+    }
+
+    public Vector3 getVelocity() {
+        return velocity;
+    }
+
+    public void setBirthDay(int birthDay) {
+       this.birthDay = birthDay;
+       
+    }   
+    
+    public static int getBirthDay() {
+    	return birthDay;    	
+    }
+    
+    public static void setAge(int newAge) {
+    	Age = newAge;
+    	 
+    }
+       
+    /**
+     * explicit setting to a defined velocity.
+     *
+     * @param velocity the speed the boid's velocity will be set to.
+     */
+    public void setVelocity(Vector3 velocity) {
+        this.velocity = velocity;
+    }
+    public void setVelocity(float x, float y, float z) {
+        this.velocity = new Vector3(x, y, z);
     }
 
 
