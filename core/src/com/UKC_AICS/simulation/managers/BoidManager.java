@@ -207,8 +207,10 @@ public class BoidManager extends Manager {
 //            }
 
 
-
-            boid.move(steering);
+            //store the steering movement
+            boid.setAcceleration(steering);
+            //apply it.
+            boid.move();
             //tell the grid to update its position.
             boidGrid.update(boid);
         }
