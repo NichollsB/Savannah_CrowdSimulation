@@ -40,7 +40,7 @@ public class BoidGraphics {
 			batch.begin();
 			for(Boid boid : boidsArray){
 				updateSpritePosition(boid);
-				if(boid.species == (byte) 1){
+				if(boid.getSpecies() == (byte) 1){
 					altSprite.draw(batch);
 				}
 				else
@@ -99,7 +99,7 @@ public class BoidGraphics {
 			Vector3 velocity = boid.getVelocity();
 			double rot = Math.toDegrees(Math.atan2( - velocity.x, velocity.y)); //made x negative.
 
-			if(boid.species == (byte) 1){
+			if(boid.getSpecies() == (byte) 1){
 				altSprite.setPosition(position.x, position.y);
 				altSprite.setRotation((float) rot);
 			}

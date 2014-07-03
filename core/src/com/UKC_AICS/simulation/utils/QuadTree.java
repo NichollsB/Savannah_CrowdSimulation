@@ -1,7 +1,7 @@
 package com.UKC_AICS.simulation.utils;
 
 import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.entity.Entity;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -18,7 +18,7 @@ public class QuadTree {
 
 
     private int level;
-    private Array<Object> objects;
+    private Array<Entity> objects;
     private Rectangle bounds;
     private QuadTree[] nodes;
 
@@ -27,7 +27,7 @@ public class QuadTree {
         this.level = level;
         bounds = rectangle;
         nodes = new QuadTree[4];
-        objects = new Array<Object>();
+        objects = new Array<Entity>();
     }
 
     /**
@@ -65,7 +65,7 @@ public class QuadTree {
      * tries to insert the object
      * @param obj
      */
-    public void insert(Object obj) {
+    public void insert(Entity obj) {
 
         if(nodes[0] != null) {
             int index = getIndex(obj);
@@ -103,7 +103,7 @@ public class QuadTree {
      * @param obj the object we are finding a home for.
      * @return returns the index of the node it can fit in, -1 means the object cannot fit completely within a child node and is part of the parent.
      */
-    public int getIndex(Object obj) {
+    public int getIndex(Entity obj) {
         int index = -1;
 
         double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
@@ -225,26 +225,26 @@ public class QuadTree {
      * @param point object that is looking for collision candidates.
      * @return list of objects that are potential colliders
      */
-    public Array<Object> retrieveColliders(Array<Object> returnObjects, Vector2 point) {
+    public Array<Entity> retrieveColliders(Array<Entity> returnObjects, Vector2 point) {
         int index = getIndex(point);
         if (index != -1 && nodes[0] != null) {
             nodes[index].retrieveColliders(returnObjects, point);
         }
 
-        for(Object obj : objects) {
+        for(Entity obj : objects) {
             if(obj.getType() == 1 && !returnObjects.contains( obj, true) ){
                 returnObjects.add(obj);
             }
         }
         return returnObjects;
     }
-    public Array<Object> retrieveObjects(Array<Object> returnObjects, Vector2 point) {
+    public Array<Entity> retrieveObjects(Array<Entity> returnObjects, Vector2 point) {
         int index = getIndex(point);
         if (index != -1 && nodes[0] != null) {
             nodes[index].retrieveColliders(returnObjects, point);
         }
 
-        for(Object obj : objects) {
+        for(Entity obj : objects) {
             if(obj.getType() != 1 && !returnObjects.contains( obj, true) ){
                 returnObjects.add(obj);
             }
@@ -253,7 +253,7 @@ public class QuadTree {
     }
 
 
-    public Array<Boid> retrieveBoids(Array<Boid>returnObjects,  Object obj) {
+    public Array<Boid> retrieveBoids(Array<Boid>returnObjects,  Entity obj) {
 
         return returnObjects;
     }
@@ -265,7 +265,7 @@ public class QuadTree {
             nodes[index].retrieveBoids(returnObjects, rect);
         }
 
-        for(Object obj : objects) {
+        for(Entity obj : objects) {
             if( obj.getType() == 1  ){
                 returnObjects.add((Boid)obj);
             }
@@ -280,7 +280,7 @@ public class QuadTree {
             nodes[index].retrieveBoids(returnObjects, point);
         }
 
-        for(Object obj : objects) {
+        for(Entity obj : objects) {
             if(obj.getType() == 1 && !returnObjects.contains( (Boid)obj, true) ){
                 returnObjects.add((Boid)obj);
             }
@@ -309,7 +309,7 @@ public class QuadTree {
 
         }
 
-        for(Object obj : objects) {
+        for(Entity obj : objects) {
             if(obj.getType() == 1){
                 returnObjects.add((Boid)obj);
             }

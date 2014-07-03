@@ -1,11 +1,9 @@
 package com.UKC_AICS.simulation.entity.behaviours;
 
-import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.WorldObject;
+import com.UKC_AICS.simulation.entity.*;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -23,7 +21,7 @@ public class Wander extends Behaviour {
      * @return a random "wander" vector between 1 and -1, with a tendency toward zero.
      */
     @Override
-    public Vector3 act(Array<Boid> boids, Array<WorldObject> objects, Boid boid) {
+    public Vector3 act(Array<Boid> boids, Array<com.UKC_AICS.simulation.entity.Object> objects, Boid boid) {
 
         tmpVec.set(rand.nextFloat() - rand.nextFloat(), rand.nextFloat() - rand.nextFloat(), 0);
         return tmpVec.cpy();

@@ -1,7 +1,6 @@
 package com.UKC_AICS.simulation.entity.behaviours;
 
-import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.WorldObject;
+import com.UKC_AICS.simulation.entity.*;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
@@ -20,6 +19,6 @@ public abstract class Behaviour {
      * @param objects : this list will contain relevant(line of sight wise) objects.
      * @param boid    : the boid that the behaviour is being run for.
      */
-    abstract public Vector3 act(Array<Boid> boids, Array<WorldObject> objects, Boid boid);
+    abstract public Vector3 act(Array<Boid> boids, Array<com.UKC_AICS.simulation.entity.Object> objects, Boid boid);
 
 }

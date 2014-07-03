@@ -3,8 +3,8 @@ package com.UKC_AICS.simulation.managers;
 import java.util.HashMap;
 import java.util.Random;
 
-import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.WorldObject;
+import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.entity.behaviours.*;
 import com.UKC_AICS.simulation.utils.QuadTree;
 import com.UKC_AICS.simulation.world.BoidGrid;
@@ -184,7 +184,7 @@ public class BoidManager extends Manager {
             //do stuff
             steering.set(0f, 0f, 0f);
 
-            Array<WorldObject> dummyObjects = new Array<WorldObject>();
+            Array<Object> dummyObjects = new Array<com.UKC_AICS.simulation.entity.Object>();
             steering.add(behaviours.get("cohesion").act(nearBoids, dummyObjects, boid).scl(coh));
             steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
             steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));

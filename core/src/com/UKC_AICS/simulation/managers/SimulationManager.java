@@ -5,7 +5,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Object;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -17,7 +19,7 @@ import com.badlogic.gdx.utils.Array;
 public class SimulationManager extends Manager {
 
     static final BoidManager boidManager = new BoidManager();
-    static final WorldManager worldManager = new WorldManager();
+    static final WorldManager worldManager = new WorldManager(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
     static public int minutes = 0;
     static public int hours = 0;
     static public int days = 0;
@@ -31,11 +33,11 @@ public class SimulationManager extends Manager {
      * Sends appropriate calls to the world and boid manager to update for this frame.
      * <p/>
      * <p/>
-     * Possibly store the data lookup tables here? like species data for example
+     * Possibly store the data lookup tables here? like subType data for example
      */
     public SimulationManager() {
 
-        // Hard coded zebra species
+        // Hard coded zebra subType
         HashMap<String, Float> zebra = new HashMap<String, Float>();
         zebra.put("cohesion", 0.3f);
         zebra.put("alignment", 0.5f);
@@ -46,7 +48,7 @@ public class SimulationManager extends Manager {
         speciesByte.put((byte) 1, "zebra");
         tempSpeciesData.put("zebra", zebra);
 
-        // Hard coded bison species
+        // Hard coded bison subType
         HashMap<String, Float> bison = new HashMap<String, Float>();
         bison.put("cohesion", 0.7f);
         bison.put("alignment", 0.5f);
@@ -58,7 +60,9 @@ public class SimulationManager extends Manager {
         tempSpeciesData.put("bison", bison);
 
         generateBoids();
-        worldManager.createMap(20, 20);
+
+        worldManager.putObject(new Object((byte)2,(byte)1,100,100), new Vector3(100,100,0));
+        worldManager.putObject(new Object((byte)2,(byte)1,200,200), new Vector3(200,200,0));
     }
 
     public void reset(){
@@ -69,7 +73,7 @@ public class SimulationManager extends Manager {
 
 
     public void generateBoids(){
-        // Looks through tempSpeciesData Hashmap for each species hashmap.  extracts number for that species and byte reference.
+        // Looks through tempSpeciesData Hashmap for each subType hashmap.  extracts number for that subType and byte reference.
         Set nameSet = tempSpeciesData.keySet();
         Iterator it = nameSet.iterator();
         while (it.hasNext()) {
@@ -79,7 +83,7 @@ public class SimulationManager extends Manager {
             byte spByte = tmpSp.get("byte").byteValue();
 
             for (int i = 0; i < number; i++) {
-                boidManager.createBoid(spByte);  //TODO get the species int from xml file
+                boidManager.createBoid(spByte);  //TODO get the subType int from xml file
             }
         }
     }
@@ -121,6 +125,13 @@ public class SimulationManager extends Manager {
 
     public Array<Boid> getBoids() {
         return boidManager.getBoids();
+    }
+    public Array<Entity> getObject() {
+        return worldManager.getObjects();
+    }
+
+    public byte[][] getMapTiles() {
+        return worldManager.getTiles();
     }
 
     public Vector3 getMapSize() {

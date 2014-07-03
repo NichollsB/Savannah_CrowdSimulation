@@ -1,7 +1,6 @@
 package com.UKC_AICS.simulation.entity.behaviours;
 
-import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.WorldObject;
+import com.UKC_AICS.simulation.entity.*;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
@@ -11,7 +10,7 @@ import com.badlogic.gdx.utils.Array;
 public class Seek extends Behaviour {
 
 
-    public Vector3 act(Array<Boid> boids, Array<WorldObject> objects, Boid boid) {
+    public Vector3 act(Array<Boid> boids, Array<com.UKC_AICS.simulation.entity.Object> objects, Boid boid) {
         throw new Error("Seek is not to be used in this manner. Try static access Seek.act(Boid boid, Vector3 target)");
     }
 

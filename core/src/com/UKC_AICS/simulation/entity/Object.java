@@ -3,32 +3,31 @@ package com.UKC_AICS.simulation.entity;
 import com.badlogic.gdx.math.Vector3;
 
 /**
- * Created by Emily on 30/06/2014.
+ * @author Emily
  */
-public class Object {
-    protected Vector3 position; // explicitly 3d vectors for extensibility
-    protected static byte type = 0; //what type of object is it? // 1 == boid(any boid),
+public class Object extends Entity {
 
-
-    /**
-     *
-     * @return the position of the object as a Vector3 for its map location.
-     */
-    public Vector3 getPosition() {
-        return position;
-    }
-
-    /**
-     *
-     * @param position sets the position of the object to this map location.
-     */
-
-    public void setPosition(Vector3 position) {
+    public Object(byte type, byte subType, Vector3 position) {
+        this.type = type;
         this.position = position;
     }
 
-    public byte getType(){
+    public Object(byte type, byte subType, int x, int y) {
+        this.type = type;
+        this.subType = subType;
+        this.position = new Vector3(x,y,0);
+    }
+
+    /**
+     * @return the type of the object as its byte type
+     */
+    public byte getType() {
         return type;
+
+    }
+
+    public void setType(byte type) {
+        this.type = type;
     }
 
 }

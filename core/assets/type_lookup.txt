@@ -1,0 +1,3 @@
+0 :nothing
+1 :boid (species specified by sub-type)
+2 :corpse (species specified by sub-type)
