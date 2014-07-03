@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--xml file for species based information-->
+<settings>
+    <species id="0" name="zebra">
+        <number>100</number>
+        <byte>1</byte>
+        <cohesion>0.9f</cohesion>
+        <separation>0.1f</separation>
+        <alignment>0.5f</alignment>
+        <wander>0.2f</wander>
+    </species>
+    <species id="1" name="bison">
+        <number>100</number>
+        <byte>2</byte>
+        <cohesion>0.1f</cohesion>
+        <separation>0.9f</separation>
+        <alignment>0.5f</alignment>
+        <wander>0.2f</wander>
+    </species>
+</settings>
+
+
