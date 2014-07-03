@@ -104,7 +104,7 @@ public class Boid extends Object {
 
 
     public Vector3 getPosition() {
-        return position.cpy();
+        return position;//.cpy();
     }
 
     public void setPosition(Vector3 position) {

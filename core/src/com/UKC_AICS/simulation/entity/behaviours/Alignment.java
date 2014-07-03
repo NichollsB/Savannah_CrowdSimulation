@@ -18,17 +18,19 @@ public class Alignment extends Behaviour {
         if (boids.size > 0) {
             for (Boid b : boids) {
                 //check if the boid is the same species
+                //TODO: Multi-species support
                 if (b.getSpecies() == boid.getSpecies()) {
-                    tmpVec2.set(b.getVelocity());
-                    tmpVec.add(tmpVec2);
+                    tmpVec.add(b.getVelocity());
                     num++;
                 }
             }
-            tmpVec.scl(1.0f / num); //do scaling to find average boid velocity
-            tmpVec.nor();
-            tmpVec.scl(boid.maxSpeed);
-            tmpVec.sub(boid.getVelocity());
-            tmpVec.limit(boid.maxForce);
+            if(num > 0) {
+                tmpVec.scl(1.0f / num); //do scaling to find average boid velocity
+                tmpVec.nor();
+                tmpVec.scl(boid.maxSpeed);
+                tmpVec.sub(boid.getVelocity());
+                tmpVec.limit(boid.maxForce);
+            }
         }
 
         return tmpVec.cpy(); //copy to avoid strange bugs.
