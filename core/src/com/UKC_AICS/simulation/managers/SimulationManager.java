@@ -85,7 +85,7 @@ public class SimulationManager extends Manager {
         // Looks through tempSpeciesData Hashmap for each species hashmap.  extracts number for that species and byte reference.
         Iterator it = newSpecieData.keySet().iterator();
         while (it.hasNext()) {
-            byte spByte = (byte)it.next();
+            byte spByte = (Byte)it.next();
             Species species = newSpecieData.get(spByte);
             int number = species.getNumber();
 
