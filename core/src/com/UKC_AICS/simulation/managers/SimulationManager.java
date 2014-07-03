@@ -34,6 +34,8 @@ public class SimulationManager extends Manager {
      * Possibly store the data lookup tables here? like species data for example
      */
     public SimulationManager() {
+
+        // Hard coded zebra species
         HashMap<String, Float> zebra = new HashMap<String, Float>();
         zebra.put("cohesion", 0.5f);
         zebra.put("alignment", 0.5f);
@@ -44,6 +46,7 @@ public class SimulationManager extends Manager {
         speciesByte.put((byte) 1, "zebra");
         tempSpeciesData.put("zebra", zebra);
 
+        // Hard coded bison species
         HashMap<String, Float> bison = new HashMap<String, Float>();
         bison.put("cohesion", 0.5f);
         bison.put("alignment", 0.5f);
@@ -63,8 +66,10 @@ public class SimulationManager extends Manager {
     	generateBoids();
     	resetTime();
     }
-    
+
+
     public void generateBoids(){
+        // Looks through tempSpeciesData Hashmap for each species hashmap.  extracts number for that species and byte reference.
         Set nameSet = tempSpeciesData.keySet();
         Iterator it = nameSet.iterator();
         while (it.hasNext()) {
