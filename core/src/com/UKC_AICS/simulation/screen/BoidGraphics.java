@@ -90,7 +90,7 @@ public class BoidGraphics {
 	public void updateSpritePosition(Boid boid){
 		//for(Iterator<Boid> boids = boidMap.keys(); boids.hasNext();){
 			Vector3 position = boid.getPosition();
-			if(boid.species == 2){
+			if(boid.species == 1){
 				altSprite.setPosition(position.x, position.y);
 			}
 			else {
