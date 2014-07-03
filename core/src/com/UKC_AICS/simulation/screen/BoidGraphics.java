@@ -6,6 +6,7 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -18,16 +19,20 @@ import com.UKC_AICS.simulation.entity.*;
  *
  */
 public class BoidGraphics {
+	//generic sprite for all entities
+	private Sprite sprite;
 	
 	//private SpriteBatch boidBatch;
 	private Sprite boidSprite;
 	//private ObjectMap<Boid, Sprite> boidMap = new ObjectMap<Boid, Sprite>();
 	private Array<Boid> boidsArray;
 	private Texture defaultTexture = new Texture(Gdx.files.internal("triangle2.png"));
-
-    private Texture altTexture = new Texture(Gdx.files.internal("triangle3.png"));
-    private Sprite altSprite;
-
+	//TEMPORARY
+	private Texture altTexture = new Texture(Gdx.files.internal("triangle3.png"));
+	private Sprite altSprite;
+	
+	private SpriteManager spriteManager = new SpriteManager();
+	
 
 	/**
 	 * Update and render the sprites representing the boids. Renders via the SpriteBatch passed in.
@@ -35,16 +40,19 @@ public class BoidGraphics {
 	 */
 	public void update(SpriteBatch batch){
 		
-		if(boidsArray.size>0){
+		if(boidsArray.size>0 && spriteManager.update()){
 			batch.disableBlending();
 			batch.begin();
+			byte b = 0;
 			for(Boid boid : boidsArray){
-				updateSpritePosition(boid);
-				if(boid.getSpecies() == (byte) 1){
+				sprite = spriteManager.getSprite(b, boid.getSpecies());
+				updateSpritePosition(boid, sprite);
+				sprite.draw(batch);
+				/*if(boid.species == 1){
 					altSprite.draw(batch);
 				}
 				else
-					boidSprite.draw(batch);
+					boidSprite.draw(batch);*/
 			}
 			batch.end();
 			batch.enableBlending();
@@ -66,13 +74,13 @@ public class BoidGraphics {
 	 * @param boidArray the Array of boids to store
 	 */
 	public void initBoidSprites(Array<Boid> boidArray){
-        boidsArray = new Array<Boid>(boidArray);
-        boidSprite = new Sprite(defaultTexture);
-        boidSprite.setOrigin((defaultTexture.getWidth()/2), defaultTexture.getHeight()/2);
-
-        altSprite = new Sprite(altTexture);
-        boidSprite.setOrigin((altTexture.getWidth()/2), altTexture.getHeight()/2);
-//		testBoid = boidsArray.get(0);
+		boidsArray = new Array<Boid>(boidArray);
+		boidSprite = new Sprite(defaultTexture);
+		boidSprite.setOrigin((defaultTexture.getWidth()/2), defaultTexture.getHeight()/2);
+		
+		altSprite = new Sprite(altTexture);
+		boidSprite.setOrigin((altTexture.getWidth()/2), altTexture.getHeight()/2);
+		
 		/*for(Boid boid : array){
 			//boidsArray.add(boid);
 			updateSpritePosition(boid);
@@ -92,21 +100,21 @@ public class BoidGraphics {
 	 * the boid velcoity vector
 	 * @param boid The Boid that the boidSprite will be postioned to
 	 */
-	public void updateSpritePosition(Boid boid){
+	public void updateSpritePosition(Boid boid, Sprite sprite){
 		//for(Iterator<Boid> boids = boidMap.keys(); boids.hasNext();){
 			Vector3 position = boid.getPosition();
-
 			Vector3 velocity = boid.getVelocity();
 			double rot = Math.toDegrees(Math.atan2( - velocity.x, velocity.y)); //made x negative.
-
-			if(boid.getSpecies() == (byte) 1){
+			sprite.setPosition(position.x, position.y);
+			sprite.setRotation((float) rot);
+			/*if(boid.species == 1){
 				altSprite.setPosition(position.x, position.y);
 				altSprite.setRotation((float) rot);
 			}
 			else {
 				boidSprite.setPosition( position.x, position.y);
 				boidSprite.setRotation((float) rot);
-			}
+			}*/
 			
 
 			
