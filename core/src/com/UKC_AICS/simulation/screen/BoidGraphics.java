@@ -24,8 +24,10 @@ public class BoidGraphics {
 	//private ObjectMap<Boid, Sprite> boidMap = new ObjectMap<Boid, Sprite>();
 	private Array<Boid> boidsArray;
 	private Texture defaultTexture = new Texture(Gdx.files.internal("triangle2.png"));
-	
-	private Boid testBoid;
+
+    private Texture altTexture = new Texture(Gdx.files.internal("triangle3.png"));
+    private Sprite altSprite;
+
 
 	/**
 	 * Update and render the sprites representing the boids. Renders via the SpriteBatch passed in.
@@ -60,10 +62,12 @@ public class BoidGraphics {
 	 * @param boidArray the Array of boids to store
 	 */
 	public void initBoidSprites(Array<Boid> boidArray){
-		boidsArray = new Array<Boid>(boidArray);
-		boidSprite = new Sprite(defaultTexture);
-		boidSprite.setOrigin((defaultTexture.getWidth()/2), defaultTexture.getHeight()/2);
-		
+        boidsArray = new Array<Boid>(boidArray);
+        boidSprite = new Sprite(defaultTexture);
+        boidSprite.setOrigin((defaultTexture.getWidth()/2), defaultTexture.getHeight()/2);
+
+        altSprite = new Sprite(altTexture);
+        boidSprite.setOrigin((altTexture.getWidth()/2), altTexture.getHeight()/2);
 //		testBoid = boidsArray.get(0);
 		/*for(Boid boid : array){
 			//boidsArray.add(boid);
@@ -87,7 +91,13 @@ public class BoidGraphics {
 	public void updateSpritePosition(Boid boid){
 		//for(Iterator<Boid> boids = boidMap.keys(); boids.hasNext();){
 			Vector3 position = boid.getPosition();
-			boidSprite.setPosition( position.x, position.y);
+
+			if(boid.species == 1){
+				altSprite.setPosition(position.x, position.y);
+			}
+			else {
+				boidSprite.setPosition( position.x, position.y);
+			}
 			position = boid.getVelocity();
 			double rot = Math.toDegrees(Math.atan2( - position.x, position.y)); //made x negative.
 
