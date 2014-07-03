@@ -37,9 +37,9 @@ public class SimulationManager extends Manager {
 
         // Hard coded zebra species
         HashMap<String, Float> zebra = new HashMap<String, Float>();
-        zebra.put("cohesion", 0.5f);
+        zebra.put("cohesion", 0.3f);
         zebra.put("alignment", 0.5f);
-        zebra.put("separation", 0.5f);
+        zebra.put("separation", 0.9f);
         zebra.put("wander", 0.2f);
         zebra.put("byte", 1f);
         zebra.put("number", 100f);
@@ -48,9 +48,9 @@ public class SimulationManager extends Manager {
 
         // Hard coded bison species
         HashMap<String, Float> bison = new HashMap<String, Float>();
-        bison.put("cohesion", 0.5f);
+        bison.put("cohesion", 0.7f);
         bison.put("alignment", 0.5f);
-        bison.put("separation", 0.5f);
+        bison.put("separation", 0.3f);
         bison.put("wander", 0.2f);
         bison.put("byte", 2f);
         bison.put("number", 100f);
