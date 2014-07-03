@@ -74,7 +74,6 @@ public class SimulationManager extends Manager {
 
 
     public void generateBoids(){
-<<<<<<< HEAD
         // Looks through tempSpeciesData Hashmap for each subType hashmap.  extracts number for that subType and byte reference.
         Set nameSet = tempSpeciesData.keySet();
         Iterator it = nameSet.iterator();
@@ -87,11 +86,7 @@ public class SimulationManager extends Manager {
             for (int i = 0; i < number; i++) {
                 boidManager.createBoid(spByte);  //TODO get the subType int from xml file
             }
-=======
-    	
-        for (int i = 0; i < 600; i++) {
-            boidManager.createBoid();
->>>>>>> feature/Non_Vis_Running
+
         }
     }
     
