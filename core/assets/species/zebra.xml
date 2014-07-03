@@ -1,0 +1,11 @@
+<!--xml file for species based information-->
+<species>
+    <speciestype id="0" name="zebra">
+        <cohesion cohesion ="0.5f"/>
+        <alignment alignment="0.5f"/>
+        <separation separation= "0.5f"/>
+        <wander wander="0.2f"/>
+    </speciestype>
+</species>
+
+

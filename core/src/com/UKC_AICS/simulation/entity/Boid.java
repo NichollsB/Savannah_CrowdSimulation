@@ -18,7 +18,7 @@ public class Boid extends Object {
 //    private float f_orientation;
 
 
-    public static byte species;
+    public byte species;
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //30 degree?
 

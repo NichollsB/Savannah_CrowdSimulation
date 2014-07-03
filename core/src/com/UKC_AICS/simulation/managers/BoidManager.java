@@ -49,8 +49,8 @@ public class BoidManager extends Manager {
     }
 
 
-    public void createBoid() {
-        Boid boid = new Boid();
+    public void createBoid(byte species) {
+        Boid boid = new Boid(species);
 
         int maxXPos = 1180;
         int minXPos = 100;
@@ -111,6 +111,7 @@ public class BoidManager extends Manager {
         Boid boid;
         for (int i = 0; i < boids.size; i++) {
             boid = boids.get(i);
+            byte species = boid.getSpecies();
 
             // find relevant boids
 
@@ -174,10 +175,10 @@ public class BoidManager extends Manager {
                 }
             }
 
-            float coh = SimulationManager.tempSpeciesData.get("zebra").get("cohesion");
-            float ali = SimulationManager.tempSpeciesData.get("zebra").get("alignment");
-            float sep = SimulationManager.tempSpeciesData.get("zebra").get("separation");
-            float wan = SimulationManager.tempSpeciesData.get("zebra").get("wander");
+            float coh = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("cohesion");
+            float ali = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("alignment");
+            float sep = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("separation");
+            float wan = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("wander");
 
 
             //do stuff
