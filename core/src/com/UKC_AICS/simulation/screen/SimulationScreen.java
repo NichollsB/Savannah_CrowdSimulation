@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 
 /**
- *
  * @author Emily
  */
 public class SimulationScreen implements Screen {
@@ -24,35 +23,35 @@ public class SimulationScreen implements Screen {
 
     private final Simulation simulation;
     private Camera camera;
-    
+
     private Environment environment; //lighting things
-    
+
     public SimulationManager simulationManager = new SimulationManager();
 
     private BitmapFont font = new BitmapFont();
     private SpriteBatch spriteBatch = new SpriteBatch();
-    
+
     private BoidGraphics boidGraphics = new BoidGraphics();
 
     SimScreenGUI gui = new SimScreenGUI(this); // Creates gui instance for this screen
-    
+
     private InputMultiplexer input;
     private InputManager inputManager = new InputManager(this);
 
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
-        
+
         input = new InputMultiplexer();
 
         input.addProcessor(gui.setStage());  //sets up GUI
         input.addProcessor(inputManager);
-        
+
         Gdx.input.setInputProcessor(input);
         //Gdx.input.setInputProcessor(inputManager);
-        
-        
+
+
         setup();
-        
+
     }
 
     @Override
@@ -61,39 +60,29 @@ public class SimulationScreen implements Screen {
         if (running) {
             simulationManager.update();
         }
-        
+
         // checks if simulation needs to be rendered or can be run "offline"
-        if (render){
-        	
-        	gui.fps.setText(getFPSString() + simulationManager.getTime());
+        if (render) {
+
+            gui.fps.setText(getFPSString() + simulationManager.getTime());
             tickPhysics(delta);
             clearOpenGL();
             boidGraphics.update(spriteBatch);
             renderSpriteBatches();
-                   
-            try	{
-            	Thread.sleep((long)(1000/60-Gdx.graphics.getDeltaTime()));
-            }
-            catch (InterruptedException e){
+
+            try {
+                Thread.sleep((long) (1000 / 60 - Gdx.graphics.getDeltaTime()));
+            } catch (InterruptedException e) {
                 System.out.print("Error...");
                 e.printStackTrace();
             }
-        }
-        else{
-         	clearOpenGL();
-           	gui.fps.setText(getFPSString() + simulationManager.getTime());
+        } else {
+            clearOpenGL();
+            gui.fps.setText(getFPSString() + simulationManager.getTime());
             renderSpriteBatches();
         }
-   }
-       
-        
-        
-        //do render calls for models, sprites, whatever. 
-        //(probably done in another class)
+    }
 
-        //draw models
-        //draw hud/ui etc
-    
 
     private void renderSpriteBatches() {
         spriteBatch.begin();
@@ -121,14 +110,15 @@ public class SimulationScreen implements Screen {
 
     /**
      * creates a new camera with specified height and width.
+     *
      * @param width
-     * @param height 
+     * @param height
      */
     private void createCamera(int width, int height) {
         //create a camera. perspective? orthographic? etc etc.
-    	
-    	camera = new OrthographicCamera();
-    	
+
+        camera = new OrthographicCamera();
+
     }
 
     public void setup() {
@@ -137,10 +127,9 @@ public class SimulationScreen implements Screen {
     }
 
     /**
-     *
      * @return gives the current fps and current time count
      */
-     public String getFPSString() {
+    public String getFPSString() {
         return "fps: " + Gdx.graphics.getFramesPerSecond();
 
     }
@@ -156,7 +145,6 @@ public class SimulationScreen implements Screen {
     }
 
     /**
-     *
      * @return running boolean
      */
     public boolean getRunning() {
@@ -167,10 +155,10 @@ public class SimulationScreen implements Screen {
      * flips the render boolean for simulation rendering.
      */
     public void flipRender() {
-    	if(render)
-    		render = false;
-    		else
-    		render = true;
+        if (render)
+            render = false;
+        else
+            render = true;
     }
 
 
@@ -207,13 +195,13 @@ public class SimulationScreen implements Screen {
         //send delta to camera controller using its update.
         //send delta to camera using its update
     }
-    
+
     /**
      * Reacts to clicking on the simulations viewport - called by InputManagers touchDown method
      */
-	public void pickPoint(int screenX, int screenY) {
-		//What should happen when clicking on the screen
-		gui.setConsole("x: " + screenX + " y: " + screenY);
-		
-	}
+    public void pickPoint(int screenX, int screenY) {
+        //What should happen when clicking on the screen
+        gui.setConsole("x: " + screenX + " y: " + screenY);
+
+    }
 }

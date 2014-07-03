@@ -136,8 +136,7 @@ public class BoidGrid {
 
 //    public Array<Boid> findNearby(Vector3 pos) {
 //
-//        //TODO: wrap-around looking
-//        //TODO: account for potential variable "look" ranges. right now fixed to one cell distance around current one.
+//        //TODOnt: wrap-around looking
 //        nearby.clear();
 //
 //        int cellX = (int) pos.x / cellSize;
@@ -228,6 +227,7 @@ public class BoidGrid {
     public Array<Boid> findNearby(Vector3 pos) {
         nearby.clear();
 
+//        //TODO: account for potential variable "look" ranges. right now fixed to one cell distance around current one.
         int cellX = (int) pos.x / cellSize;
         int cellY = (int) pos.y / cellSize;
 

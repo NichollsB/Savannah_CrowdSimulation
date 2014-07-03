@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class Object {
     protected Vector3 position; // explicitly 3d vectors for extensibility
-    protected static byte type = 0;
+    protected static byte type = 0; //what type of object is it? // 1 == boid(any boid),
 
 
     /**
@@ -15,7 +15,7 @@ public class Object {
      * @return the position of the object as a Vector3 for its map location.
      */
     public Vector3 getPosition() {
-        return position.cpy();
+        return position;
     }
 
     /**

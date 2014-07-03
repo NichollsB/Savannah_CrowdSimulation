@@ -23,8 +23,8 @@ public class QuadTree {
     private QuadTree[] nodes;
 
 
-    public QuadTree(int i, Rectangle rectangle) {
-        level = i;
+    public QuadTree(int level, Rectangle rectangle) {
+        this.level = level;
         bounds = rectangle;
         nodes = new QuadTree[4];
         objects = new Array<Object>();
@@ -222,11 +222,33 @@ public class QuadTree {
 
     /**
      * filters all objects (boids and worldObjects) for "possible" collisions and returns them.
-     * @param obj object that is looking for collision candidates.
+     * @param point object that is looking for collision candidates.
      * @return list of objects that are potential colliders
      */
-    public Array<Object> retrieveColliders(Array<Object> returnObjects, Object obj) {
+    public Array<Object> retrieveColliders(Array<Object> returnObjects, Vector2 point) {
+        int index = getIndex(point);
+        if (index != -1 && nodes[0] != null) {
+            nodes[index].retrieveColliders(returnObjects, point);
+        }
 
+        for(Object obj : objects) {
+            if(obj.getType() == 1 && !returnObjects.contains( obj, true) ){
+                returnObjects.add(obj);
+            }
+        }
+        return returnObjects;
+    }
+    public Array<Object> retrieveObjects(Array<Object> returnObjects, Vector2 point) {
+        int index = getIndex(point);
+        if (index != -1 && nodes[0] != null) {
+            nodes[index].retrieveColliders(returnObjects, point);
+        }
+
+        for(Object obj : objects) {
+            if(obj.getType() != 1 && !returnObjects.contains( obj, true) ){
+                returnObjects.add(obj);
+            }
+        }
         return returnObjects;
     }
 
