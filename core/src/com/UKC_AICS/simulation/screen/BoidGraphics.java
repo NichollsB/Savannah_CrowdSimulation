@@ -39,7 +39,11 @@ public class BoidGraphics {
 			batch.begin();
 			for(Boid boid : boidsArray){
 				updateSpritePosition(boid);
-				boidSprite.draw(batch);
+				if(boid.species == 1){
+					altSprite.draw(batch);
+				}
+				else
+					boidSprite.draw(batch);
 			}
 			batch.end();
 			batch.enableBlending();
@@ -90,16 +94,19 @@ public class BoidGraphics {
 	public void updateSpritePosition(Boid boid){
 		//for(Iterator<Boid> boids = boidMap.keys(); boids.hasNext();){
 			Vector3 position = boid.getPosition();
+			Vector3 velocity = boid.getVelocity();
+			double rot = Math.toDegrees(Math.atan2( - velocity.x, velocity.y)); //made x negative.
 			if(boid.species == 1){
 				altSprite.setPosition(position.x, position.y);
+				altSprite.setRotation((float) rot);
 			}
 			else {
 				boidSprite.setPosition( position.x, position.y);
+				boidSprite.setRotation((float) rot);
 			}
-			position = boid.getVelocity();
-			double rot = Math.toDegrees(Math.atan2( - position.x, position.y)); //made x negative.
+			
 
-			boidSprite.setRotation((float) rot);
+			
 			//boidSprite.rotate((float) rot);
 //			boidMap.get(boid).setPosition(position.x, position.y);
 			/*if (boid.equals(boidsArray.get(0))){
