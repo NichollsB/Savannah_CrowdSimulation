@@ -42,7 +42,7 @@ public class SimulationManager extends Manager {
         zebra.put("separation", 0.5f);
         zebra.put("wander", 0.2f);
         zebra.put("byte", 1f);
-        zebra.put("number", 5f);
+        zebra.put("number", 100f);
         speciesByte.put((byte) 1, "zebra");
         tempSpeciesData.put("zebra", zebra);
 
@@ -53,7 +53,7 @@ public class SimulationManager extends Manager {
         bison.put("separation", 0.5f);
         bison.put("wander", 0.2f);
         bison.put("byte", 2f);
-        bison.put("number", 5f);
+        bison.put("number", 100f);
         speciesByte.put((byte) 2, "bison");
         tempSpeciesData.put("bison", bison);
 
