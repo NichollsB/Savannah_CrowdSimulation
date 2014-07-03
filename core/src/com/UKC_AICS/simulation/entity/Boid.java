@@ -21,8 +21,9 @@ public class Boid extends Object {
     public static byte species;
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //30 degree?
-
-
+    public static int Age = 0;
+    public static int birthDay = 0;
+    
     public Boid() {
         type = 1; // this is for categorising it as a "boid" object.
         species = 0;
@@ -118,6 +119,20 @@ public class Boid extends Object {
         return velocity;
     }
 
+    public void setBirthDay(int birthDay) {
+       this.birthDay = birthDay;
+       
+    }   
+    
+    public static int getBirthDay() {
+    	return birthDay;    	
+    }
+    
+    public static void setAge(int newAge) {
+    	Age = newAge;
+    	 
+    }
+       
     /**
      * explicit setting to a defined velocity.
      *

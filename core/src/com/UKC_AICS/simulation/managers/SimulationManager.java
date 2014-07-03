@@ -19,7 +19,8 @@ public class SimulationManager extends Manager {
     static public int hours = 0;
     static public int days = 0;
     static public int weeks = 0;
-
+     public static int currentDay = 0;
+    
     //monstrous things.
     static final HashMap<String, HashMap<String, Float>> tempSpeciesData = new HashMap<String, HashMap<String, Float>>();
 
@@ -48,7 +49,7 @@ public class SimulationManager extends Manager {
     
     public void generateBoids(){
     	
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 600; i++) {
             boidManager.createBoid();
         }
     }
@@ -68,9 +69,11 @@ public class SimulationManager extends Manager {
         } else if (days < 6) {
             hours = 0;
             days += 1;
+            setDay();
         } else {
             days = 0;
             weeks += 1;
+            setDay();
         }
 //        System.out.println(minutes + " mins; " + hours + " hrs; " + days + " days; " + weeks + " wks.");
     }
@@ -80,6 +83,19 @@ public class SimulationManager extends Manager {
                 + days + " days; " + weeks + " wks.";
     }
 
+    public void setDay() {
+    	currentDay++;
+    	System.out.println(currentDay);
+    	boidManager.updateAge();
+    }
+    
+   public static int getDay() {
+	   return currentDay;
+   }
+   
+   
+    
+    
     public void resetTime() {
         minutes = 0;
         hours = 0;
