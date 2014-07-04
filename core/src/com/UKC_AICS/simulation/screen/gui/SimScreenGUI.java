@@ -60,7 +60,7 @@ public class SimScreenGUI {
             }
         });
 
-        //
+        //Reset button
         final TextButton resetButton = new TextButton("Reset", skin, "default");
         resetButton.addListener(new ClickListener() {
             @Override

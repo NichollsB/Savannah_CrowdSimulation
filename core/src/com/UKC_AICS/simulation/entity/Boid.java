@@ -11,6 +11,8 @@ public class Boid extends Entity {
     //boids own specific variants on the species.
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //30 degree?
+    
+    //Present for each species
     public static int Age = 0;
     public static int birthDay = 0;
 
@@ -97,8 +99,7 @@ public class Boid extends Entity {
     }
 
     public void setBirthDay(int birthDay) {
-       this.birthDay = birthDay;
-       
+       this.birthDay = birthDay;     
     }   
     
     public static int getBirthDay() {
@@ -106,8 +107,7 @@ public class Boid extends Entity {
     }
     
     public static void setAge(int newAge) {
-    	Age = newAge;
-    	 
+    	Age = newAge;	 
     }
        
     /**
