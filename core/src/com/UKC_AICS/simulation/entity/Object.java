@@ -17,17 +17,4 @@ public class Object extends Entity {
         this.subType = subType;
         this.position = new Vector3(x,y,0);
     }
-
-    /**
-     * @return the type of the object as its byte type
-     */
-    public byte getType() {
-        return type;
-
-    }
-
-    public void setType(byte type) {
-        this.type = type;
-    }
-
 }

@@ -8,23 +8,17 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class Boid extends Entity {
 
-    public static float MAX_SPEED = 2f;
-
-   //public Vector3 position; //now held in Super class.
-
-//    private Vector3 velocity;
-//    private Vector3 orientation;
-//    private float f_orientation;
-
-
+    //boids own specific variants on the species.
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //30 degree?
     public static int Age = 0;
     public static int birthDay = 0;
+
+    private Vector3 acceleration = new Vector3();
     
     public Boid() {
         type = 1; // this is for categorising it as a "boid" object.
-        subType = 0;
+        subType = 1;
         position = new Vector3();
         velocity = new Vector3();
 //        orientation = new Vector3();
@@ -32,7 +26,7 @@ public class Boid extends Entity {
 
     public Boid( Vector3 pos, Vector3 vel) {
         this.type = 1; // this is for categorising it as a "boid" object.
-        subType = 0;
+        subType = 1;
         position = pos.cpy();
         velocity = vel.cpy();
 //        orientation = new Vector3();
@@ -53,15 +47,17 @@ public class Boid extends Entity {
 //        orientation = new Vector3();
     }
 
-    public void move(Vector3 acceleration) {
-        //TODO: Add in better limiter for speed.
-//        limitVelocityChange(velocityChange);
 
-        velocity.add(acceleration).limit(MAX_SPEED);
+    public void setAcceleration(Vector3 acceleration) {
 
+        this.acceleration.set(acceleration);
+    }
+
+    public void move() {
+        //TODO: Add in better limiter for speed. Possibly??
         //move
+        velocity.add(acceleration).limit(maxSpeed);
         position.add(velocity);
-
         //check for out of bounds
         checkInBounds();
     }

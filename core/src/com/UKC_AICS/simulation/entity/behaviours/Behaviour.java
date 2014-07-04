@@ -19,6 +19,8 @@ public abstract class Behaviour {
      * @param objects : this list will contain relevant(line of sight wise) objects.
      * @param boid    : the boid that the behaviour is being run for.
      */
-    abstract public Vector3 act(Array<Boid> boids, Array<com.UKC_AICS.simulation.entity.Object> objects, Boid boid);
+    public Vector3 act(Array<Boid> boids, Array<com.UKC_AICS.simulation.entity.Object> objects, Boid boid) {
+        return null;
+    }
 
 }

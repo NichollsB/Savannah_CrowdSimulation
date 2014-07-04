@@ -35,9 +35,9 @@ public class Cohesion extends Behaviour {
             }
         }
 
-        if (tmpVec.x != tmpVec.x) {
-            System.out.println("blerpy");
-        }
+//        if (tmpVec.x != tmpVec.x) {
+//            System.out.println("blerpy");
+//        }
         return tmpVec.cpy();
     }
 }

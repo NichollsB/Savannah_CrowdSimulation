@@ -6,6 +6,7 @@ import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.utils.Species;
 import com.UKC_AICS.simulation.utils.StaXParser;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
@@ -19,6 +20,7 @@ import java.util.Iterator;
  */
 public class SimulationManager extends Manager {
 
+//    static final BoidManagerThreaded boidManager = new BoidManagerThreaded();
     static final BoidManager boidManager = new BoidManager();
     static final WorldManager worldManager = new WorldManager(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
@@ -47,30 +49,6 @@ public class SimulationManager extends Manager {
         File pathTest = new File("settings.xml");
         System.out.println(pathTest.getAbsolutePath());
 
-//        System.out.println();
-        // Hard coded zebra species
-//        HashMap<String, Float> zebra = new HashMap<String, Float>();
-//        zebra.put("cohesion", 0.3f);
-//        zebra.put("alignment", 0.5f);
-//        zebra.put("separation", 0.9f);
-//        zebra.put("wander", 0.2f);
-//        zebra.put("byte", 1f);
-//        zebra.put("number", 100f);
-//        speciesByte.put((byte) 1, "zebra");
-//        tempSpeciesData.put("zebra", zebra);
-//
-//        // Hard coded bison species
-//        HashMap<String, Float> bison = new HashMap<String, Float>();
-//        bison.put("cohesion", 0.7f);
-//        bison.put("alignment", 0.5f);
-//        bison.put("separation", 0.3f);
-//        bison.put("wander", 0.2f);
-//        bison.put("byte", 2f);
-//        bison.put("number", 100f);
-//        speciesByte.put((byte) 2, "bison");
-//        tempSpeciesData.put("bison", bison);
-
-
         generateBoids();
 
         worldManager.putObject(new Object((byte)2,(byte)1,100,100), new Vector3(100,100,0));
@@ -88,12 +66,12 @@ public class SimulationManager extends Manager {
         // Looks through tempSpeciesData Hashmap for each species hashmap.  extracts number for that species and byte reference.
         Iterator it = newSpecieData.keySet().iterator();
         while (it.hasNext()) {
-            byte spByte = (Byte)it.next();
+            Byte spByte = (Byte)it.next();
             Species species = newSpecieData.get(spByte);
             int number = species.getNumber();
 
             for (int i = 0; i < number; i++) {
-                boidManager.createBoid(spByte);  //TODO get the subType int from xml file
+                boidManager.createBoid(spByte.byteValue());  //TODO get the subType int from xml file
             }
 
         }
@@ -138,9 +116,7 @@ public class SimulationManager extends Manager {
 	   return currentDay;
    }
    
-   
-    
-    
+
     public void resetTime() {
         minutes = 0;
         hours = 0;
@@ -152,8 +128,12 @@ public class SimulationManager extends Manager {
     public Array<Boid> getBoids() {
         return boidManager.getBoids();
     }
-    public Array<Entity> getObject() {
+    public Array<Entity> getObjects() {
         return worldManager.getObjects();
+    }
+
+    public Array<Entity> getObjectsNearby(Vector2 point) {
+        return worldManager.getObjectsNearby(point);
     }
 
     public byte[][] getMapTiles() {
