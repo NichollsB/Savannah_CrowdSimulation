@@ -1,5 +1,7 @@
 package com.UKC_AICS.simulation.screen;
 
+import java.util.HashMap;
+
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.badlogic.gdx.Gdx;
@@ -123,7 +125,7 @@ public class SimulationScreen implements Screen {
 
     public void setup() {
         setupCameraController();
-        boidGraphics.initBoidSprites(simulationManager.getBoids());
+        boidGraphics.initBoidSprites(simulationManager.getBoids(), simulationManager.getTextureLocations());
     }
 
     /**
@@ -204,4 +206,5 @@ public class SimulationScreen implements Screen {
         gui.setConsole("x: " + screenX + " y: " + screenY);
 
     }
+
 }

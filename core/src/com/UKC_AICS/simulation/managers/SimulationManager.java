@@ -3,10 +3,10 @@ package com.UKC_AICS.simulation.managers;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.UKC_AICS.simulation.utils.Species;
 import com.UKC_AICS.simulation.utils.StaXParser;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -30,7 +30,7 @@ public class SimulationManager extends Manager {
     static public int hours = 0;
     static public int days = 0;
     static public int weeks = 0;
-    public static int currentDay = 0;
+     public static int currentDay = 0;
     
     //monstrous things.
     static final HashMap<String, HashMap<String, Float>> tempSpeciesData = new HashMap<String, HashMap<String, Float>>();
@@ -38,7 +38,9 @@ public class SimulationManager extends Manager {
 
     StaXParser staXParser = new StaXParser();
     static HashMap<Byte, Species> speciesData;
-
+    
+    HashMap<Byte, String> fileLocations;
+    
 
     /**
      * Sends appropriate calls to the world and boid manager to update for this frame.
@@ -47,7 +49,7 @@ public class SimulationManager extends Manager {
      * Possibly store the data lookup tables here? like subType data for example
      */
     public SimulationManager() {
-        speciesData = staXParser.readConfig("../Project-Savannah/core/assets/settings.xml");
+        speciesData = staXParser.readConfig("../core/assets/settings.xml");
 
         generateBoids();
 
@@ -63,6 +65,8 @@ public class SimulationManager extends Manager {
 
 
     public void generateBoids(){
+    	//Create a map of species bytes to filenames for the boid sprite textures
+    	fileLocations = new HashMap<Byte, String>();
         // Looks through tempSpeciesData Hashmap for each species hashmap.  extracts number for that species and byte reference.
         Iterator it = speciesData.keySet().iterator();
         while (it.hasNext()) {
@@ -73,7 +77,8 @@ public class SimulationManager extends Manager {
             for (int i = 0; i < number; i++) {
                 boidManager.createBoid(spByte.byteValue());  //TODO get the subType int from xml file
             }
-
+            //Find the species texture file location
+            fileLocations.put(spByte, species.getSpriteLocation());
         }
     }
     
@@ -143,4 +148,9 @@ public class SimulationManager extends Manager {
     public Vector3 getMapSize() {
         return worldManager.getSize();
     }
+
+	public HashMap<Byte, String> getTextureLocations() {
+		// TODO Auto-generated method stub
+		return fileLocations;
+	}
 }
