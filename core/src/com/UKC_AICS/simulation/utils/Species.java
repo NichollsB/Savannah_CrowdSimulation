@@ -11,6 +11,7 @@ public class Species {
     private float separation;
     private float alignment;
     private float wander;
+    private String spriteLocation;
 
     public String getName() {
         return name;
@@ -59,6 +60,13 @@ public class Species {
     }
     public void setWander(float wander) {
         this.wander = wander;
+    }
+
+    public String getSpriteLocation() {
+        return spriteLocation;
+    }
+    public void setSpriteLocation(String spriteLocation) {
+        this.spriteLocation = spriteLocation;
     }
 
     @Override

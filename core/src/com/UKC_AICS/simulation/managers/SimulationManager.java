@@ -6,6 +6,7 @@ import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.utils.Species;
 import com.UKC_AICS.simulation.utils.StaXParser;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -29,14 +30,14 @@ public class SimulationManager extends Manager {
     static public int hours = 0;
     static public int days = 0;
     static public int weeks = 0;
-     public static int currentDay = 0;
+    public static int currentDay = 0;
     
     //monstrous things.
     static final HashMap<String, HashMap<String, Float>> tempSpeciesData = new HashMap<String, HashMap<String, Float>>();
     static final HashMap<Byte, String> speciesByte = new HashMap<Byte, String>();
 
     StaXParser staXParser = new StaXParser();
-    static HashMap<Byte, Species> newSpecieData;
+    static HashMap<Byte, Species> speciesData;
 
 
     /**
@@ -46,9 +47,7 @@ public class SimulationManager extends Manager {
      * Possibly store the data lookup tables here? like subType data for example
      */
     public SimulationManager() {
-        newSpecieData = staXParser.readConfig("settings.xml");
-        File pathTest = new File("settings.xml");
-        System.out.println(pathTest.getAbsolutePath());
+        speciesData = staXParser.readConfig("../Project-Savannah/core/assets/settings.xml");
 
         generateBoids();
 
@@ -65,10 +64,10 @@ public class SimulationManager extends Manager {
 
     public void generateBoids(){
         // Looks through tempSpeciesData Hashmap for each species hashmap.  extracts number for that species and byte reference.
-        Iterator it = newSpecieData.keySet().iterator();
+        Iterator it = speciesData.keySet().iterator();
         while (it.hasNext()) {
             Byte spByte = (Byte)it.next();
-            Species species = newSpecieData.get(spByte);
+            Species species = speciesData.get(spByte);
             int number = species.getNumber();
 
             for (int i = 0; i < number; i++) {

@@ -186,10 +186,10 @@ public class BoidManager extends Manager {
 //            float sep = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("separation");
 //            float wan = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("wander");
 
-            float coh = SimulationManager.newSpecieData.get(boid.getSpecies()).getCohesion();
-            float sep = SimulationManager.newSpecieData.get(boid.getSpecies()).getSeparation();
-            float ali = SimulationManager.newSpecieData.get(boid.getSpecies()).getAlignment();
-            float wan = SimulationManager.newSpecieData.get(boid.getSpecies()).getWander();
+            float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
+            float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
+            float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
+            float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander();
 
             //do stuff
             steering.set(0f, 0f, 0f);

@@ -15,6 +15,7 @@ public class SpriteManager {
 	private ObjectMap<Integer, String> speciesFiles = new ObjectMap(){{
 		put(0, "data/triangle2.png");
 		put(1, "data/triangle3.png");
+        put(2, "data/triangle3.png");
 	}};
 	private ObjectMap<Integer, String> objects = new ObjectMap<Integer, String>();
 	
