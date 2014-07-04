@@ -28,7 +28,7 @@ public class SimulationManager extends Manager {
     static public int hours = 0;
     static public int days = 0;
     static public int weeks = 0;
-     public static int currentDay = 0;
+    public static int currentDay = 0;
     
     //monstrous things.
     static final HashMap<String, HashMap<String, Float>> tempSpeciesData = new HashMap<String, HashMap<String, Float>>();
