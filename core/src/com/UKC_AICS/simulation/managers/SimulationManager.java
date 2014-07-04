@@ -20,7 +20,8 @@ import java.util.Iterator;
  */
 public class SimulationManager extends Manager {
 
-//    static final BoidManagerThreaded boidManager = new BoidManagerThreaded();
+    //    static final BoidManagerThreaded boidManager = new BoidManagerThreaded();
+//    static final BoidManagerThreadedTwo boidManager = new BoidManagerThreadedTwo();
     static final BoidManager boidManager = new BoidManager();
     static final WorldManager worldManager = new WorldManager(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 

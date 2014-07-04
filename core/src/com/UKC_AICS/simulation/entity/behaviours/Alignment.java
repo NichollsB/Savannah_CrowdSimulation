@@ -3,11 +3,12 @@ package com.UKC_AICS.simulation.entity.behaviours;
 import com.UKC_AICS.simulation.entity.*;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.UKC_AICS.simulation.entity.Object;
 
 public class Alignment extends Behaviour {
 
     @Override
-    public Vector3 act(Array<Boid> boids, Array<com.UKC_AICS.simulation.entity.Object> objects, Boid boid) {
+    public Vector3 act(Array<Boid> boids, Array<Object> objects, Boid boid) {
         tmpVec.set(0, 0, 0); //will hold returnable
         tmpVec2.set(0, 0, 0); //will hold temporary value for running sum of velocity
 
@@ -16,6 +17,9 @@ public class Alignment extends Behaviour {
             for (Boid b : boids) {
                 //check if the boid is the same subType
                 //TODO: Multi-subType support
+                if(b == null || boid == null) {
+                    System.out.println("one of the boids is null!");
+                }
                 if (b.getSpecies() == boid.getSpecies()) {
                     tmpVec.add(b.getVelocity());
                     num++;

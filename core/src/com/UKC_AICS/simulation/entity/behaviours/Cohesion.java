@@ -18,10 +18,9 @@ public class Cohesion extends Behaviour {
         int num = 0; //hold how many same specie boids in list.
         //loop through boids and add their position to the vector
 
-        if (boids.size >= 1 ) {
+        if (boids.size > 0 ) {
+            //check if its not you and check to see if same subType. TODO: multi - subType herding.
             for (Boid otherBoid : boids) {
-
-                //check if its not you and check to see if same subType. TODO: multi - subType herding.
                 if (boid != otherBoid && otherBoid.getSpecies() == boid.getSpecies()) {
                     tmpVec2.add(otherBoid.getPosition());
                     num++;
