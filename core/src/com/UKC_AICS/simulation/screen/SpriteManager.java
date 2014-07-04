@@ -42,13 +42,16 @@ public class SpriteManager {
 	}
 	
 	private void createSprites(){
-		
+		Sprite speciesSprite;
+		Texture speciesTexture;
 		created = true;
 		speciesSprites = new ObjectMap<Integer, Sprite>(speciesFiles.size);
 		for(Integer species: speciesFiles.keys()){
 			if(assetManager.isLoaded(speciesFiles.get(species))){
-				speciesSprites.put(species, new Sprite(
-						assetManager.get(speciesFiles.get(species), Texture.class)));
+				speciesTexture = assetManager.get(speciesFiles.get(species), Texture.class);
+				speciesSprite = new Sprite(speciesTexture);
+				speciesSprite.setOrigin((speciesTexture.getWidth()/2), speciesTexture.getHeight()/2);
+				speciesSprites.put(species, speciesSprite);
 			}
 			else
 				created = false;
