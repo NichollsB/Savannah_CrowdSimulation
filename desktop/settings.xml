@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--xml file for species based information-->
+<settings>
+    <species id="0" name="zebra">
+        <number>100</number>
+        <byte>0</byte>
+        <spriteLocation>data/triangle2.png</spriteLocation>
+        <cohesion>0.9f</cohesion>
+        <separation>0.1f</separation>
+        <alignment>0.5f</alignment>
+        <wander>0.2f</wander>
+    </species>
+    <species id="1" name="wildebeest">
+        <number>100</number>
+        <byte>1</byte>
+        <spriteLocation>data/triangle3.png</spriteLocation>
+        <cohesion>0.1f</cohesion>
+        <separation>0.9f</separation>
+        <alignment>0.5f</alignment>
+        <wander>0.2f</wander>
+    </species>
+    <species id="2" name="gazelles">
+        <number>100</number>
+        <byte>2</byte>
+        <spriteLocation>data/triangle2.png</spriteLocation>
+        <cohesion>0.5f</cohesion>
+        <separation>0.5f</separation>
+        <alignment>0.5f</alignment>
+        <wander>0.2f</wander>
+    </species>
+</settings>
+
+
