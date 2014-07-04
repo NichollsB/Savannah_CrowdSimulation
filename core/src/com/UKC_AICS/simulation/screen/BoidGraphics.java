@@ -1,6 +1,7 @@
 package com.UKC_AICS.simulation.screen;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
@@ -73,7 +74,8 @@ public class BoidGraphics {
 	 * Pass in and store the boids and initialise the boidSprite to a sprite with the default texture
 	 * @param boidArray the Array of boids to store
 	 */
-	public void initBoidSprites(Array<Boid> boidArray){
+	public void initBoidSprites(Array<Boid> boidArray, HashMap<Byte, String> fileLocations){
+		spriteManager.loadAssets(fileLocations);
 		boidsArray = new Array<Boid>(boidArray);
 		boidSprite = new Sprite(defaultTexture);
 		boidSprite.setOrigin((defaultTexture.getWidth()/2), defaultTexture.getHeight()/2);

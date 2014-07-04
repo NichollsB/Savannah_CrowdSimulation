@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.screen;
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
@@ -12,11 +13,12 @@ import com.badlogic.gdx.utils.ObjectMap;
 public class SpriteManager {
 	
 	
-	private ObjectMap<Integer, String> speciesFiles = new ObjectMap(){{
-		put(0, "data/triangle2.png");
-		put(1, "data/triangle3.png");
-        put(2, "data/triangle3.png");
-	}};
+	private ObjectMap<Integer, String> speciesFiles = new ObjectMap<Integer, String>();//{{
+//		put(0, "data/triangle2.png");
+//		put(1, "data/triangle3.png");
+//        put(2, "data/triangle3.png");
+//	}};
+	private String defaultTextureFile = "data/triangle2.png";
 	private ObjectMap<Integer, String> objects = new ObjectMap<Integer, String>();
 	
 	
@@ -29,7 +31,7 @@ public class SpriteManager {
 	private boolean created = true;
 	
 	public SpriteManager(){
-		loadAssets();
+		//loadAssets();
 	}
 	
 	public boolean update(){
@@ -73,13 +75,20 @@ public class SpriteManager {
 	public Sprite getSprite(Byte type){
 		return getSprite(type, null);
 	}
-	
-	public void loadAssets(){
-		created = false;
 
-		for(Iterator<Integer> species = speciesFiles.keys(); species.hasNext();){
-			assetManager.load(speciesFiles.get(species.next()), Texture.class);
+	public void loadAssets(HashMap<Byte, String> fileLocations){
+		created = false;
+		String speciesStr;
+		for(Byte species : fileLocations.keySet()){
+			speciesStr = fileLocations.get(species);
+			
+			speciesFiles.put(species.intValue(), speciesStr);
+			assetManager.load(speciesStr, Texture.class);
 		}
+
+		/*for(Iterator<Integer> species = speciesFiles.keys(); species.hasNext();){
+			assetManager.load(speciesFiles.get(species.next()), Texture.class);
+		}*/
 		for(Iterator<Integer> obj = objects.keys(); obj.hasNext();){
 			assetManager.load(objects.get(obj.next()), Texture.class);
 		}
