@@ -26,6 +26,7 @@ public class StaXParser {
     static final String WANDER = "wander";
     static final String NUMBER = "number";
     static final String BYTE = "byte";
+    static final String SPRITELOCATION = "spriteLocation";
 
     @SuppressWarnings({ "unchecked", "null" })
     public HashMap<Byte, Species> readConfig(String configFile) {
@@ -67,11 +68,21 @@ public class StaXParser {
                             continue;
                         }
                     }
+
                     if (event.isStartElement()) {
                         if (event.asStartElement().getName().getLocalPart()
                                 .equals(BYTE)) {
                             event = eventReader.nextEvent();
                             species.setSpbyte(Byte.valueOf(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(SPRITELOCATION)) {
+                            event = eventReader.nextEvent();
+                            species.setSpriteLocation(event.asCharacters().getData());
                             continue;
                         }
                     }
