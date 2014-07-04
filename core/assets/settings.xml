@@ -22,7 +22,7 @@
     <species id="2" name="gazelles">
         <number>100</number>
         <byte>2</byte>
-        <spriteLocation>data/triangle2.png</spriteLocation>
+        <spriteLocation>corpse_object_x16.png</spriteLocation>
         <cohesion>0.5f</cohesion>
         <separation>0.5f</separation>
         <alignment>0.5f</alignment>
