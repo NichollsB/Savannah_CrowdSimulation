@@ -1,6 +1,7 @@
 package com.UKC_AICS.simulation.managers;
 
 import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.entity.behaviours.*;
 import com.UKC_AICS.simulation.utils.QuadTree;
@@ -285,7 +286,7 @@ public class BoidManagerThreaded extends Manager {
                             //do stuff
                             steering.set(0f, 0f, 0f);
 
-                            Array<Object> dummyObjects = new Array<Object>();
+                            Array<Entity> dummyObjects = new Array<Entity>();
 
                             if (boid.equals(null) || nearBoids.size <= 0 || closeBoids.size <= 0) {
                                 System.out.println("SOmething is null!!!");

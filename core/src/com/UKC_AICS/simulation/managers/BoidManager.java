@@ -3,6 +3,7 @@ package com.UKC_AICS.simulation.managers;
 import java.util.HashMap;
 import java.util.Random;
 
+import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.entity.behaviours.*;
@@ -10,6 +11,7 @@ import com.UKC_AICS.simulation.utils.QuadTree;
 import com.UKC_AICS.simulation.world.BoidGrid;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
@@ -23,6 +25,8 @@ public class BoidManager extends Manager {
 
     private static final float FLOCK_RADIUS = 100f;
     private static final float SEP_RADIUS = 20f;
+    private final SimulationManager parent;
+
     private Array<Boid> boids = new Array<Boid>();
     private QuadTree quadtree;
     
@@ -36,8 +40,9 @@ public class BoidManager extends Manager {
 
     private BoidGrid boidGrid;
 
-    public BoidManager() {
+    public BoidManager(SimulationManager parent) {
 
+        this.parent = parent;
         boidGrid = new BoidGrid(60, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         quadtree = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
@@ -194,12 +199,15 @@ public class BoidManager extends Manager {
             //do stuff
             steering.set(0f, 0f, 0f);
 
-            Array<Object> dummyObjects = new Array<com.UKC_AICS.simulation.entity.Object>();
+            Array<Entity> dummyObjects = parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
             steering.add(behaviours.get("cohesion").act(nearBoids, dummyObjects, boid).scl(coh));
             steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
             steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
             steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
+            //TODO: add these behaviours in properly.
+            steering.add(behaviours.get("repeller").act());
+            steering.add(behaviours.get("attractor").act());
 
             // NaN check
 //            if (steering.x != steering.x) {

@@ -11,7 +11,7 @@ public class Cohesion extends Behaviour {
      * Cohesion is the attraction toward the middle of the flock/herd/group
      */
     @Override
-    public Vector3 act(Array<Boid> boids, Array<com.UKC_AICS.simulation.entity.Object> objects, Boid boid) {
+    public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
         tmpVec.set(0, 0, 0);
         tmpVec2.set(0, 0, 0);
 

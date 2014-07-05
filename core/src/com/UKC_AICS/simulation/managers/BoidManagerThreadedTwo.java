@@ -150,7 +150,7 @@ public class BoidManagerThreadedTwo extends Manager {
                 boid = boids.get(i);
                 byte species = boid.getSpecies();
 
-                Species speciesData = SimulationManager.newSpecieData.get(species);
+                Species speciesData = SimulationManager.speciesData.get(species);
 
                 coh = speciesData.getCohesion();
                 ali = speciesData.getAlignment();

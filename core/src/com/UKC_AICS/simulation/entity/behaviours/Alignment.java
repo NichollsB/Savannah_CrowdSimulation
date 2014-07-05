@@ -3,12 +3,11 @@ package com.UKC_AICS.simulation.entity.behaviours;
 import com.UKC_AICS.simulation.entity.*;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.UKC_AICS.simulation.entity.Object;
 
 public class Alignment extends Behaviour {
 
     @Override
-    public Vector3 act(Array<Boid> boids, Array<Object> objects, Boid boid) {
+    public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
         tmpVec.set(0, 0, 0); //will hold returnable
         tmpVec2.set(0, 0, 0); //will hold temporary value for running sum of velocity
 
