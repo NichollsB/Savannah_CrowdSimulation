@@ -9,21 +9,22 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.sun.xml.internal.stream.Entity;
 
 public class SpriteManager {
 	
 	
-	private ObjectMap<Integer, String> speciesFiles = new ObjectMap<Integer, String>();//{{
+	private ObjectMap<Integer, String> dynamicsFiles = new ObjectMap<Integer, String>();//{{
 //		put(0, "data/triangle2.png");
 //		put(1, "data/triangle3.png");
 //        put(2, "data/triangle3.png");
 //	}};
 	private String defaultTextureFile = "data/triangle2.png";
-	private ObjectMap<Integer, String> objects = new ObjectMap<Integer, String>();
+	private ObjectMap<Integer, String> staticsFiles = new ObjectMap<Integer, String>();
 	
 	
-	private ObjectMap<Integer, Sprite> speciesSprites;
-//	private ObjectMap<Integer, Sprite> objectSprites ;
+	private ObjectMap<Integer, Sprite> continuousEntitySprites;
+	private ObjectMap<Integer, Sprite> staticEntitySprites;
 	private Array<Array<Sprite>> entitySprites;
 	
 	private AssetManager assetManager = new AssetManager();
@@ -42,16 +43,27 @@ public class SpriteManager {
 	}
 	
 	private void createSprites(){
-		Sprite speciesSprite;
-		Texture speciesTexture;
+		Sprite sprite;
+		Texture spriteTexture;
 		created = true;
-		speciesSprites = new ObjectMap<Integer, Sprite>(speciesFiles.size);
-		for(Integer species: speciesFiles.keys()){
-			if(assetManager.isLoaded(speciesFiles.get(species))){
-				speciesTexture = assetManager.get(speciesFiles.get(species), Texture.class);
-				speciesSprite = new Sprite(speciesTexture);
-				speciesSprite.setOrigin((speciesTexture.getWidth()/2), speciesTexture.getHeight()/2);
-				speciesSprites.put(species, speciesSprite);
+		continuousEntitySprites = new ObjectMap<Integer, Sprite>(dynamicsFiles.size);
+		for(Integer entity: dynamicsFiles.keys()){
+			if(assetManager.isLoaded(dynamicsFiles.get(entity))){
+				spriteTexture = assetManager.get(dynamicsFiles.get(entity), Texture.class);
+				sprite = new Sprite(spriteTexture);
+				sprite.setOrigin((spriteTexture.getWidth()/2), spriteTexture.getHeight()/2);
+				continuousEntitySprites.put(entity, sprite);
+			}
+			else
+				created = false;
+		}
+		staticEntitySprites = new ObjectMap<Integer, Sprite>(staticsFiles.size);
+		for(Integer entity: staticsFiles.keys()){
+			if(assetManager.isLoaded(staticsFiles.get(entity))){
+				spriteTexture = assetManager.get(staticsFiles.get(entity), Texture.class);
+				sprite = new Sprite(spriteTexture);
+				sprite.setOrigin((spriteTexture.getWidth()/2), spriteTexture.getHeight()/2);
+				staticEntitySprites.put(entity, sprite);
 			}
 			else
 				created = false;
@@ -66,34 +78,57 @@ public class SpriteManager {
 //		}
 	}
 	
-	public Sprite getSprite(Byte type, Byte subtype){
-		if(type == 0 && subtype !=  null && subtype < speciesSprites.size){
-			return speciesSprites.get((int)subtype);
+	public Sprite getContinuousSprite(Byte subType){
+		if(subType < continuousEntitySprites.size){
+			return continuousEntitySprites.get((int)subType);
 		}
-//		else if(type < objectSprites.size){
-//			return objectSprites.get((int)type);
-//		}
 		return null;
 	}
-	public Sprite getSprite(Byte type){
-		return getSprite(type, null);
+	public Sprite getStaticSprite(Byte subtype){
+		if(subtype < staticEntitySprites.size){
+			return staticEntitySprites.get((int)subtype);
+		}
+		return null;
+	}
+	public Sprite getSprite(Byte type, Byte subType){
+		if(type <= 0 || type == null){
+			return getContinuousSprite(subType);
+		}
+		else {
+			return getStaticSprite(subType);
+		}
 	}
 
-	public void loadAssets(HashMap<Byte, String> fileLocations){
+	/**
+	 * Set the AssetManager to loading a set of entities textures (for creation of sprites), and add
+	 * the string location to an associated map for processing once loaded
+	 * @param entityTextureLocation : String. Location of the texture that should be loaded
+	 * @param continuousEntities : boolean. If the entity associated with the texture will be continuously updated or not...will 
+	 * probably not include this
+	 */
+	public void loadAssets(HashMap<Byte, String> entityTextureLocation, boolean continuousEntities){
 		created = false;
-		String speciesStr;
-		for(Byte species : fileLocations.keySet()){
-			speciesStr = fileLocations.get(species);
+		String fileStr;
+		for(Byte entity : entityTextureLocation.keySet()){
+			fileStr = entityTextureLocation.get(entity);
+			assetManager.load(fileStr, Texture.class);
+			if(continuousEntities){
+				dynamicsFiles.put(entity.intValue(), fileStr);
+			}
+			else {
+				staticsFiles.put(entity.intValue(), fileStr);
+			}
 			
-			speciesFiles.put(species.intValue(), speciesStr);
-			assetManager.load(speciesStr, Texture.class);
 		}
-
-		/*for(Iterator<Integer> species = speciesFiles.keys(); species.hasNext();){
-			assetManager.load(speciesFiles.get(species.next()), Texture.class);
-		}*/
-		for(Iterator<Integer> obj = objects.keys(); obj.hasNext();){
-			assetManager.load(objects.get(obj.next()), Texture.class);
+	}
+	
+	public void loadAssetsTemp(Array<Byte> objs){
+		created = false;
+		String filename = "corpse_object_x16.png";
+		for(Byte type : objs){
+			staticsFiles.put((int)type, filename);
+			assetManager.load(filename, Texture.class);
 		}
+		//System.out.println("Loading static sprites:" + staticsFiles.size);
 	}
 }

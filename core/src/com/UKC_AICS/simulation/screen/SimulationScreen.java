@@ -24,7 +24,7 @@ public class SimulationScreen implements Screen {
     boolean running = true;  //for play pausing.
 
     private final Simulation simulation;
-    private Camera camera;
+    private OrthographicCamera camera;
 
     private Environment environment; //lighting things
 
@@ -43,12 +43,7 @@ public class SimulationScreen implements Screen {
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
 
-        input = new InputMultiplexer();
-
-        input.addProcessor(gui.setStage());  //sets up GUI
-        input.addProcessor(inputManager);
-
-        Gdx.input.setInputProcessor(input);
+        
         //Gdx.input.setInputProcessor(inputManager);
 
 
@@ -118,14 +113,20 @@ public class SimulationScreen implements Screen {
      */
     private void createCamera(int width, int height) {
         //create a camera. perspective? orthographic? etc etc.
+    	input = new InputMultiplexer();
 
+        input.addProcessor(gui.setStage());  //sets up GUI
+        input.addProcessor(inputManager);
+
+        Gdx.input.setInputProcessor(input);
         camera = new OrthographicCamera();
-
+        camera.setToOrtho(false);
     }
 
     public void setup() {
         setupCameraController();
         boidGraphics.initBoidSprites(simulationManager.getBoids(), simulationManager.getTextureLocations());
+        boidGraphics.initObjSprites(simulationManager.getObjects());
     }
 
     /**

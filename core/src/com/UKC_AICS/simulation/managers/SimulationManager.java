@@ -51,9 +51,13 @@ public class SimulationManager extends Manager {
         speciesData = staXParser.readConfig("../core/assets/settings.xml");
 
         generateBoids();
-
-        worldManager.putObject(new Object((byte)2,(byte)1,100,100), new Vector3(100,100,0));
-        worldManager.putObject(new Object((byte)2,(byte)1,200,200), new Vector3(200,200,0));
+        Array<Byte> objTypes = new Array<Byte>();
+        Object obj = new Object((byte)2,(byte)1,100,100);
+        objTypes.add(obj.getType());
+        objTypes.add(obj.getType());
+        worldManager.putObject(obj, new Vector3(100,100,0));
+        worldManager.putObject(obj, new Vector3(200,200,0));
+        System.out.println("num objects" + objTypes.size);
     }
 
     public void reset(){
