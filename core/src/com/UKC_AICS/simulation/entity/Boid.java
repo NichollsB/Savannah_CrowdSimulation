@@ -57,8 +57,8 @@ public class Boid extends Entity {
         sightRadius = species.getSightRadius();
         flockRadius = species.getFlockRadius();
 
-        maxSpeed = 2f;
-        maxForce = 0.03f;
+        maxSpeed = species.getMaxSpeed();
+        maxForce = species.getMaxForce();
 
         position = new Vector3();
         velocity = new Vector3();

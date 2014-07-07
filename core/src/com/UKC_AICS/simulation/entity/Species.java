@@ -7,10 +7,51 @@ public class Species {
     private String name;
     private int number;
     private byte spbyte;
+    private String spriteLocation;
+
+    private float sightRadius;
+    private float flockRadius;
+    private float nearRadius;
+
+    private float maxSpeed;
+    private float maxForce;
+
     private float cohesion;
     private float separation;
     private float alignment;
     private float wander;
+
+
+
+
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+    public void setNumber(float number) {
+        this.number = (int)number;
+    }
+
+    public byte getSpbyte() {
+        return spbyte;
+    }
+    public void setSpbyte(byte spbyte) {
+        this.spbyte = spbyte;
+    }
+
+    public String getSpriteLocation() {
+        return spriteLocation;
+    }
+    public void setSpriteLocation(String spriteLocation) {
+        this.spriteLocation = spriteLocation;
+    }
 
     public float getNearRadius() {
         return nearRadius;
@@ -33,30 +74,18 @@ public class Species {
         this.sightRadius = sightRadius;
     }
 
-    private float sightRadius;
-    private float flockRadius;
-    private float nearRadius;
-    private String spriteLocation;
-
-    public String getName() {
-        return name;
+    public float getMaxSpeed() {
+        return maxSpeed;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setMaxSpeed(float maxSpeed) {
+        this.maxSpeed = maxSpeed;
     }
 
-    public int getNumber() {
-        return number;
+    public float getMaxForce() {
+        return maxForce;
     }
-    public void setNumber(float number) {
-        this.number = (int)number;
-    }
-
-    public byte getSpbyte() {
-        return spbyte;
-    }
-    public void setSpbyte(byte spbyte) {
-        this.spbyte = spbyte;
+    public void setMaxForce(float maxForce) {
+        this.maxForce = maxForce;
     }
 
     public float getCohesion() {
@@ -85,13 +114,6 @@ public class Species {
     }
     public void setWander(float wander) {
         this.wander = wander;
-    }
-
-    public String getSpriteLocation() {
-        return spriteLocation;
-    }
-    public void setSpriteLocation(String spriteLocation) {
-        this.spriteLocation = spriteLocation;
     }
 
     @Override
