@@ -13,7 +13,8 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.managers.BoidManager;;
+import com.UKC_AICS.simulation.managers.BoidManager;
+import com.badlogic.gdx.math.Vector3;
 
 /**
  * 
@@ -51,9 +52,27 @@ import com.UKC_AICS.simulation.managers.BoidManager;;
 	    // Write the different nodes
 	    
 	    for(Boid b : BoidManager.boids) {
-	    	String age = Boid.getAge();
-	    createNode(eventWriter, "age", );
-	    createNode(eventWriter, "birthday", Boid.getBirthDay());
+	    	
+	    	int ageInt = b.getAge();
+	    	String age = "" + ageInt;
+	    	
+	    	int bDayInt = b.getBirthDay();
+	    	String bDay = "" + bDayInt;
+	    	
+	    	Vector3 positionVec = b.getPosition();
+	    	String position = "" + positionVec;
+	    	
+	    	Vector3 velocityVec = b.getVelocity();
+	    	String velocity = "" + velocityVec;
+	    	
+	    	byte speciesByte = b.getSpecies();
+	    	String species = "" + speciesByte;
+	    	
+	    createNode(eventWriter, "age", age);
+	    createNode(eventWriter, "birthday", bDay);
+	    createNode(eventWriter, "position", position);
+	    createNode(eventWriter, "velocity", velocity);
+	    createNode(eventWriter, "species", species);
 	    }
       
 	    eventWriter.add(eventFactory.createEndElement("", "", "config"));

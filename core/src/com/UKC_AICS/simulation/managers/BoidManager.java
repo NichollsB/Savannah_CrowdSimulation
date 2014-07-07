@@ -23,7 +23,7 @@ public class BoidManager extends Manager {
 
     private final SimulationManager parent;
 
-    private Array<Boid> boids = new Array<Boid>();
+    public static Array<Boid> boids = new Array<Boid>();
     private QuadTree quadtree;
     
 
@@ -273,7 +273,7 @@ public class BoidManager extends Manager {
     	
     public void updateAge(){
     	for(Boid b : boids){
-            int bday = Boid.getBirthDay();
+            int bday = b.getBirthDay();
             int day = SimulationManager.getDay();
             int newAge = bday + (day - bday);
             Boid.setAge(newAge);

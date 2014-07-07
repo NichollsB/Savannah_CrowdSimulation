@@ -124,7 +124,7 @@ public class Boid extends Entity {
     public static void setAge(int newAge) {
     	Age = newAge;	 
     }
-    public int getAge() {
+    public static int getAge() {
     	return Age;	 
     }
     /**
