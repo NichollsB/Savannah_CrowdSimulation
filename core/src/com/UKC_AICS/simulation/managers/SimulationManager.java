@@ -21,6 +21,7 @@ public class SimulationManager extends Manager {
 
     //    static final BoidManagerThreaded boidManager = new BoidManagerThreaded();
 //    static final BoidManagerThreadedTwo boidManager = new BoidManagerThreadedTwo();
+//    BoidManagerThreadedThree boidManager = new BoidManagerThreadedThree(this);
     BoidManager boidManager = new BoidManager(this);
     WorldManager worldManager = new WorldManager(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
@@ -52,10 +53,10 @@ public class SimulationManager extends Manager {
         generateBoids();
 
         worldManager.putObject(new Object((byte)2,(byte)1,100,100));
-//        worldManager.putObject(new Object((byte)2,(byte)1,110,100));
+        worldManager.putObject(new Object((byte)2,(byte)1,100,600));
 //        worldManager.putObject(new Object((byte)2,(byte)1,100,110));
 
-        worldManager.putObject(new Object((byte)3,(byte)1,555,555));
+        worldManager.putObject(new Object((byte)3,(byte)1,300,300));
 //        worldManager.putObject(new Object((byte)3,(byte)1,565,555));
 //        worldManager.putObject(new Object((byte)3,(byte)1,555,565));
     }

@@ -65,8 +65,51 @@ public class BoidManagerThreadedTwo extends Manager {
         behaviours.put("cohesion", new Cohesion());
         behaviours.put("wander", new Wander());
 
+        behaviours.put("attractor", new Attractor());
+        behaviours.put("repeller", new Repeller());
+
     }
 
+
+    /**
+     * create boid from the species file.
+     * @param species
+     */
+    public void createBoid(Species species) {
+        Boid boid = new Boid(species);
+
+        int maxXPos = 1180;
+        int minXPos = 100;
+
+        int maxYPos = 620;
+        int minYPos = 100;
+
+        int maxXOrient = 10;
+        int maxYOrient = 10;
+
+
+        int maxXVel = 1;
+        int maxYVel = 1;
+
+
+        int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+        int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+
+        int xVel = (rand.nextInt(2 * maxXVel) - maxXVel);
+
+        int yVel = (rand.nextInt(2 * maxYVel) - maxYVel);
+
+
+        boid.setBirthDay(SimulationManager.getDay());
+
+        boid.setPosition(xPos, yPos, 0);
+//        boid.setOrientation(xOrient, yOrient, 0);
+        boid.setVelocity(xVel, yVel, 0);
+
+        boids.add(boid);
+//        quadtree.insert(boid);
+        boidGrid.addBoid(boid);
+    }
 
     public void createBoid(byte species) {
         Boid boid = new Boid(species);
@@ -228,6 +271,13 @@ public class BoidManagerThreadedTwo extends Manager {
 //            notifyAll();
         }
     }
+
+
+    public void calculateBoids() {
+
+    }
+
+
 
     private boolean allBoidsUpdated() {
         boolean bool = updatedBoids.size() == boids.size;

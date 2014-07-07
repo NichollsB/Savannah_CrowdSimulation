@@ -6,18 +6,23 @@ import com.badlogic.gdx.utils.Array;
 
 public class Alignment extends Behaviour {
 
-    @Override
-    public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
+//    private static Vector3 tmpVec;
+//    private static Vector3 tmpVec2;
+
+//    @Override
+     public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
         tmpVec.set(0, 0, 0); //will hold returnable
         tmpVec2.set(0, 0, 0); //will hold temporary value for running sum of velocity
 
         int num = 0;
         if (boids.size > 0) {
-            for (Boid b : boids) {
+            Boid b;
+            for (int i = 0; i < boids.size; i++) {
+                b = boids.get(i);
                 //check if the boid is the same subType
                 //TODO: Multi-subType support
                 if(b == null || boid == null) {
-                    System.out.println("one of the boids is null!");
+                    System.out.println("one of the boids is null! " + i);
                 }
                 if (b.getSpecies() == boid.getSpecies()) {
                     tmpVec.add(b.getVelocity());

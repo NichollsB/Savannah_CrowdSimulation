@@ -20,7 +20,9 @@ public class Cohesion extends Behaviour {
 
         if (boids.size > 0 ) {
             //check if its not you and check to see if same subType. TODO: multi - subType herding.
-            for (Boid otherBoid : boids) {
+            Boid otherBoid;
+            for (int i = 0; i < boids.size; i++) {
+                otherBoid = boids.get(i);
                 if (boid != otherBoid && otherBoid.getSpecies() == boid.getSpecies()) {
                     tmpVec2.add(otherBoid.getPosition());
                     num++;
