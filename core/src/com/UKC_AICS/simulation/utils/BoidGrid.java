@@ -1,4 +1,4 @@
-package com.UKC_AICS.simulation.world;
+package com.UKC_AICS.simulation.utils;
 
 import com.UKC_AICS.simulation.entity.*;
 import com.badlogic.gdx.math.Vector2;

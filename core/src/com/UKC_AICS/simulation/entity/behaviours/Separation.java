@@ -16,7 +16,7 @@ public class Separation extends Behaviour {
 //	}
 
     @Override
-    public Vector3 act(Array<Boid> boids, Array<com.UKC_AICS.simulation.entity.Object> objects, Boid boid) {
+    public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
         tmpVec.set(0, 0, 0); //will hold returnable
         tmpVec2.set(0, 0, 0); //will hold temporary value for
 

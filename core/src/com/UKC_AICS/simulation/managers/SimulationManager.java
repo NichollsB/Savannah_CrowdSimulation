@@ -3,7 +3,7 @@ package com.UKC_AICS.simulation.managers;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
-import com.UKC_AICS.simulation.utils.Species;
+import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.utils.StaXParser;
 import com.UKC_AICS.simulation.utils.StaxWriter;
 import com.badlogic.gdx.Gdx;
@@ -11,7 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -21,15 +20,16 @@ import java.util.Iterator;
  */
 public class SimulationManager extends Manager {
 
-//    static final BoidManagerThreaded boidManager = new BoidManagerThreaded();
-    static final BoidManager boidManager = new BoidManager();
-    static final WorldManager worldManager = new WorldManager(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+    //    static final BoidManagerThreaded boidManager = new BoidManagerThreaded();
+//    static final BoidManagerThreadedTwo boidManager = new BoidManagerThreadedTwo();
+    BoidManager boidManager = new BoidManager(this);
+    WorldManager worldManager = new WorldManager(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
     static public int minutes = 0;
     static public int hours = 0;
     static public int days = 0;
     static public int weeks = 0;
-    public static int currentDay = 0;
+     public static int currentDay = 0;
     
     //monstrous things.
     static final HashMap<String, HashMap<String, Float>> tempSpeciesData = new HashMap<String, HashMap<String, Float>>();
@@ -37,7 +37,9 @@ public class SimulationManager extends Manager {
 
     StaXParser staXParser = new StaXParser();
     static HashMap<Byte, Species> speciesData;
-
+    
+    HashMap<Byte, String> fileLocations;
+    
 
     /**
      * Sends appropriate calls to the world and boid manager to update for this frame.
@@ -46,14 +48,17 @@ public class SimulationManager extends Manager {
      * Possibly store the data lookup tables here? like subType data for example
      */
     public SimulationManager() {
-        speciesData = staXParser.readConfig("settings.xml");
-        File pathTest = new File("settings.xml");
-        System.out.println(pathTest.getAbsolutePath());
+        speciesData = staXParser.readConfig("../core/assets/data/settings.xml");
 
         generateBoids();
 
-        worldManager.putObject(new Object((byte)2,(byte)1,100,100), new Vector3(100,100,0));
-        worldManager.putObject(new Object((byte)2,(byte)1,200,200), new Vector3(200,200,0));
+        worldManager.putObject(new Object((byte)2,(byte)1,100,100));
+//        worldManager.putObject(new Object((byte)2,(byte)1,110,100));
+//        worldManager.putObject(new Object((byte)2,(byte)1,100,110));
+
+        worldManager.putObject(new Object((byte)3,(byte)1,555,555));
+//        worldManager.putObject(new Object((byte)3,(byte)1,565,555));
+//        worldManager.putObject(new Object((byte)3,(byte)1,555,565));
     }
 
     public void reset(){
@@ -75,6 +80,8 @@ public class SimulationManager extends Manager {
     
 
     public void generateBoids(){
+    	//Create a map of species bytes to filenames for the boid sprite textures
+    	fileLocations = new HashMap<Byte, String>();
         // Looks through tempSpeciesData Hashmap for each species hashmap.  extracts number for that species and byte reference.
         Iterator it = speciesData.keySet().iterator();
         while (it.hasNext()) {
@@ -83,9 +90,10 @@ public class SimulationManager extends Manager {
             int number = species.getNumber();
 
             for (int i = 0; i < number; i++) {
-                boidManager.createBoid(spByte.byteValue());  //TODO get the subType int from xml file
+                boidManager.createBoid(species);  //TODO get the subType int from xml file
             }
-
+            //Find the species texture file location
+            fileLocations.put(spByte, species.getSpriteLocation());
         }
     }
     
@@ -154,4 +162,9 @@ public class SimulationManager extends Manager {
     public Vector3 getMapSize() {
         return worldManager.getSize();
     }
+
+	public HashMap<Byte, String> getTextureLocations() {
+		// TODO Auto-generated method stub
+		return fileLocations;
+	}
 }

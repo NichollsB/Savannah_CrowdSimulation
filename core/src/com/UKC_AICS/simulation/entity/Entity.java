@@ -6,10 +6,10 @@ import com.badlogic.gdx.math.Vector3;
  * Created by Emily on 30/06/2014.
  */
 public class Entity {
-    protected Vector3 position; // explicitly 3d vectors for extensibility
-    protected Vector3 velocity; // explicitly 3d vectors for extensibility
-    protected byte type = 0; //what category of object is it? // 1 == boid(any boid),
-    protected byte subType = 0; //what type of object is it? // for boids this would be subType
+    public Vector3 position; // explicitly 3d vectors for extensibility
+    public Vector3 velocity; // explicitly 3d vectors for extensibility
+    public byte type = 0; //what category of object is it? // 1 == boid(any boid),
+    public byte subType = 0; //what type of object is it? // for boids this would be subType
 
 
 

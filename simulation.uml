@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.UKC_AICS.simulation</OriginalElement>
+  <nodes>
+    <node x="2782.727442680776" y="1158.5">com.UKC_AICS.simulation.entity.behaviours.Alignment</node>
+    <node x="1077.7988712522047" y="971.0">com.UKC_AICS.simulation.utils.QuadTree</node>
+    <node x="2418.7988712522047" y="1158.5">com.UKC_AICS.simulation.entity.behaviours.Cohesion</node>
+    <node x="2663.102442680776" y="1684.0">com.UKC_AICS.simulation.managers.BoidManagerThreaded</node>
+    <node x="726.3544708994707" y="0.0">com.UKC_AICS.simulation.entity.Entity</node>
+    <node x="3648.5211375661374" y="2608.0">com.UKC_AICS.simulation.screen.BoidGraphics</node>
+    <node x="618.625" y="1827.0">com.UKC_AICS.simulation.managers.WorldManager</node>
+    <node x="1930.7988712522047" y="1158.5">com.UKC_AICS.simulation.entity.behaviours.Separation</node>
+    <node x="0.0" y="3973.0">com.UKC_AICS.simulation.world.LandMap</node>
+    <node x="1994.9774426807762" y="3114.0">com.UKC_AICS.simulation.screen.SimulationScreen</node>
+    <node x="2171.7988712522047" y="1838.0">com.UKC_AICS.simulation.managers.BoidManager</node>
+    <node x="2221.977442680776" y="3854.0">com.UKC_AICS.simulation.Simulation</node>
+    <node x="1586.7988712522047" y="1147.5">com.UKC_AICS.simulation.entity.behaviours.Seek</node>
+    <node x="3691.354470899471" y="1871.0">com.UKC_AICS.simulation.screen.SpriteManager</node>
+    <node x="228.5" y="1893.0">com.UKC_AICS.simulation.utils.StaXParser</node>
+    <node x="120.96558201058178" y="2608.0">com.UKC_AICS.simulation.screen.InputManager</node>
+    <node x="0.0" y="894.0">com.UKC_AICS.simulation.utils.Species</node>
+    <node x="574.625" y="586.5">com.UKC_AICS.simulation.entity.Object</node>
+    <node x="3171.977442680776" y="1026.0">com.UKC_AICS.simulation.world.BoidGrid</node>
+    <node x="3963.5211375661374" y="2630.0">com.UKC_AICS.simulation.screen.gui.SimScreenGUI</node>
+    <node x="2243.177134038801" y="553.0">com.UKC_AICS.simulation.entity.behaviours.Behaviour</node>
+    <node x="448.9655820105818" y="2432.0">com.UKC_AICS.simulation.managers.SimulationManager</node>
+    <node x="933.7988712522047" y="1158.5">com.UKC_AICS.simulation.managers.Manager</node>
+    <node x="200.0" y="3973.0">com.UKC_AICS.simulation.utils.MathsUtils</node>
+    <node x="2253.7988712522047" y="1147.0">com.UKC_AICS.simulation.entity.behaviours.Wander</node>
+    <node x="3114.477442680776" y="388.0">com.UKC_AICS.simulation.entity.Boid</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.UKC_AICS.simulation.screen.gui.SimScreenGUI" target="com.UKC_AICS.simulation.screen.SimulationScreen">
+      <point x="94.33333333333303" y="103.0" />
+      <point x="4199.3544708994705" y="3094.0" />
+      <point x="2672.327442680776" y="3094.0" />
+      <point x="320.8499999999999" y="-345.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManager" target="com.UKC_AICS.simulation.entity.behaviours.Separation">
+      <point x="-47.25" y="-180.0" />
+      <point x="2345.0488712522047" y="1584.0" />
+      <point x="2006.5488712522047" y="1584.0" />
+      <point x="-75.75" y="25.5" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManagerThreaded" target="com.UKC_AICS.simulation.entity.behaviours.Behaviour">
+      <point x="83.57142857142856" y="-334.0" />
+      <point x="3136.6738712522047" y="1564.0" />
+      <point x="3107.227442680776" y="1564.0" />
+      <point x="3107.227442680776" y="844.0" />
+      <point x="2410.3438007054674" y="844.0" />
+      <point x="78.66666666666652" y="48.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.Simulation" target="com.UKC_AICS.simulation.screen.SimulationScreen">
+      <point x="-86.33333333333348" y="-37.0" />
+      <point x="2265.1441093474427" y="3829.0" />
+      <point x="2113.8107760141097" y="3829.0" />
+      <point x="-237.66666666666652" y="345.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.SimulationManager" target="com.UKC_AICS.simulation.managers.BoidManager">
+      <point x="232.66666666666674" y="-301.0" />
+      <point x="1030.6322486772485" y="2402.0" />
+      <point x="2282.0488712522047" y="2402.0" />
+      <point x="-110.25" y="180.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.screen.SimulationScreen" target="com.UKC_AICS.simulation.screen.InputManager">
+      <point x="-320.8499999999999" y="-345.0" />
+      <point x="2030.6274426807763" y="3094.0" />
+      <point x="172.29891534391504" y="3094.0" />
+      <point x="-102.66666666666669" y="125.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.SimulationManager" target="com.UKC_AICS.simulation.managers.Manager">
+      <point x="155.1111111111111" y="-301.0" />
+      <point x="953.0766931216929" y="2392.0" />
+      <point x="1048.125" y="2392.0" />
+      <point x="1048.125" y="1644.0" />
+      <point x="980.2988712522047" y="1644.0" />
+      <point x="-15.5" y="25.5" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManagerThreaded" target="com.UKC_AICS.simulation.entity.behaviours.Separation">
+      <point x="-195.0" y="-334.0" />
+      <point x="2858.102442680776" y="1514.0" />
+      <point x="2158.0488712522047" y="1514.0" />
+      <point x="75.75" y="25.5" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.screen.SimulationScreen" target="com.UKC_AICS.simulation.managers.SimulationManager">
+      <point x="-106.94999999999982" y="-345.0" />
+      <point x="2244.5274426807764" y="3064.0" />
+      <point x="623.4655820105818" y="3064.0" />
+      <point x="-174.5" y="301.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.SimulationManager" target="com.UKC_AICS.simulation.utils.Species">
+      <point x="-310.2222222222222" y="-301.0" />
+      <point x="487.7433597883596" y="2412.0" />
+      <point x="218.0" y="2412.0" />
+      <point x="218.0" y="1664.0" />
+      <point x="149.25" y="1664.0" />
+      <point x="-149.25" y="290.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManagerThreaded" target="com.UKC_AICS.simulation.utils.QuadTree">
+      <point x="-306.4285714285711" y="-334.0" />
+      <point x="2746.673871252205" y="1534.0" />
+      <point x="1443.7988712522047" y="1534.0" />
+      <point x="122.0" y="213.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.screen.InputManager" target="com.UKC_AICS.simulation.screen.SimulationScreen">
+      <point x="102.66666666666674" y="125.0" />
+      <point x="377.6322486772485" y="3074.0" />
+      <point x="2173.227442680776" y="3074.0" />
+      <point x="-178.25" y="-345.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManagerThreaded" target="com.UKC_AICS.simulation.entity.behaviours.Alignment">
+      <point x="-27.857142857142662" y="-334.0" />
+      <point x="3025.2452998236336" y="1564.0" />
+      <point x="3009.977442680776" y="1564.0" />
+      <point x="75.75" y="25.5" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.screen.BoidGraphics" target="com.UKC_AICS.simulation.screen.SpriteManager">
+      <point x="0.0" y="-125.0" />
+      <point x="3796.0211375661374" y="2412.0" />
+      <point x="3812.854470899471" y="2412.0" />
+      <point x="-121.5" y="147.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManager" target="com.UKC_AICS.simulation.entity.behaviours.Behaviour">
+      <point x="-78.75" y="-180.0" />
+      <point x="2313.5488712522047" y="1594.0" />
+      <point x="1920.2988712522047" y="1594.0" />
+      <point x="1920.2988712522047" y="864.0" />
+      <point x="2292.3438007054674" y="864.0" />
+      <point x="-39.333333333333485" y="48.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManager" target="com.UKC_AICS.simulation.utils.QuadTree">
+      <point x="-173.25" y="-180.0" />
+      <point x="2219.0488712522047" y="1624.0" />
+      <point x="1281.1322045855381" y="1624.0" />
+      <point x="-40.66666666666674" y="213.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManager" target="com.UKC_AICS.simulation.entity.behaviours.Wander">
+      <point x="-15.75" y="-180.0" />
+      <point x="2376.5488712522047" y="1574.0" />
+      <point x="2290.0488712522047" y="1574.0" />
+      <point x="-36.25" y="37.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.utils.StaXParser" target="com.UKC_AICS.simulation.utils.Species">
+      <point x="0.0" y="-125.0" />
+      <point x="379.0" y="1664.0" />
+      <point x="447.75" y="1664.0" />
+      <point x="149.25" y="290.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManagerThreaded" target="com.UKC_AICS.simulation.entity.behaviours.Wander">
+      <point x="-139.28571428571422" y="-334.0" />
+      <point x="2913.816728395062" y="1504.0" />
+      <point x="2362.5488712522047" y="1504.0" />
+      <point x="36.25" y="37.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.screen.SimulationScreen" target="com.UKC_AICS.simulation.screen.gui.SimScreenGUI">
+      <point x="249.55000000000018" y="-345.0" />
+      <point x="2601.0274426807764" y="3084.0" />
+      <point x="4105.021137566137" y="3084.0" />
+      <point x="0.0" y="103.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.SimulationManager" target="com.UKC_AICS.simulation.entity.Object">
+      <point x="-77.55555555555543" y="-301.0" />
+      <point x="720.4100264550264" y="2382.0" />
+      <point x="608.125" y="2382.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.entity.Object" target="com.UKC_AICS.simulation.entity.Entity">
+      <point x="0.0" y="-14.5" />
+      <point x="608.125" y="368.0" />
+      <point x="766.2544708994706" y="368.0" />
+      <point x="-159.60000000000002" y="169.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.world.BoidGrid" target="com.UKC_AICS.simulation.entity.Boid">
+      <point x="87.0" y="-158.0" />
+      <point x="3432.977442680776" y="874.0" />
+      <point x="3351.477442680776" y="874.0" />
+      <point x="0.0" y="213.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManagerThreaded" target="com.UKC_AICS.simulation.entity.behaviours.Cohesion">
+      <point x="-83.57142857142844" y="-334.0" />
+      <point x="2969.531014109348" y="1494.0" />
+      <point x="2646.0488712522047" y="1494.0" />
+      <point x="75.75" y="25.5" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.WorldManager" target="com.UKC_AICS.simulation.utils.QuadTree">
+      <point x="83.79999999999995" y="-191.0" />
+      <point x="911.925" y="1654.0" />
+      <point x="1118.4655379188716" y="1654.0" />
+      <point x="-203.33333333333326" y="213.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManager" target="com.UKC_AICS.simulation.entity.Boid">
+      <point x="141.75" y="-180.0" />
+      <point x="2534.0488712522047" y="1594.0" />
+      <point x="3161.477442680776" y="1594.0" />
+      <point x="3161.477442680776" y="874.0" />
+      <point x="3246.1441093474427" y="874.0" />
+      <point x="-105.33333333333348" y="213.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManager" target="com.UKC_AICS.simulation.managers.Manager">
+      <point x="-204.75" y="-180.0" />
+      <point x="2187.5488712522047" y="1634.0" />
+      <point x="1011.2988712522047" y="1634.0" />
+      <point x="15.5" y="25.5" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.screen.BoidGraphics" target="com.UKC_AICS.simulation.entity.Boid">
+      <point x="-98.33333333333348" y="-125.0" />
+      <point x="3697.687804232804" y="2412.0" />
+      <point x="3680.854470899471" y="2412.0" />
+      <point x="3680.854470899471" y="834.0" />
+      <point x="3562.1441093474427" y="834.0" />
+      <point x="210.66666666666652" y="213.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.screen.SimulationScreen" target="com.UKC_AICS.simulation.Simulation">
+      <point x="237.66666666666652" y="345.0" />
+      <point x="2589.1441093474427" y="3829.0" />
+      <point x="2437.8107760141097" y="3829.0" />
+      <point x="86.33333333333348" y="-37.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.WorldManager" target="com.UKC_AICS.simulation.managers.Manager">
+      <point x="0.0" y="-191.0" />
+      <point x="828.125" y="1644.0" />
+      <point x="949.2988712522047" y="1644.0" />
+      <point x="-46.5" y="25.5" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.entity.behaviours.Wander" target="com.UKC_AICS.simulation.entity.behaviours.Behaviour">
+      <point x="0.0" y="-37.0" />
+      <point x="2326.2988712522047" y="874.0" />
+      <point x="2331.677134038801" y="874.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManager" target="com.UKC_AICS.simulation.world.BoidGrid">
+      <point x="173.25" y="-180.0" />
+      <point x="2565.5488712522047" y="1604.0" />
+      <point x="3215.477442680776" y="1604.0" />
+      <point x="-130.5" y="158.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManagerThreaded" target="com.UKC_AICS.simulation.managers.Manager">
+      <point x="-362.1428571428569" y="-334.0" />
+      <point x="2690.9595855379193" y="1544.0" />
+      <point x="1042.2988712522047" y="1544.0" />
+      <point x="46.5" y="25.5" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.utils.QuadTree" target="com.UKC_AICS.simulation.entity.Entity">
+      <point x="0.0" y="-213.0" />
+      <point x="1321.7988712522047" y="368.0" />
+      <point x="1005.6544708994707" y="368.0" />
+      <point x="79.79999999999995" y="169.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManagerThreaded" target="com.UKC_AICS.simulation.world.BoidGrid">
+      <point x="195.0" y="-334.0" />
+      <point x="3248.102442680776" y="1634.0" />
+      <point x="3476.477442680776" y="1634.0" />
+      <point x="130.5" y="158.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.WorldManager" target="com.UKC_AICS.simulation.entity.Entity">
+      <point x="-167.60000000000014" y="-191.0" />
+      <point x="660.5249999999999" y="1624.0" />
+      <point x="820.3249999999998" y="1624.0" />
+      <point x="820.3249999999998" y="358.0" />
+      <point x="846.0544708994707" y="358.0" />
+      <point x="-79.79999999999995" y="169.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.SimulationManager" target="com.UKC_AICS.simulation.managers.WorldManager">
+      <point x="77.55555555555566" y="-301.0" />
+      <point x="875.5211375661374" y="2412.0" />
+      <point x="932.875" y="2412.0" />
+      <point x="104.75" y="191.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManagerThreaded" target="com.UKC_AICS.simulation.entity.Boid">
+      <point x="306.4285714285717" y="-334.0" />
+      <point x="3359.531014109348" y="1654.0" />
+      <point x="3658.854470899471" y="1654.0" />
+      <point x="3658.854470899471" y="854.0" />
+      <point x="3456.8107760141093" y="854.0" />
+      <point x="105.33333333333303" y="213.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManager" target="com.UKC_AICS.simulation.entity.behaviours.Cohesion">
+      <point x="15.75" y="-180.0" />
+      <point x="2408.0488712522047" y="1554.0" />
+      <point x="2494.5488712522047" y="1554.0" />
+      <point x="-75.75" y="25.5" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.SimulationManager" target="com.UKC_AICS.simulation.utils.StaXParser">
+      <point x="-232.66666666666652" y="-301.0" />
+      <point x="565.2989153439153" y="2402.0" />
+      <point x="303.75" y="2402.0" />
+      <point x="-75.25" y="125.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.entity.behaviours.Seek" target="com.UKC_AICS.simulation.entity.behaviours.Behaviour">
+      <point x="0.0" y="-36.5" />
+      <point x="1748.2988712522047" y="854.0" />
+      <point x="2272.677134038801" y="854.0" />
+      <point x="-59.0" y="48.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.entity.behaviours.Alignment" target="com.UKC_AICS.simulation.entity.behaviours.Behaviour">
+      <point x="0.0" y="-25.5" />
+      <point x="2934.227442680776" y="864.0" />
+      <point x="2371.0104673721344" y="864.0" />
+      <point x="39.333333333333485" y="48.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.screen.SimulationScreen" target="com.UKC_AICS.simulation.screen.BoidGraphics">
+      <point x="35.65000000000009" y="-345.0" />
+      <point x="2387.1274426807763" y="3054.0" />
+      <point x="3722.2711375661374" y="3054.0" />
+      <point x="-73.75" y="125.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.managers.BoidManager" target="com.UKC_AICS.simulation.entity.behaviours.Alignment">
+      <point x="47.25" y="-180.0" />
+      <point x="2439.5488712522047" y="1564.0" />
+      <point x="2858.477442680776" y="1564.0" />
+      <point x="-75.75" y="25.5" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.entity.Boid" target="com.UKC_AICS.simulation.entity.Entity">
+      <point x="0.0" y="-213.0" />
+      <point x="3351.477442680776" y="358.0" />
+      <point x="1085.4544708994708" y="358.0" />
+      <point x="159.60000000000014" y="169.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.entity.behaviours.Cohesion" target="com.UKC_AICS.simulation.entity.behaviours.Behaviour">
+      <point x="0.0" y="-25.5" />
+      <point x="2570.2988712522047" y="874.0" />
+      <point x="2351.3438007054674" y="874.0" />
+      <point x="19.666666666666515" y="48.0" />
+    </edge>
+    <edge source="com.UKC_AICS.simulation.entity.behaviours.Separation" target="com.UKC_AICS.simulation.entity.behaviours.Behaviour">
+      <point x="0.0" y="-25.5" />
+      <point x="2082.2988712522047" y="874.0" />
+      <point x="2312.0104673721344" y="874.0" />
+      <point x="-19.666666666666515" y="48.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.41983370017119104" x="874.7928209438367" y="1358.5697291790254" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

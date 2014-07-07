@@ -11,17 +11,16 @@ public class Cohesion extends Behaviour {
      * Cohesion is the attraction toward the middle of the flock/herd/group
      */
     @Override
-    public Vector3 act(Array<Boid> boids, Array<com.UKC_AICS.simulation.entity.Object> objects, Boid boid) {
+    public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
         tmpVec.set(0, 0, 0);
         tmpVec2.set(0, 0, 0);
 
         int num = 0; //hold how many same specie boids in list.
         //loop through boids and add their position to the vector
 
-        if (boids.size >= 1 ) {
+        if (boids.size > 0 ) {
+            //check if its not you and check to see if same subType. TODO: multi - subType herding.
             for (Boid otherBoid : boids) {
-
-                //check if its not you and check to see if same subType. TODO: multi - subType herding.
                 if (boid != otherBoid && otherBoid.getSpecies() == boid.getSpecies()) {
                     tmpVec2.add(otherBoid.getPosition());
                     num++;
