@@ -5,6 +5,7 @@ import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.utils.Species;
 import com.UKC_AICS.simulation.utils.StaXParser;
+import com.UKC_AICS.simulation.utils.StaxWriter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -61,6 +62,17 @@ public class SimulationManager extends Manager {
     	resetTime();
     }
 
+    public void save() {
+    	System.out.println("Called in SM");
+    	StaxWriter configFile = new StaxWriter();
+        configFile.setFile("config2.xml");
+        try {
+          configFile.saveConfig();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    
 
     public void generateBoids(){
         // Looks through tempSpeciesData Hashmap for each species hashmap.  extracts number for that species and byte reference.
@@ -108,7 +120,6 @@ public class SimulationManager extends Manager {
 
     public void setDay() {
     	currentDay++;
-    	System.out.println(currentDay);
     	boidManager.updateAge();
     }
     

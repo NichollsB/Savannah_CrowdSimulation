@@ -109,7 +109,9 @@ public class Boid extends Entity {
     public static void setAge(int newAge) {
     	Age = newAge;	 
     }
-       
+    public int getAge() {
+    	return Age;	 
+    }
     /**
      * explicit setting to a defined velocity.
      *

@@ -23,7 +23,7 @@ public class BoidManager extends Manager {
 
     private static final float FLOCK_RADIUS = 100f;
     private static final float SEP_RADIUS = 20f;
-    private Array<Boid> boids = new Array<Boid>();
+    public static Array<Boid> boids = new Array<Boid>();
     private QuadTree quadtree;
     
 
@@ -71,11 +71,9 @@ public class BoidManager extends Manager {
         int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
 
         int xOrient = (rand.nextInt(2 * maxXOrient) - maxXOrient);
-
         int yOrient = (rand.nextInt(2 * maxYOrient) - maxYOrient);
 
         int xVel = (rand.nextInt(2 * maxXVel) - maxXVel);
-
         int yVel = (rand.nextInt(2 * maxYVel) - maxYVel);
 
         
