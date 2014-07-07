@@ -5,6 +5,7 @@ import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.utils.StaXParser;
+import com.UKC_AICS.simulation.utils.StaxWriter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -52,13 +53,14 @@ public class SimulationManager extends Manager {
 
         generateBoids();
 
-        worldManager.putObject(new Object((byte)2,(byte)1,100,100));
-        worldManager.putObject(new Object((byte)2,(byte)1,100,600));
-//        worldManager.putObject(new Object((byte)2,(byte)1,100,110));
+        Array<Byte> objTypes = new Array<Byte>();
+        Object obj = new Object((byte)2,(byte)1,100,100);
+        objTypes.add(obj.getType());
+        worldManager.putObject(obj);
+        obj = new Object((byte)3,(byte)1,555,555);
+        objTypes.add(obj.getType());
+        worldManager.putObject(obj);
 
-        worldManager.putObject(new Object((byte)3,(byte)1,300,300));
-//        worldManager.putObject(new Object((byte)3,(byte)1,565,555));
-//        worldManager.putObject(new Object((byte)3,(byte)1,555,565));
     }
 
     public void reset(){
@@ -67,6 +69,17 @@ public class SimulationManager extends Manager {
     	resetTime();
     }
 
+    public void save() {
+    	System.out.println("Called in SM");
+    	StaxWriter configFile = new StaxWriter();
+        configFile.setFile("config2.xml");
+        try {
+          configFile.saveConfig();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    
 
     public void generateBoids(){
     	//Create a map of species bytes to filenames for the boid sprite textures
@@ -117,7 +130,6 @@ public class SimulationManager extends Manager {
 
     public void setDay() {
     	currentDay++;
-    	System.out.println(currentDay);
     	boidManager.updateAge();
     }
     

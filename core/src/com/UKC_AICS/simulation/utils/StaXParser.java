@@ -32,6 +32,8 @@ public class StaXParser {
     static final String SIGHTRADIUS = "sightRadius";
     static final String FLOCKRADIUS= "flockRadius";
     static final String NEARRADIUS = "nearRadius";
+    static final String MAXFORCE = "maxForce";
+    static final String MAXSPEED = "maxSpeed";
 
     @SuppressWarnings({ "unchecked", "null" })
     public HashMap<Byte, Species> readConfig(String configFile) {
@@ -150,6 +152,24 @@ public class StaXParser {
                                 .equals(NEARRADIUS)) {
                             event = eventReader.nextEvent();
                             species.setNearRadius(Float.parseFloat(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(MAXFORCE)) {
+                            event = eventReader.nextEvent();
+                            species.setMaxForce(Float.parseFloat(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(MAXSPEED)) {
+                            event = eventReader.nextEvent();
+                            species.setMaxSpeed(Float.parseFloat(event.asCharacters().getData()));
                             continue;
                         }
                     }

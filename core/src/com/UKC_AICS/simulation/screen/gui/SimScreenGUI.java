@@ -65,9 +65,18 @@ public class SimScreenGUI {
         resetButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 simScreen.simulationManager.reset();
                 simScreen.setup();
+            }
+        });
+        
+      //Save button
+        final TextButton saveButton = new TextButton("Save", skin, "default");
+        saveButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            	simScreen.simulationManager.save();
+            	System.out.println("Saving");
             }
         });
 
@@ -89,6 +98,7 @@ public class SimScreenGUI {
         table.add(playButton).size(100f, 30f).bottom().left().padLeft(20f).padBottom(10f);
         table.add(resetButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
         table.add(switchButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
+        table.add(saveButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
         //
         table.add(console).size(300f,30f).bottom();
 
