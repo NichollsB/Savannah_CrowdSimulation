@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--xml file for object based information-->
+<settings>
+    <object id="00" name="zebra corpse">
+        <type>0</type> <!-- byte -->
+        <subtype>0</subtype> <!-- byte -->
+        <spriteLocation>data/corpse_object_x16.png</spriteLocation>
+    </object>
+    <object id="01" name="wildebeest">
+        <type>0</type> <!-- byte -->
+        <subtype>0</subtype> <!-- byte -->
+        <spriteLocation>data/corpse_object_x16_2.png</spriteLocation>
+    </object>
+    <object id="02" name="gazelles">
+        <type>0</type> <!-- byte -->
+        <subtype>2</subtype> <!-- byte -->
+        <spriteLocation>data/corpse_object_x16_3.png</spriteLocation>
+    </object>
+</settings>
+
+

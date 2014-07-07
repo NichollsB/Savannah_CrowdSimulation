@@ -251,7 +251,7 @@ public class BoidManager extends Manager {
 
             //TODO: add these behaviours in properly.
             steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
-            steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
+            steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.2f));
 
             // NaN check
 //            if (steering.x != steering.x) {

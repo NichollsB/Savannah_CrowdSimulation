@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
+
 <!--xml file for species based information-->
 <settings>
     <species id="0" name="zebra">
         <number>100</number>
-        <byte>0</byte>
+        <byte>0</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle.png</spriteLocation>
         <sightRadius>200f</sightRadius>
         <flockRadius>100f</flockRadius>
@@ -12,7 +13,7 @@
         <maxForce>0.03f</maxForce>
         <cohesion>0.5f</cohesion>
         <separation>0.5f</separation>
-        <alignment>0.5f</alignment>
+        <alignment>0.2f</alignment>
         <!--<cohesion>0.9f</cohesion>-->
         <!--<separation>0.1f</separation>-->
         <!--<alignment>0.5f</alignment>-->
@@ -20,7 +21,7 @@
     </species>
     <species id="1" name="wildebeest">
         <number>100</number>
-        <byte>1</byte>
+        <byte>1</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle2.png</spriteLocation>
         <sightRadius>180f</sightRadius>
         <flockRadius>120f</flockRadius>
@@ -29,7 +30,7 @@
         <maxForce>0.03f</maxForce>
         <cohesion>0.5f</cohesion>
         <separation>0.5f</separation>
-        <alignment>0.5f</alignment>
+        <alignment>0.8f</alignment>
         <!--<cohesion>0.1f</cohesion>-->
         <!--<separation>0.9f</separation>-->
         <!--<alignment>0.5f</alignment>-->
@@ -37,7 +38,7 @@
     </species>
     <species id="2" name="gazelles">
         <number>100</number>
-        <byte>2</byte>
+        <byte>2</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle3.png</spriteLocation>
         <sightRadius>250f</sightRadius>
         <flockRadius>80f</flockRadius>

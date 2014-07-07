@@ -49,13 +49,15 @@ public class SimulationManager extends Manager {
      * Possibly store the data lookup tables here? like subType data for example
      */
     public SimulationManager() {
-        speciesData = staXParser.readConfig("../core/assets/data/settings.xml");
+        speciesData = staXParser.readConfig("../core/assets/data/species.xml");
 
         generateBoids();
 
         Array<Byte> objTypes = new Array<Byte>();
         Object obj = new Object((byte)2,(byte)1,100,100);
         objTypes.add(obj.getType());
+        worldManager.putObject(obj);
+        obj = new Object((byte)2,(byte)1,900,300);
         worldManager.putObject(obj);
         obj = new Object((byte)3,(byte)1,555,555);
         objTypes.add(obj.getType());

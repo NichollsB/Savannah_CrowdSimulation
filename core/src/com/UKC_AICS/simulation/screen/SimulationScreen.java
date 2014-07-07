@@ -38,7 +38,7 @@ public class SimulationScreen implements Screen {
     SimScreenGUI gui = new SimScreenGUI(this); // Creates gui instance for this screen
 
     private InputMultiplexer input;
-    private InputManager inputManager = new InputManager(this);
+    private InputManager inputManager;
 
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
@@ -48,7 +48,7 @@ public class SimulationScreen implements Screen {
 
 
         setup();
-
+        
     }
 
     @Override
@@ -113,20 +113,23 @@ public class SimulationScreen implements Screen {
      */
     private void createCamera(int width, int height) {
         //create a camera. perspective? orthographic? etc etc.
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false);
+    	inputManager = new InputManager(this, 1280, 720, camera);
     	input = new InputMultiplexer();
 
         input.addProcessor(gui.setStage());  //sets up GUI
         input.addProcessor(inputManager);
 
         Gdx.input.setInputProcessor(input);
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false);
+
     }
 
     public void setup() {
         setupCameraController();
         boidGraphics.initBoidSprites(simulationManager.getBoids(), simulationManager.getTextureLocations());
         boidGraphics.initObjSprites(simulationManager.getObjects());
+        //boidGraphics.initTileSprites(simulationManager.getMapTiles());
     }
 
     /**
