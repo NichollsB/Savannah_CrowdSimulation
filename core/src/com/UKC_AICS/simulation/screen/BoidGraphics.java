@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Object;
 
 /**
  * 
@@ -27,6 +28,7 @@ public class BoidGraphics {
 	private Sprite boidSprite;
 	//private ObjectMap<Boid, Sprite> boidMap = new ObjectMap<Boid, Sprite>();
 	private Array<Boid> boidsArray;
+	private Array<Entity> entityArray;
 	private Texture defaultTexture = new Texture(Gdx.files.internal("triangle2.png"));
 	//TEMPORARY
 	private Texture altTexture = new Texture(Gdx.files.internal("triangle3.png"));
@@ -40,23 +42,35 @@ public class BoidGraphics {
 	 * @param batch is the SpriteBatch to render the boid sprites in
 	 */
 	public void update(SpriteBatch batch){
-		
-		if(boidsArray.size>0 && spriteManager.update()){
+		if(spriteManager.update()){
+			
 			batch.disableBlending();
 			batch.begin();
 			byte b = 0;
-			for(Boid boid : boidsArray){
-				sprite = spriteManager.getSprite(b, boid.getSpecies());
-				updateSpritePosition(boid, sprite);
-				sprite.draw(batch);
-				/*if(boid.species == 1){
-					altSprite.draw(batch);
+			if(boidsArray.size>0){
+				for(Boid boid : boidsArray){
+					sprite = spriteManager.getSprite(b, boid.getSpecies());
+					updateSpritePosition(boid, sprite);
+					sprite.draw(batch);
+					/*if(boid.species == 1){
+						altSprite.draw(batch);
+					}
+					else
+						boidSprite.draw(batch);*/
 				}
-				else
-					boidSprite.draw(batch);*/
+			}
+			if(entityArray.size>0){
+				for(Entity entity : entityArray){
+					sprite = spriteManager.getStaticSprite(entity.getSubType());
+					Vector3 pos = entity.getPosition();
+					sprite.setPosition(pos.x, pos.y);
+					sprite.draw(batch);
+				}
+				
 			}
 			batch.end();
 			batch.enableBlending();
+			
 		}
 		/*if(boidMap.size>0){
 			 Boid boid;
@@ -75,26 +89,22 @@ public class BoidGraphics {
 	 * @param boidArray the Array of boids to store
 	 */
 	public void initBoidSprites(Array<Boid> boidArray, HashMap<Byte, String> fileLocations){
-		spriteManager.loadAssets(fileLocations);
+		spriteManager.loadAssets(fileLocations, true);
 		boidsArray = new Array<Boid>(boidArray);
 		boidSprite = new Sprite(defaultTexture);
 		boidSprite.setOrigin((defaultTexture.getWidth()/2), defaultTexture.getHeight()/2);
 		
 		altSprite = new Sprite(altTexture);
 		boidSprite.setOrigin((altTexture.getWidth()/2), altTexture.getHeight()/2);
-		
-		/*for(Boid boid : array){
-			//boidsArray.add(boid);
-			updateSpritePosition(boid);
-		}*/
-		/*System.out.println("boid array size: " + boidsArray.size());
-		boidSprite = new Sprite(defaultTexture);
-		for(Boid boid : arrayList){
-			if(!boidMap.containsKey(boid)){
-				boidMap.put(boid, new Sprite(defaultTexture));
-				//updateSpritePosition(boid);
-			}
-		}*/
+
+	}
+	
+	public void initObjSprites (Array<Entity> entityArray){
+		this.entityArray = new Array<Entity>(entityArray);
+		Array<Byte> types = new Array<Byte>();
+		types.add((byte)1);
+		types.add((byte)2);
+		spriteManager.loadAssetsTemp(types);
 	}
 	
 	/**

@@ -52,13 +52,14 @@ public class SimulationManager extends Manager {
 
         generateBoids();
 
-        worldManager.putObject(new Object((byte)2,(byte)1,100,100));
-//        worldManager.putObject(new Object((byte)2,(byte)1,110,100));
-//        worldManager.putObject(new Object((byte)2,(byte)1,100,110));
+        Array<Byte> objTypes = new Array<Byte>();
+        Object obj = new Object((byte)2,(byte)1,100,100);
+        objTypes.add(obj.getType());
+        worldManager.putObject(obj);
+        obj = new Object((byte)3,(byte)1,555,555);
+        objTypes.add(obj.getType());
+        worldManager.putObject(obj);
 
-        worldManager.putObject(new Object((byte)3,(byte)1,555,555));
-//        worldManager.putObject(new Object((byte)3,(byte)1,565,555));
-//        worldManager.putObject(new Object((byte)3,(byte)1,555,565));
     }
 
     public void reset(){
