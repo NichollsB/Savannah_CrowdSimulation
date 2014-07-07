@@ -65,7 +65,6 @@ public class SimScreenGUI {
         resetButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 simScreen.simulationManager.reset();
                 simScreen.setup();
             }
@@ -76,9 +75,8 @@ public class SimScreenGUI {
         saveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
-            	//simScreen.simulationManager.save();
-            	//System.out.println("Saving");
+            	simScreen.simulationManager.save();
+            	System.out.println("Saving");
             }
         });
 
