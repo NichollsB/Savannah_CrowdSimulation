@@ -13,18 +13,34 @@ import com.sun.xml.internal.stream.Entity;
 
 public class SpriteManager {
 	
+	//Full filemap
+	private ObjectMap<String, ObjectMap<Integer, String>> filesMap = 
+			new ObjectMap<String, ObjectMap<Integer, String>>(){{
+				put("Tiles", new ObjectMap<Integer, String>(){{
+					put(0, "grass_tile_x16.png");
+				}});
+				put("Objects", new ObjectMap<Integer, String>(){{
+					put(0, "corpse_object_x16.png");
+					put(1, "corpse_object_x16.png");
+					put(2, "corpse_object_x16.png");
+				}});
+				put("Boids", new ObjectMap<Integer, String>());
+			}};
 	
-	private ObjectMap<Integer, String> dynamicsFiles = new ObjectMap<Integer, String>();//{{
+	//World Tiling:
+	private ObjectMap<Integer, String> tileFiles = new ObjectMap<Integer, String>();
+	
+	private ObjectMap<Integer, String> boidsFiles = new ObjectMap<Integer, String>();//{{
 //		put(0, "data/triangle2.png");
 //		put(1, "data/triangle3.png");
 //        put(2, "data/triangle3.png");
 //	}};
-	private String defaultTextureFile = "data/triangle2.png";
-	private ObjectMap<Integer, String> staticsFiles = new ObjectMap<Integer, String>();
+	private String defaultBoidTextureFile = "data/triangle2.png";
+	private ObjectMap<Integer, String> objectsFiles = new ObjectMap<Integer, String>();
 	
 	
-	private ObjectMap<Integer, Sprite> continuousEntitySprites;
-	private ObjectMap<Integer, Sprite> staticEntitySprites;
+	private ObjectMap<Integer, Sprite> boidSprites;
+	private ObjectMap<Integer, Sprite> objectSprites;
 	private Array<Array<Sprite>> entitySprites;
 	
 	private AssetManager assetManager = new AssetManager();
@@ -46,24 +62,24 @@ public class SpriteManager {
 		Sprite sprite;
 		Texture spriteTexture;
 		created = true;
-		continuousEntitySprites = new ObjectMap<Integer, Sprite>(dynamicsFiles.size);
-		for(Integer entity: dynamicsFiles.keys()){
-			if(assetManager.isLoaded(dynamicsFiles.get(entity))){
-				spriteTexture = assetManager.get(dynamicsFiles.get(entity), Texture.class);
+		boidSprites = new ObjectMap<Integer, Sprite>(boidsFiles.size);
+		for(Integer entity: boidsFiles.keys()){
+			if(assetManager.isLoaded(boidsFiles.get(entity))){
+				spriteTexture = assetManager.get(boidsFiles.get(entity), Texture.class);
 				sprite = new Sprite(spriteTexture);
 				sprite.setOrigin((spriteTexture.getWidth()/2), spriteTexture.getHeight()/2);
-				continuousEntitySprites.put(entity, sprite);
+				boidSprites.put(entity, sprite);
 			}
 			else
 				created = false;
 		}
-		staticEntitySprites = new ObjectMap<Integer, Sprite>(staticsFiles.size);
-		for(Integer entity: staticsFiles.keys()){
-			if(assetManager.isLoaded(staticsFiles.get(entity))){
-				spriteTexture = assetManager.get(staticsFiles.get(entity), Texture.class);
+		objectSprites = new ObjectMap<Integer, Sprite>(objectsFiles.size);
+		for(Integer entity: objectsFiles.keys()){
+			if(assetManager.isLoaded(objectsFiles.get(entity))){
+				spriteTexture = assetManager.get(objectsFiles.get(entity), Texture.class);
 				sprite = new Sprite(spriteTexture);
 				sprite.setOrigin((spriteTexture.getWidth()/2), spriteTexture.getHeight()/2);
-				staticEntitySprites.put(entity, sprite);
+				objectSprites.put(entity, sprite);
 			}
 			else
 				created = false;
@@ -79,14 +95,14 @@ public class SpriteManager {
 	}
 	
 	public Sprite getContinuousSprite(Byte subType){
-		if(subType < continuousEntitySprites.size){
-			return continuousEntitySprites.get((int)subType);
+		if(subType < boidSprites.size){
+			return boidSprites.get((int)subType);
 		}
 		return null;
 	}
 	public Sprite getStaticSprite(Byte subtype){
-		if(subtype < staticEntitySprites.size){
-			return staticEntitySprites.get((int)subtype);
+		if(subtype < objectSprites.size){
+			return objectSprites.get((int)subtype);
 		}
 		return null;
 	}
@@ -113,10 +129,10 @@ public class SpriteManager {
 			fileStr = entityTextureLocation.get(entity);
 			assetManager.load(fileStr, Texture.class);
 			if(continuousEntities){
-				dynamicsFiles.put(entity.intValue(), fileStr);
+				boidsFiles.put(entity.intValue(), fileStr);
 			}
 			else {
-				staticsFiles.put(entity.intValue(), fileStr);
+				objectsFiles.put(entity.intValue(), fileStr);
 			}
 			
 		}
@@ -126,7 +142,7 @@ public class SpriteManager {
 		created = false;
 		String filename = "corpse_object_x16.png";
 		for(Byte type : objs){
-			staticsFiles.put((int)type, filename);
+			objectsFiles.put((int)type, filename);
 			assetManager.load(filename, Texture.class);
 		}
 		//System.out.println("Loading static sprites:" + staticsFiles.size);

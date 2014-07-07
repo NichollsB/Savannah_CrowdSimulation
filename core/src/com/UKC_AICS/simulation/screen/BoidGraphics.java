@@ -107,6 +107,10 @@ public class BoidGraphics {
 		spriteManager.loadAssetsTemp(types);
 	}
 	
+	public void initTileSprites(Byte[][] map){
+		
+	}
+	
 	/**
 	 * sets the boidSprite to the Boid perameters current position and finds the equivalent rotation of the sprite from
 	 * the boid velcoity vector
@@ -119,24 +123,7 @@ public class BoidGraphics {
 			double rot = Math.toDegrees(Math.atan2( - velocity.x, velocity.y)); //made x negative.
 			sprite.setPosition(position.x, position.y);
 			sprite.setRotation((float) rot);
-			/*if(boid.species == 1){
-				altSprite.setPosition(position.x, position.y);
-				altSprite.setRotation((float) rot);
-			}
-			else {
-				boidSprite.setPosition( position.x, position.y);
-				boidSprite.setRotation((float) rot);
-			}*/
-			
 
-			
-			//boidSprite.rotate((float) rot);
-//			boidMap.get(boid).setPosition(position.x, position.y);
-			/*if (boid.equals(boidsArray.get(0))){
-				System.out.println("Boid pos: " + boid.getPosition().toString() + " Boid Velocity: " + boid.getVelocity().toString() +
-						" boid rotation: " + rot);
-			}*/
-		//}
 	}
 	
 
