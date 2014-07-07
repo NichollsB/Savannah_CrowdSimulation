@@ -3,12 +3,10 @@ package com.UKC_AICS.simulation.managers;
 import java.util.HashMap;
 import java.util.Random;
 
-import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.*;
-import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.entity.behaviours.*;
 import com.UKC_AICS.simulation.utils.QuadTree;
-import com.UKC_AICS.simulation.world.BoidGrid;
+import com.UKC_AICS.simulation.utils.BoidGrid;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -23,8 +21,6 @@ public class BoidManager extends Manager {
 
 
 
-    private static final float FLOCK_RADIUS = 100f;
-    private static final float SEP_RADIUS = 20f;
     private final SimulationManager parent;
 
     private Array<Boid> boids = new Array<Boid>();
@@ -51,6 +47,8 @@ public class BoidManager extends Manager {
         behaviours.put("alignment", new Alignment());
         behaviours.put("cohesion", new Cohesion());
         behaviours.put("wander", new Wander());
+        behaviours.put("attractor", new Attractor());
+        behaviours.put("repeller", new Repeller());
 
     }
 
@@ -75,15 +73,51 @@ public class BoidManager extends Manager {
         int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
         int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
 
-        int xOrient = (rand.nextInt(2 * maxXOrient) - maxXOrient);
+        int xVel = (rand.nextInt(2 * maxXVel) - maxXVel);
 
-        int yOrient = (rand.nextInt(2 * maxYOrient) - maxYOrient);
+        int yVel = (rand.nextInt(2 * maxYVel) - maxYVel);
+
+
+        boid.setBirthDay(SimulationManager.getDay());
+
+        boid.setPosition(xPos, yPos, 0);
+//        boid.setOrientation(xOrient, yOrient, 0);
+        boid.setVelocity(xVel, yVel, 0);
+
+        boids.add(boid);
+//        quadtree.insert(boid);
+        boidGrid.addBoid(boid);
+    }
+
+    /**
+     * create boid from the species file.
+     * @param species
+     */
+    public void createBoid(Species species) {
+        Boid boid = new Boid(species);
+
+        int maxXPos = 1180;
+        int minXPos = 100;
+
+        int maxYPos = 620;
+        int minYPos = 100;
+
+        int maxXOrient = 10;
+        int maxYOrient = 10;
+
+
+        int maxXVel = 1;
+        int maxYVel = 1;
+
+
+        int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+        int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
 
         int xVel = (rand.nextInt(2 * maxXVel) - maxXVel);
 
         int yVel = (rand.nextInt(2 * maxYVel) - maxYVel);
 
-        
+
         boid.setBirthDay(SimulationManager.getDay());
 
         boid.setPosition(xPos, yPos, 0);
@@ -177,12 +211,23 @@ public class BoidManager extends Manager {
             for (Boid b : nearBoids) {
                 steering.set(boid.getPosition());
                 steering.sub(b.getPosition());
-                if (steering.len() > FLOCK_RADIUS) {
+                if (steering.len() > boid.flockRadius) {
                     nearBoids.removeValue(b, true);
                 }
                 //if the boid is outside the flock radius it CANT also be in the "too close" range
-                else if (steering.len() < SEP_RADIUS) {
+                else if (steering.len() < boid.nearRadius) {
                     closeBoids.add(b);
+                }
+            }
+
+            //find objects nearby
+            Array<Entity> dummyObjects = parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
+            for (Entity ent : dummyObjects) {
+//                if (ent.getPosition().dst2(boid.getPosition()) > boid.sightRadius) {
+                steering.set(boid.position);
+                steering.sub(ent.position);
+                if (steering.len() > boid.sightRadius) {
+                    dummyObjects.removeValue(ent, false);
                 }
             }
 
@@ -199,15 +244,14 @@ public class BoidManager extends Manager {
             //do stuff
             steering.set(0f, 0f, 0f);
 
-            Array<Entity> dummyObjects = parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
             steering.add(behaviours.get("cohesion").act(nearBoids, dummyObjects, boid).scl(coh));
             steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
             steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
             steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
             //TODO: add these behaviours in properly.
-            steering.add(behaviours.get("repeller").act());
-            steering.add(behaviours.get("attractor").act());
+//            steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
+//            steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
 
             // NaN check
 //            if (steering.x != steering.x) {
@@ -229,10 +273,10 @@ public class BoidManager extends Manager {
     	
     public void updateAge(){
     	for(Boid b : boids){
-    	int bday = Boid.getBirthDay();
-    	int day = SimulationManager.getDay();
-    	int newAge = bday + (day - bday);
-    	Boid.setAge(newAge);
+            int bday = Boid.getBirthDay();
+            int day = SimulationManager.getDay();
+            int newAge = bday + (day - bday);
+            Boid.setAge(newAge);
     	}
     }
     

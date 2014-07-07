@@ -1,11 +1,11 @@
 package com.UKC_AICS.simulation.managers;
 
 import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.*;
 import com.UKC_AICS.simulation.utils.QuadTree;
-import com.UKC_AICS.simulation.utils.Species;
-import com.UKC_AICS.simulation.world.BoidGrid;
+import com.UKC_AICS.simulation.entity.Species;
+import com.UKC_AICS.simulation.utils.BoidGrid;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -301,7 +301,7 @@ public class BoidManagerThreadedTwo extends Manager {
                             //do stuff
                             steering.set(0f, 0f, 0f);
 
-                            Array<Object> dummyObjects = new Array<Object>();
+                            Array<Entity> dummyObjects = new Array<Entity>();
 
                             if (boid.equals(null) || nearBoids.size <= 0 || closeBoids.size <= 0) {
                                 System.out.println("SOmething is null!!!");

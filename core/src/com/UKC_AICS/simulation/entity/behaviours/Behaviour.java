@@ -10,6 +10,7 @@ public abstract class Behaviour {
     //Temporary Vectors that the behaviours can use to do summing etc.
     protected Vector3 tmpVec = new Vector3();
     protected Vector3 tmpVec2 = new Vector3();
+    protected static Vector3 statVec = new Vector3();
 
 
     /**
@@ -19,7 +20,8 @@ public abstract class Behaviour {
      * @param boid    : the boid that the behaviour is being run for.
      */
     public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
-        return null;
+        throw new Error("The Behaviour is calling the default - make sure to check you've got the right act() call");
+//        return null;
     }
     public Vector3 act(Array<Entity> objects, Boid boid) {
         return null;

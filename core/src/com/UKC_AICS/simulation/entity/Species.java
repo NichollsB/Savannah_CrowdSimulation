@@ -1,4 +1,4 @@
-package com.UKC_AICS.simulation.utils;
+package com.UKC_AICS.simulation.entity;
 
 /**
  * Created by james on 03/07/2014.
@@ -11,6 +11,31 @@ public class Species {
     private float separation;
     private float alignment;
     private float wander;
+
+    public float getNearRadius() {
+        return nearRadius;
+    }
+    public void setNearRadius(float nearRadius) {
+        this.nearRadius = nearRadius;
+    }
+
+    public float getFlockRadius() {
+        return flockRadius;
+    }
+    public void setFlockRadius(float flockRadius) {
+        this.flockRadius = flockRadius;
+    }
+
+    public float getSightRadius() {
+        return sightRadius;
+    }
+    public void setSightRadius(float sightRadius) {
+        this.sightRadius = sightRadius;
+    }
+
+    private float sightRadius;
+    private float flockRadius;
+    private float nearRadius;
     private String spriteLocation;
 
     public String getName() {

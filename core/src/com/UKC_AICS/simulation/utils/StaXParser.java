@@ -1,5 +1,7 @@
 package com.UKC_AICS.simulation.utils;
 
+import com.UKC_AICS.simulation.entity.Species;
+
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -27,6 +29,9 @@ public class StaXParser {
     static final String NUMBER = "number";
     static final String BYTE = "byte";
     static final String SPRITELOCATION = "spriteLocation";
+    static final String SIGHTRADIUS = "sightRadius";
+    static final String FLOCKRADIUS= "flockRadius";
+    static final String NEARRADIUS = "nearRadius";
 
     @SuppressWarnings({ "unchecked", "null" })
     public HashMap<Byte, Species> readConfig(String configFile) {
@@ -120,6 +125,33 @@ public class StaXParser {
                         event = eventReader.nextEvent();
                         species.setWander(Float.parseFloat(event.asCharacters().getData()));
                         continue;
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(SIGHTRADIUS)) {
+                            event = eventReader.nextEvent();
+                            species.setSightRadius(Float.parseFloat(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(FLOCKRADIUS)) {
+                            event = eventReader.nextEvent();
+                            species.setFlockRadius(Float.parseFloat(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(NEARRADIUS)) {
+                            event = eventReader.nextEvent();
+                            species.setNearRadius(Float.parseFloat(event.asCharacters().getData()));
+                            continue;
+                        }
                     }
                 }
                 // If we reach the end of an item element, we add it to the list
