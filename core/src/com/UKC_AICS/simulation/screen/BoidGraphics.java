@@ -47,6 +47,15 @@ public class BoidGraphics {
 			batch.disableBlending();
 			batch.begin();
 			byte b = 0;
+			if(entityArray.size>0){
+				for(Entity entity : entityArray){
+					sprite = spriteManager.getStaticSprite(entity.getSubType());
+					Vector3 pos = entity.getPosition();
+					sprite.setPosition(pos.x, pos.y);
+					sprite.draw(batch);
+				}
+				
+			}
 			if(boidsArray.size>0){
 				for(Boid boid : boidsArray){
 					sprite = spriteManager.getSprite(b, boid.getSpecies());
@@ -58,15 +67,6 @@ public class BoidGraphics {
 					else
 						boidSprite.draw(batch);*/
 				}
-			}
-			if(entityArray.size>0){
-				for(Entity entity : entityArray){
-					sprite = spriteManager.getStaticSprite(entity.getSubType());
-					Vector3 pos = entity.getPosition();
-					sprite.setPosition(pos.x, pos.y);
-					sprite.draw(batch);
-				}
-				
 			}
 			batch.end();
 			batch.enableBlending();
