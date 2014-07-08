@@ -182,57 +182,73 @@ public class BoidManagerThreadedThree extends Manager {
         //TODO: Look into making this so it can be threaded.
         resetThreadLists();
 
-        synchronized (lock) {
-            calculateAllBoids();
-            lock.notify();
-        }
+        calculateAllBoids();
+
+
 
         synchronized (lock) {
+            while(!allBoidsUpdated()) {
+                try{
+                    lock.wait(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             moveAllBoids();
-            lock.notify();
+            lock.notifyAll();
         }
 
         synchronized (lock){
             while (!allBoidsMoved()){
                 try {
-                    lock.wait();
+                    lock.wait(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            lock.notify();
+            lock.notify(); //not needed??
             System.out.println("DONNNEEE!!!");
         }
     }
 
     private void calculateAllBoids() {
-        float coh;
-        float ali;
-        float sep;
-        float wan;
+        synchronized (lock) {
+            float coh;
+            float ali;
+            float sep;
+            float wan;
+            Boid boid;
+            for (int i = 0; i < boids.size; i++) {
+                boid = boids.get(i);
+                byte species = boid.getSpecies();
 
-        Boid boid;
-        for (int i = 0; i < boids.size; i++) {
-            boid = boids.get(i);
-            byte species = boid.getSpecies();
+                Species speciesData = SimulationManager.speciesData.get(species);
 
-            Species speciesData = SimulationManager.speciesData.get(species);
+                coh = speciesData.getCohesion();
+                ali = speciesData.getAlignment();
+                sep = speciesData.getSeparation();
+                wan = speciesData.getWander();
 
-            coh = speciesData.getCohesion();
-            ali = speciesData.getAlignment();
-            sep = speciesData.getSeparation();
-            wan = speciesData.getWander();
-
-            //post boids calculation task
-            Runnable runnableCalculate = createCalcRunnable(boid, species, coh, sep, ali, wan);
-            executorService.submit(runnableCalculate);
+                //post boids calculation task
+                Runnable runnableCalculate = createCalcRunnable(boid, species, coh, sep, ali, wan);
+                executorService.submit(runnableCalculate);
+            }
+            System.out.println("Posted all boids' calc runnables ");
+            lock.notifyAll();
         }
-        System.out.println("Posted all boids' calc runnables ");
     }
 
     private void moveAllBoids() {
         for (Boid boid : boids) {
-            executorService.submit(moveRunnables.get(boid));
+            Runnable r = moveRunnables.get(boid);
+            if(r == null) {
+                System.out.println("STUPID NO MOVE RUNNABLE");
+                if(updated(boid)) {
+                    System.out.println("BUT I UPDATED");
+                }
+            } else {
+                executorService.submit(r);
+            }
         }
         System.out.println("Posted all boids' move runnables ");
     }
@@ -263,11 +279,13 @@ public class BoidManagerThreadedThree extends Manager {
                     Array<Boid> nearBoids = boidGrid.findNearby(boid.getPosition());
                     Array<Boid> closeBoids = new Array<Boid>();
 
-                    for (Boid b : nearBoids) {
+                    Boid b;
+                    for (int i = 0; i < boids.size; i++) {
+                        b = boids.get(i);
                         steering.set(boid.getPosition());
                         steering.sub(b.getPosition());
                         if (steering.len() > boid.flockRadius) {
-                            nearBoids.removeValue(b, true);
+                            nearBoids.removeValue(b, false);
                         }
                         //if the boid is outside the flock radius it CANT also be in the "too close" range
                         else if (steering.len() < boid.nearRadius) {
@@ -307,6 +325,9 @@ public class BoidManagerThreadedThree extends Manager {
                     updatedBoids.add(boid);
                     System.out.println(boid.toString() + " has calculated");
 
+                    Runnable r = createMoveRunnable(boid);
+                    moveRunnables.put(boid, r);
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -326,8 +347,7 @@ public class BoidManagerThreadedThree extends Manager {
                     //tell the grid to update its position.
                     boidGrid.update(boid);
                     movedBoids.add(boid);
-//                        System.out.println(boid.toString() + " has moved");
-
+                    System.out.println(boid.toString() + " has moved");
             }
         };
         return runnableMove;

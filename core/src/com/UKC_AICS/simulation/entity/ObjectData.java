@@ -14,4 +14,12 @@ public class ObjectData {
         this.subType = subType;
         this.imagePath = imagePath;
     }
+
+    public byte getType() {
+        return type;
+    }
+
+    public byte getSubType() {
+        return subType;
+    }
 }

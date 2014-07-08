@@ -19,8 +19,8 @@ public class Repeller extends Behaviour
         for (Entity ent : objects) {
             if (ent.getType() != 2) { //TODO: remove hardcoded "flee" picking from mass of objects - probably filter before passing to here.
                 tmpVec2.add(ent.position);
+                num++;
             }
-            num++;
         }
 
 //        tmpVec2.sub(boid.getPosition());

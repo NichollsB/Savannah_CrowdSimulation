@@ -7,14 +7,20 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class Object extends Entity {
 
-public Object(byte type, byte subType, Vector3 position) {
+    public Object(byte type, byte subType, Vector3 position) {
         this.type = type;
         this.position = position;
-        }
+    }
 
-public Object(byte type, byte subType, int x, int y) {
+    public Object(byte type, byte subType, int x, int y) {
         this.type = type;
         this.subType = subType;
-        this.position = new Vector3(x,y,0);
-        }
-        }
+        this.position = new Vector3(x, y, 0);
+    }
+    
+    public Object(ObjectData objData, int x, int y) {
+        this.type = objData.getType();
+        this.subType = objData.getSubType();
+        this.position = new Vector3(x, y, 0);
+    }
+}

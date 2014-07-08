@@ -54,12 +54,13 @@ public class SimulationManager extends Manager {
         generateBoids();
 
         Array<Byte> objTypes = new Array<Byte>();
-        Object obj = new Object((byte)2,(byte)1,100,100);
+        Object obj = new Object((byte)2,(byte)1,355,450);
         objTypes.add(obj.getType());
         worldManager.putObject(obj);
-        obj = new Object((byte)2,(byte)1,900,300);
+        obj = new Object((byte)2,(byte)1,500,200);
+//        obj = new Object((byte)2,(byte)1,900,300);
         worldManager.putObject(obj);
-        obj = new Object((byte)3,(byte)1,555,555);
+        obj = new Object((byte)3,(byte)1,755,450);
         objTypes.add(obj.getType());
         worldManager.putObject(obj);
 
