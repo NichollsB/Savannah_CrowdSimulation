@@ -3,8 +3,10 @@ package com.UKC_AICS.simulation.managers;
 import java.util.HashMap;
 import java.util.Random;
 
+import com.UKC_AICS.simulation.Registry;
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.behaviours.*;
+import com.UKC_AICS.simulation.utils.MathsUtils;
 import com.UKC_AICS.simulation.utils.QuadTree;
 import com.UKC_AICS.simulation.utils.BoidGrid;
 import com.badlogic.gdx.Gdx;
@@ -53,41 +55,41 @@ public class BoidManager extends Manager {
     }
 
 
-    public void createBoid(byte species) {
-        Boid boid = new Boid(species);
-
-        int maxXPos = 1180;
-        int minXPos = 100;
-
-        int maxYPos = 620;
-        int minYPos = 100;
-
-        int maxXOrient = 10;
-        int maxYOrient = 10;
-
-
-        int maxXVel = 1;
-        int maxYVel = 1;
-
-
-        int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
-        int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
-
-        int xVel = (rand.nextInt(2 * maxXVel) - maxXVel);
-
-        int yVel = (rand.nextInt(2 * maxYVel) - maxYVel);
-
-
-        boid.setBirthDay(SimulationManager.getDay());
-
-        boid.setPosition(xPos, yPos, 0);
-//        boid.setOrientation(xOrient, yOrient, 0);
-        boid.setVelocity(xVel, yVel, 0);
-
-        boids.add(boid);
-//        quadtree.insert(boid);
-        boidGrid.addBoid(boid);
-    }
+//    public void createBoid(byte species) {
+//        Boid boid = new Boid(species);
+//
+//        int maxXPos = 1180;
+//        int minXPos = 100;
+//
+//        int maxYPos = 620;
+//        int minYPos = 100;
+//
+//        int maxXOrient = 10;
+//        int maxYOrient = 10;
+//
+//
+//        int maxXVel = 1;
+//        int maxYVel = 1;
+//
+//
+//        int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+//        int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+//
+//        int xVel = (rand.nextInt(2 * maxXVel) - maxXVel);
+//
+//        int yVel = (rand.nextInt(2 * maxYVel) - maxYVel);
+//
+//
+//        boid.setBirthDay(SimulationManager.getDay());
+//
+//        boid.setPosition(xPos, yPos, 0);
+////        boid.setOrientation(xOrient, yOrient, 0);
+//        boid.setVelocity(xVel, yVel, 0);
+//
+//        boids.add(boid);
+////        quadtree.insert(boid);
+//        boidGrid.addBoid(boid);
+//    }
 
     /**
      * create boid from the species file.
@@ -118,17 +120,29 @@ public class BoidManager extends Manager {
         int yVel = (rand.nextInt(2 * maxYVel) - maxYVel);
 
 
-        boid.setBirthDay(SimulationManager.getDay());
+//        boid.setBirthDay(SimulationManager.getDay());
+//        boid.setOrientation(xOrient, yOrient, 0);
 
         boid.setPosition(xPos, yPos, 0);
-//        boid.setOrientation(xOrient, yOrient, 0);
         boid.setVelocity(xVel, yVel, 0);
 
         boid.hunger = rand.nextInt(120) + 20;
         boid.thirst = rand.nextInt(150) + 50;
+        //random start age
+        boid.age = rand.nextInt((int)species.getLifespan());
+
         boids.add(boid);
 //        quadtree.insert(boid);
         boidGrid.addBoid(boid);
+    }
+
+    /**
+     * create a copy of a boid.
+     * @param oldBoid
+     * @return
+     */
+    public Boid createBoid(Boid oldBoid) {
+        return new Boid(oldBoid);
     }
 
     public void clearBoidList() {
@@ -148,8 +162,9 @@ public class BoidManager extends Manager {
      * called by the update in SimulationManager
      * <p/>
      * this will loop through the boids and update them
+     * @param dayIncrement
      */
-    public void update() {
+    public void update(boolean dayIncrement) {
 //        rebuildTree(boids);
         //loop through boids and ask them to do their thing.
 
@@ -265,7 +280,13 @@ public class BoidManager extends Manager {
 
                 //tell the grid to update its position.
                 boidGrid.update(boid);
+
+
             }
+        }
+        //do aging here, purely on a day increment basis, so we'll see swathes of death everytime the day increments.
+        if (dayIncrement) {
+            updateAges();
         }
     }
 
@@ -282,16 +303,24 @@ public class BoidManager extends Manager {
             parent.parent.gui.setConsole(" A boid just died of thirst :( ");
             return true;
         }
+        float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
+        if( boid.age > lifespan)  {
+            boids.removeValue(boid, false);
+            boidGrid.removeBoid(boid);
+            parent.parent.gui.setConsole(" A boid just died of age related issues :( ");
+            return true;
+        }
         return false;
     }
 
 
-    public void updateAge(){
+    public void updateAges(){
     	for(Boid b : boids){
-            int bday = b.getBirthDay();
-            int day = SimulationManager.getDay();
-            int newAge = bday + (day - bday);
-            Boid.setAge(newAge);
+            b.age++;
+//            int bday = b.getBirthDay();
+//            int day = SimulationManager.getDay();
+//            int newAge = bday + (day - bday);
+//            b.setAge(newAge);
     	}
     }
     
@@ -299,7 +328,7 @@ public class BoidManager extends Manager {
     
 
     public void rebuildTree(Array<Boid> boids) {
-        quadtree = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        quadtree = new QuadTree(0, new Rectangle(0, 0, Registry.screenWidth, Registry.screenHeight));
         for (Boid boid : boids)
             quadtree.insert(boid);
     }

@@ -105,13 +105,18 @@ public class SimulationManager extends Manager {
         }
     }
     
-    public void update() {
-        boidManager.update();
-        worldManager.update();
-        tick();
+    public void update(boolean dayIncrement) {
+        dayIncrement = tick();
+        boidManager.update(dayIncrement);
+        worldManager.update(dayIncrement);
     }
 
-    private void tick() {
+    /**
+     *
+     * @return whether the time has "ticked" over a dya or not.
+     */
+    private boolean tick() {
+        boolean increment = false;
         if (minutes < 59) {
             minutes += 1;
         } else if (hours < 23) {
@@ -121,11 +126,14 @@ public class SimulationManager extends Manager {
             hours = 0;
             days += 1;
             setDay();
+            increment = true;
         } else {
             days = 0;
             weeks += 1;
             setDay();
+            increment = true;
         }
+        return increment;
 //        System.out.println(minutes + " mins; " + hours + " hrs; " + days + " days; " + weeks + " wks.");
     }
 
@@ -136,7 +144,7 @@ public class SimulationManager extends Manager {
 
     public void setDay() {
     	currentDay++;
-    	boidManager.updateAge();
+//    	boidManager.updateAge(); //moved this to boidmanager
     }
     
    public static int getDay() {

@@ -25,8 +25,8 @@ public class Boid extends Entity {
     public float thirst = 0;
 
 
-    public static int age = 0;
-    public static int birthDay = 0;
+    public int age = 0;
+    public int birthDay = 0;
 
     public Boid( Vector3 pos, Vector3 vel) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -65,7 +65,30 @@ public class Boid extends Entity {
         position = new Vector3();
         velocity = new Vector3();
 
+    }
 
+    /**
+     *
+     * Copy constructor
+     *
+     * @param boid the boid to make a copy of.
+     */
+    public Boid(Boid boid) {
+        type = 1;
+        subType =  boid.getSubType();
+        nearRadius = boid.nearRadius;
+        sightRadius = boid.sightRadius;
+        flockRadius = boid.flockRadius;
+
+        maxSpeed = boid.maxSpeed;
+        maxForce = boid.maxForce;
+
+        position = new Vector3(boid.getPosition());
+        velocity = new Vector3(boid.getVelocity());
+
+        hunger = boid.hunger;
+        thirst = boid.thirst;
+        age = boid.age;
     }
 
 
@@ -126,14 +149,17 @@ public class Boid extends Entity {
        this.birthDay = birthDay;     
     }   
     
-    public static int getBirthDay() {
+    public int getBirthDay() {
     	return birthDay;    	
     }
-    
-    public static void setAge(int newAge) {
-    	age = newAge;
+
+    public void setAge(int newAge) {
+        age = newAge;
     }
-    public static int getAge() {
+    public void age() {
+        age++;
+    }
+    public int getAge() {
     	return age;
     }
 

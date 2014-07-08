@@ -1,14 +1,11 @@
 package com.UKC_AICS.simulation.screen;
 
-import java.util.HashMap;
-
 import com.UKC_AICS.simulation.Registry;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -56,7 +53,7 @@ public class SimulationScreen implements Screen {
     public void render(float delta) {
         //kind of the update loop.
         if (running) {
-            simulationManager.update();
+            simulationManager.update(false);
         }
 
         // checks if simulation needs to be rendered or can be run "offline"
