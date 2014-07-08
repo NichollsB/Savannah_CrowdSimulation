@@ -1,4 +1,4 @@
-package com.UKC_AICS.simulation.utils;
+package com.UKC_AICS.simulation.entity;
 
 /**
  * Created by james on 03/07/2014.
@@ -7,11 +7,23 @@ public class Species {
     private String name;
     private int number;
     private byte spbyte;
+    private String spriteLocation;
+
+    private float sightRadius;
+    private float flockRadius;
+    private float nearRadius;
+
+    private float maxSpeed;
+    private float maxForce;
+
     private float cohesion;
     private float separation;
     private float alignment;
     private float wander;
-    private String spriteLocation;
+
+
+
+
 
     public String getName() {
         return name;
@@ -32,6 +44,48 @@ public class Species {
     }
     public void setSpbyte(byte spbyte) {
         this.spbyte = spbyte;
+    }
+
+    public String getSpriteLocation() {
+        return spriteLocation;
+    }
+    public void setSpriteLocation(String spriteLocation) {
+        this.spriteLocation = spriteLocation;
+    }
+
+    public float getNearRadius() {
+        return nearRadius;
+    }
+    public void setNearRadius(float nearRadius) {
+        this.nearRadius = nearRadius;
+    }
+
+    public float getFlockRadius() {
+        return flockRadius;
+    }
+    public void setFlockRadius(float flockRadius) {
+        this.flockRadius = flockRadius;
+    }
+
+    public float getSightRadius() {
+        return sightRadius;
+    }
+    public void setSightRadius(float sightRadius) {
+        this.sightRadius = sightRadius;
+    }
+
+    public float getMaxSpeed() {
+        return maxSpeed;
+    }
+    public void setMaxSpeed(float maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
+    public float getMaxForce() {
+        return maxForce;
+    }
+    public void setMaxForce(float maxForce) {
+        this.maxForce = maxForce;
     }
 
     public float getCohesion() {
@@ -60,13 +114,6 @@ public class Species {
     }
     public void setWander(float wander) {
         this.wander = wander;
-    }
-
-    public String getSpriteLocation() {
-        return spriteLocation;
-    }
-    public void setSpriteLocation(String spriteLocation) {
-        this.spriteLocation = spriteLocation;
     }
 
     @Override

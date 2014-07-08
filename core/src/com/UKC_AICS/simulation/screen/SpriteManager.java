@@ -1,15 +1,12 @@
 package com.UKC_AICS.simulation.screen;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.sun.xml.internal.stream.Entity;
 
 public class SpriteManager {
 	
@@ -17,12 +14,12 @@ public class SpriteManager {
 	private ObjectMap<String, ObjectMap<Integer, String>> filesMap = 
 			new ObjectMap<String, ObjectMap<Integer, String>>(){{
 				put("Tiles", new ObjectMap<Integer, String>(){{
-					put(0, "grass_tile_x16.png");
+					put(0, "data/grass_tile_x16.png");
 				}});
 				put("Objects", new ObjectMap<Integer, String>(){{
-					put(0, "corpse_object_x16.png");
-					put(1, "corpse_object_x16.png");
-					put(2, "corpse_object_x16.png");
+					put(0, "data/corpse_object_x16.png");
+					put(1, "data/corpse_object_x16.png");
+					put(2, "data/corpse_object_x16.png");
 				}});
 				put("Boids", new ObjectMap<Integer, String>());
 			}};
@@ -140,7 +137,7 @@ public class SpriteManager {
 	
 	public void loadAssetsTemp(Array<Byte> objs){
 		created = false;
-		String filename = "corpse_object_x16.png";
+		String filename = "data/corpse_object_x16.png";
 		for(Byte type : objs){
 			objectsFiles.put((int)type, filename);
 			assetManager.load(filename, Texture.class);

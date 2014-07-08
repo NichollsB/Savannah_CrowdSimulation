@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 /**
  * @author Emily
  */
-public class BoidManagerThreaded extends Manager {
+public class BoidManagerThreadedTwo extends Manager {
 
 
     private static ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() - 1);
@@ -32,6 +32,7 @@ public class BoidManagerThreaded extends Manager {
     final static java.lang.Object lockMove = new java.lang.Object();
 
     private HashMap<Boid, Runnable> moveRunnables = new HashMap<Boid, Runnable>();
+    private HashMap<Boid, Runnable>  updateRunnables = new HashMap<Boid, Runnable>();
 
     private CopyOnWriteArraySet<Boid> updatedBoids = new CopyOnWriteArraySet<Boid>();
     private CopyOnWriteArraySet<Boid> movedBoids = new CopyOnWriteArraySet<Boid>();
@@ -53,7 +54,7 @@ public class BoidManagerThreaded extends Manager {
     private BoidGrid boidGrid;
 
 
-    public BoidManagerThreaded() {
+    public BoidManagerThreadedTwo() {
 
         boidGrid = new BoidGrid(60, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -64,8 +65,51 @@ public class BoidManagerThreaded extends Manager {
         behaviours.put("cohesion", new Cohesion());
         behaviours.put("wander", new Wander());
 
+        behaviours.put("attractor", new Attractor());
+        behaviours.put("repeller", new Repeller());
+
     }
 
+
+    /**
+     * create boid from the species file.
+     * @param species
+     */
+    public void createBoid(Species species) {
+        Boid boid = new Boid(species);
+
+        int maxXPos = 1180;
+        int minXPos = 100;
+
+        int maxYPos = 620;
+        int minYPos = 100;
+
+        int maxXOrient = 10;
+        int maxYOrient = 10;
+
+
+        int maxXVel = 1;
+        int maxYVel = 1;
+
+
+        int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+        int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+
+        int xVel = (rand.nextInt(2 * maxXVel) - maxXVel);
+
+        int yVel = (rand.nextInt(2 * maxYVel) - maxYVel);
+
+
+        boid.setBirthDay(SimulationManager.getDay());
+
+        boid.setPosition(xPos, yPos, 0);
+//        boid.setOrientation(xOrient, yOrient, 0);
+        boid.setVelocity(xVel, yVel, 0);
+
+        boids.add(boid);
+//        quadtree.insert(boid);
+        boidGrid.addBoid(boid);
+    }
 
     public void createBoid(byte species) {
         Boid boid = new Boid(species);
@@ -156,51 +200,84 @@ public class BoidManagerThreaded extends Manager {
                 sep = speciesData.getSeparation();
                 wan = speciesData.getWander();
 
-                //post boids calculation task
+                //make calculation runnable
                 Runnable runnableCalculate = createCalcRunnable(boid, species, coh, sep, ali, wan);
-                executorService.submit(runnableCalculate);
-
                 //post boids move task.
                 Runnable runnableMove = createMoveRunnable(boid);
 
                 moveRunnables.put(boid, runnableMove);
+                updateRunnables.put(boid, runnableCalculate);
+
+                //post boids calculation task
+                executorService.submit(runnableCalculate);
             }
 
-//            System.out.println("All runnables created!");
+            System.out.println("All runnables created!");
             isRecalculating = true;
             lock.notifyAll();
         }
+
+        synchronized (lock) {
+            Runnable r;
+            for (Boid b : updateRunnables.keySet()) {
+                r = updateRunnables.get(b);
+                if(r!= null) {
+                    executorService.submit(r);
+                } else {
+                    System.out.print("oops");
+                }
+            }
+
+            lock.notifyAll();
+        }
+
+
         synchronized (lockUpdate) {
             while (!allBoidsUpdated()) {
                 try {
                     isRecalculating = true;
-//                    System.out.println("All boids have calculated is waiting");
+                    System.out.println("All boids have calculated is waiting");
                     lockUpdate.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-
             isRecalculating = false;
-//            System.out.println("All boids have calculated has notified");
-            lockUpdate.notifyAll();
+
+            for(Boid b : updatedBoids) {
+                Runnable r= moveRunnables.get(b);
+                if (r != null) {
+                    executorService.submit(r);
+                } else {
+                    System.out.println("oops");
+                }
+            }
+             System.out.println("All boids have calculated has notified");
+             lockUpdate.notifyAll();
 
         }
 
         synchronized (lockMove) {
             while (!allBoidsMoved()) {
                 try {
-//                    System.out.println("All boids have moved is waiting");
+                    System.out.println("All boids have moved is waiting");
                     lockMove.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
             executorService.shutdown();
-//            System.out.println("UPDATE CYCLE COMPLETE");
+            System.out.println("UPDATE CYCLE COMPLETE");
 //            notifyAll();
         }
     }
+
+
+    public void calculateBoids() {
+
+    }
+
+
 
     private boolean allBoidsUpdated() {
         boolean bool = updatedBoids.size() == boids.size;
@@ -233,23 +310,14 @@ public class BoidManagerThreaded extends Manager {
 
             @Override
             public void run() {
-                synchronized (lock) {
                     while (!isRecalculating && updated(boid)) {
                         try {
-//                            System.out.println(boid + " calc is waiting");
-                            lock.wait();
-                        } catch (InterruptedException e) {
+                            System.out.println(boid + " calc is waiting");
+//                            lock.wait();
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                    synchronized (lockUpdate) {
-                        while (updated(boid)) {
-                            try {
-                               lockUpdate.wait();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
                         try {
                             Array<Boid> nearBoids = new Array<Boid>();
                             Array<Boid> closeBoids = new Array<Boid>();
@@ -296,22 +364,17 @@ public class BoidManagerThreaded extends Manager {
 
                             boid.setAcceleration(steering);
                             updatedBoids.add(boid);
-//                            System.out.println(boid.toString() + " has calculated");
+                            System.out.println(boid.toString() + " has calculated");
 
-                            executorService.submit(moveRunnables.remove(boid));
-
-
-                            lockUpdate.notifyAll();
+//                            executorService.submit(moveRunnables.remove(boid));
                             //                        lockMove.notifyAll();
                         } catch (Exception ex) {
                             ex.printStackTrace();
 
-                        } finally {
-                            lockUpdate.notifyAll();
-                        }
+
                     }
                 }
-            }
+//            }
         };
 
         return runnableCalculate;
@@ -323,32 +386,24 @@ public class BoidManagerThreaded extends Manager {
         Runnable runnableMove = new Runnable() {
             @Override
             public void run() {
-                synchronized (lockUpdate) {
-                    while (isRecalculating) { //&& !allBoidsUpdated() && moved(boid)
-                        try {
-//                            System.out.println(boid + " move is waiting");
-                            lockUpdate.wait();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    synchronized (lockMove) {
-                        while (moved(boid)) {
-                            try {
-                                lockMove.wait();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        boid.move();
-                        //tell the grid to update its position.
-                        boidGrid.update(boid);
-                        movedBoids.add(boid);
+                synchronized (lockMove) {
+//                    while (isRecalculating) { //&& !allBoidsUpdated() && moved(boid)
+//                        try {
+////                            System.out.println(boid + " move is waiting");
+//                            lockUpdate.wait();
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+                    boid.move();
+                    //tell the grid to update its position.
+                    boidGrid.update(boid);
+                    movedBoids.add(boid);
 
 //                        System.out.println(boid.toString() + " has moved");
 
-                        lockMove.notifyAll();
-                    }
+                    lockMove.notifyAll();
+//                }
                 }
             }
         };

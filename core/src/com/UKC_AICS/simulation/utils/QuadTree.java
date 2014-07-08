@@ -231,7 +231,9 @@ public class QuadTree {
             nodes[index].retrieveColliders(returnObjects, point);
         }
 
-        for(Entity obj : objects) {
+        Entity obj;
+        for (int i = 0; i < objects.size; i++) {
+            obj = objects.get(i);
             if(obj.getType() == 1 && !returnObjects.contains( obj, true) ){
                 returnObjects.add(obj);
             }
@@ -244,7 +246,9 @@ public class QuadTree {
             nodes[index].retrieveColliders(returnObjects, point);
         }
 
-        for(Entity obj : objects) {
+        Entity obj;
+        for (int i = 0; i < objects.size; i++) {
+            obj = objects.get(i);
             if(obj.getType() != 1 && !returnObjects.contains( obj, true) ){
                 returnObjects.add(obj);
             }
@@ -265,7 +269,9 @@ public class QuadTree {
             nodes[index].retrieveBoids(returnObjects, rect);
         }
 
-        for(Entity obj : objects) {
+        Entity obj;
+        for (int i = 0; i < objects.size; i++) {
+            obj = objects.get(i);
             if( obj.getType() == 1  ){
                 returnObjects.add((Boid)obj);
             }
@@ -280,7 +286,9 @@ public class QuadTree {
             nodes[index].retrieveBoids(returnObjects, point);
         }
 
-        for(Entity obj : objects) {
+        Entity obj;
+        for (int i = 0; i < objects.size; i++) {
+            obj = objects.get(i);
             if(obj.getType() == 1 && !returnObjects.contains( (Boid)obj, true) ){
                 returnObjects.add((Boid)obj);
             }

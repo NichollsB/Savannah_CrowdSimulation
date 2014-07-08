@@ -21,7 +21,7 @@ public class Wander extends Behaviour {
      * @return a random "wander" vector between 1 and -1, with a tendency toward zero.
      */
     @Override
-    public Vector3 act(Array<Boid> boids, Array<com.UKC_AICS.simulation.entity.Object> objects, Boid boid) {
+    public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
 
         tmpVec.set(rand.nextFloat() - rand.nextFloat(), rand.nextFloat() - rand.nextFloat(), 0);
         return tmpVec.cpy();

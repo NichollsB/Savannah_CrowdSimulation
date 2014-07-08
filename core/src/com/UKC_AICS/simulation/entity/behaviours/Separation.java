@@ -16,7 +16,7 @@ public class Separation extends Behaviour {
 //	}
 
     @Override
-    public Vector3 act(Array<Boid> boids, Array<com.UKC_AICS.simulation.entity.Object> objects, Boid boid) {
+    public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
         tmpVec.set(0, 0, 0); //will hold returnable
         tmpVec2.set(0, 0, 0); //will hold temporary value for
 
@@ -25,17 +25,21 @@ public class Separation extends Behaviour {
         if (boids.size > 0) {
             for (Boid b : boids) {
                 //no subType check here for now as it wants to stay a certain distance away from all boids.
+                if(b != boid) {
                     tmpVec2.set(boid.getPosition());
                     tmpVec2.sub(b.getPosition());
                     tmpVec.add(tmpVec2);
                     num++;
+                }
             }
 
-            tmpVec.scl(1.0f / num);
-            tmpVec.nor();
-            tmpVec.scl(boid.maxSpeed);
-            tmpVec.sub(boid.getVelocity());
-            tmpVec.limit(boid.maxForce);
+            if(num > 0) {
+                tmpVec.scl(1.0f / num);
+                tmpVec.nor();
+                tmpVec.scl(boid.maxSpeed);
+                tmpVec.sub(boid.getVelocity());
+                tmpVec.limit(boid.maxForce);
+            }
 
         }
 

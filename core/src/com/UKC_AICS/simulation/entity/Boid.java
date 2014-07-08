@@ -10,21 +10,21 @@ public class Boid extends Entity {
 
     //boids own specific variants on the species.
     public float maxSpeed = 2f;
-    public float maxForce = 0.03f; //30 degree?
+    public float maxForce = 0.03f; //
     
     //Present for each species
-    public static int Age = 0;
-    public static int birthDay = 0;
+     // - individula weightings will go here.
+
+    public float sightRadius = 200f;
+    public float flockRadius = 100f;
+    public float nearRadius = 20f;
 
     private Vector3 acceleration = new Vector3();
-    
-    public Boid() {
-        type = 1; // this is for categorising it as a "boid" object.
-        subType = 1;
-        position = new Vector3();
-        velocity = new Vector3();
-//        orientation = new Vector3();
-    }
+
+
+
+    public static int Age = 0;
+    public static int birthDay = 0;
 
     public Boid( Vector3 pos, Vector3 vel) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -47,6 +47,21 @@ public class Boid extends Entity {
         position = pos.cpy();
         velocity = vel.cpy();
 //        orientation = new Vector3();
+    }
+
+
+    public Boid(Species species) {
+        type = 1;
+        subType =  species.getSpbyte();
+        nearRadius = species.getNearRadius();
+        sightRadius = species.getSightRadius();
+        flockRadius = species.getFlockRadius();
+
+        maxSpeed = species.getMaxSpeed();
+        maxForce = species.getMaxForce();
+
+        position = new Vector3();
+        velocity = new Vector3();
     }
 
 
@@ -109,7 +124,9 @@ public class Boid extends Entity {
     public static void setAge(int newAge) {
     	Age = newAge;	 
     }
-       
+    public static int getAge() {
+    	return Age;	 
+    }
     /**
      * explicit setting to a defined velocity.
      *

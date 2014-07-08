@@ -3,15 +3,14 @@ package com.UKC_AICS.simulation.managers;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
-import com.UKC_AICS.simulation.screen.SimulationScreen;
-import com.UKC_AICS.simulation.utils.Species;
+import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.utils.StaXParser;
+import com.UKC_AICS.simulation.utils.StaxWriter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -21,9 +20,11 @@ import java.util.Iterator;
  */
 public class SimulationManager extends Manager {
 
-//    static final BoidManagerThreaded boidManager = new BoidManagerThreaded();
-    static final BoidManager boidManager = new BoidManager();
-    static final WorldManager worldManager = new WorldManager(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+    //    static final BoidManagerThreaded boidManager = new BoidManagerThreaded();
+//    static final BoidManagerThreadedTwo boidManager = new BoidManagerThreadedTwo();
+//    BoidManagerThreadedThree boidManager = new BoidManagerThreadedThree(this);
+    BoidManager boidManager = new BoidManager(this);
+    WorldManager worldManager = new WorldManager(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
     static public int minutes = 0;
     static public int hours = 0;
@@ -48,16 +49,21 @@ public class SimulationManager extends Manager {
      * Possibly store the data lookup tables here? like subType data for example
      */
     public SimulationManager() {
-        speciesData = staXParser.readConfig("../core/assets/settings.xml");
+        speciesData = staXParser.readConfig("../core/assets/data/species.xml");
 
         generateBoids();
+
         Array<Byte> objTypes = new Array<Byte>();
-        Object obj = new Object((byte)2,(byte)1,100,100);
+        Object obj = new Object((byte)2,(byte)1,355,450);
         objTypes.add(obj.getType());
+        worldManager.putObject(obj);
+        obj = new Object((byte)2,(byte)1,500,200);
+//        obj = new Object((byte)2,(byte)1,900,300);
+        worldManager.putObject(obj);
+        obj = new Object((byte)3,(byte)1,755,450);
         objTypes.add(obj.getType());
-        worldManager.putObject(obj, new Vector3(100,100,0));
-        worldManager.putObject(obj, new Vector3(200,200,0));
-        System.out.println("num objects" + objTypes.size);
+        worldManager.putObject(obj);
+
     }
 
     public void reset(){
@@ -66,6 +72,17 @@ public class SimulationManager extends Manager {
     	resetTime();
     }
 
+    public void save() {
+    	System.out.println("Called in SM");
+    	StaxWriter configFile = new StaxWriter();
+        configFile.setFile("config2.xml");
+        try {
+          configFile.saveConfig();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    
 
     public void generateBoids(){
     	//Create a map of species bytes to filenames for the boid sprite textures
@@ -78,7 +95,7 @@ public class SimulationManager extends Manager {
             int number = species.getNumber();
 
             for (int i = 0; i < number; i++) {
-                boidManager.createBoid(spByte.byteValue());  //TODO get the subType int from xml file
+                boidManager.createBoid(species);  //TODO get the subType int from xml file
             }
             //Find the species texture file location
             fileLocations.put(spByte, species.getSpriteLocation());
@@ -116,7 +133,6 @@ public class SimulationManager extends Manager {
 
     public void setDay() {
     	currentDay++;
-    	System.out.println(currentDay);
     	boidManager.updateAge();
     }
     

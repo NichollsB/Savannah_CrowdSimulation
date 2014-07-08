@@ -50,6 +50,9 @@ public class WorldManager extends Manager {
     public void putObject(Entity entity, int x, int y) {
         putObject(entity, new Vector3(x,y,0));
     }
+    public void putObject(Entity entity) {
+        putObject(entity, entity.getPosition());
+    }
     public void putObject(Entity entity, Vector3 position) {
         if(entity.getPosition().x != position.x || entity.getPosition().y != position.y){
             entity.setPosition(position);
