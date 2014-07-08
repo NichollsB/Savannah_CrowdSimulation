@@ -4,6 +4,7 @@ import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.entity.Species;
+import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.UKC_AICS.simulation.utils.StaXParser;
 import com.UKC_AICS.simulation.utils.StaxWriter;
 import com.badlogic.gdx.Gdx;
@@ -20,6 +21,7 @@ import java.util.Iterator;
  */
 public class SimulationManager extends Manager {
 
+    final SimulationScreen parent;
     //    static final BoidManagerThreaded boidManager = new BoidManagerThreaded();
 //    static final BoidManagerThreadedTwo boidManager = new BoidManagerThreadedTwo();
 //    BoidManagerThreadedThree boidManager = new BoidManagerThreadedThree(this);
@@ -48,7 +50,8 @@ public class SimulationManager extends Manager {
      * <p/>
      * Possibly store the data lookup tables here? like subType data for example
      */
-    public SimulationManager() {
+    public SimulationManager(SimulationScreen parent) {
+        this.parent = parent;
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
 
         generateBoids();

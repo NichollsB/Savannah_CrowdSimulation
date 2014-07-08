@@ -1,7 +1,10 @@
 package com.UKC_AICS.simulation.entity;
 
+import com.UKC_AICS.simulation.Registry;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
+
+import java.util.Random;
 
 /**
  * @author Emily
@@ -11,19 +14,18 @@ public class Boid extends Entity {
     //boids own specific variants on the species.
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //
-    
-    //Present for each species
-     // - individula weightings will go here.
+    private Vector3 acceleration = new Vector3();
 
     public float sightRadius = 200f;
     public float flockRadius = 100f;
     public float nearRadius = 20f;
 
-    private Vector3 acceleration = new Vector3();
+
+    public float hunger = 0;
+    public float thirst = 0;
 
 
-
-    public static int Age = 0;
+    public static int age = 0;
     public static int birthDay = 0;
 
     public Boid( Vector3 pos, Vector3 vel) {
@@ -62,11 +64,12 @@ public class Boid extends Entity {
 
         position = new Vector3();
         velocity = new Vector3();
+
+
     }
 
 
     public void setAcceleration(Vector3 acceleration) {
-
         this.acceleration.set(acceleration);
     }
 
@@ -74,25 +77,31 @@ public class Boid extends Entity {
         //TODO: Add in better limiter for speed. Possibly??
         //move
         velocity.add(acceleration).limit(maxSpeed);
+
         position.add(velocity);
         //check for out of bounds
         checkInBounds();
+
+
+        //TODO: potentially have different species "degrade" at different rates
+        hunger -= (float) 0.5 /60;
+        thirst -= (float) 2 /60;
     }
 
 
 
     private void checkInBounds() {
         //TODO make this access the simulation map size, as this will be different from screen size eventually.
-        if(position.x > Gdx.graphics.getWidth()) {
-            position.x -= Gdx.graphics.getWidth();
+        if(position.x > Registry.screenWidth) {
+            position.x -= Registry.screenWidth;
         } else if(position.x < 0) {
-            position.x += Gdx.graphics.getWidth();
+            position.x += Registry.screenWidth;
         }
 
-        if(position.y > Gdx.graphics.getHeight()) {
-            position.y -= Gdx.graphics.getHeight();
+        if(position.y > Registry.screenHeight) {
+            position.y -= Registry.screenHeight;
         } else if(position.y < 0) {
-            position.y += Gdx.graphics.getHeight();
+            position.y += Registry.screenHeight;
         }
     }
 
@@ -106,7 +115,7 @@ public class Boid extends Entity {
         this.position = position;
     }
     public void setPosition( float x, float y, float z) {
-        this.position = new Vector3(x, y, z);
+        setPosition(new Vector3(x, y, z));
     }
 
     public Vector3 getVelocity() {
@@ -122,11 +131,14 @@ public class Boid extends Entity {
     }
     
     public static void setAge(int newAge) {
-    	Age = newAge;	 
+    	age = newAge;
     }
     public static int getAge() {
-    	return Age;	 
+    	return age;
     }
+
+
+
     /**
      * explicit setting to a defined velocity.
      *

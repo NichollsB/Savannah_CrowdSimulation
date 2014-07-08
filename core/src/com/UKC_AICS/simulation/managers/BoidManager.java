@@ -124,6 +124,8 @@ public class BoidManager extends Manager {
 //        boid.setOrientation(xOrient, yOrient, 0);
         boid.setVelocity(xVel, yVel, 0);
 
+        boid.hunger = rand.nextInt(120) + 20;
+        boid.thirst = rand.nextInt(150) + 50;
         boids.add(boid);
 //        quadtree.insert(boid);
         boidGrid.addBoid(boid);
@@ -150,8 +152,6 @@ public class BoidManager extends Manager {
     public void update() {
 //        rebuildTree(boids);
         //loop through boids and ask them to do their thing.
-
-        //TODO: Look into making this so it can be threaded.
 
         Boid boid;
         for (int i = 0; i < boids.size; i++) {
@@ -226,15 +226,10 @@ public class BoidManager extends Manager {
 //                if (ent.getPosition().dst2(boid.getPosition()) > boid.sightRadius) {
                 steering.set(boid.position);
                 steering.sub(ent.position);
-                if (steering.len() > boid.sightRadius) {
+                if (steering.len2() > boid.sightRadius * boid.sightRadius) {
                     dummyObjects.removeValue(ent, false);
                 }
             }
-
-//            float coh = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("cohesion");
-//            float ali = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("alignment");
-//            float sep = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("separation");
-//            float wan = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("wander");
 
             float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
             float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
@@ -249,7 +244,7 @@ public class BoidManager extends Manager {
             steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
             steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
-            
+
             steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.2f));
             steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.2f));
 
@@ -263,14 +258,34 @@ public class BoidManager extends Manager {
             boid.setAcceleration(steering);
             //apply it.
             boid.move();
-            //tell the grid to update its position.
-            boidGrid.update(boid);
+
+            if(checkForDeath(boid)) {
+                continue;
+            } else {
+
+                //tell the grid to update its position.
+                boidGrid.update(boid);
+            }
         }
     }
-    
-    
-    	
-    	
+
+    public boolean checkForDeath(final Boid boid) {
+        if( boid.hunger <= -20) {
+            boids.removeValue(boid, false);
+            boidGrid.removeBoid(boid);
+            parent.parent.gui.setConsole(" A boid just died of hunger :( ");
+            return true;
+        }
+        else if( boid.thirst <= -10) {
+            boids.removeValue(boid, false);
+            boidGrid.removeBoid(boid);
+            parent.parent.gui.setConsole(" A boid just died of thirst :( ");
+            return true;
+        }
+        return false;
+    }
+
+
     public void updateAge(){
     	for(Boid b : boids){
             int bday = b.getBirthDay();
@@ -290,6 +305,6 @@ public class BoidManager extends Manager {
     }
 
     public Array<Boid> getBoids() {
-        return (Array<Boid>) boids;
+        return boids;
     }
 }

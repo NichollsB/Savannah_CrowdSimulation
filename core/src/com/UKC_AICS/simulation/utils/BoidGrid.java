@@ -85,9 +85,9 @@ public class BoidGrid {
             }
             //TESTED, dont think this is needed.
             //to make sure it hasn't been put to its new pos already //seems a bit silly????
-//            if (grid[curCellX][curCellY].contains(boid, true)) {
-//                grid[curCellX][curCellY].removeValue(boid, true);
-//            }
+            if (grid[curCellX][curCellY].contains(boid, true)) {
+                grid[curCellX][curCellY].removeValue(boid, true);
+            }
         }
         return boid; //in case of chaining.
     }
