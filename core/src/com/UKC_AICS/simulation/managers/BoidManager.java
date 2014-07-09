@@ -34,7 +34,7 @@ public class BoidManager extends Manager {
     private HashMap<String, Behaviour> behaviours = new HashMap<String, Behaviour>();
 
 
-    private BoidGrid boidGrid;
+    private static BoidGrid boidGrid;
 
     public BoidManager(SimulationManager parent) {
 
@@ -60,6 +60,10 @@ public class BoidManager extends Manager {
     	boid.setBirthDay(bDay);
     	boid.setPosition(pX,pY,pZ);
     	boid.setVelocity(vX,vY,vZ);
+    	
+    	boids.add(boid);
+//      quadtree.insert(boid);
+     	boidGrid.addBoid(boid);
     }
     
 
