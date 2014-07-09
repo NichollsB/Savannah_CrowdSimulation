@@ -110,6 +110,7 @@ public class SimulationManager extends Manager {
     
     public void clear(){
     	boidManager.clearBoidList();
+    	
     }
     
     public void update() {

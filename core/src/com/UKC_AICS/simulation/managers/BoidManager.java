@@ -145,7 +145,10 @@ public class BoidManager extends Manager {
     }
 
     public void clearBoidList() {
-
+       
+    	for(Boid boid : boids){
+    	boidGrid.removeBoid(boid);
+    	}
         boids.clear();
        
 
