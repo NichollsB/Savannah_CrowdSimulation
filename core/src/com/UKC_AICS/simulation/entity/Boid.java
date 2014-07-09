@@ -22,8 +22,7 @@ public class Boid extends Entity {
     private Vector3 acceleration = new Vector3();
 
 
-
-    public static int Age = 0;
+    public static int age = 0;
     public static int birthDay = 0;
 
     public Boid( Vector3 pos, Vector3 vel) {
@@ -122,10 +121,10 @@ public class Boid extends Entity {
     }
     
     public static void setAge(int newAge) {
-    	Age = newAge;	 
+    	age = newAge;
     }
     public static int getAge() {
-    	return Age;	 
+    	return age;
     }
     /**
      * explicit setting to a defined velocity.
