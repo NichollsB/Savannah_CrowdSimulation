@@ -90,7 +90,7 @@ public class BoidGraphics {
 	 */
 	public void initBoidSprites(Array<Boid> boidArray, HashMap<Byte, String> fileLocations){
 		spriteManager.loadAssets(fileLocations, true);
-		boidsArray = new Array<Boid>(boidArray);
+		boidsArray = boidArray;
 		boidSprite = new Sprite(defaultTexture);
 		boidSprite.setOrigin((defaultTexture.getWidth()/2), defaultTexture.getHeight()/2);
 		
