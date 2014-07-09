@@ -10,7 +10,16 @@ import java.util.Random;
  * @author Emily
  */
 public class Boid extends Entity {
+    public enum State {
+        DEFAULT,
+        HUNGRY,
+        THIRSTY,
+        EVADE;
 
+        public int getStateID() {
+            return ordinal();
+        }
+    }
     //boids own specific variants on the species.
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //
@@ -24,6 +33,7 @@ public class Boid extends Entity {
     public float hunger = 0;
     public float thirst = 0;
 
+    public State state = State.DEFAULT;
 
     public int age = 0;
     public int birthDay = 0;
