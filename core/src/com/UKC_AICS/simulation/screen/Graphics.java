@@ -20,7 +20,7 @@ import com.UKC_AICS.simulation.entity.Object;
  * @author Ben Nicholls bn65@kent.ac.uk
  *
  */
-public class BoidGraphics {
+public class Graphics {
 	//generic sprite for all entities
 	private Sprite sprite;
 	
@@ -36,6 +36,8 @@ public class BoidGraphics {
 	
 	private SpriteManager spriteManager = new SpriteManager();
 	
+	private byte[][] tileMap;
+	
 
 	/**
 	 * Update and render the sprites representing the boids. Renders via the SpriteBatch passed in.
@@ -44,12 +46,14 @@ public class BoidGraphics {
 	public void update(SpriteBatch batch){
 		if(spriteManager.update()){
 			
+			
+			spriteManager.drawTileCache();
 			batch.disableBlending();
 			batch.begin();
 			byte b = 0;
 			if(entityArray.size>0){
 				for(Entity entity : entityArray){
-					sprite = spriteManager.getStaticSprite(entity.getSubType());
+					sprite = spriteManager.getObjectSprite(entity.getType());
 					Vector3 pos = entity.getPosition();
 					sprite.setPosition(pos.x, pos.y);
 					sprite.draw(batch);
@@ -89,8 +93,8 @@ public class BoidGraphics {
 	 * @param boidArray the Array of boids to store
 	 */
 	public void initBoidSprites(Array<Boid> boidArray, HashMap<Byte, String> fileLocations){
-		spriteManager.loadAssets(fileLocations, true);
-		boidsArray = new Array<Boid>(boidArray);
+		spriteManager.loadAssets_Boids(fileLocations, true);
+		boidsArray = boidArray;
 		boidSprite = new Sprite(defaultTexture);
 		boidSprite.setOrigin((defaultTexture.getWidth()/2), defaultTexture.getHeight()/2);
 		
@@ -102,13 +106,20 @@ public class BoidGraphics {
 	public void initObjSprites (Array<Entity> entityArray){
 		this.entityArray = new Array<Entity>(entityArray);
 		Array<Byte> types = new Array<Byte>();
-		types.add((byte)1);
-		types.add((byte)2);
-		spriteManager.loadAssetsTemp(types);
+		
+		for(Entity entity : entityArray){
+			types.add(entity.getType());
+		}
+//		System.out.println(types.size);
+//		types.add((byte)1);
+//		types.add((byte)2);
+		spriteManager.loadAssets_Objects(types);
 	}
 	
-	public void initTileSprites(Byte[][] map){
-		
+	public void initTileSprites(byte[][] map){
+		spriteManager.loadAssets_Tiles();
+		tileMap = map;
+		spriteManager.createTileCache(map);
 	}
 	
 	/**

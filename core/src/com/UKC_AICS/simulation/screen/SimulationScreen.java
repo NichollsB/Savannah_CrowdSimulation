@@ -33,7 +33,7 @@ public class SimulationScreen implements Screen {
     private BitmapFont font = new BitmapFont();
     private SpriteBatch spriteBatch = new SpriteBatch();
 
-    private BoidGraphics boidGraphics = new BoidGraphics();
+    private Graphics boidGraphics = new Graphics();
 
     SimScreenGUI gui = new SimScreenGUI(this); // Creates gui instance for this screen
 
@@ -129,6 +129,7 @@ public class SimulationScreen implements Screen {
         setupCameraController();
         boidGraphics.initBoidSprites(simulationManager.getBoids(), simulationManager.getTextureLocations());
         boidGraphics.initObjSprites(simulationManager.getObjects());
+        boidGraphics.initTileSprites(simulationManager.getMapTiles());
         //boidGraphics.initTileSprites(simulationManager.getMapTiles());
     }
 
