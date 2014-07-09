@@ -79,6 +79,17 @@ public class SimScreenGUI {
             	System.out.println("Saving");
             }
         });
+        
+      //Load button
+        final TextButton loadButton = new TextButton("Load", skin, "default");
+        loadButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            	simScreen.simulationManager.clear();
+            	simScreen.simulationManager.load();
+            	System.out.println("Loading");
+            }
+        });
 
         // Switch mode button.
         final TextButton switchButton = new TextButton("Switch", skin,"default");
@@ -99,6 +110,7 @@ public class SimScreenGUI {
         table.add(resetButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
         table.add(switchButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
         table.add(saveButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
+        table.add(loadButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
         //
         table.add(console).size(300f,30f).bottom();
 

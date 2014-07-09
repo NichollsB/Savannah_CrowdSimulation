@@ -51,6 +51,17 @@ public class BoidManager extends Manager {
         behaviours.put("repeller", new Repeller());
 
     }
+    
+    
+    public static void createBoid(byte species, int age ,int bDay ,float pX ,float pY ,float pZ ,float vX ,float vY ,float vZ) {
+    	Boid boid = new Boid(species);
+    	
+    	boid.setAge(age);
+    	boid.setBirthDay(bDay);
+    	boid.setPosition(pX,pY,pZ);
+    	boid.setVelocity(vX,vY,vZ);
+    }
+    
 
 
     public void createBoid(byte species) {
@@ -132,7 +143,7 @@ public class BoidManager extends Manager {
     public void clearBoidList() {
 
         boids.clear();
-
+       
 
     }
 
