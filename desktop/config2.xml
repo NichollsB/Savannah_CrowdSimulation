@@ -1,1502 +1,2102 @@
-<?xml version="1.0"?><config>
-	<age>5</age>
+<?xml version="1.0"?><boidlist>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>702.32794,565.03503,0.0</position>
-	<velocity>0.47137323,-1.7832996,0.0</velocity>
+	<position>227.51828,715.525,0.0</position>
+	<velocity>0.39412668,-1.9909668,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>530.7192,689.36206,0.0</position>
-	<velocity>0.8020638,-0.9615847,0.0</velocity>
+	<position>178.90521,19.774118,0.0</position>
+	<velocity>0.35931176,-1.7171773,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>702.26184,636.23193,0.0</position>
-	<velocity>0.25194818,-1.874356,0.0</velocity>
+	<position>219.51596,36.88663,0.0</position>
+	<velocity>0.49268693,-1.908361,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>555.5454,708.01263,0.0</position>
-	<velocity>1.3405097,-1.1611779,0.0</velocity>
+	<position>514.08905,129.83377,0.0</position>
+	<velocity>-1.7400063,0.23432477,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>348.59756,53.302536,0.0</position>
-	<velocity>0.99780595,-1.5950823,0.0</velocity>
+	<position>218.84485,24.002684,0.0</position>
+	<velocity>0.4453532,-2.121406,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>690.0739,629.8461,0.0</position>
-	<velocity>0.44134808,-1.8363595,0.0</velocity>
+	<position>379.01907,272.38306,0.0</position>
+	<velocity>-1.3245492,1.0239995,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>733.4094,539.47925,0.0</position>
-	<velocity>0.6204501,-1.4811171,0.0</velocity>
+	<position>225.40552,28.151388,0.0</position>
+	<velocity>0.8788236,-1.5846747,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>737.4536,511.78485,0.0</position>
-	<velocity>0.5705754,-1.3944156,0.0</velocity>
+	<position>275.9008,343.8755,0.0</position>
+	<velocity>-2.2700393,-0.3109647,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>697.182,570.3636,0.0</position>
-	<velocity>0.7728679,-1.4625834,0.0</velocity>
+	<position>192.73471,78.17515,0.0</position>
+	<velocity>0.7939168,-1.4670312,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>702.5746,567.1985,0.0</position>
-	<velocity>0.59516865,-1.6667305,0.0</velocity>
+	<position>228.91264,349.92865,0.0</position>
+	<velocity>-2.4507406,-0.49383327,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>700.07794,602.08704,0.0</position>
-	<velocity>0.6515467,-1.8908958,0.0</velocity>
+	<position>180.46635,717.22235,0.0</position>
+	<velocity>0.21703821,-1.5930935,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>700.2609,601.2781,0.0</position>
-	<velocity>0.5996687,-1.8902504,0.0</velocity>
+	<position>346.68323,287.05093,0.0</position>
+	<velocity>-1.9190372,1.1524894,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>531.50555,706.4947,0.0</position>
-	<velocity>1.220336,-1.1180712,0.0</velocity>
+	<position>214.28783,20.076988,0.0</position>
+	<velocity>0.21301731,-1.9971808,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>735.5256,525.0104,0.0</position>
-	<velocity>0.310033,-1.7190847,0.0</velocity>
+	<position>222.19711,66.179245,0.0</position>
+	<velocity>0.17547111,-1.887165,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>677.67224,566.5444,0.0</position>
-	<velocity>0.5914954,-1.52799,0.0</velocity>
+	<position>202.79456,20.805073,0.0</position>
+	<velocity>-0.0067674182,-1.2301558,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>712.5134,497.91403,0.0</position>
-	<velocity>0.23840238,-1.5842352,0.0</velocity>
+	<position>242.57501,330.4923,0.0</position>
+	<velocity>-2.036062,-0.45426616,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>719.67456,569.1181,0.0</position>
-	<velocity>0.37480575,-0.95818764,0.0</velocity>
+	<position>226.8268,373.6486,0.0</position>
+	<velocity>-1.842578,-0.14808212,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>728.7281,541.2007,0.0</position>
-	<velocity>0.58280325,-1.1793879,0.0</velocity>
+	<position>357.66077,267.47595,0.0</position>
+	<velocity>-1.921159,1.4024384,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>713.5981,683.2009,0.0</position>
-	<velocity>0.3919706,-1.1753464,0.0</velocity>
+	<position>240.10054,354.46918,0.0</position>
+	<velocity>-2.4408114,-0.48851556,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>743.5643,492.05182,0.0</position>
-	<velocity>0.5725138,-1.7713637,0.0</velocity>
+	<position>272.1736,357.86362,0.0</position>
+	<velocity>-2.4486933,-0.4625145,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>523.28796,711.84827,0.0</position>
-	<velocity>0.7188264,-1.0519835,0.0</velocity>
+	<position>347.99442,270.9212,0.0</position>
+	<velocity>-1.7660381,1.6182384,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>720.9277,513.6614,0.0</position>
-	<velocity>0.584833,-1.7331241,0.0</velocity>
+	<position>242.12823,14.165783,0.0</position>
+	<velocity>0.971908,-1.2587472,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>713.3717,565.2707,0.0</position>
-	<velocity>0.3964899,-1.5218534,0.0</velocity>
+	<position>205.94818,692.0515,0.0</position>
+	<velocity>0.21387383,-2.1139717,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>718.6264,571.7906,0.0</position>
-	<velocity>0.44006726,-1.7456545,0.0</velocity>
+	<position>215.96771,20.615984,0.0</position>
+	<velocity>0.26715615,-1.9089509,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>684.9301,546.6676,0.0</position>
-	<velocity>0.27457243,-1.4067978,0.0</velocity>
+	<position>217.72057,58.57607,0.0</position>
+	<velocity>0.40367383,-2.2568293,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>690.0305,538.55426,0.0</position>
-	<velocity>0.39036846,-1.3422614,0.0</velocity>
+	<position>224.68985,351.68323,0.0</position>
+	<velocity>-2.4307795,-0.37831378,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>737.2558,598.8256,0.0</position>
-	<velocity>0.18854544,-1.6186236,0.0</velocity>
+	<position>227.33443,351.24762,0.0</position>
+	<velocity>-2.4319012,-0.5398308,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>664.9787,596.2251,0.0</position>
-	<velocity>0.61554736,-1.4207853,0.0</velocity>
+	<position>226.83746,20.222174,0.0</position>
+	<velocity>0.84140253,-2.0667455,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>686.84625,518.3953,0.0</position>
-	<velocity>0.35612744,-1.6098417,0.0</velocity>
+	<position>173.96835,370.0016,0.0</position>
+	<velocity>-2.0320313,-0.38729116,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>554.90045,666.6329,0.0</position>
-	<velocity>0.8722998,-1.4677572,0.0</velocity>
+	<position>375.70007,273.18018,0.0</position>
+	<velocity>-1.1364263,0.99070036,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>704.7264,540.3662,0.0</position>
-	<velocity>0.28243947,-1.7531822,0.0</velocity>
+	<position>484.80542,124.95491,0.0</position>
+	<velocity>-1.7805465,0.33951303,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>731.2041,628.22675,0.0</position>
-	<velocity>0.3405115,-1.3010871,0.0</velocity>
+	<position>500.7698,142.63525,0.0</position>
+	<velocity>-2.3609352,0.001320187,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>705.3906,580.7244,0.0</position>
-	<velocity>0.35782558,-1.823217,0.0</velocity>
+	<position>525.62915,147.99936,0.0</position>
+	<velocity>-2.2156985,0.20897536,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>686.6685,518.0577,0.0</position>
-	<velocity>0.14258477,-1.3003764,0.0</velocity>
+	<position>201.95245,65.17241,0.0</position>
+	<velocity>0.5871745,-1.5501957,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>716.21515,609.7194,0.0</position>
-	<velocity>0.3976837,-1.8301955,0.0</velocity>
+	<position>225.4808,350.23,0.0</position>
+	<velocity>-2.398354,-0.37675542,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>692.7301,496.162,0.0</position>
-	<velocity>0.2219468,-1.2592151,0.0</velocity>
+	<position>210.28853,363.34854,0.0</position>
+	<velocity>-2.0095618,-0.040450938,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>705.33905,567.77844,0.0</position>
-	<velocity>0.45136672,-1.4602278,0.0</velocity>
+	<position>221.20421,64.89568,0.0</position>
+	<velocity>0.15815423,-1.9633342,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>695.7004,555.0103,0.0</position>
-	<velocity>0.5573592,-1.588012,0.0</velocity>
+	<position>252.92722,385.15823,0.0</position>
+	<velocity>-2.0284183,-0.57225674,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>551.22064,710.7665,0.0</position>
-	<velocity>1.2097203,-1.3517761,0.0</velocity>
+	<position>258.43307,350.728,0.0</position>
+	<velocity>-2.4159727,-0.4790067,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>666.6471,560.19257,0.0</position>
-	<velocity>0.10055168,-0.992237,0.0</velocity>
+	<position>340.77023,246.83696,0.0</position>
+	<velocity>-1.9248908,0.5271926,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>727.3398,617.9471,0.0</position>
-	<velocity>0.3500409,-1.8347644,0.0</velocity>
+	<position>516.6416,147.31758,0.0</position>
+	<velocity>-2.042704,0.27416462,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>721.11664,595.4637,0.0</position>
-	<velocity>0.38305318,-1.6584325,0.0</velocity>
+	<position>500.3734,171.0242,0.0</position>
+	<velocity>-1.7730652,0.56209147,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>573.52136,692.9279,0.0</position>
-	<velocity>0.98159987,-1.2925602,0.0</velocity>
+	<position>244.69284,368.08105,0.0</position>
+	<velocity>-2.1310625,-0.58433574,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>718.5274,586.14905,0.0</position>
-	<velocity>0.26218987,-1.7471808,0.0</velocity>
+	<position>245.37349,363.6002,0.0</position>
+	<velocity>-1.9066933,-0.4215961,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>563.57184,686.6522,0.0</position>
-	<velocity>1.1709911,-1.3869084,0.0</velocity>
+	<position>262.95178,352.41953,0.0</position>
+	<velocity>-2.4510493,-0.4476678,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>702.0636,575.87585,0.0</position>
-	<velocity>0.4681532,-1.6801227,0.0</velocity>
+	<position>533.8218,222.38455,0.0</position>
+	<velocity>-1.5564923,-1.2844243,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>657.0083,519.292,0.0</position>
-	<velocity>0.11347096,-0.8325013,0.0</velocity>
+	<position>217.54851,329.12967,0.0</position>
+	<velocity>-1.6240243,-0.91429704,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>668.0378,547.1682,0.0</position>
-	<velocity>0.50347114,-1.8533518,0.0</velocity>
+	<position>228.07011,352.18234,0.0</position>
+	<velocity>-2.3691525,-0.4893056,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>710.1193,518.0155,0.0</position>
-	<velocity>0.06631921,-1.6240859,0.0</velocity>
+	<position>189.2179,42.935738,0.0</position>
+	<velocity>0.49481574,-1.4157553,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>709.78143,536.62585,0.0</position>
-	<velocity>0.4526559,-1.5165325,0.0</velocity>
+	<position>321.572,284.04755,0.0</position>
+	<velocity>-1.718184,1.3149564,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>716.3138,547.43304,0.0</position>
-	<velocity>0.6245607,-1.6827474,0.0</velocity>
+	<position>239.09056,343.15802,0.0</position>
+	<velocity>-2.1158123,-0.47235745,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>695.1894,596.2413,0.0</position>
-	<velocity>0.57839584,-1.7146337,0.0</velocity>
+	<position>249.45847,352.1806,0.0</position>
+	<velocity>-2.4232407,-0.5038004,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>708.1128,549.9866,0.0</position>
-	<velocity>0.42773667,-1.953725,0.0</velocity>
+	<position>252.39404,353.33856,0.0</position>
+	<velocity>-2.387168,-0.4444479,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>694.70874,501.18262,0.0</position>
-	<velocity>0.21877815,-1.6399449,0.0</velocity>
+	<position>227.85571,377.66998,0.0</position>
+	<velocity>-1.9008098,-0.26218283,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>551.8701,711.17224,0.0</position>
-	<velocity>1.2553358,-1.1456091,0.0</velocity>
+	<position>259.3518,31.264347,0.0</position>
+	<velocity>0.30175582,-1.8327531,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>723.2364,482.76953,0.0</position>
-	<velocity>0.5378783,-1.5956552,0.0</velocity>
+	<position>251.52213,370.16992,0.0</position>
+	<velocity>-2.0485008,-0.5357715,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>676.34985,565.9669,0.0</position>
-	<velocity>0.4560005,-1.5370549,0.0</velocity>
+	<position>369.3038,255.85449,0.0</position>
+	<velocity>-1.8977679,1.4908034,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>712.15283,554.5229,0.0</position>
-	<velocity>0.5194013,-1.6402119,0.0</velocity>
+	<position>509.49518,148.368,0.0</position>
+	<velocity>-2.2391658,0.65453756,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>754.7912,553.4249,0.0</position>
-	<velocity>0.46909294,-0.97389877,0.0</velocity>
+	<position>233.70418,36.314556,0.0</position>
+	<velocity>0.5123972,-1.3411664,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>706.5108,566.19495,0.0</position>
-	<velocity>0.4127564,-1.8270472,0.0</velocity>
+	<position>200.79718,363.55853,0.0</position>
+	<velocity>-2.1422992,-0.38100398,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>719.83685,555.3405,0.0</position>
-	<velocity>0.5859247,-1.5527352,0.0</velocity>
+	<position>229.68144,59.86318,0.0</position>
+	<velocity>0.41081178,-1.3794773,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>684.9902,558.2568,0.0</position>
-	<velocity>0.5978218,-1.4847937,0.0</velocity>
+	<position>220.0224,36.94597,0.0</position>
+	<velocity>0.71626574,-2.0889177,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>544.05164,7.2239485,0.0</position>
-	<velocity>1.3167682,-1.3032305,0.0</velocity>
+	<position>373.4855,248.77965,0.0</position>
+	<velocity>-0.7858072,0.5997168,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>707.01056,521.5301,0.0</position>
-	<velocity>0.13147548,-1.7371565,0.0</velocity>
+	<position>201.06165,8.054463,0.0</position>
+	<velocity>0.27262887,-1.7877461,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>700.3646,584.97504,0.0</position>
-	<velocity>0.39115915,-1.7534679,0.0</velocity>
+	<position>511.95178,127.46797,0.0</position>
+	<velocity>-1.627446,0.11170149,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>722.60284,570.3642,0.0</position>
-	<velocity>0.09337641,-1.2903917,0.0</velocity>
+	<position>500.49472,142.23418,0.0</position>
+	<velocity>-2.3565974,0.032325126,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>701.6027,537.61145,0.0</position>
-	<velocity>0.24313214,-1.7237434,0.0</velocity>
+	<position>250.07951,53.69169,0.0</position>
+	<velocity>0.82927763,-1.5424616,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>724.0521,511.18192,0.0</position>
-	<velocity>0.6145868,-1.5900646,0.0</velocity>
+	<position>521.45215,145.76787,0.0</position>
+	<velocity>-2.1795485,0.20504545,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>704.5242,563.33527,0.0</position>
-	<velocity>0.13712618,-1.8599794,0.0</velocity>
+	<position>237.28824,346.23877,0.0</position>
+	<velocity>-2.1047945,-0.56160694,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>566.9015,717.9135,0.0</position>
-	<velocity>0.7942828,-1.0040956,0.0</velocity>
+	<position>499.27734,144.08992,0.0</position>
+	<velocity>-2.309878,0.027161133,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>753.50977,569.87103,0.0</position>
-	<velocity>0.46977365,-1.2385972,0.0</velocity>
+	<position>235.16861,42.26811,0.0</position>
+	<velocity>0.7115063,-1.6001513,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>732.0387,557.31714,0.0</position>
-	<velocity>0.3774021,-1.682446,0.0</velocity>
+	<position>218.67624,62.668488,0.0</position>
+	<velocity>0.4858688,-2.0857396,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>679.43207,541.5594,0.0</position>
-	<velocity>0.50322,-1.6337589,0.0</velocity>
+	<position>241.10783,76.76024,0.0</position>
+	<velocity>0.13618158,-1.2736827,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>689.793,562.99066,0.0</position>
-	<velocity>0.46755606,-1.2009922,0.0</velocity>
+	<position>226.53214,351.10828,0.0</position>
+	<velocity>-2.2996502,-0.45638692,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>708.1957,516.0586,0.0</position>
-	<velocity>0.44949847,-1.6267803,0.0</velocity>
+	<position>245.82875,357.24213,0.0</position>
+	<velocity>-2.3778965,-0.4683426,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>702.44867,477.9269,0.0</position>
-	<velocity>0.61358577,-1.3677241,0.0</velocity>
+	<position>499.1064,152.46379,0.0</position>
+	<velocity>-2.200458,0.48001242,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>686.4354,530.8416,0.0</position>
-	<velocity>0.33009908,-1.5253478,0.0</velocity>
+	<position>209.32826,51.887585,0.0</position>
+	<velocity>0.6439171,-1.5448046,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>714.66754,580.61505,0.0</position>
-	<velocity>0.1518168,-1.8199341,0.0</velocity>
+	<position>517.66394,160.76152,0.0</position>
+	<velocity>-1.533562,0.3786775,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>733.29114,509.00742,0.0</position>
-	<velocity>0.7007814,-1.4311996,0.0</velocity>
+	<position>250.49455,353.17368,0.0</position>
+	<velocity>-2.236738,-0.478415,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>706.8867,522.8565,0.0</position>
-	<velocity>0.21274297,-1.5732812,0.0</velocity>
+	<position>261.57333,361.46198,0.0</position>
+	<velocity>-2.4011023,-0.5413154,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>647.8447,537.08655,0.0</position>
-	<velocity>0.10307299,-1.0706905,0.0</velocity>
+	<position>241.86243,355.59525,0.0</position>
+	<velocity>-2.187011,-0.5271066,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>584.58234,684.80774,0.0</position>
-	<velocity>1.2720124,-1.2431171,0.0</velocity>
+	<position>193.93484,346.5833,0.0</position>
+	<velocity>-1.9754856,-0.5855462,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>734.841,547.11414,0.0</position>
-	<velocity>0.62785083,-1.2866408,0.0</velocity>
+	<position>197.41917,324.53613,0.0</position>
+	<velocity>-1.9128933,-0.66746813,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>712.3707,550.1598,0.0</position>
-	<velocity>0.43007204,-1.5484766,0.0</velocity>
+	<position>362.6627,259.05142,0.0</position>
+	<velocity>-1.4584624,0.9925746,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>711.00024,660.182,0.0</position>
-	<velocity>0.11033292,-1.6083565,0.0</velocity>
+	<position>233.71455,373.44385,0.0</position>
+	<velocity>-2.038333,-0.4970097,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>739.9075,613.4248,0.0</position>
-	<velocity>0.38321248,-1.6912273,0.0</velocity>
+	<position>529.539,224.23573,0.0</position>
+	<velocity>-1.791202,-1.024395,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>550.05286,718.05133,0.0</position>
-	<velocity>1.293825,-1.1240094,0.0</velocity>
+	<position>216.005,328.81473,0.0</position>
+	<velocity>-1.7247313,-0.8661099,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>753.2384,534.9752,0.0</position>
-	<velocity>0.20934525,-1.7452235,0.0</velocity>
+	<position>523.3343,164.97346,0.0</position>
+	<velocity>-1.9835674,0.0061171353,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>706.648,551.8674,0.0</position>
-	<velocity>0.5477336,-1.7942396,0.0</velocity>
+	<position>531.9445,145.74544,0.0</position>
+	<velocity>-2.071023,0.5255802,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>540.28796,1.9993162,0.0</position>
-	<velocity>1.4423511,-1.0848475,0.0</velocity>
+	<position>217.3801,39.092823,0.0</position>
+	<velocity>0.7753486,-1.1019717,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>680.56793,602.4867,0.0</position>
-	<velocity>0.49518892,-1.5843544,0.0</velocity>
+	<position>362.9122,246.56837,0.0</position>
+	<velocity>-0.62748855,0.80966103,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>695.7818,572.4781,0.0</position>
-	<velocity>0.7646725,-1.665759,0.0</velocity>
+	<position>223.18198,321.17987,0.0</position>
+	<velocity>-1.5924699,-0.4788333,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>711.23,602.3265,0.0</position>
-	<velocity>0.20488574,-1.789458,0.0</velocity>
+	<position>219.89058,36.87056,0.0</position>
+	<velocity>0.67845035,-2.177374,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>556.70605,684.25836,0.0</position>
-	<velocity>1.1872559,-1.4445052,0.0</velocity>
+	<position>254.83662,58.614075,0.0</position>
+	<velocity>0.8675634,-1.3186399,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>714.4797,538.9197,0.0</position>
-	<velocity>0.4337166,-1.8720012,0.0</velocity>
+	<position>214.03983,383.8094,0.0</position>
+	<velocity>-1.2229975,-0.23155557,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>717.33057,584.5914,0.0</position>
-	<velocity>0.3082533,-1.6720829,0.0</velocity>
+	<position>229.20181,343.3774,0.0</position>
+	<velocity>-2.1625497,-0.5420029,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>671.29407,502.72067,0.0</position>
-	<velocity>0.5582964,-1.3600007,0.0</velocity>
+	<position>232.57146,388.29984,0.0</position>
+	<velocity>-2.1761343,-0.44003838,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>745.3869,577.2145,0.0</position>
-	<velocity>0.20203424,-1.3435413,0.0</velocity>
+	<position>171.14917,343.87473,0.0</position>
+	<velocity>-1.769618,-0.07430455,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>663.87274,531.219,0.0</position>
-	<velocity>0.3732935,-1.6785136,0.0</velocity>
+	<position>213.42982,20.067673,0.0</position>
+	<velocity>0.05168477,-1.8907946,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>693.60913,463.96866,0.0</position>
-	<velocity>0.28815448,-1.5793763,0.0</velocity>
+	<position>214.14621,341.48453,0.0</position>
+	<velocity>-2.248192,-0.64216644,0.0</velocity>
 	<species>0</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>574.0829,91.029,0.0</position>
-	<velocity>-0.40622786,-1.2022238,0.0</velocity>
+	<position>297.00906,717.4243,0.0</position>
+	<velocity>-1.293146,-0.27885067,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>597.57996,227.49599,0.0</position>
-	<velocity>-0.38293293,-1.7137758,0.0</velocity>
+	<position>155.64636,311.5415,0.0</position>
+	<velocity>0.19161311,-0.521397,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>521.4512,173.16312,0.0</position>
-	<velocity>-0.1928182,-1.6141855,0.0</velocity>
+	<position>406.22656,70.714134,0.0</position>
+	<velocity>-0.6105934,0.42428726,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>647.1608,269.66495,0.0</position>
-	<velocity>-0.4093404,-1.723259,0.0</velocity>
+	<position>757.6951,401.3164,0.0</position>
+	<velocity>-1.0618331,-0.6827578,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>614.27966,260.66443,0.0</position>
-	<velocity>-0.3964535,-1.7928821,0.0</velocity>
+	<position>370.483,76.31077,0.0</position>
+	<velocity>-1.0985789,0.378037,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>563.09344,177.68782,0.0</position>
-	<velocity>-0.5448834,-1.1561412,0.0</velocity>
+	<position>293.56027,60.43838,0.0</position>
+	<velocity>-1.3779013,-0.20701757,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>602.34644,237.92297,0.0</position>
-	<velocity>-0.45554215,-1.2422627,0.0</velocity>
+	<position>641.874,303.687,0.0</position>
+	<velocity>-0.73034936,-1.2379184,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>598.9653,289.31412,0.0</position>
-	<velocity>-0.015571095,-1.5795547,0.0</velocity>
+	<position>444.83786,189.37372,0.0</position>
+	<velocity>-0.4240321,-0.29510093,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>603.50305,238.37602,0.0</position>
-	<velocity>-0.50903594,-1.830966,0.0</velocity>
+	<position>128.42426,278.40515,0.0</position>
+	<velocity>-0.20298578,-0.9945677,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>611.3708,293.5822,0.0</position>
-	<velocity>-0.23148316,-1.7916819,0.0</velocity>
+	<position>435.8529,91.14761,0.0</position>
+	<velocity>-0.6990235,0.41252992,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>705.8844,172.4212,0.0</position>
-	<velocity>-0.18691154,-1.4576639,0.0</velocity>
+	<position>396.21457,117.98526,0.0</position>
+	<velocity>-0.7852537,-0.46850783,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>577.82684,303.28598,0.0</position>
-	<velocity>-0.1988211,-1.2769188,0.0</velocity>
+	<position>698.0608,338.18674,0.0</position>
+	<velocity>-0.9610586,-0.8984885,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>594.1604,261.03564,0.0</position>
-	<velocity>-0.3442273,-1.7884551,0.0</velocity>
+	<position>597.69745,187.6148,0.0</position>
+	<velocity>-0.9592758,-0.6381425,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>563.9488,279.1388,0.0</position>
-	<velocity>-0.084998995,-1.1410159,0.0</velocity>
+	<position>337.05127,366.8696,0.0</position>
+	<velocity>-0.90249854,-0.8956377,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>633.60223,218.40768,0.0</position>
-	<velocity>-0.26382858,-1.4268494,0.0</velocity>
+	<position>493.7309,194.59462,0.0</position>
+	<velocity>-1.1360294,-0.571691,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>613.7988,197.49982,0.0</position>
-	<velocity>-0.39879838,-1.7100608,0.0</velocity>
+	<position>379.61618,90.608795,0.0</position>
+	<velocity>-0.8360833,0.23070467,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>620.9722,262.6891,0.0</position>
-	<velocity>-0.06865704,-1.7320856,0.0</velocity>
+	<position>764.2008,401.94073,0.0</position>
+	<velocity>-1.1558148,-0.84546393,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>549.2177,215.74391,0.0</position>
-	<velocity>-0.17326823,-1.2365311,0.0</velocity>
+	<position>89.13341,45.201824,0.0</position>
+	<velocity>-1.4093373,-0.10074639,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>563.4659,212.5318,0.0</position>
-	<velocity>-0.33256352,-1.3196883,0.0</velocity>
+	<position>748.8852,259.25488,0.0</position>
+	<velocity>-1.1564358,-0.18227883,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>699.1998,190.75891,0.0</position>
-	<velocity>-0.049386185,-1.2352492,0.0</velocity>
+	<position>678.1253,217.90744,0.0</position>
+	<velocity>-1.177575,-0.43315944,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>617.07605,214.47104,0.0</position>
-	<velocity>-0.10440041,-1.9402148,0.0</velocity>
+	<position>435.20892,139.81967,0.0</position>
+	<velocity>-0.7672758,0.023650056,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>651.04584,49.957752,0.0</position>
-	<velocity>-0.22662623,-1.2218095,0.0</velocity>
+	<position>811.44086,274.71555,0.0</position>
+	<velocity>-1.3739337,-0.29366264,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>662.343,278.3333,0.0</position>
-	<velocity>-0.6334348,-0.8368256,0.0</velocity>
+	<position>404.88434,145.56607,0.0</position>
+	<velocity>-0.5140381,-0.49021223,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>699.9878,295.0661,0.0</position>
-	<velocity>-0.49570972,-1.0036702,0.0</velocity>
+	<position>654.7606,245.46292,0.0</position>
+	<velocity>-1.295248,-0.08106365,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>487.3155,145.84253,0.0</position>
-	<velocity>0.11760332,-1.195228,0.0</velocity>
+	<position>389.324,358.962,0.0</position>
+	<velocity>-1.2679143,-0.6860578,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>602.81586,208.53174,0.0</position>
-	<velocity>-0.33075488,-1.796313,0.0</velocity>
+	<position>726.9869,406.32666,0.0</position>
+	<velocity>-0.8238686,-0.77678657,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>563.0841,187.22128,0.0</position>
-	<velocity>-0.22399017,-0.8411442,0.0</velocity>
+	<position>112.227165,229.00323,0.0</position>
+	<velocity>-0.29014504,-0.73130745,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>672.7504,207.0699,0.0</position>
-	<velocity>-0.23719805,-1.1334409,0.0</velocity>
+	<position>132.90599,302.4912,0.0</position>
+	<velocity>-0.29157308,-1.1105592,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>623.87976,297.82996,0.0</position>
-	<velocity>-0.50625825,-1.8793011,0.0</velocity>
+	<position>805.9447,27.353817,0.0</position>
+	<velocity>-1.1887767,-0.077843934,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>618.14026,195.18236,0.0</position>
-	<velocity>-0.252468,-1.967785,0.0</velocity>
+	<position>602.54016,278.107,0.0</position>
+	<velocity>-0.57055426,-0.7452315,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>653.3781,140.71121,0.0</position>
-	<velocity>-0.084107526,-1.321019,0.0</velocity>
+	<position>144.42532,222.3214,0.0</position>
+	<velocity>-0.063715346,-0.906568,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>610.36774,234.49545,0.0</position>
-	<velocity>-0.5269465,-1.7509617,0.0</velocity>
+	<position>353.7037,27.312416,0.0</position>
+	<velocity>-0.7747613,-0.32103974,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>660.102,268.80267,0.0</position>
-	<velocity>-0.3980945,-1.8439127,0.0</velocity>
+	<position>778.488,94.62228,0.0</position>
+	<velocity>-1.4957,0.11349642,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>587.2634,193.46013,0.0</position>
-	<velocity>-0.2852551,-1.3086705,0.0</velocity>
+	<position>69.473434,48.420406,0.0</position>
+	<velocity>-1.1177903,-0.19968255,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>638.63574,167.70444,0.0</position>
-	<velocity>-0.12015785,-1.5900488,0.0</velocity>
+	<position>459.41946,191.7303,0.0</position>
+	<velocity>-0.8418376,-0.66851604,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>533.3792,113.432755,0.0</position>
-	<velocity>-0.41356194,-1.734578,0.0</velocity>
+	<position>797.93884,275.33347,0.0</position>
+	<velocity>-1.3908317,-0.32872474,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>572.8099,286.29288,0.0</position>
-	<velocity>-0.04981438,-1.2818685,0.0</velocity>
+	<position>442.23764,171.11446,0.0</position>
+	<velocity>-0.50903434,-0.47141337,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>581.36914,239.29683,0.0</position>
-	<velocity>-0.51842844,-1.7104081,0.0</velocity>
+	<position>836.0195,49.295967,0.0</position>
+	<velocity>-1.1916206,0.32996932,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>623.51074,153.30054,0.0</position>
-	<velocity>-0.3616903,-1.9179579,0.0</velocity>
+	<position>847.8599,22.577456,0.0</position>
+	<velocity>-1.1326034,0.024583273,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>612.71826,240.33698,0.0</position>
-	<velocity>-0.41229966,-1.60803,0.0</velocity>
+	<position>429.94443,83.03755,0.0</position>
+	<velocity>-0.41404846,0.9132817,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>568.8881,241.74483,0.0</position>
-	<velocity>-0.6632931,-1.1016172,0.0</velocity>
+	<position>394.68625,105.22818,0.0</position>
+	<velocity>-0.25846967,0.8207225,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>639.4466,228.32071,0.0</position>
-	<velocity>-0.19816887,-1.2239146,0.0</velocity>
+	<position>649.2884,341.70294,0.0</position>
+	<velocity>-1.1274375,-0.9689714,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>605.81244,217.0317,0.0</position>
-	<velocity>-0.48264986,-1.8675809,0.0</velocity>
+	<position>570.7145,209.59233,0.0</position>
+	<velocity>-1.2585422,-0.71357083,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>615.6833,216.1238,0.0</position>
-	<velocity>-0.31961706,-1.8155591,0.0</velocity>
+	<position>197.60805,269.32474,0.0</position>
+	<velocity>-0.32952228,-1.3306112,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>640.5709,187.96701,0.0</position>
-	<velocity>-0.06016346,-1.0057721,0.0</velocity>
+	<position>145.70972,278.7689,0.0</position>
+	<velocity>-0.51161575,-0.5156868,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>660.80493,138.81642,0.0</position>
-	<velocity>-0.22229372,-1.3808339,0.0</velocity>
+	<position>100.995,304.82977,0.0</position>
+	<velocity>-0.440819,-0.6162557,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>681.10474,231.43053,0.0</position>
-	<velocity>-0.39567736,-1.1234708,0.0</velocity>
+	<position>1170.5828,260.6191,0.0</position>
+	<velocity>-1.1666942,-0.08457932,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>625.96204,233.5865,0.0</position>
-	<velocity>-0.2136312,-1.6805146,0.0</velocity>
+	<position>664.9685,248.00267,0.0</position>
+	<velocity>-1.3204124,-0.18247764,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>628.505,118.24063,0.0</position>
-	<velocity>-0.40935177,-1.7055016,0.0</velocity>
+	<position>611.2097,231.59659,0.0</position>
+	<velocity>-1.0205563,-0.3714174,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>553.2065,124.6381,0.0</position>
-	<velocity>-0.32047364,-1.4005497,0.0</velocity>
+	<position>498.25128,194.873,0.0</position>
+	<velocity>-0.765199,-0.6756666,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>591.23474,110.473274,0.0</position>
-	<velocity>-0.2357984,-1.6658905,0.0</velocity>
+	<position>2.6724718,15.568863,0.0</position>
+	<velocity>-0.55467564,-0.066753075,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>617.60834,240.48991,0.0</position>
-	<velocity>-0.42421305,-1.6164107,0.0</velocity>
+	<position>679.02997,179.78824,0.0</position>
+	<velocity>-1.1063519,-0.12773374,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>561.23395,135.16325,0.0</position>
-	<velocity>-0.10200161,-1.6222293,0.0</velocity>
+	<position>391.1377,70.866875,0.0</position>
+	<velocity>-0.65979975,0.36385158,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>547.159,149.68314,0.0</position>
-	<velocity>-0.47938865,-1.7185423,0.0</velocity>
+	<position>154.61205,303.6995,0.0</position>
+	<velocity>-0.50292146,-1.2098422,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>617.01306,164.50577,0.0</position>
-	<velocity>-0.11835709,-1.5069888,0.0</velocity>
+	<position>96.791595,249.4479,0.0</position>
+	<velocity>-0.6814263,-0.7385216,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>595.5819,280.8194,0.0</position>
-	<velocity>-0.36631438,-1.679185,0.0</velocity>
+	<position>149.64107,344.72733,0.0</position>
+	<velocity>-0.4439657,-0.49266666,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>473.9213,220.4223,0.0</position>
-	<velocity>-0.46778345,-0.79769486,0.0</velocity>
+	<position>44.051147,33.2415,0.0</position>
+	<velocity>-0.8863713,-0.19190696,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>638.3829,168.93724,0.0</position>
-	<velocity>0.12308402,-1.3958387,0.0</velocity>
+	<position>482.00198,171.09848,0.0</position>
+	<velocity>-1.3163472,0.049748596,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>614.1831,246.26332,0.0</position>
-	<velocity>-0.13612872,-1.7785342,0.0</velocity>
+	<position>713.7956,234.91539,0.0</position>
+	<velocity>-1.3828408,-0.24228118,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>516.52423,253.7873,0.0</position>
-	<velocity>-0.4886939,-1.2864794,0.0</velocity>
+	<position>529.54004,196.86922,0.0</position>
+	<velocity>-1.0938504,-0.5238809,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>641.02185,265.3314,0.0</position>
-	<velocity>-0.52144915,-1.156755,0.0</velocity>
+	<position>1104.1665,261.39252,0.0</position>
+	<velocity>-1.2857113,0.14208803,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>627.161,209.42992,0.0</position>
-	<velocity>-0.48072538,-1.8425031,0.0</velocity>
+	<position>199.45593,353.48654,0.0</position>
+	<velocity>-1.0080724,-0.8609164,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>635.04266,258.59302,0.0</position>
-	<velocity>-0.29499146,-1.6541408,0.0</velocity>
+	<position>191.06992,294.62286,0.0</position>
+	<velocity>-0.56936336,-0.9049735,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>601.4657,217.50688,0.0</position>
-	<velocity>-0.42449448,-1.319293,0.0</velocity>
+	<position>396.08356,169.68173,0.0</position>
+	<velocity>-0.69517934,0.102142885,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>612.4958,245.39052,0.0</position>
-	<velocity>-0.26996285,-1.8313775,0.0</velocity>
+	<position>1157.3558,240.94583,0.0</position>
+	<velocity>-1.1994126,-0.26656747,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>581.91595,316.00204,0.0</position>
-	<velocity>-0.25749224,-1.4791397,0.0</velocity>
+	<position>83.91539,254.82631,0.0</position>
+	<velocity>-0.41392484,-0.76301134,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>586.9671,267.31183,0.0</position>
-	<velocity>-0.41883615,-1.5543725,0.0</velocity>
+	<position>867.3507,87.595436,0.0</position>
+	<velocity>-0.9460518,-0.045100376,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>615.358,257.31482,0.0</position>
-	<velocity>-0.30028713,-1.9750568,0.0</velocity>
+	<position>84.25597,196.11649,0.0</position>
+	<velocity>-0.75352,-1.0482734,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>612.58844,357.63965,0.0</position>
-	<velocity>0.009028193,-1.5714238,0.0</velocity>
+	<position>130.71956,251.80728,0.0</position>
+	<velocity>-0.24241461,-1.3398142,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>498.7197,199.30844,0.0</position>
-	<velocity>-0.5519926,-1.4211154,0.0</velocity>
+	<position>442.70676,186.07237,0.0</position>
+	<velocity>-0.58206016,-0.19444191,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>664.2537,109.425316,0.0</position>
-	<velocity>-0.31732798,-1.0312965,0.0</velocity>
+	<position>400.18478,59.559174,0.0</position>
+	<velocity>-0.6955003,0.5666649,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>716.6887,241.67851,0.0</position>
-	<velocity>-0.42986417,-0.99124163,0.0</velocity>
+	<position>828.07965,68.24539,0.0</position>
+	<velocity>-0.9474735,-0.018816844,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>642.61005,274.20764,0.0</position>
-	<velocity>-0.60480475,-1.6855965,0.0</velocity>
+	<position>355.0596,340.57446,0.0</position>
+	<velocity>-1.2355164,-0.6746748,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>616.5296,235.58502,0.0</position>
-	<velocity>-0.43351912,-1.5384568,0.0</velocity>
+	<position>12.736049,228.52591,0.0</position>
+	<velocity>-0.012976965,-0.83272904,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>638.96533,198.84737,0.0</position>
-	<velocity>-0.034131173,-1.6449672,0.0</velocity>
+	<position>1230.154,256.39252,0.0</position>
+	<velocity>-1.2850991,-0.5707281,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>616.39667,290.1443,0.0</position>
-	<velocity>-0.27878565,-1.8888098,0.0</velocity>
+	<position>657.9517,247.89752,0.0</position>
+	<velocity>-1.068362,-0.2519317,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>558.55023,160.44958,0.0</position>
-	<velocity>-0.4784978,-1.605415,0.0</velocity>
+	<position>446.7735,158.07965,0.0</position>
+	<velocity>-0.9953005,-0.9198599,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>623.5452,281.71796,0.0</position>
-	<velocity>-0.33969665,-1.866545,0.0</velocity>
+	<position>653.07135,187.2572,0.0</position>
+	<velocity>-0.7991597,-0.3504702,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>503.23013,89.85167,0.0</position>
-	<velocity>-0.5741844,-1.308003,0.0</velocity>
+	<position>871.7579,49.685154,0.0</position>
+	<velocity>-1.3241935,-0.062182706,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>678.4715,258.1671,0.0</position>
-	<velocity>-0.39989272,-1.1372731,0.0</velocity>
+	<position>362.33652,130.79617,0.0</position>
+	<velocity>-0.98545045,0.21864328,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>522.4641,212.94557,0.0</position>
-	<velocity>-0.17541721,-1.2778196,0.0</velocity>
+	<position>384.19513,317.30853,0.0</position>
+	<velocity>-0.6299939,0.15536329,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>558.19147,259.8841,0.0</position>
-	<velocity>-0.11812904,-0.9570691,0.0</velocity>
+	<position>962.3966,315.42957,0.0</position>
+	<velocity>-1.3928055,-0.24300061,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>590.5552,109.17678,0.0</position>
-	<velocity>-0.5039546,-1.7853227,0.0</velocity>
+	<position>173.57228,321.03513,0.0</position>
+	<velocity>-1.052295,-0.8671334,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>602.5208,169.53592,0.0</position>
-	<velocity>-0.6674377,-1.2959903,0.0</velocity>
+	<position>908.2462,19.463692,0.0</position>
+	<velocity>-1.272525,0.019623458,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>521.8213,301.10712,0.0</position>
-	<velocity>-0.27770823,-0.9380134,0.0</velocity>
+	<position>341.39056,66.42464,0.0</position>
+	<velocity>-1.0242887,0.053587615,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>583.13257,192.84926,0.0</position>
-	<velocity>-0.5555005,-1.5069687,0.0</velocity>
+	<position>120.78684,326.4718,0.0</position>
+	<velocity>-0.078944385,-0.46858418,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>639.47485,319.81802,0.0</position>
-	<velocity>-0.7669755,-1.4690529,0.0</velocity>
+	<position>767.5388,48.675915,0.0</position>
+	<velocity>-1.2544603,0.10799642,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>685.7307,217.412,0.0</position>
-	<velocity>-0.6042733,-1.4972659,0.0</velocity>
+	<position>680.87616,280.4064,0.0</position>
+	<velocity>-0.51645225,-1.1994624,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>633.97534,187.2239,0.0</position>
-	<velocity>0.089193396,-1.601836,0.0</velocity>
+	<position>146.46767,281.4646,0.0</position>
+	<velocity>0.32259133,-0.9989053,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>613.6247,78.52845,0.0</position>
-	<velocity>-0.1633509,-1.4463212,0.0</velocity>
+	<position>142.31511,289.2191,0.0</position>
+	<velocity>-0.5083429,-1.0299617,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>620.4448,259.5775,0.0</position>
-	<velocity>-0.3125589,-1.9502023,0.0</velocity>
+	<position>88.513016,302.39902,0.0</position>
+	<velocity>-0.70505434,-0.45924225,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>549.1552,249.272,0.0</position>
-	<velocity>-0.6093194,-0.8699958,0.0</velocity>
+	<position>654.7092,213.47945,0.0</position>
+	<velocity>-0.6750673,-0.41967353,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>669.8328,181.7517,0.0</position>
-	<velocity>-0.30164832,-1.287558,0.0</velocity>
+	<position>525.235,170.00597,0.0</position>
+	<velocity>-0.9170488,-0.28928363,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>598.8227,143.23526,0.0</position>
-	<velocity>-0.30220547,-1.1323038,0.0</velocity>
+	<position>406.53174,166.00584,0.0</position>
+	<velocity>-0.9330512,-0.024994437,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>585.74164,167.46716,0.0</position>
-	<velocity>-0.4057439,-1.8430997,0.0</velocity>
+	<position>1237.478,207.29881,0.0</position>
+	<velocity>-1.1238576,0.03261417,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>640.9618,225.1093,0.0</position>
-	<velocity>-0.19654414,-1.2005806,0.0</velocity>
+	<position>390.46674,172.9473,0.0</position>
+	<velocity>-1.0559117,-0.31469944,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>742.2085,213.46808,0.0</position>
-	<velocity>-0.4531209,-0.6403712,0.0</velocity>
+	<position>146.05396,71.12242,0.0</position>
+	<velocity>-1.2701199,-0.2686801,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>619.89105,304.32617,0.0</position>
-	<velocity>-0.22218749,-1.9876199,0.0</velocity>
+	<position>822.0603,670.4139,0.0</position>
+	<velocity>-0.93770224,-1.1707752,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>517.7407,247.83134,0.0</position>
-	<velocity>-0.1260189,-0.82982165,0.0</velocity>
+	<position>480.4331,190.72993,0.0</position>
+	<velocity>-1.0914713,-0.76193625,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>700.783,142.34306,0.0</position>
-	<velocity>-0.46469438,-1.6113899,0.0</velocity>
+	<position>699.8851,248.3915,0.0</position>
+	<velocity>-1.4009433,-0.24053855,0.0</velocity>
 	<species>1</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>375.8415,596.80475,0.0</position>
-	<velocity>-1.0530515,-0.9132975,0.0</velocity>
+	<position>296.5873,365.86725,0.0</position>
+	<velocity>-2.0169375,2.5340402,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>371.66272,601.67,0.0</position>
-	<velocity>-1.5848775,-0.9600559,0.0</velocity>
+	<position>577.5083,96.31331,0.0</position>
+	<velocity>1.786978,1.4619132,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>383.06943,596.7135,0.0</position>
-	<velocity>-1.4812405,-1.1353443,0.0</velocity>
+	<position>556.5012,101.60537,0.0</position>
+	<velocity>1.8297325,1.669898,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>362.46265,615.90015,0.0</position>
-	<velocity>-0.79041845,-0.66152334,0.0</velocity>
+	<position>551.009,107.412056,0.0</position>
+	<velocity>1.8954617,1.7970754,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>373.8523,614.51184,0.0</position>
-	<velocity>-0.7875253,-1.1025813,0.0</velocity>
+	<position>316.73303,349.72354,0.0</position>
+	<velocity>-1.9258844,1.9630253,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>389.60687,624.9086,0.0</position>
-	<velocity>-1.1642474,-1.2398502,0.0</velocity>
+	<position>565.8432,101.03184,0.0</position>
+	<velocity>1.7733475,2.4766316,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>373.4182,606.7,0.0</position>
-	<velocity>-0.9775397,-0.71801496,0.0</velocity>
+	<position>561.3196,87.78196,0.0</position>
+	<velocity>1.5304952,2.2596865,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>368.12405,593.8997,0.0</position>
-	<velocity>-1.1030576,-0.875028,0.0</velocity>
+	<position>307.75552,344.58664,0.0</position>
+	<velocity>-1.4802505,2.4953494,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>362.35666,587.34607,0.0</position>
-	<velocity>-1.4275808,-1.1852573,0.0</velocity>
+	<position>576.6632,138.131,0.0</position>
+	<velocity>1.0322678,1.7681668,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>392.72974,630.055,0.0</position>
-	<velocity>-1.0099268,-1.147044,0.0</velocity>
+	<position>291.07614,357.66614,0.0</position>
+	<velocity>-1.4483654,1.2269617,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>44.573902,566.8204,0.0</position>
-	<velocity>-0.15233,-1.5827903,0.0</velocity>
+	<position>294.45526,383.08698,0.0</position>
+	<velocity>-1.0908136,1.5831382,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>383.9332,609.7081,0.0</position>
-	<velocity>-1.5346532,-1.1891305,0.0</velocity>
+	<position>293.73334,384.15027,0.0</position>
+	<velocity>-1.1681038,1.5076418,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>369.146,599.3131,0.0</position>
-	<velocity>-1.2064687,-0.9011399,0.0</velocity>
+	<position>573.64386,121.38165,0.0</position>
+	<velocity>1.2404428,2.25213,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>380.17258,604.2295,0.0</position>
-	<velocity>-1.4288218,-1.1103683,0.0</velocity>
+	<position>566.28424,115.8692,0.0</position>
+	<velocity>1.2098632,2.1856427,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>368.45987,589.4514,0.0</position>
-	<velocity>-1.3304527,-1.3424833,0.0</velocity>
+	<position>564.80237,99.53505,0.0</position>
+	<velocity>2.2712102,2.502638,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>368.59482,610.5478,0.0</position>
-	<velocity>-1.3447226,-0.82177234,0.0</velocity>
+	<position>292.37064,369.51385,0.0</position>
+	<velocity>-2.215103,2.272203,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>380.04147,592.821,0.0</position>
-	<velocity>-0.88663465,-0.88900226,0.0</velocity>
+	<position>293.18823,368.71204,0.0</position>
+	<velocity>-2.148929,2.2399955,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>383.20795,608.31934,0.0</position>
-	<velocity>-1.4083904,-1.1499757,0.0</velocity>
+	<position>279.62494,351.27774,0.0</position>
+	<velocity>-0.89500445,1.1632309,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>374.888,606.80133,0.0</position>
-	<velocity>-1.4215585,-1.2641271,0.0</velocity>
+	<position>570.1385,107.51442,0.0</position>
+	<velocity>1.7814733,2.417183,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>390.18362,608.46967,0.0</position>
-	<velocity>-0.9441061,-0.6927917,0.0</velocity>
+	<position>306.09897,388.5482,0.0</position>
+	<velocity>-1.5192429,1.1382023,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>396.5426,613.51263,0.0</position>
-	<velocity>-1.3009334,-0.78895724,0.0</velocity>
+	<position>300.06363,361.055,0.0</position>
+	<velocity>-1.5787972,2.225817,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>372.6111,617.2872,0.0</position>
-	<velocity>-1.2508112,-1.0160002,0.0</velocity>
+	<position>296.9201,355.43808,0.0</position>
+	<velocity>-0.98667043,1.5842195,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>405.32602,622.858,0.0</position>
-	<velocity>-1.5014726,-1.1506106,0.0</velocity>
+	<position>564.7278,99.62249,0.0</position>
+	<velocity>2.2698991,2.3407142,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>397.68295,620.8046,0.0</position>
-	<velocity>-1.4183538,-1.1533829,0.0</velocity>
+	<position>588.8777,125.34097,0.0</position>
+	<velocity>2.2661374,1.766978,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>381.11472,613.1827,0.0</position>
-	<velocity>-0.85633683,-0.8775228,0.0</velocity>
+	<position>274.6722,341.3079,0.0</position>
+	<velocity>-0.90891,0.96226066,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>379.38187,616.3608,0.0</position>
-	<velocity>-0.90138525,-0.77520996,0.0</velocity>
+	<position>337.3885,373.73898,0.0</position>
+	<velocity>-1.2422938,1.1925647,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>375.19348,621.9939,0.0</position>
-	<velocity>-0.96531886,-1.1031314,0.0</velocity>
+	<position>290.01685,383.07672,0.0</position>
+	<velocity>-1.6211656,2.4199078,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>42.74035,562.8788,0.0</position>
-	<velocity>-0.22634001,-1.0750494,0.0</velocity>
+	<position>311.01746,373.63617,0.0</position>
+	<velocity>-1.139692,1.6316868,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>384.05237,599.49927,0.0</position>
-	<velocity>-1.1829336,-0.77880096,0.0</velocity>
+	<position>274.8086,375.17163,0.0</position>
+	<velocity>-1.604813,1.5305537,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>363.20056,596.903,0.0</position>
-	<velocity>-1.4039477,-0.8892336,0.0</velocity>
+	<position>293.43073,372.6508,0.0</position>
+	<velocity>-1.8293499,2.169829,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>372.0872,590.33527,0.0</position>
-	<velocity>-1.2798134,-0.997371,0.0</velocity>
+	<position>286.45462,384.31784,0.0</position>
+	<velocity>-1.8252046,2.4914782,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>371.49423,595.0921,0.0</position>
-	<velocity>-0.9241009,-0.6626917,0.0</velocity>
+	<position>290.64032,380.76035,0.0</position>
+	<velocity>-1.803152,2.3287761,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>45.518238,562.4502,0.0</position>
-	<velocity>-0.2511399,-1.9738773,0.0</velocity>
+	<position>574.9568,104.92364,0.0</position>
+	<velocity>2.2803693,1.9610738,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>374.71402,583.58057,0.0</position>
-	<velocity>-0.7507503,-0.45769492,0.0</velocity>
+	<position>285.1946,345.5273,0.0</position>
+	<velocity>-1.0707082,1.0096811,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>41.9228,558.89343,0.0</position>
-	<velocity>-0.119128585,-0.912641,0.0</velocity>
+	<position>566.65186,101.55887,0.0</position>
+	<velocity>2.15756,2.442986,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>367.8594,585.7698,0.0</position>
-	<velocity>-1.3012339,-0.9085224,0.0</velocity>
+	<position>303.74564,345.57608,0.0</position>
+	<velocity>-0.91854703,2.3956027,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>385.848,608.98083,0.0</position>
-	<velocity>-1.5618206,-1.1362839,0.0</velocity>
+	<position>327.79495,360.36703,0.0</position>
+	<velocity>-1.495462,1.0392915,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>372.7858,605.59265,0.0</position>
-	<velocity>-1.5143707,-0.7637025,0.0</velocity>
+	<position>298.1456,353.07236,0.0</position>
+	<velocity>-0.67269003,2.0511642,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>366.3003,593.9525,0.0</position>
-	<velocity>-1.1139214,-1.2035244,0.0</velocity>
+	<position>587.0343,107.22491,0.0</position>
+	<velocity>1.6596313,1.9892756,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>50.774113,557.45514,0.0</position>
-	<velocity>0.0205926,-0.86068314,0.0</velocity>
+	<position>322.0426,371.59744,0.0</position>
+	<velocity>-0.7960882,1.591823,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>365.73532,602.827,0.0</position>
-	<velocity>-1.1375765,-0.8971166,0.0</velocity>
+	<position>558.1116,123.41872,0.0</position>
+	<velocity>1.5005809,1.9810458,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>372.51007,602.18414,0.0</position>
-	<velocity>-1.4354649,-1.0220472,0.0</velocity>
+	<position>299.27786,362.21686,0.0</position>
+	<velocity>-2.1836293,2.5801005,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>385.33456,591.42334,0.0</position>
-	<velocity>-1.5025674,-1.095284,0.0</velocity>
+	<position>267.42297,350.21902,0.0</position>
+	<velocity>-0.99206537,0.15570575,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>385.64133,609.34155,0.0</position>
-	<velocity>-1.6089666,-1.1728647,0.0</velocity>
+	<position>82.57598,625.5703,0.0</position>
+	<velocity>1.9213918,-2.9254494,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>376.51715,598.3268,0.0</position>
-	<velocity>-1.3430951,-1.2120605,0.0</velocity>
+	<position>547.10803,112.43396,0.0</position>
+	<velocity>1.5730958,1.6941179,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>378.85983,604.1688,0.0</position>
-	<velocity>-1.3377585,-1.245833,0.0</velocity>
+	<position>292.3186,375.97787,0.0</position>
+	<velocity>-1.7511716,2.394142,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>48.72634,568.16284,0.0</position>
-	<velocity>-0.30528963,-1.3301129,0.0</velocity>
+	<position>303.22366,368.13046,0.0</position>
+	<velocity>-1.2053107,1.5738986,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>378.0719,607.0389,0.0</position>
-	<velocity>-1.5029083,-1.2031295,0.0</velocity>
+	<position>553.88965,90.401474,0.0</position>
+	<velocity>2.285409,2.3143163,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>361.9362,610.3985,0.0</position>
-	<velocity>-1.2370651,-0.87176293,0.0</velocity>
+	<position>553.7168,81.18371,0.0</position>
+	<velocity>1.8373187,2.603157,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>376.073,602.3922,0.0</position>
-	<velocity>-1.5296649,-1.1028172,0.0</velocity>
+	<position>311.9952,359.23755,0.0</position>
+	<velocity>-1.6644039,1.7494111,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>367.17725,606.9582,0.0</position>
-	<velocity>-1.1953341,-0.95691574,0.0</velocity>
+	<position>280.9356,358.7367,0.0</position>
+	<velocity>-1.6549821,1.575182,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>1204.0214,650.72284,0.0</position>
-	<velocity>-0.15325555,-0.46405613,0.0</velocity>
+	<position>321.25568,373.95447,0.0</position>
+	<velocity>-0.64772534,1.5211651,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>364.0362,602.625,0.0</position>
-	<velocity>-1.1993266,-1.1398878,0.0</velocity>
+	<position>562.8658,97.39717,0.0</position>
+	<velocity>2.1291564,2.6114783,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>387.3261,598.69385,0.0</position>
-	<velocity>-1.179738,-0.6942061,0.0</velocity>
+	<position>563.15906,98.50798,0.0</position>
+	<velocity>2.2658339,2.24867,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>391.0271,612.28156,0.0</position>
-	<velocity>-1.4319484,-1.1226962,0.0</velocity>
+	<position>290.4186,374.42282,0.0</position>
+	<velocity>-2.1817539,2.1155682,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>46.823265,555.3461,0.0</position>
-	<velocity>-0.20834363,-1.9891186,0.0</velocity>
+	<position>560.71814,83.36712,0.0</position>
+	<velocity>1.598594,2.5592916,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>378.7264,599.43976,0.0</position>
-	<velocity>-0.8126038,-0.6592936,0.0</velocity>
+	<position>280.01917,359.34976,0.0</position>
+	<velocity>-1.7004566,1.5797668,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>49.61698,534.7922,0.0</position>
-	<velocity>0.026080828,-1.480112,0.0</velocity>
+	<position>577.29803,97.440605,0.0</position>
+	<velocity>1.5976179,1.5639917,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>45.21464,549.2563,0.0</position>
-	<velocity>-0.09208629,-1.7710919,0.0</velocity>
+	<position>274.55832,356.48975,0.0</position>
+	<velocity>-0.98887116,1.2977973,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>374.12323,604.2779,0.0</position>
-	<velocity>-1.569803,-1.0779419,0.0</velocity>
+	<position>314.49594,365.86642,0.0</position>
+	<velocity>-1.2051262,1.3653488,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>391.74094,622.1794,0.0</position>
-	<velocity>-1.0727133,-1.0756975,0.0</velocity>
+	<position>304.37827,388.0057,0.0</position>
+	<velocity>-1.5404415,1.7634512,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>377.51587,605.21796,0.0</position>
-	<velocity>-1.4784067,-1.3453368,0.0</velocity>
+	<position>544.43884,96.6946,0.0</position>
+	<velocity>2.2751334,1.5309038,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>358.5045,590.735,0.0</position>
-	<velocity>-1.5083892,-1.094934,0.0</velocity>
+	<position>575.3302,110.25362,0.0</position>
+	<velocity>2.0695107,2.644952,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>375.15225,610.7038,0.0</position>
-	<velocity>-1.3068936,-0.96588403,0.0</velocity>
+	<position>572.43506,84.48659,0.0</position>
+	<velocity>1.777106,2.0033784,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>371.4616,602.38983,0.0</position>
-	<velocity>-1.6021543,-1.0628961,0.0</velocity>
+	<position>295.6756,357.1879,0.0</position>
+	<velocity>-1.0753062,1.5517412,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>398.89175,623.77454,0.0</position>
-	<velocity>-1.4505979,-1.2312838,0.0</velocity>
+	<position>290.63824,395.58176,0.0</position>
+	<velocity>-1.5599704,2.2275872,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>977.22076,362.2101,0.0</position>
-	<velocity>-0.08076398,-1.1753107,0.0</velocity>
+	<position>328.0109,349.5391,0.0</position>
+	<velocity>-1.748471,1.9097075,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>39.88201,580.60657,0.0</position>
-	<velocity>0.054628134,-1.5480754,0.0</velocity>
+	<position>561.1127,96.91964,0.0</position>
+	<velocity>2.4478917,2.2719176,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>379.3795,607.2589,0.0</position>
-	<velocity>-1.5785953,-1.1388671,0.0</velocity>
+	<position>297.5844,364.61246,0.0</position>
+	<velocity>-1.8397925,2.0863419,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>364.54962,608.99347,0.0</position>
-	<velocity>-0.96592706,-0.4723965,0.0</velocity>
+	<position>297.95578,352.25204,0.0</position>
+	<velocity>-0.68487513,2.0891316,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>368.60327,601.5014,0.0</position>
-	<velocity>-1.4836521,-0.94212055,0.0</velocity>
+	<position>576.0621,99.016464,0.0</position>
+	<velocity>1.9153136,1.6793051,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>380.70978,606.2547,0.0</position>
-	<velocity>-1.6543164,-1.0418918,0.0</velocity>
+	<position>555.9625,125.79032,0.0</position>
+	<velocity>1.1487995,1.8838369,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>371.56644,601.8872,0.0</position>
-	<velocity>-1.5340912,-1.00104,0.0</velocity>
+	<position>290.4992,372.33652,0.0</position>
+	<velocity>-2.1523054,1.8538879,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>377.08136,614.0201,0.0</position>
-	<velocity>-1.2781217,-0.6719356,0.0</velocity>
+	<position>311.2892,372.7563,0.0</position>
+	<velocity>-1.0509815,1.6216843,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>374.74756,599.4514,0.0</position>
-	<velocity>-0.9218934,-0.9873264,0.0</velocity>
+	<position>310.74268,361.08643,0.0</position>
+	<velocity>-1.5828319,1.5412598,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>370.27524,598.2089,0.0</position>
-	<velocity>-1.3600225,-1.053885,0.0</velocity>
+	<position>319.62112,389.31717,0.0</position>
+	<velocity>-1.4967285,1.4993614,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>378.403,597.2434,0.0</position>
-	<velocity>-0.9836754,-0.80828863,0.0</velocity>
+	<position>302.0021,362.19894,0.0</position>
+	<velocity>-2.0824862,2.2447093,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>358.13287,587.89526,0.0</position>
-	<velocity>-1.2738568,-0.97165304,0.0</velocity>
+	<position>310.6414,369.58182,0.0</position>
+	<velocity>-1.0592281,1.5831245,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>374.56372,598.2118,0.0</position>
-	<velocity>-1.0698378,-0.82224023,0.0</velocity>
+	<position>597.298,96.94396,0.0</position>
+	<velocity>1.0777009,1.7640122,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>46.738487,559.8679,0.0</position>
-	<velocity>-0.009503119,-1.8076782,0.0</velocity>
+	<position>297.9171,370.7076,0.0</position>
+	<velocity>-1.5791303,1.7843401,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>381.3301,586.88995,0.0</position>
-	<velocity>-0.90046877,-1.107782,0.0</velocity>
+	<position>302.21396,370.771,0.0</position>
+	<velocity>-1.1439413,1.5345438,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>373.56342,602.76855,0.0</position>
-	<velocity>-1.3796793,-0.97261816,0.0</velocity>
+	<position>291.2494,371.11365,0.0</position>
+	<velocity>-2.1178358,2.0488083,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>376.56107,602.22095,0.0</position>
-	<velocity>-1.3988181,-1.1517003,0.0</velocity>
+	<position>575.8628,99.45222,0.0</position>
+	<velocity>1.9657998,1.5377667,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>377.63913,603.9712,0.0</position>
-	<velocity>-1.3047624,-0.8650289,0.0</velocity>
+	<position>280.86798,383.4738,0.0</position>
+	<velocity>-2.1817112,2.0199049,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>386.49457,590.3122,0.0</position>
-	<velocity>-1.0146062,-0.77287805,0.0</velocity>
+	<position>279.1461,361.89484,0.0</position>
+	<velocity>-1.280466,2.1128163,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>390.60876,594.68506,0.0</position>
-	<velocity>-0.8552764,-0.96589345,0.0</velocity>
+	<position>573.3864,118.0571,0.0</position>
+	<velocity>1.355134,2.3766422,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>360.2557,589.15955,0.0</position>
-	<velocity>-1.4003432,-1.2229583,0.0</velocity>
+	<position>294.92575,351.89923,0.0</position>
+	<velocity>-0.9797909,1.9220961,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>379.42007,611.16003,0.0</position>
-	<velocity>-1.0930859,-1.1368465,0.0</velocity>
+	<position>300.61533,360.17496,0.0</position>
+	<velocity>-1.9527553,2.554968,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>1197.1484,14.077463,0.0</position>
-	<velocity>-0.07046748,0.16568348,0.0</velocity>
+	<position>288.85034,374.4196,0.0</position>
+	<velocity>-2.312747,2.0972724,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>389.5458,617.0442,0.0</position>
-	<velocity>-1.3585021,-1.1458368,0.0</velocity>
+	<position>274.55826,379.20993,0.0</position>
+	<velocity>-1.8922354,1.413215,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>364.3859,596.7524,0.0</position>
-	<velocity>-1.1180475,-0.95222116,0.0</velocity>
+	<position>265.1257,353.10547,0.0</position>
+	<velocity>-1.8585123,0.30952018,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>376.9555,612.1948,0.0</position>
-	<velocity>-1.0301421,-1.1057929,0.0</velocity>
+	<position>291.2444,354.7653,0.0</position>
+	<velocity>-0.9667191,1.4144849,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>1206.304,646.2071,0.0</position>
-	<velocity>0.19639713,-1.5305436,0.0</velocity>
+	<position>568.3295,71.53398,0.0</position>
+	<velocity>0.890958,2.233588,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>48.751324,579.46375,0.0</position>
-	<velocity>-0.13965106,-0.8682297,0.0</velocity>
+	<position>572.6245,99.32032,0.0</position>
+	<velocity>1.6875707,1.9284959,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>383.88217,615.3022,0.0</position>
-	<velocity>-1.154492,-0.44319317,0.0</velocity>
+	<position>558.7764,108.96433,0.0</position>
+	<velocity>1.3902047,1.7579105,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>379.7633,604.2576,0.0</position>
-	<velocity>-1.4031268,-1.0750269,0.0</velocity>
+	<position>252.88058,343.40308,0.0</position>
+	<velocity>-0.86210346,-0.116547436,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>379.94592,608.8546,0.0</position>
-	<velocity>-1.5446875,-1.1029062,0.0</velocity>
+	<position>573.26434,101.59226,0.0</position>
+	<velocity>1.7303307,1.7790734,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>47.18538,550.49457,0.0</position>
-	<velocity>-0.18890628,-1.9249215,0.0</velocity>
+	<position>301.09262,361.91727,0.0</position>
+	<velocity>-2.229047,2.152912,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>42.175854,577.0686,0.0</position>
-	<velocity>-0.06319304,-1.1920313,0.0</velocity>
+	<position>293.7359,369.31467,0.0</position>
+	<velocity>-2.1134157,2.4973078,0.0</velocity>
 	<species>2</species>
-	<age>5</age>
+</boid>
+<boid>
+	<age>0</age>
 	<birthday>0</birthday>
-	<position>392.42596,616.07294,0.0</position>
-	<velocity>-1.6098307,-1.1867793,0.0</velocity>
+	<position>579.3184,85.21965,0.0</position>
+	<velocity>1.3478706,1.7008172,0.0</velocity>
 	<species>2</species>
-</config>
+</boid>
+</boidlist>

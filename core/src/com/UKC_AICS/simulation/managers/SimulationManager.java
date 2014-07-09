@@ -5,6 +5,7 @@ import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.utils.StaXParser;
+import com.UKC_AICS.simulation.utils.StaXParserLoad;
 import com.UKC_AICS.simulation.utils.StaxWriter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -82,7 +83,12 @@ public class SimulationManager extends Manager {
           e.printStackTrace();
         }
       }
-    
+    //Change this see tutorial
+    public void load() {
+    	System.out.println("Called in SM");
+    	StaXParserLoad load = new StaXParserLoad();
+        load.readConfig("config2.xml");
+      }
 
     public void generateBoids(){
     	//Create a map of species bytes to filenames for the boid sprite textures
@@ -100,6 +106,10 @@ public class SimulationManager extends Manager {
             //Find the species texture file location
             fileLocations.put(spByte, species.getSpriteLocation());
         }
+    }
+    
+    public void clear(){
+    	boidManager.clearBoidList();
     }
     
     public void update() {
