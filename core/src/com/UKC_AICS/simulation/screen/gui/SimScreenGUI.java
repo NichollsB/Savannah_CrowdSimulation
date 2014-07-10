@@ -23,6 +23,7 @@ public class SimScreenGUI {
     Table table;
     Skin skin;
     public Label fps;
+    public Window graphicsWindow;
 
     /**
      *
@@ -32,17 +33,27 @@ public class SimScreenGUI {
         simScreen = ss;
     }
 
+    public void update(){
+    	table.drawDebug(stage);
+    	stage.draw();
+    }
     /**
      * setups up the UI.
      */
     public Stage setStage() {
+
+    	
         stage = new Stage(new ScreenViewport());
         table = new Table();
         table.debug();
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
         fps = new Label(simScreen.getFPSString()+ simScreen.simulationManager.getTime(), skin);
         stage.addActor(table);
-
+        
+    	graphicsWindow = new Window("Graphics Window", skin);
+    	graphicsWindow.setMovable(true);
+    	graphicsWindow.setResizable(true);
+    	
         table.setFillParent(true);
 
         // play/pause button
@@ -93,14 +104,18 @@ public class SimScreenGUI {
 
         //
         console = new TextArea("console log",skin);
-
-        table.add(fps).bottom().left().expandY().width(500f).pad(0f, 10f, 10f, 0f);
-        table.add(playButton).size(100f, 30f).bottom().left().padLeft(20f).padBottom(10f);
-        table.add(resetButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
-        table.add(switchButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
-        table.add(saveButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
-        //
-        table.add(console).size(300f,30f).bottom();
+//        table.add(graphicsWindow).size(500f,500f);
+//        table.row();
+        
+//        table.add(fps).bottom().left().expandY().width(500f).pad(0f, 10f, 10f, 0f);
+//        table.addActor(fps);
+//        table.addActor(playButton);
+//        table.add(playButton).size(100f, 30f).bottom().left().padLeft(20f).padBottom(10f);
+//        table.add(resetButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
+//        table.add(switchButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
+//        table.add(saveButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
+//        //table.add(graphicsWindow).size(500f,500f);
+//        table.add(console).size(300f,30f).bottom();
 
         return stage;
         //Gdx.input.setInputProcessor(stage);

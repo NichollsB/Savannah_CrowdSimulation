@@ -3,6 +3,8 @@ package com.UKC_AICS.simulation.screen;
 import java.util.HashMap;
 
 import com.UKC_AICS.simulation.Simulation;
+import com.UKC_AICS.simulation.screen.graphics.Graphics;
+import com.UKC_AICS.simulation.screen.graphics.InputManager;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -94,8 +96,8 @@ public class SimulationScreen implements Screen {
 
     private void renderSpriteBatches() {
         spriteBatch.begin();
-
-        gui.stage.draw();  //GUI stuff
+        gui.update();
+          //GUI stuff
 //        Table.drawDebug(stage);  //debug lines for UI
 //        font.draw(spriteBatch, getFPSString(), 0, 20);
         spriteBatch.end();
