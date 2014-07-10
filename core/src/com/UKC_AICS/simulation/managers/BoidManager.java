@@ -8,9 +8,7 @@ import com.UKC_AICS.simulation.entity.behaviours.*;
 import com.UKC_AICS.simulation.utils.QuadTree;
 import com.UKC_AICS.simulation.utils.BoidGrid;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Array;
 
 
@@ -32,6 +30,8 @@ public class BoidManager extends Manager {
     private Random rand = new Random();
 
     private HashMap<String, Behaviour> behaviours = new HashMap<String, Behaviour>();
+
+    CollisionManager collisionManager = new CollisionManager();
 
 
     private static BoidGrid boidGrid;
@@ -238,47 +238,98 @@ public class BoidManager extends Manager {
                 }
             }
 
+            boolean avoidCollision = false;
+            Entity toAvoid = null;
             //find objects nearby
             Array<Entity> dummyObjects = parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
-            for (Entity ent : dummyObjects) {
+//            for (int j = 0; j < dummyObjects.size; j++) {
+                for (Entity dummyObject : dummyObjects) {
+
+
+                Entity ent = dummyObject;
+
 //                if (ent.getPosition().dst2(boid.getPosition()) > boid.sightRadius) {
                 steering.set(boid.position);
                 steering.sub(ent.position);
-                if (steering.len() > boid.sightRadius) {
-                    dummyObjects.removeValue(ent, false);
+
+                if (steering.len2() >  boid.sightRadius * boid.sightRadius) {
+//                    dummyObjects.removeValue(ent, false);
+                }
+                else if (steering.len2() <  boid.nearRadius* boid.nearRadius) {
+                    if(ent.getPosition() == new Vector3(500,200,0)) {
+                        System.out.println("syupid object");
+                    }
+                    toAvoid = ent;
+                    avoidCollision = true;
+                    break;
                 }
             }
 
-//            float coh = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("cohesion");
-//            float ali = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("alignment");
-//            float sep = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("separation");
-//            float wan = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("wander");
-
-            float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
-            float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
-            float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
-            float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander();
-
-            //do stuff
             steering.set(0f, 0f, 0f);
+            if(!avoidCollision) {
+                float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
+                float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
+                float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
+                float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander();
 
-            steering.add(behaviours.get("cohesion").act(nearBoids, dummyObjects, boid).scl(coh));
-            steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
-            steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
-            steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
+                steering.add(behaviours.get("cohesion").act(nearBoids, dummyObjects, boid).scl(coh));
+                steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
+                steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
+                steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
+            } else {
+                // Needs to avoid an object
+                Vector3 tmpPos = boid.getPosition().cpy();
+                tmpPos.add(boid.getVelocity());
+                boid.getVelocity().scl(0.8f);
 
+                int turn = Intersector.pointLineSide(boid.position.x, boid.position.y, tmpPos.x,tmpPos.y, toAvoid.getPosition().x, toAvoid.getPosition().y);
+                if(turn == -1) {
+                    steering.add(-boid.getVelocity().y, boid.getVelocity().x,0f).rotate(boid.position, 45f);  //turn left
+                } else if (turn == 1) {
+                    steering.add(boid.getVelocity().y, -boid.getVelocity().x,0f).rotate(boid.position, -45f);  //turn right
+                } else {
+                    steering.add(boid.getVelocity().y, -boid.getVelocity().x,0f);   // default to turn right
+                }
+                System.out.println("I just avoided and object! " + boid.getPosition() + "    " + boid.getVelocity());
+            }
             
-            steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.2f));
-            steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.2f));
+//            steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.2f));
+//            steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.2f));
+
+          //get copy of boid pos, current velocity and new acceleration(steering)
+            //acceleration limit by maxspeed
+//            Vector3 temppos = boid.getPosition().cpy();
+//            Vector3 tempVel = boid.getVelocity().cpy();
+//            tempVel.add(steering.cpy()).limit(boid.maxSpeed);
+//            temppos.add(tempVel);     //temppos should be the new position the boid moves to
+//
+//            Circle tempCircle = new Circle(temppos.x, temppos.y, 8f);
+//
+//            Array<Boid> checkBoids =  boidGrid.findNearby((int) (tempCircle.x * boidGrid.inverseCellSize.
+//                    x), (int) (tempCircle.y * boidGrid.inverseCellSize.y), 0);
+//
+//
+//            //check if new postion overlaps with any boids in Cell
+//            Boid steeringAdjust = collisionManager.checkCollision(tempCircle, boids, boid);
+//            //if there is a boid to avoid
+//            float newLimit = 2f;
+//            boolean limitLen = false;
+//            if (steeringAdjust != null) {
+//                Vector3 tmp = steeringAdjust.getPosition();
+//                tmp.sub(boid.getPosition());
+//                newLimit = tmp.len();
+//                limitLen = true;
+//            }
 
             // NaN check
 //            if (steering.x != steering.x) {
 //                System.out.println("blerpy");
 //            }
 
-
             //store the steering movement
             boid.setAcceleration(steering);
+            boid.setNewVelocity();
+
             //apply it.
             boid.move();
             //tell the grid to update its position.

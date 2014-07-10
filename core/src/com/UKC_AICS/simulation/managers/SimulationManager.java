@@ -58,11 +58,28 @@ public class SimulationManager extends Manager {
         Object obj = new Object((byte)2,(byte)1,355,450);
         objTypes.add(obj.getType());
         worldManager.putObject(obj);
+
         obj = new Object((byte)2,(byte)1,500,200);
-//        obj = new Object((byte)2,(byte)1,900,300);
+////        obj = new Object((byte)2,(byte)1,900,300);
         worldManager.putObject(obj);
+
         obj = new Object((byte)3,(byte)1,755,450);
         objTypes.add(obj.getType());
+        worldManager.putObject(obj);
+
+        obj = new Object((byte)2,(byte)1,400,600);
+        worldManager.putObject(obj);
+        obj = new Object((byte)2,(byte)1,160,200);
+        worldManager.putObject(obj);
+        obj = new Object((byte)2,(byte)1,160,400);
+        worldManager.putObject(obj);
+        obj = new Object((byte)2,(byte)1,180,600);
+        worldManager.putObject(obj);
+        obj = new Object((byte)2,(byte)1,1100,200);
+        worldManager.putObject(obj);
+        obj = new Object((byte)2,(byte)1,1100,400);
+        worldManager.putObject(obj);
+        obj = new Object((byte)2,(byte)1,1100,600);
         worldManager.putObject(obj);
 
     }

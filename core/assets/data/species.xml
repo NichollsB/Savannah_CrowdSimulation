@@ -19,37 +19,7 @@
         <alignment>0.5f</alignment>
         <wander>0.1f</wander>
     </species>
-    <species id="1" name="wildebeest">
-        <number>100</number>
-        <byte>1</byte>  <!-- this is the sub-type -->
-        <spriteLocation>data/triangle2.png</spriteLocation>
-        <sightRadius>180f</sightRadius>
-        <flockRadius>120f</flockRadius>
-        <nearRadius>40f</nearRadius>
-        <maxSpeed>1.5f</maxSpeed>
-        <maxForce>0.02f</maxForce>
-        <!--<cohesion>0.1f</cohesion>-->
-        <!--<separation>0.9f</separation>-->
-        <!--<alignment>0.5f</alignment>-->
-        <cohesion>0.5f</cohesion>
-        <separation>0.5f</separation>
-        <alignment>0.5f</alignment>
-        <wander>0.1f</wander>
-    </species>
-    <species id="2" name="gazelles">
-        <number>100</number>
-        <byte>2</byte>  <!-- this is the sub-type -->
-        <spriteLocation>data/triangle3.png</spriteLocation>
-        <sightRadius>250f</sightRadius>
-        <flockRadius>80f</flockRadius>
-        <nearRadius>15f</nearRadius>
-        <maxSpeed>3.5f</maxSpeed>
-        <maxForce>0.2f</maxForce>
-        <cohesion>0.5f</cohesion>
-        <separation>0.5f</separation>
-        <alignment>0.5f</alignment>
-        <wander>0.1f</wander>
-    </species>
+
 </settings>
 
 
