@@ -58,7 +58,7 @@ public class BoidGrid {
     public void addBoid(Boid boid) {
         Vector2 cell_pos = new Vector2((int) boid.getPosition().x / cellSize, (int) boid.getPosition().y / cellSize);
         cells.put(boid, cell_pos);
-        if (cell_pos.y == cellHeight-1 || cell_pos.x == 0 || cell_pos.y ==0 || cell_pos.x == cellWidth -1){
+        if (cell_pos.y > cellHeight-1 || cell_pos.x < 0 || cell_pos.y < 0 || cell_pos.x > cellWidth -1){
             System.out.print("derp");
         }
         grid[(int) cell_pos.x][(int) cell_pos.y].add(boid);
