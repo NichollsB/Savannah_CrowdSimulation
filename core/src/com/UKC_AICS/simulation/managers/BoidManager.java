@@ -47,6 +47,7 @@ public class BoidManager extends Manager {
         behaviours.put("alignment", new Alignment());
         behaviours.put("cohesion", new Cohesion());
         behaviours.put("wander", new Wander());
+        
         behaviours.put("attractor", new Attractor());
         behaviours.put("repeller", new Repeller());
 
@@ -248,11 +249,6 @@ public class BoidManager extends Manager {
                     dummyObjects.removeValue(ent, false);
                 }
             }
-
-//            float coh = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("cohesion");
-//            float ali = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("alignment");
-//            float sep = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("separation");
-//            float wan = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("wander");
 
             float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
             float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
