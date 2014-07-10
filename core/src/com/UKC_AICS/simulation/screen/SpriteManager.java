@@ -76,7 +76,7 @@ public class SpriteManager {
 		Sprite sprite;
 		Texture spriteTexture;
 		tileTextures = new ObjectMap<Integer, Sprite>(tileFiles.size);
-		for(Integer tile: tileFiles.keys()){
+		/*for(Integer tile: tileFiles.keys()){
 			if(assetManager.isLoaded(tileFiles.get(tile))){
 				spriteTexture = assetManager.get(tileFiles.get(tile), Texture.class);
 				sprite = new Sprite(spriteTexture);
@@ -86,6 +86,14 @@ public class SpriteManager {
 			}
 			else
 				tilesLoaded = false;
+		}*/
+		
+		for(Integer tile : tileFiles.keys()){
+			if(assetManager.isLoaded(tileFiles.get(tile))){
+				spriteTexture = assetManager.get(tileFiles.get(tile), Texture.class);
+				tileTextures.put(tile, new Sprite(spriteTexture));
+				tilesLoaded = true;
+			}
 		}
 			
 		boidSprites = new ObjectMap<Integer, Sprite>(boidsFiles.size);
@@ -123,52 +131,53 @@ public class SpriteManager {
 //		}
 	}
 	
-	/**
-	 * Initialise the tileCache
-	 * @param tiles The map of tile types in the environment
-	 */
-	public void createTileCache(byte[][] tiles) {
-		//while(!tilesLoaded){}
-		if(tilesLoaded){
-			tileCache = new SpriteCache();
-			tileCache.beginCache();
-			int x = 0;
-			Sprite sprite;
-			int y = 0;
-			int count = 0;
-			for(int i = 0; i < tiles.length; i++){
-				for(int j = 0; j < tiles[i].length; j++){
-					if(i == 0) x = 0; if(j == 0) y = 0;
-					count++;
-					System.out.println(tiles[i][j]);
-					System.out.println("Adding texture " + tileTextures.get((int)tiles[i][j]) +
-							" cache " + tileCache + " num tiles " + count);
-					sprite = tileTextures.get((int)tiles[i][j]);
-					sprite.setPosition(x, y);
-					tileCache.add(sprite);
-					y+= 16;
-				}
-				x+= 16;
-			}
-			System.out.println("Cache index " + tileCache.endCache());
-			tile = tileCache.endCache();
-			tilesCreated = true;
-		}
-		else {
-			tilesMap = tiles;
-		}
-		//created = true;
-	}
 	
-	public void drawTileCache(){
-		if(tilesCreated){
-			tileCache.begin();		
-			tileCache.draw(tile);
-			tileCache.end();
-		}
-		else
-			createTileCache(tilesMap);
-	}
+//	/**
+//	 * Initialise the tileCache
+//	 * @param tiles The map of tile types in the environment
+//	 */
+//	public void createTileCache(byte[][] tiles) {
+//		//while(!tilesLoaded){}
+//		if(tilesLoaded){
+//			tileCache = new SpriteCache();
+//			tileCache.beginCache();
+//			int x = 0;
+//			Sprite sprite;
+//			int y = 0;
+//			int count = 0;
+//			for(int i = 0; i < tiles.length; i++){
+//				for(int j = 0; j < tiles[i].length; j++){
+//					if(i == 0) x = 0; if(j == 0) y = 0;
+//					count++;
+////					System.out.println(tiles[i][j]);
+////					System.out.println("Adding texture " + tileTextures.get((int)tiles[i][j]) +
+////							" cache " + tileCache + " num tiles " + count);
+//					sprite = tileTextures.get((int)tiles[i][j]);
+//					sprite.setPosition(x, y);
+//					tileCache.add(sprite);
+//					y+= 16;
+//				}
+//				x+= 16;
+//			}
+////			System.out.println("Cache index " + tileCache.endCache());
+//			tile = tileCache.endCache();
+//			tilesCreated = true;
+//		}
+//		else {
+//			tilesMap = tiles;
+//		}
+//		//created = true;
+//	}
+//	
+//	public void drawTileCache(){
+//		if(tilesCreated){
+//			tileCache.begin();		
+//			tileCache.draw(tile);
+//			tileCache.end();
+//		}
+//		else
+//			createTileCache(tilesMap);
+//	}
 
 	public Sprite getContinuousSprite(Byte subType){
 		if(boidSprites.containsKey((int)subType)){
@@ -182,6 +191,11 @@ public class SpriteManager {
 		}
 		return null;
 	}
+	
+	public Sprite getGrassTexture(){
+		return tileTextures.get(0);
+	}
+	
 	public Sprite getSprite(Byte type, Byte subType){
 		if(type <= 0 || type == null){
 			return getContinuousSprite(subType);
@@ -219,7 +233,7 @@ public class SpriteManager {
 		String filename = "data/corpse_object_x16.png";
 		for(Byte type : objs){
 			filename = objectsFiles.get((int)type);
-			System.out.println(filename);
+			//System.out.println(filename);
 			assetManager.load(filename, Texture.class);
 		}
 	}

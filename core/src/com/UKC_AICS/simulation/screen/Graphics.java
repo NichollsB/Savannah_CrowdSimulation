@@ -47,9 +47,27 @@ public class Graphics {
 		if(spriteManager.update()){
 			
 			
-			spriteManager.drawTileCache();
+			//spriteManager.drawTileCache();
 			batch.disableBlending();
 			batch.begin();
+			//drawGrass
+			//int x=0, y=0;
+//			Texture tex;
+			if(tileMap.length > 0){
+				for(int y = 0; y < Gdx.graphics.getHeight(); y+=16){
+					for(int x = 0; x < Gdx.graphics.getWidth(); x+=16){
+						//tex = spriteManager.getGrassTexture();
+						sprite = spriteManager.getGrassTexture();
+						sprite.setPosition(x, y);
+						sprite.draw(batch);
+//						batch.draw(sprite, x, y);
+						//x+=16;
+						//System.out.println("x " + x + " y " + y);
+					}
+					//y+=16;
+				}
+			}
+			
 			byte b = 0;
 			if(entityArray.size>0){
 				for(Entity entity : entityArray){
@@ -117,9 +135,13 @@ public class Graphics {
 	}
 	
 	public void initTileSprites(byte[][] map){
-		spriteManager.loadAssets_Tiles();
+		/*spriteManager.loadAssets_Tiles();
 		tileMap = map;
-		spriteManager.createTileCache(map);
+		spriteManager.createTileCache(map);*/
+		
+		tileMap = map;
+//		System.out.println(map.length);
+		spriteManager.loadAssets_Tiles();
 	}
 	
 	/**

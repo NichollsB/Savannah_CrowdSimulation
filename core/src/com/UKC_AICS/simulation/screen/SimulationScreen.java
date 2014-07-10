@@ -21,6 +21,7 @@ import com.UKC_AICS.simulation.managers.SimulationManager;
 public class SimulationScreen implements Screen {
 
     private boolean render = true;   // for render pausing
+    private boolean update = false;
     boolean running = true;  //for play pausing.
 
     private final Simulation simulation;
@@ -50,7 +51,8 @@ public class SimulationScreen implements Screen {
         setup();
         
     }
-
+    private long time = 0;
+    private long nextRender = 0;
     @Override
     public void render(float delta) {
         //kind of the update loop.
@@ -60,19 +62,28 @@ public class SimulationScreen implements Screen {
 
         // checks if simulation needs to be rendered or can be run "offline"
         if (render) {
-
-            gui.fps.setText(getFPSString() + simulationManager.getTime());
-            tickPhysics(delta);
-            clearOpenGL();
-            boidGraphics.update(spriteBatch);
-            renderSpriteBatches();
-
-            try {
-                Thread.sleep((long) (1000 / 60 - Gdx.graphics.getDeltaTime()));
-            } catch (InterruptedException e) {
-                System.out.print("Error...");
-                e.printStackTrace();
-            }
+        	camera.update();
+        	spriteBatch.setProjectionMatrix(camera.combined);
+        	time = System.nanoTime();
+        	if(time >= nextRender){
+        		update = false;
+	            gui.fps.setText(getFPSString() + simulationManager.getTime());
+	            tickPhysics(delta);
+	            clearOpenGL();
+	            boidGraphics.update(spriteBatch);
+	            renderSpriteBatches();
+	            nextRender = System.nanoTime() + (long)33333333.33333333;
+        	}
+//        	else{
+//        		update = true;
+//        	}
+	            try {
+	                Thread.sleep((long) (1000 / 60 - Gdx.graphics.getDeltaTime()));
+	            } catch (InterruptedException e) {
+	                System.out.print("Error...");
+	                e.printStackTrace();
+	            }
+	       
         } else {
             clearOpenGL();
             gui.fps.setText(getFPSString() + simulationManager.getTime());
@@ -115,7 +126,7 @@ public class SimulationScreen implements Screen {
         //create a camera. perspective? orthographic? etc etc.
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
-    	inputManager = new InputManager(this, 1280, 720, camera);
+    	inputManager = new InputManager(this, width, height, camera);
     	input = new InputMultiplexer();
 
         input.addProcessor(gui.setStage());  //sets up GUI

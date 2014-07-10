@@ -37,7 +37,6 @@ public class WorldManager extends Manager {
             }
         }
 
-
         information_layers.put("map_tiles", mapInfo);
     }
 
