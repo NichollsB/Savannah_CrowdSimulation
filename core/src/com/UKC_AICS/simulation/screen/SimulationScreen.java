@@ -1,13 +1,11 @@
 package com.UKC_AICS.simulation.screen;
 
-import java.util.HashMap;
-
+import com.UKC_AICS.simulation.Registry;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -28,14 +26,14 @@ public class SimulationScreen implements Screen {
 
     private Environment environment; //lighting things
 
-    public SimulationManager simulationManager = new SimulationManager();
+    public SimulationManager simulationManager = new SimulationManager(this);
 
     private BitmapFont font = new BitmapFont();
     private SpriteBatch spriteBatch = new SpriteBatch();
 
     private BoidGraphics boidGraphics = new BoidGraphics();
 
-    SimScreenGUI gui = new SimScreenGUI(this); // Creates gui instance for this screen
+    public SimScreenGUI gui = new SimScreenGUI(this); // Creates gui instance for this screen
 
     private InputMultiplexer input;
     private InputManager inputManager;
@@ -55,7 +53,7 @@ public class SimulationScreen implements Screen {
     public void render(float delta) {
         //kind of the update loop.
         if (running) {
-            simulationManager.update();
+            simulationManager.update(false);
         }
 
         // checks if simulation needs to be rendered or can be run "offline"
@@ -68,7 +66,7 @@ public class SimulationScreen implements Screen {
             renderSpriteBatches();
 
             try {
-                Thread.sleep((long) (1000 / 60 - Gdx.graphics.getDeltaTime()));
+                Thread.sleep((long) (1000 / 60 - Gdx.graphics.getDeltaTime())); //FIXME: this can go negative after leaving the screen alone for a while. crashes program
             } catch (InterruptedException e) {
                 System.out.print("Error...");
                 e.printStackTrace();
@@ -115,7 +113,7 @@ public class SimulationScreen implements Screen {
         //create a camera. perspective? orthographic? etc etc.
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
-    	inputManager = new InputManager(this, 1280, 720, camera);
+    	inputManager = new InputManager(this, Registry.screenWidth, Registry.screenHeight, camera);
     	input = new InputMultiplexer();
 
         input.addProcessor(gui.setStage());  //sets up GUI

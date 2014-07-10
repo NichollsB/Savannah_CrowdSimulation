@@ -1,29 +1,42 @@
 package com.UKC_AICS.simulation.entity;
 
+import com.UKC_AICS.simulation.Registry;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
+
+import java.util.Random;
 
 /**
  * @author Emily
  */
 public class Boid extends Entity {
+    public enum State {
+        DEFAULT,
+        HUNGRY,
+        THIRSTY,
+        EVADE;
 
+        public int getStateID() {
+            return ordinal();
+        }
+    }
     //boids own specific variants on the species.
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //
-    
-    //Present for each species
-     // - individula weightings will go here.
+    private Vector3 acceleration = new Vector3();
 
     public float sightRadius = 200f;
     public float flockRadius = 100f;
     public float nearRadius = 20f;
 
-    private Vector3 acceleration = new Vector3();
 
+    public float hunger = 0;
+    public float thirst = 0;
 
-    public static int age = 0;
-    public static int birthDay = 0;
+    public State state = State.DEFAULT;
+
+    public int age = 0;
+    public int birthDay = 0;
 
     public Boid( Vector3 pos, Vector3 vel) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -61,11 +74,35 @@ public class Boid extends Entity {
 
         position = new Vector3();
         velocity = new Vector3();
+
+    }
+
+    /**
+     *
+     * Copy constructor
+     *
+     * @param boid the boid to make a copy of.
+     */
+    public Boid(Boid boid) {
+        type = 1;
+        subType =  boid.getSubType();
+        nearRadius = boid.nearRadius;
+        sightRadius = boid.sightRadius;
+        flockRadius = boid.flockRadius;
+
+        maxSpeed = boid.maxSpeed;
+        maxForce = boid.maxForce;
+
+        position = new Vector3(boid.getPosition());
+        velocity = new Vector3(boid.getVelocity());
+
+        hunger = boid.hunger;
+        thirst = boid.thirst;
+        age = boid.age;
     }
 
 
     public void setAcceleration(Vector3 acceleration) {
-
         this.acceleration.set(acceleration);
     }
 
@@ -73,25 +110,31 @@ public class Boid extends Entity {
         //TODO: Add in better limiter for speed. Possibly??
         //move
         velocity.add(acceleration).limit(maxSpeed);
+
         position.add(velocity);
         //check for out of bounds
         checkInBounds();
+
+
+        //TODO: potentially have different species "degrade" at different rates
+        hunger -= (float) 0.5 /60;
+        thirst -= (float) 2 /60;
     }
 
 
 
     private void checkInBounds() {
         //TODO make this access the simulation map size, as this will be different from screen size eventually.
-        if(position.x > Gdx.graphics.getWidth()) {
-            position.x -= Gdx.graphics.getWidth();
+        if(position.x > Registry.screenWidth) {
+            position.x -= Registry.screenWidth;
         } else if(position.x < 0) {
-            position.x += Gdx.graphics.getWidth();
+            position.x += Registry.screenWidth;
         }
 
-        if(position.y > Gdx.graphics.getHeight()) {
-            position.y -= Gdx.graphics.getHeight();
+        if(position.y > Registry.screenHeight) {
+            position.y -= Registry.screenHeight;
         } else if(position.y < 0) {
-            position.y += Gdx.graphics.getHeight();
+            position.y += Registry.screenHeight;
         }
     }
 
@@ -105,7 +148,7 @@ public class Boid extends Entity {
         this.position = position;
     }
     public void setPosition( float x, float y, float z) {
-        this.position = new Vector3(x, y, z);
+        setPosition(new Vector3(x, y, z));
     }
 
     public Vector3 getVelocity() {
@@ -116,16 +159,23 @@ public class Boid extends Entity {
        this.birthDay = birthDay;     
     }   
     
-    public static int getBirthDay() {
+    public int getBirthDay() {
     	return birthDay;    	
     }
-    
-    public static void setAge(int newAge) {
-    	age = newAge;
+
+    public void setAge(int newAge) {
+        age = newAge;
     }
-    public static int getAge() {
+    public void age() {
+        age++;
+    }
+
+    public int getAge() {
     	return age;
     }
+
+
+
     /**
      * explicit setting to a defined velocity.
      *

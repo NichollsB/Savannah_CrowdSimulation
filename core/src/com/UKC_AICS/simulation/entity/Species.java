@@ -1,5 +1,7 @@
 package com.UKC_AICS.simulation.entity;
 
+import java.lang.*;
+
 /**
  * Created by james on 03/07/2014.
  */
@@ -20,9 +22,7 @@ public class Species {
     private float separation;
     private float alignment;
     private float wander;
-
-
-
+    private float lifespan;
 
 
     public String getName() {
@@ -120,5 +120,12 @@ public class Species {
     public String toString() {
         return "Species [name=" + name + ", number=" + number + ", byte="
                 + spbyte + ", cohesion=" + cohesion + ", separation=" + separation + ", alignment=" + alignment + ", wander=" + wander + "]";
+    }
+
+    public float getLifespan() {
+        return lifespan;
+    }
+    public void setLifespan(float lifespan) {
+        this.lifespan = lifespan;
     }
 }

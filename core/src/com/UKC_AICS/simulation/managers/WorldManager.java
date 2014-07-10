@@ -1,7 +1,6 @@
 package com.UKC_AICS.simulation.managers;
 
 import com.UKC_AICS.simulation.entity.*;
-import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.utils.QuadTree;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
@@ -43,7 +42,7 @@ public class WorldManager extends Manager {
 
 
     @Override
-    public void update() {
+    public void update(boolean dayIncrement) {
 
     }
 

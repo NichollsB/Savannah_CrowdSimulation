@@ -7,7 +7,7 @@ import com.UKC_AICS.simulation.entity.Boid;
  */
 public class StateMachine extends Manager {
     @Override
-    public void update() {
+    public void update(boolean dayIncrement) {
         throw new Error("This is not updated all together, its updated per boid using update(Boid boid)");
     }
 

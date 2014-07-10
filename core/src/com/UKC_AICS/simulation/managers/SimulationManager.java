@@ -4,6 +4,7 @@ import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.entity.Species;
+import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.UKC_AICS.simulation.utils.StaXParser;
 import com.UKC_AICS.simulation.utils.StaXParserLoad;
 import com.UKC_AICS.simulation.utils.StaxWriter;
@@ -21,6 +22,7 @@ import java.util.Iterator;
  */
 public class SimulationManager extends Manager {
 
+    final SimulationScreen parent;
     //    static final BoidManagerThreaded boidManager = new BoidManagerThreaded();
 //    static final BoidManagerThreadedTwo boidManager = new BoidManagerThreadedTwo();
 //    BoidManagerThreadedThree boidManager = new BoidManagerThreadedThree(this);
@@ -49,7 +51,8 @@ public class SimulationManager extends Manager {
      * <p/>
      * Possibly store the data lookup tables here? like subType data for example
      */
-    public SimulationManager() {
+    public SimulationManager(SimulationScreen parent) {
+        this.parent = parent;
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
 
         generateBoids();
@@ -107,19 +110,28 @@ public class SimulationManager extends Manager {
             fileLocations.put(spByte, species.getSpriteLocation());
         }
     }
-    
+
     public void clear(){
     	boidManager.clearBoidList();
-    	
     }
     
-    public void update() {
-        boidManager.update();
-        worldManager.update();
-        tick();
+//    public void update() {
+//        boidManager.update();
+//        worldManager.update();
+//        tick();
+
+    public void update(boolean dayIncrement) {
+        dayIncrement = tick();
+        boidManager.update(dayIncrement);
+        worldManager.update(dayIncrement);
     }
 
-    private void tick() {
+    /**
+     *
+     * @return whether the time has "ticked" over a dya or not.
+     */
+    private boolean tick() {
+        boolean increment = false;
         if (minutes < 59) {
             minutes += 1;
         } else if (hours < 23) {
@@ -129,22 +141,25 @@ public class SimulationManager extends Manager {
             hours = 0;
             days += 1;
             setDay();
+            increment = true;
         } else {
             days = 0;
             weeks += 1;
             setDay();
+            increment = true;
         }
+        return increment;
 //        System.out.println(minutes + " mins; " + hours + " hrs; " + days + " days; " + weeks + " wks.");
     }
 
     public String getTime() {
-        return " Time " + minutes + " mins; " + hours + " hrs; "
+        return " Time " + hours + " hrs; "
                 + days + " days; " + weeks + " wks.";
     }
 
     public void setDay() {
     	currentDay++;
-    	boidManager.updateAge();
+//    	boidManager.updateAge(); //moved this to boidmanager
     }
     
    public static int getDay() {

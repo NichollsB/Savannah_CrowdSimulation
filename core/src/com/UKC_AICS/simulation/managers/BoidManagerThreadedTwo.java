@@ -171,8 +171,9 @@ public class BoidManagerThreadedTwo extends Manager {
      * called by the update in SimulationManager
      * <p/>
      * this will loop through the boids and update them
+     * @param dayIncrement
      */
-    public void update() {
+    public void update(boolean dayIncrement) {
 //        rebuildTree(boids);
         //loop through boids and ask them to do their thing.
 
@@ -413,10 +414,10 @@ public class BoidManagerThreadedTwo extends Manager {
 
     public void updateAge() {
         for (Boid b : boids) {
-            int bday = Boid.getBirthDay();
+            int bday = b.getBirthDay();
             int day = SimulationManager.getDay();
             int newAge = bday + (day - bday);
-            Boid.setAge(newAge);
+            b.setAge(newAge);
         }
     }
 
