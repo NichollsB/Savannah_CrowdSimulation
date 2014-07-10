@@ -8,7 +8,7 @@ import java.util.HashMap;
 /**
  * Created by Emily on 07/07/2014.
  */
-public class Registry {
+public class Constants {
 
 
 
@@ -18,6 +18,8 @@ public class Registry {
 
     public static int screenWidth = 1280;
     public static int screenHeight = 720;
+
+    public static final int TILE_SIZE = 16;
 
 
 

@@ -1,10 +1,7 @@
 package com.UKC_AICS.simulation.entity;
 
-import com.UKC_AICS.simulation.Registry;
-import com.badlogic.gdx.Gdx;
+import com.UKC_AICS.simulation.Constants;
 import com.badlogic.gdx.math.Vector3;
-
-import java.util.Random;
 
 /**
  * @author Emily
@@ -32,6 +29,7 @@ public class Boid extends Entity {
 
     public float hunger = 0;
     public float thirst = 0;
+    public float panic = 0;
 
     public State state = State.DEFAULT;
 
@@ -125,16 +123,16 @@ public class Boid extends Entity {
 
     private void checkInBounds() {
         //TODO make this access the simulation map size, as this will be different from screen size eventually.
-        if(position.x > Registry.screenWidth) {
-            position.x -= Registry.screenWidth;
+        if(position.x > Constants.screenWidth) {
+            position.x -= Constants.screenWidth;
         } else if(position.x < 0) {
-            position.x += Registry.screenWidth;
+            position.x += Constants.screenWidth;
         }
 
-        if(position.y > Registry.screenHeight) {
-            position.y -= Registry.screenHeight;
+        if(position.y > Constants.screenHeight) {
+            position.y -= Constants.screenHeight;
         } else if(position.y < 0) {
-            position.y += Registry.screenHeight;
+            position.y += Constants.screenHeight;
         }
     }
 

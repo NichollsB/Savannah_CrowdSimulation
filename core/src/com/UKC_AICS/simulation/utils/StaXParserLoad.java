@@ -1,21 +1,17 @@
 package com.UKC_AICS.simulation.utils;
 
-import com.UKC_AICS.simulation.entity.Species;
-
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import com.UKC_AICS.simulation.managers.BoidManager;
-import com.UKC_AICS.simulation.entity.Boid;
+
+import com.UKC_AICS.simulation.managers.BoidManagerOld;
+
 /**
  * Created by Matt on 08/07/2014.
  */
@@ -114,7 +110,7 @@ public class StaXParserLoad {
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
                     if (endElement.getName().getLocalPart() == (BOID)) {
-                        BoidManager.createBoid(spec ,age ,bDay ,fltArray[0] ,fltArray[1] ,fltArray[2] ,fltArray2[0] ,fltArray2[1] ,fltArray2[2]);
+                        BoidManagerOld.createBoid(spec, age, bDay, fltArray[0], fltArray[1], fltArray[2], fltArray2[0], fltArray2[1], fltArray2[2]);
                     }
                 }
 

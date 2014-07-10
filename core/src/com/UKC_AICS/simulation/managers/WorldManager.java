@@ -1,7 +1,8 @@
 package com.UKC_AICS.simulation.managers;
 
-import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.utils.QuadTree;
+import com.UKC_AICS.simulation.world.LandMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -16,8 +17,9 @@ import java.util.HashMap;
 public class WorldManager extends Manager {
 
     private static final int TILE_SIZE = 16;
+    private static LandMap map;
     private Vector3 size;
-    private HashMap<String, byte[][]> information_layers = new HashMap<String, byte[][]>();
+//    private HashMap<String, byte[][]> information_layers = new HashMap<String, byte[][]>();
 
 
     private Array<Entity> objects = new Array<Entity>();
@@ -28,16 +30,8 @@ public class WorldManager extends Manager {
 
         objects_map = new QuadTree(0, new Rectangle(0,0,width,height));
 
-        byte [][] mapInfo = new byte[width/TILE_SIZE][height/TILE_SIZE];
+        map = new LandMap(width, height);
 
-        for(int i = 0; i < mapInfo.length; i++ ) {
-            for(int j = 0; j < mapInfo[i].length; j++ ) {
-                mapInfo[i][j] = 0;
-            }
-        }
-
-
-        information_layers.put("map_tiles", mapInfo);
     }
 
 
@@ -76,7 +70,7 @@ public class WorldManager extends Manager {
     }
 
     public byte getTileAt(int x, int y) {
-        return information_layers.get("map_tiles")[x][y];
+        return map.information_layers.get("terrain")[x][y];
     }
 
 //    public void createMap(int width, int height) {
@@ -88,7 +82,7 @@ public class WorldManager extends Manager {
     }
 
     public byte[][] getTiles() {
-        return information_layers.get("map_tiles");
+        return map.information_layers.get("terrain");
     }
 
     public Array<Entity> getObjectsNearby(int x, int y) {
@@ -98,5 +92,19 @@ public class WorldManager extends Manager {
         Array<Entity> returnObjects = new Array<Entity>();
         objects_map.retrieveObjects(returnObjects, point);
         return returnObjects;
+    }
+
+    public static HashMap<String,Byte> getTileInfoAt(int x, int y) {
+        HashMap<String, Byte> layers = new HashMap<String, Byte>();
+        int mapX = x/TILE_SIZE;
+        int mapY = y/TILE_SIZE;
+        for (String layer : map.information_layers.keySet()) {
+            layers.put(layer, map.information_layers.get(layer)[mapX][mapY]);
+        }
+        return layers;
+    }
+
+    public static void changeTileOnLayer(float x, float y, String layer, byte newValue) {
+        map.changeTileOnLayer((int)x,(int)y,layer, newValue);
     }
 }

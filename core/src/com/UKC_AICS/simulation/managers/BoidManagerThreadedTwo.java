@@ -2,10 +2,10 @@ package com.UKC_AICS.simulation.managers;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
-import com.UKC_AICS.simulation.entity.behaviours.*;
-import com.UKC_AICS.simulation.utils.QuadTree;
 import com.UKC_AICS.simulation.entity.Species;
+import com.UKC_AICS.simulation.entity.behaviours.*;
 import com.UKC_AICS.simulation.utils.BoidGrid;
+import com.UKC_AICS.simulation.utils.QuadTree;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;

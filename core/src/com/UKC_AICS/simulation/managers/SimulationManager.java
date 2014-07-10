@@ -26,6 +26,7 @@ public class SimulationManager extends Manager {
     //    static final BoidManagerThreaded boidManager = new BoidManagerThreaded();
 //    static final BoidManagerThreadedTwo boidManager = new BoidManagerThreadedTwo();
 //    BoidManagerThreadedThree boidManager = new BoidManagerThreadedThree(this);
+//    BoidManagerOld boidManager = new BoidManagerOld(this);
     BoidManager boidManager = new BoidManager(this);
     WorldManager worldManager = new WorldManager(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
@@ -40,7 +41,7 @@ public class SimulationManager extends Manager {
     static final HashMap<Byte, String> speciesByte = new HashMap<Byte, String>();
 
     StaXParser staXParser = new StaXParser();
-    static HashMap<Byte, Species> speciesData;
+    public static HashMap<Byte, Species> speciesData;
     
     HashMap<Byte, String> fileLocations;
     
@@ -198,4 +199,8 @@ public class SimulationManager extends Manager {
 		// TODO Auto-generated method stub
 		return fileLocations;
 	}
+
+    public HashMap<String, Byte> getTileInfo(int screenX, int screenY) {
+        return worldManager.getTileInfoAt(screenX,screenY);
+    }
 }

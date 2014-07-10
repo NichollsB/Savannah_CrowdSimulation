@@ -112,7 +112,7 @@ public class SimScreenGUI {
         table.add(saveButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
         table.add(loadButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
         //
-        table.add(console).size(300f,30f).bottom();
+        table.add(console).size(300f,30f).top().right();
 
         return stage;
         //Gdx.input.setInputProcessor(stage);

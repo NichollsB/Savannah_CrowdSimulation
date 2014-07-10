@@ -1,6 +1,6 @@
 package com.UKC_AICS.simulation.screen;
 
-import com.UKC_AICS.simulation.Registry;
+import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.badlogic.gdx.Gdx;
@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.UKC_AICS.simulation.managers.SimulationManager;
+
+import java.util.HashMap;
 
 /**
  * @author Emily
@@ -113,7 +115,7 @@ public class SimulationScreen implements Screen {
         //create a camera. perspective? orthographic? etc etc.
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
-    	inputManager = new InputManager(this, Registry.screenWidth, Registry.screenHeight, camera);
+    	inputManager = new InputManager(this, Constants.screenWidth, Constants.screenHeight, camera);
     	input = new InputMultiplexer();
 
         input.addProcessor(gui.setStage());  //sets up GUI
@@ -205,7 +207,8 @@ public class SimulationScreen implements Screen {
      */
     public void pickPoint(int screenX, int screenY) {
         //What should happen when clicking on the screen
-        gui.setConsole("x: " + screenX + " y: " + screenY);
+        HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX,screenY);
+        gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
 
     }
 
