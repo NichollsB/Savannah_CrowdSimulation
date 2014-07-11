@@ -81,6 +81,8 @@ public class CollisionManager {
 
             if (lookAheadCheck(boid, target)) {
                 //calculate adjustment vector here
+                //should be able to use the tmpVec and tmpVec2 used to calc true.
+
 
             } else if (lookHalfAheadCheck(boid, target)) {
                 //calculate adjustment vector here
@@ -104,7 +106,8 @@ public class CollisionManager {
         //collision check here
         boolean collision = false;
         tmpVec.set(boid.getPosition());
-        tmpVec.add(boid.getVelocity());
+        //check new position that is 2xthe current velocity ahead( 2 moves ahead not accounting for acceleration)
+        tmpVec.add(tmpVec2.set(boid.getVelocity()).scl(2f));
         tmpVec.sub(target.getPosition());
         if (tmpVec.len() < 20f) {
             collision = true;
@@ -121,7 +124,15 @@ public class CollisionManager {
      */
     private boolean lookHalfAheadCheck(Boid boid, Entity target) {
         //collision check here
-        return false;
+        boolean collision = false;
+        tmpVec.set(boid.getPosition());
+        //check new position that is the current velocity ahead( 1 moves ahead not accounting for acceleration)
+        tmpVec.add(tmpVec2.set(boid.getVelocity()));
+        tmpVec.sub(target.getPosition());
+        if (tmpVec.len() < 20f) {
+            collision = true;
+        }
+        return collision;
     }
 
     /**
@@ -133,7 +144,32 @@ public class CollisionManager {
      */
     private boolean sideCheck(Boid boid, Entity target) {
         //collision check here
-        return false;
+        boolean collision = false;
+        //need to add 0.5f velocity to current position,
+        //project a new position off at +/- 45degrees from current velocity
+        //then check the collision by distance of centres of boid/target
+        tmpVec.set(boid.getPosition());
+        tmpVec2.set(boid.getVelocity());
+        tmpVec2.scl(0.5f);
+        //TODO maybe separate these checks into one for each side, as they will require different actions.??
+        for (int i = 0; i < 2; i++) {
+            if(i ==0) {
+                tmpVec2.rotate(45f,0f,0f,0f);
+                tmpVec.add(tmpVec2);
+                tmpVec.sub(target.getPosition());
+                if (tmpVec.len() < 20f) {
+                    collision = true;
+                }
+            } else {
+                tmpVec2.rotate(-45f,0f,0f,0f);
+                tmpVec.add(tmpVec2);
+                tmpVec.sub(target.getPosition());
+                if (tmpVec.len() < 20f) {
+                    collision = true;
+                }
+            }
+        }
+        return collision;
     }
 
 
