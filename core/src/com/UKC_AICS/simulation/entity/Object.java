@@ -26,4 +26,6 @@ public class Object extends Entity {
         this.position = new Vector3(x, y, 0);
         initCircle();
     }
+
+
 }

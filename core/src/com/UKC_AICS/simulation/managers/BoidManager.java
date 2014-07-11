@@ -238,6 +238,15 @@ public class BoidManager extends Manager {
                 }
             }
 
+            //TODO this is where to use new collisionManager
+            Array<Entity> collisionObjects = parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
+            //TODO add close by boids to the collisonObjects Array later
+            Vector3 collisionAdjustment = null;
+
+                 collisionAdjustment = collisionManager.checkCollision(boid, collisionObjects);
+
+
+
             boolean avoidCollision = false;
             Entity toAvoid = null;
             //find objects nearby
@@ -255,7 +264,7 @@ public class BoidManager extends Manager {
                 if (steering.len2() >  boid.sightRadius * boid.sightRadius) {
 //                    dummyObjects.removeValue(ent, false);
                 }
-                else if (steering.len2() <  boid.nearRadius* boid.nearRadius) {
+                else if (steering.len() <  boid.nearRadius* 1.5) {
                     if(ent.getPosition() == new Vector3(500,200,0)) {
                         System.out.println("syupid object");
                     }
@@ -266,6 +275,18 @@ public class BoidManager extends Manager {
             }
 
             steering.set(0f, 0f, 0f);
+            // new check will be if(collisionAdjustment == null) {
+//                float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
+//                float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
+//                float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
+//                float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander();
+//
+//                steering.add(behaviours.get("cohesion").act(nearBoids, dummyObjects, boid).scl(coh));
+//                steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
+//                steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
+//                steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
+//            } else {
+            //TODO add the collisionAdjustment somehow
             if(!avoidCollision) {
                 float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
                 float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
@@ -284,12 +305,15 @@ public class BoidManager extends Manager {
 
                 int turn = Intersector.pointLineSide(boid.position.x, boid.position.y, tmpPos.x,tmpPos.y, toAvoid.getPosition().x, toAvoid.getPosition().y);
                 if(turn == -1) {
-                    steering.add(-boid.getVelocity().y, boid.getVelocity().x,0f).rotate(boid.position, 45f);  //turn left
+                    steering.add(-boid.getVelocity().y, boid.getVelocity().x, 0f);  //turn left
                 } else if (turn == 1) {
-                    steering.add(boid.getVelocity().y, -boid.getVelocity().x,0f).rotate(boid.position, -45f);  //turn right
+                    steering.add(boid.getVelocity().y, -boid.getVelocity().x, 0f);  //turn right
                 } else {
                     steering.add(boid.getVelocity().y, -boid.getVelocity().x,0f);   // default to turn right
                 }
+                steering.nor();
+                steering.limit(boid.maxForce);
+                steering.scl(boid.maxSpeed);
                 System.out.println("I just avoided and object! " + boid.getPosition() + "    " + boid.getVelocity());
             }
             
