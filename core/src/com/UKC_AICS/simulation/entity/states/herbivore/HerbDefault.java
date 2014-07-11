@@ -28,8 +28,11 @@ public class HerbDefault extends State {
     public boolean update(Boid boid) {
 
 
-        if(boid.hunger < 15) {
-            parent.pushState(boid, new Eat(parent,bm));
+        if(boid.thirst < 15) {
+            parent.pushState(boid, new Thirsty(parent, bm));
+        }
+        else if(boid.hunger < 15) {
+            parent.pushState(boid, new Hungry(parent,bm));
         } else {
 
 

@@ -50,7 +50,9 @@ public class LandMap {
         for(int i = 0; i < mapInfo.length; i++ ) {
             for(int j = 0; j < mapInfo[i].length; j++ ) {
                 mapInfo[i][j] = (byte)rand.nextInt(100);
-                terrain[i][j] = 1; //change terrain type to water.
+                if (mapInfo[i][j] > 50) {
+                    terrain[i][j] = 1; //change terrain type to water.
+                }
             }
         }
 

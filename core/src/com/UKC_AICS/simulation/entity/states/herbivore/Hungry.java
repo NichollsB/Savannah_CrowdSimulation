@@ -26,53 +26,54 @@ public class Hungry extends State {
     public boolean update(Boid boid) {
         //search for food.
 
-        if(WorldManager.getTileInfoAt((int)boid.position.x,(int)boid.position.y).get("grass") >= 20) {
-            parent.pushState(boid, new Eat(parent,bm));
-        }
+        if (boid.hunger > 60) {
+            // pop
+            return true; //stop looking for food.
+        } else {
 
-        Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition()) ;
-        Array<Boid> closeBoids = new Array<Boid>();
+            if (WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("grass") >= 20) {
+                parent.pushState(boid, new Eat(parent, bm));
+            }
+
+            Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
+            Array<Boid> closeBoids = new Array<Boid>();
 
             /*
             * CELL  ATTEMPTS.
             */
 
-        for (Boid b : nearBoids) {
-            steering.set(boid.getPosition());
-            steering.sub(b.getPosition());
-            if (steering.len() > boid.flockRadius) {
-                nearBoids.removeValue(b, true);
+            for (Boid b : nearBoids) {
+                steering.set(boid.getPosition());
+                steering.sub(b.getPosition());
+                if (steering.len() > boid.flockRadius) {
+                    nearBoids.removeValue(b, true);
+                }
+                //if the boid is outside the flock radius it CANT also be in the "too close" range
+                else if (steering.len() < boid.nearRadius) {
+                    closeBoids.add(b);
+                }
             }
-            //if the boid is outside the flock radius it CANT also be in the "too close" range
-            else if (steering.len() < boid.nearRadius) {
-                closeBoids.add(b);
-            }
-        }
 
-        //find objects nearby
-        Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
+            //find objects nearby
+            Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
-        float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander()/2;
-        float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
-        float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
+//            float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander() / 2;
+            float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
+            float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
 
-        steering.set(0f, 0f, 0f);
+            steering.set(0f, 0f, 0f);
 
-        steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
-        steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
-        steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
+            steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
+            steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
+//            steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
-        steering.nor().scl(boid.maxSpeed/2);
-        steering.sub(boid.getVelocity());
-        steering.limit(boid.maxForce);
+            steering.nor().scl(boid.maxSpeed / 2);
+            steering.sub(boid.getVelocity());
+            steering.limit(boid.maxForce);
 
-        boid.setAcceleration(steering);
+            boid.setAcceleration(steering);
 
-        if (boid.hunger > 60) {
-            // pop
-            return false;
-        } else {
-            return false;
+            return false; //keep in this state.
         }
     }
 
