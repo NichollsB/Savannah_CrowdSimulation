@@ -178,54 +178,15 @@ public class BoidManager extends Manager {
 
             // find relevant boids
 
-            Array<Boid> nearBoids = new Array<Boid>();
-            Array<Boid> closeBoids = new Array<Boid>();
-/*
- SIMPLE LOOPING. HORRIBLE! :(
- */
-//            for (Boid b : boids) {
-//                if (boid != b) {
-//                    steering.set(boid.getPosition());
-//                    steering.sub(b.getPosition());
-//                    if (steering.len() < FLOCK_RADIUS) {
-//                        if (!nearBoids.contains(b, true)) {
-//                            nearBoids.add(b);
-//                        }
-//                    } else {
-//                        if (nearBoids.contains(b, true)) {
-//                            nearBoids.removeValue(b, true);
-//                        }
-//                    }
-//                    if (steering.len() < SEP_RADIUS) {
-//                        closeBoids.add(b);
-//                    }
-//                }
-//            }
-
-            /*
-             QUADTREE ATTEMPTS.
-             */
-//            nearBoids = quadtree.retrieveBoidsInRadius(boid.getPosition(), FLOCK_RADIUS);
-////            For use with the quadtree lookup
-//            for(Boid b : nearBoids) {
-//                steering.set(boid.getPosition());
-//                steering.sub(b.getPosition());
-//                if (steering.len() > FLOCK_RADIUS) {
-//                    nearBoids.removeValue(b, true);
-//                }
-//                //if the boid is outside the flock radius it CANT be in the "too close" range
-//                else if (steering.len() < SEP_RADIUS) {
-//                    closeBoids.add(b);
-//                }
-//
-//            }
 
 
             /*
             * CELL  ATTEMPTS.
             */
 
-            nearBoids = boidGrid.findNearby(boid.getPosition());
+            Array<Boid> nearBoids = boidGrid.findNearby(boid.getPosition());
+            Array<Boid> closeBoids = new Array<Boid>();
+
             for (Boid b : nearBoids) {
                 steering.set(boid.getPosition());
                 steering.sub(b.getPosition());
@@ -248,11 +209,6 @@ public class BoidManager extends Manager {
                     dummyObjects.removeValue(ent, false);
                 }
             }
-
-//            float coh = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("cohesion");
-//            float ali = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("alignment");
-//            float sep = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("separation");
-//            float wan = SimulationManager.tempSpeciesData.get(SimulationManager.speciesByte.get(species)).get("wander");
 
             float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
             float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();

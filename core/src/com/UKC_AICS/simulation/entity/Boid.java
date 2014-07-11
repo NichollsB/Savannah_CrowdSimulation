@@ -74,6 +74,7 @@ public class Boid extends Entity {
         //TODO: Add in better limiter for speed. Possibly??
         //move
         velocity.add(acceleration).limit(maxSpeed);
+        velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
         position.add(velocity);
         //check for out of bounds
         checkInBounds();
