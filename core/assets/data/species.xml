@@ -3,7 +3,7 @@
 <!--xml file for species based information-->
 <settings>
     <species id="0" name="zebra">
-        <number>0</number>
+        <number>10</number>
         <byte>0</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle.png</spriteLocation>
         <sightRadius>180f</sightRadius>
@@ -21,7 +21,7 @@
         <wander>0.1f</wander>
     </species>
     <species id="1" name="wildebeest">
-        <number>5</number>
+        <number>10</number>
         <byte>1</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle2.png</spriteLocation>
         <sightRadius>180f</sightRadius>
@@ -39,7 +39,7 @@
         <wander>0.1f</wander>
     </species>
     <species id="2" name="gazelles">
-        <number>0f</number>
+        <number>10f</number>
         <byte>2</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle3.png</spriteLocation>
         <sightRadius>250f</sightRadius>

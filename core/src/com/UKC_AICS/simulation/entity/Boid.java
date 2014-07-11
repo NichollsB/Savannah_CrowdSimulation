@@ -109,6 +109,8 @@ public class Boid extends Entity {
         //move
         velocity.add(acceleration).limit(maxSpeed);
 
+        velocity.sub(acceleration.set(velocity).scl(0.05f)); //drag attempt
+
         position.add(velocity);
         //check for out of bounds
         checkInBounds();

@@ -17,7 +17,7 @@ public class Eat extends State{
 
     @Override
     public boolean update(Boid boid) {
-        byte grassAmount =WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("grass");
+        byte grassAmount = WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("grass");
 
         if( grassAmount >= 10 && boid.hunger < 80) {
             boid.setAcceleration(new Vector3(0f, 0f, 0f).sub(boid.velocity));

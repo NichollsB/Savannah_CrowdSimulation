@@ -52,7 +52,7 @@ public class Hungry extends State {
         //find objects nearby
         Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
-        float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander();
+        float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander()/2;
         float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
         float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
 
