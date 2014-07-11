@@ -11,6 +11,10 @@ import com.badlogic.gdx.utils.Array;
  */
 public class CollisionManager {
 
+    private float initialCheckRadius = 50f;
+    private Vector3 tmpVec = new Vector3(0f,0f,0f);
+    private Vector3 tmpVec2 = new Vector3(0f,0f,0f);
+
     public CollisionManager(){}
 
 //    public Boid checkCollision(Circle newCircle, Array<Boid> checkBoids, Boid boid){
@@ -55,12 +59,25 @@ public class CollisionManager {
      * @param targets   possible collision targets (just Entity's within sight range or all?)
      * @return  a correction Vector3 to avoid collision with most threatening
      */
-    public Vector3 checkCollision(Entity boid, Array<Entity> targets) {
-        Array<Entity> entities = targets;
+    public Vector3 checkCollision(Boid boid, Array<Entity> targets) {
+        Array<Entity> entities = targets;  //
+        // targets that are within a check range check, to be checked further
         Array<Entity> collisionThreats = new Array<Entity>();
         Vector3 adjustment = new Vector3(0f, 0f, 0f);
+        //iterate through initial array to find proximity threats
         for (int i = 0; i < entities.size; i++) {
             Entity target = entities.get(i);
+            //temporarily use adjustment vector to calculate distances
+            tmpVec.set(boid.getPosition());
+            tmpVec.sub(target.getPosition());
+            //check if distance to target is less than boid sight range
+            if(adjustment.len() < initialCheckRadius){
+                //if close, add to the collision threats
+                collisionThreats.add(target);
+            }
+        }
+        for (int i = 0; i < collisionThreats.size; i++) {
+            Entity target = collisionThreats.get(i);
 
             if (lookAheadCheck(boid, target)) {
                 //calculate adjustment vector here
@@ -83,9 +100,16 @@ public class CollisionManager {
      * @param target  the possible Entity that the boid may collide with
      * @return  a boolean as to whether a collision will occur on current Vector
      */
-    private boolean lookAheadCheck(Entity boid, Entity target){
+    private boolean lookAheadCheck(Boid boid, Entity target){
         //collision check here
-        return false;
+        boolean collision = false;
+        tmpVec.set(boid.getPosition());
+        tmpVec.add(boid.getVelocity());
+        tmpVec.sub(target.getPosition());
+        if (tmpVec.len() < 20f) {
+            collision = true;
+        }
+        return collision;
     }
 
     /**
@@ -95,7 +119,7 @@ public class CollisionManager {
      * @param target  the possible Entity that the boid may collide with
      * @return  a boolean as to whether a collision will occur on current Vector
      */
-    private boolean lookHalfAheadCheck(Entity boid, Entity target) {
+    private boolean lookHalfAheadCheck(Boid boid, Entity target) {
         //collision check here
         return false;
     }
@@ -107,7 +131,7 @@ public class CollisionManager {
      * @param target  the possible Entity that the boid may collide with
      * @return  a boolean as to whether a collision will occur on current Vector
      */
-    private boolean sideCheck(Entity boid, Entity target) {
+    private boolean sideCheck(Boid boid, Entity target) {
         //collision check here
         return false;
     }
