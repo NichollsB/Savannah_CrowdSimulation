@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.screen;
 
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
+import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -207,8 +208,13 @@ public class SimulationScreen implements Screen {
      */
     public void pickPoint(int screenX, int screenY) {
         //What should happen when clicking on the screen
-        HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX,screenY);
-        gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
+        Boid boid = simulationManager.getBoidAt(screenX,screenY);
+        if (boid == null) {
+            HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
+            gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
+        } else {
+            System.out.println(boid);
+        }
 
     }
 

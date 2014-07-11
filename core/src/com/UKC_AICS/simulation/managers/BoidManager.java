@@ -154,13 +154,13 @@ public class BoidManager extends Manager {
             //apply movement to it.
             boid.move();
 
-//            if(checkForDeath(boid)) {
-//                continue;
-//            } else {
+            if(checkForDeath(boid)) {
+                continue;
+            } else {
 
                 //tell the grid to update its position.
                 getBoidGrid().update(boid);
-//            }
+            }
         }
         //do aging here, purely on a day increment basis, so we'll see swathes of death everytime the day increments.
         if (dayIncrement) {
@@ -175,12 +175,12 @@ public class BoidManager extends Manager {
             parent.parent.gui.setConsole(" A boid just died of hunger :( ");
             return true;
         }
-        else if( boid.thirst <= -10) {
-            boids.removeValue(boid, false);
-            getBoidGrid().removeBoid(boid);
-            parent.parent.gui.setConsole(" A boid just died of thirst :( ");
-            return true;
-        }
+//        else if( boid.thirst <= -10) {
+//            boids.removeValue(boid, false);
+//            getBoidGrid().removeBoid(boid);
+//            parent.parent.gui.setConsole(" A boid just died of thirst :( ");
+//            return true;
+//        }
         float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
         if( boid.age > lifespan)  {
             boids.removeValue(boid, false);
@@ -223,4 +223,7 @@ public class BoidManager extends Manager {
         BoidManager.boidGrid = boidGrid;
     }
 
+    public Boid getBoidAt(int screenX, int screenY) {
+        return boidGrid.findBoidAt(screenX,screenY);
+    }
 }

@@ -299,4 +299,22 @@ public class BoidGrid {
 
         return bnearby;
     }
+
+
+    public Boid findBoidAt(int screenX, int screenY) {
+
+        int cellX = screenX / cellSize;
+        int cellY = screenY / cellSize;
+
+        Array<Boid> boids = new Array<Boid>();
+        findBoidsInCell(boids, cellX, cellY);
+
+        for (Boid boid : boids) {
+            if(boid.bounds.contains(screenX,screenY)) {
+                return boid;
+            }
+        }
+
+        return null;
+    }
 }

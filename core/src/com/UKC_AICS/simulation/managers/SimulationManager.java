@@ -203,4 +203,8 @@ public class SimulationManager extends Manager {
     public HashMap<String, Byte> getTileInfo(int screenX, int screenY) {
         return worldManager.getTileInfoAt(screenX,screenY);
     }
+
+    public Boid getBoidAt(int screenX, int screenY) {
+        return boidManager.getBoidAt(screenX,screenY);
+    }
 }

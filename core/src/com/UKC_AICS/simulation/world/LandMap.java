@@ -26,17 +26,17 @@ public class LandMap {
     public LandMap(int width, int height) {
         size = new Vector3(width/TILE_SIZE, height/TILE_SIZE, 1);
 
-        byte [][] mapInfo = new byte[width/TILE_SIZE][height/TILE_SIZE];
+        byte[][] terrain = new byte[width/TILE_SIZE][height/TILE_SIZE];
 
-        for(int i = 0; i < mapInfo.length; i++ ) {
-            for(int j = 0; j < mapInfo[i].length; j++ ) {
-                mapInfo[i][j] = 0;
+        for(int i = 0; i < terrain.length; i++ ) {
+            for(int j = 0; j < terrain[i].length; j++ ) {
+                terrain[i][j] = 0; //terrain type is land.
             }
         }
 
-        information_layers.put("terrain", mapInfo);
 
-        mapInfo = new byte[width/TILE_SIZE][height/TILE_SIZE];
+        byte [][] mapInfo =  new byte[width/TILE_SIZE][height/TILE_SIZE];
+
         Random rand = new Random();
         for(int i = 0; i < mapInfo.length; i++ ) {
             for(int j = 0; j < mapInfo[i].length; j++ ) {
@@ -46,6 +46,17 @@ public class LandMap {
 
 
         information_layers.put("grass", mapInfo);
+        mapInfo = new byte[width/TILE_SIZE][height/TILE_SIZE];
+        for(int i = 0; i < mapInfo.length; i++ ) {
+            for(int j = 0; j < mapInfo[i].length; j++ ) {
+                mapInfo[i][j] = (byte)rand.nextInt(100);
+                terrain[i][j] = 1; //change terrain type to water.
+            }
+        }
+
+
+        information_layers.put("water", mapInfo);
+        information_layers.put("terrain", terrain);
     }
     
 

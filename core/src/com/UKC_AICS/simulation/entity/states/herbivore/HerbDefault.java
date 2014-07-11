@@ -28,9 +28,9 @@ public class HerbDefault extends State {
     public boolean update(Boid boid) {
 
 
-//        if(boid.hunger < 15) {
-//            parent.pushState(boid, new Eat(parent,bm));
-//        } else {
+        if(boid.hunger < 15) {
+            parent.pushState(boid, new Eat(parent,bm));
+        } else {
 
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
@@ -88,7 +88,7 @@ public class HerbDefault extends State {
 
             //store the steering movement
             boid.setAcceleration(steering);
-//        }
+        }
 
 
         return false; //base state so no popping.

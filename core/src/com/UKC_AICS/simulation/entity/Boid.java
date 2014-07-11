@@ -1,6 +1,7 @@
 package com.UKC_AICS.simulation.entity;
 
 import com.UKC_AICS.simulation.Constants;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -26,6 +27,7 @@ public class Boid extends Entity {
     public float flockRadius = 100f;
     public float nearRadius = 20f;
 
+    public Rectangle bounds = new Rectangle();
 
     public float hunger = 0;
     public float thirst = 0;
@@ -73,6 +75,7 @@ public class Boid extends Entity {
         position = new Vector3();
         velocity = new Vector3();
 
+        bounds.set(position.x, position.y, 10, 10);
     }
 
     /**
@@ -97,6 +100,8 @@ public class Boid extends Entity {
         hunger = boid.hunger;
         thirst = boid.thirst;
         age = boid.age;
+
+        bounds = boid.bounds;
     }
 
 
@@ -112,6 +117,7 @@ public class Boid extends Entity {
         velocity.sub(acceleration.set(velocity).scl(0.05f)); //drag attempt
 
         position.add(velocity);
+        bounds.setPosition(position.x, position.y);
         //check for out of bounds
         checkInBounds();
 
@@ -202,6 +208,17 @@ public class Boid extends Entity {
 
     public byte getSpecies() {
         return subType;
+    }
+
+    public String toString() {
+        String string = "";
+
+        string += "BOID: " + "\n" + "\t position:" + position.toString() + "\n";
+        string += "\t hunger:" + hunger + "\n";
+        string += "\t thirst:" + thirst + "\n";
+        string += "\t age:" + age + "\n";
+
+        return string;
     }
 
 }
