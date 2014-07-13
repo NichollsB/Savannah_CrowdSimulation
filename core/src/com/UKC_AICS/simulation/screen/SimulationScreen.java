@@ -15,6 +15,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 
 /**
@@ -27,21 +33,30 @@ public class SimulationScreen implements Screen {
     boolean running = true;  //for play pausing.
 
     private final Simulation simulation;
-    private OrthographicCamera camera;
+    
 
     private Environment environment; //lighting things
 
     public SimulationManager simulationManager = new SimulationManager();
 
     private BitmapFont font = new BitmapFont();
-    private SpriteBatch spriteBatch = new SpriteBatch();
 
+    
+    private OrthographicCamera simViewcamera;
+    private Viewport simViewport;
+    private SpriteBatch simViewBatch = new SpriteBatch();
+    private Rectangle viewWindow;
+    private Rectangle camView;
+    
+    
     private Graphics boidGraphics = new Graphics();
 
     SimScreenGUI gui = new SimScreenGUI(this); // Creates gui instance for this screen
 
     private InputMultiplexer input;
     private InputManager inputManager;
+    
+
 
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
@@ -64,16 +79,21 @@ public class SimulationScreen implements Screen {
 
         // checks if simulation needs to be rendered or can be run "offline"
         if (render) {
-        	camera.update();
-        	spriteBatch.setProjectionMatrix(camera.combined);
+        	simViewcamera.update();
+        	simViewBatch.setProjectionMatrix(simViewcamera.combined);
         	time = System.nanoTime();
         	if(time >= nextRender){
         		update = false;
 	            gui.fps.setText(getFPSString() + simulationManager.getTime());
 	            tickPhysics(delta);
 	            clearOpenGL();
-	            boidGraphics.update(spriteBatch);
+	            ScissorStack.calculateScissors(simViewcamera, simViewBatch.getTransformMatrix(), camView, viewWindow);
+	            ScissorStack.pushScissors(viewWindow);
+
+	            boidGraphics.update(simViewBatch);
 	            renderSpriteBatches();
+	            simViewBatch.flush();
+	            ScissorStack.popScissors();
 	            nextRender = System.nanoTime() + (long)33333333.33333333;
         	}
 //        	else{
@@ -95,12 +115,12 @@ public class SimulationScreen implements Screen {
 
 
     private void renderSpriteBatches() {
-        spriteBatch.begin();
+        simViewBatch.begin();
         gui.update();
           //GUI stuff
 //        Table.drawDebug(stage);  //debug lines for UI
 //        font.draw(spriteBatch, getFPSString(), 0, 20);
-        spriteBatch.end();
+        simViewBatch.end();
     }
 
     /**
@@ -113,8 +133,15 @@ public class SimulationScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        createCamera(width, height);
+        
         gui.stage.getViewport().update(width, height, true);
+        camView.setWidth(width);
+        camView.setHeight(height);
+        viewWindow = gui.getViewArea();
+        simViewcamera.position.set(width/2, height/2, 0);
+        simViewcamera.viewportWidth = width;
+        simViewcamera.viewportHeight = height;
+        //createCamera(width, height, 0, 0);
         //setup();
     }
 
@@ -126,20 +153,32 @@ public class SimulationScreen implements Screen {
      */
     private void createCamera(int width, int height) {
         //create a camera. perspective? orthographic? etc etc.
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false);
-    	inputManager = new InputManager(this, width, height, camera);
+    	camView =  new Rectangle(width, height, 0, 0);
+    	viewWindow = gui.getViewArea();
+        simViewcamera = new OrthographicCamera(width, height);
+        simViewcamera.setToOrtho(false);
+        simViewcamera.position.set(width/2, height/2, 0);
+        //clipCamera(camView, viewWindow);
+    	inputManager = new InputManager(this, (int)width, (int)height, simViewcamera);
     	input = new InputMultiplexer();
-
         input.addProcessor(gui.setStage());  //sets up GUI
         input.addProcessor(inputManager);
 
         Gdx.input.setInputProcessor(input);
 
     }
+    
+    private void clipCamera(Rectangle view, Rectangle clip, ScissorStack stack){
+    	//stack.calculateScissors(simViewcamera, batchTransform, area, scissor);
+        //simViewcamera.position.set(view.getWidth()/2, view.getHeight()/2, 0);
+        
+        
+    }
 
     public void setup() {
+    	
         setupCameraController();
+        createCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         boidGraphics.initBoidSprites(simulationManager.getBoids(), simulationManager.getTextureLocations());
         boidGraphics.initObjSprites(simulationManager.getObjects());
         boidGraphics.initTileSprites(simulationManager.getMapTiles());
