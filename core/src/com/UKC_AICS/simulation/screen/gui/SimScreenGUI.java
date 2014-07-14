@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.screen.gui;
 
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -27,9 +28,11 @@ public class SimScreenGUI {
     Table table;
     Skin skin;
     public Label fps;
+
     public Window graphicsWindow;
     private Rectangle screenRect = new Rectangle();
     private Table viewArea;
+
 
     /**
      *
@@ -39,16 +42,14 @@ public class SimScreenGUI {
         simScreen = ss;
     }
 
-    public void update(){
-    	table.drawDebug(stage);
-    	stage.draw();
-    }
     /**
      * setups up the UI.
      */
     public Stage setStage() {
 
+
     	screenRect.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         stage = new Stage(new ScreenViewport());
         table = new Table();
         table.setSize(1280, 720);
@@ -57,11 +58,7 @@ public class SimScreenGUI {
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
         fps = new Label(simScreen.getFPSString()+ simScreen.simulationManager.getTime(), skin);
         stage.addActor(table);
-        
-    	graphicsWindow = new Window("Graphics Window", skin);
-    	graphicsWindow.setMovable(true);
-    	graphicsWindow.setResizable(true);
-    	
+
         table.setFillParent(true);
 
 
@@ -143,6 +140,7 @@ public class SimScreenGUI {
 
             }
         });
+
         HorizontalGroup southGroup = new HorizontalGroup();
 //        southGroup.addActor(fps);
 //        fps.setWidth(500f);
@@ -175,6 +173,7 @@ public class SimScreenGUI {
     	t.add(westTable).right().width(100f).fillY().expandY();
     	westTable.add("west");
     	return westTable;
+
     }
     
     public void setConsole(String log){
@@ -196,4 +195,14 @@ public class SimScreenGUI {
     public Rectangle getViewArea(){
     	return screenRect;
     }
+
+	public void update(SpriteBatch batch) {
+        batch.begin();
+
+        stage.draw();  //GUI stuff
+
+//        Table.drawDebug(stage);  //debug lines for UI
+//        font.draw(spriteBatch, getFPSString(), 0, 20);
+        batch.end();
+	}
 }

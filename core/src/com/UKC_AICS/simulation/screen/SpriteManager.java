@@ -1,4 +1,4 @@
-package com.UKC_AICS.simulation.screen.graphics;
+package com.UKC_AICS.simulation.screen;
 
 import java.util.HashMap;
 

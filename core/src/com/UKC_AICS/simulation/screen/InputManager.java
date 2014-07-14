@@ -1,6 +1,5 @@
-package com.UKC_AICS.simulation.screen.graphics;
+package com.UKC_AICS.simulation.screen;
 
-import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -22,6 +21,7 @@ public class InputManager implements InputProcessor{
 		this.width = width;
 		this.height = height;
 		this.camera = camera;
+		System.out.println();
 	}
 	
 	public int flipY(int y){
