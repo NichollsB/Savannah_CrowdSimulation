@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
@@ -38,6 +40,17 @@ public class Graphics {
 	
 	private byte[][] tileMap;
 	
+	private int renderWidth;
+	private int renderHeight;
+	
+	private OrthographicCamera camera = new OrthographicCamera();
+	
+	public Graphics(int width, int height){
+		renderWidth = width;
+		renderHeight = height;
+		
+	}
+	
 
 	/**
 	 * Update and render the sprites representing the boids. Renders via the SpriteBatch passed in.
@@ -54,8 +67,8 @@ public class Graphics {
 			//int x=0, y=0;
 //			Texture tex;
 			if(tileMap.length > 0){
-				for(int y = 0; y < Gdx.graphics.getHeight(); y+=16){
-					for(int x = 0; x < Gdx.graphics.getWidth(); x+=16){
+				for(int y = 0; y < renderHeight; y+=16){
+					for(int x = 0; x < renderWidth; x+=16){
 						//tex = spriteManager.getGrassTexture();
 						sprite = spriteManager.getGrassTexture();
 						sprite.setPosition(x, y);
@@ -157,6 +170,10 @@ public class Graphics {
 			sprite.setPosition(position.x, position.y);
 			sprite.setRotation((float) rot);
 
+	}
+	
+	public Camera getCamera(){
+		return camera;
 	}
 	
 

@@ -12,13 +12,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
  * Created by James on 02/07/2014.
  * Class for the creation of gui for simulationScreen
  */
-public class SimScreenGUI {
+public class SimScreenGUI extends Stage {
 	
+	//Sizing perameters
+	private final int 
+			NORTH_HEIGHT = 80,
+			EAST_WIDTH = 80,
+			WEST_WIDTH = 80,
+			SOUTH_HEIGHT = 80;
+	private final Rectangle screenRect = new Rectangle(1,1,1,1);
 	//Changing components:
 	 TextArea console;
 
@@ -30,29 +38,35 @@ public class SimScreenGUI {
     public Label fps;
 
     public Window graphicsWindow;
-    private Rectangle screenRect = new Rectangle();
+    
     private Table viewArea;
 
-
+    private ScreenViewport uiViewport = new ScreenViewport();
     /**
      *
      * @param ss the simulationScreen creating the gui
      */
-    public SimScreenGUI (SimulationScreen ss) {
+    public SimScreenGUI (SimulationScreen ss, int width, int height) {
         simScreen = ss;
+        setStage(width, height);
     }
+
 
     /**
      * setups up the UI.
      */
-    public Stage setStage() {
+    public void setStage(int width, int height) {
 
 
-    	screenRect.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-        stage = new Stage(new ScreenViewport());
+    	screenRect.setSize(width, height);
+    	
+    	this.setViewport(uiViewport);
+        stage = this;
+    	
         table = new Table();
-        table.setSize(1280, 720);
+        table.setSize(width, height);
+//        table.setPosition(0, 0);
+       
         table.pack();
         table.debug();
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
@@ -75,25 +89,29 @@ public class SimScreenGUI {
         Table west = createWest(table);
         table.row();
         Table south = createSouth(table);
-
+        
         //table.add(createEast());
         //table.row();
 
         table.pack();
-        setViewRect();
-        return stage;
+        setViewRect(north, south, east, west);
+     //   System.out.println(this.getViewport().getViewportX());
+//        setViewRect();
         //Gdx.input.setInputProcessor(stage);
     }
-    private Table createNorth(Table t){
+    
+  
+
+	private Table createNorth(Table t){
     	Table menuTable = new Table(skin);
-    	t.add(menuTable).top().height(80).expandX().fillX().colspan(3);
+    	t.add(menuTable).top().height(NORTH_HEIGHT).expandX().fillX().colspan(3);
     	menuTable.add("north").fill();
 //    	menuGroup.fill(Gdx.graphics.getWidth());
     	return menuTable;
     }
     private Table createSouth(Table t){
     	Table southTable = new Table(skin);
-    	t.add(southTable).bottom().height(80f).expandX().fillX().colspan(3);
+    	t.add(southTable).bottom().height(SOUTH_HEIGHT).expandX().fillX().colspan(3);
 //    	southTable.add("south");
         // play/pause button
         final TextButton playButton = new TextButton("Play", skin, "default");
@@ -164,13 +182,14 @@ public class SimScreenGUI {
     
     private Table createEast(Table t){
     	Table eastTable = new Table(skin);
-    	t.add(eastTable).left().width(100).fillY().expandY();
+    	t.add(eastTable).left().width(EAST_WIDTH).fillY().expandY();
     	eastTable.add("east");
     	return eastTable;
     }
     private Table createWest(Table t){
     	Table westTable = new Table(skin);
-    	t.add(westTable).right().width(100f).fillY().expandY();
+    	t.add(westTable).right().width(WEST_WIDTH).fillY().expandY();
+   	 	
     	westTable.add("west");
     	return westTable;
 
@@ -184,15 +203,31 @@ public class SimScreenGUI {
     }
     
     public void resize(int width, int height){
-    	setViewRect();
+    	setViewRect(width, height);
+    }
+    
+    private void setViewRect(int width, int height){
+    	if(screenRect!=null){
+    		screenRect.setSize(width - (EAST_WIDTH + WEST_WIDTH),
+    				height - (NORTH_HEIGHT + SOUTH_HEIGHT));
+    		screenRect.setPosition(EAST_WIDTH, SOUTH_HEIGHT);
+    	}
     }
     
     private void setViewRect(){
-        screenRect.setSize(viewArea.getWidth(), viewArea.getHeight());
-        screenRect.setPosition(viewArea.getX(), viewArea.getY());
+    	if(viewArea != null){
+	        screenRect.setSize(viewArea.getWidth(), viewArea.getHeight());
+	        screenRect.setPosition(viewArea.getX(), viewArea.getY());
+    	}
     }
+    private void setViewRect(Table north, Table south, Table east, Table west) {
+    	float width = Gdx.graphics.getWidth() - (east.getWidth() + west.getWidth());
+    	float height = Gdx.graphics.getHeight() - (north.getHeight() + south.getHeight());
+  		screenRect.set(west.getWidth(), north.getHeight(), width, height);
+  	}
     
     public Rectangle getViewArea(){
+        //setViewRect();
     	return screenRect;
     }
 
@@ -200,8 +235,7 @@ public class SimScreenGUI {
         batch.begin();
 
         stage.draw();  //GUI stuff
-
-//        Table.drawDebug(stage);  //debug lines for UI
+        Table.drawDebug(stage);  //debug lines for UI
 //        font.draw(spriteBatch, getFPSString(), 0, 20);
         batch.end();
 	}

@@ -15,13 +15,14 @@ public class InputManager implements InputProcessor{
 	private int width;
 	private int height;
 	private OrthographicCamera camera;
+	private float maxZoom = 2f;
 	
 	public InputManager(SimulationScreen screen, int width, int height, OrthographicCamera camera){
 		this.screen = screen;
 		this.width = width;
 		this.height = height;
 		this.camera = camera;
-		System.out.println();
+		camera.zoom = 1.2f;
 	}
 	
 	public int flipY(int y){
@@ -96,15 +97,15 @@ public class InputManager implements InputProcessor{
 	@Override
 	public boolean scrolled(int amount) {
 		//Zoom out
-        if (amount > 0 && camera.zoom < 1) {
-            camera.zoom += 0.1f;
+        if (amount > 0 && camera.zoom < maxZoom) {
+        	camera.zoom += 0.1f;            
         }
 
         //Zoom in
         if (amount < 0 && camera.zoom > 0.1) {
             camera.zoom -= 0.1f;
         }
-
+        System.out.println("zoom " + camera.zoom);
         return true;
 	}
 
