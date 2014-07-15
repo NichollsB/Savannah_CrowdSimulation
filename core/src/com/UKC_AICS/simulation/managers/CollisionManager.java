@@ -1,8 +1,9 @@
 package com.UKC_AICS.simulation.managers;
 
-import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Object;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
@@ -11,7 +12,7 @@ import com.badlogic.gdx.utils.Array;
  */
 public class CollisionManager {
 
-    private float initialCheckRadius = 50f;
+    private float initialCheckRadius = 20f;
     private Vector3 tmpVec = new Vector3(0f,0f,0f);
     private Vector3 tmpVec2 = new Vector3(0f,0f,0f);
 
@@ -64,35 +65,108 @@ public class CollisionManager {
         // targets that are within a check range check, to be checked further
         Array<Entity> collisionThreats = new Array<Entity>();
         Vector3 adjustment = new Vector3(0f, 0f, 0f);
+        boolean adjustmentSet = false;
         //iterate through initial array to find proximity threats
         for (int i = 0; i < entities.size; i++) {
             Entity target = entities.get(i);
-            //temporarily use adjustment vector to calculate distances
-            tmpVec.set(boid.getPosition());
-            tmpVec.sub(target.getPosition());
-            //check if distance to target is less than boid sight range
-            if(adjustment.len() < initialCheckRadius){
-                //if close, add to the collision threats
-                collisionThreats.add(target);
+            //check target is not self
+            if (!boid.equals(target)) {
+                //temporarily use adjustment vector to calculate distances
+                tmpVec.set(boid.getPosition());
+                tmpVec.sub(target.getPosition());
+                //check if distance to target is less than boid sight range
+                if (tmpVec.len() < 16f) {
+                    //if close, add to the collision threats
+                    collisionThreats.add(target);
+                }
             }
         }
-        for (int i = 0; i < collisionThreats.size; i++) {
-            Entity target = collisionThreats.get(i);
-
-            if (lookAheadCheck(boid, target)) {
-                //calculate adjustment vector here
-                //should be able to use the tmpVec and tmpVec2 used to calc true.
-
-
-            } else if (lookHalfAheadCheck(boid, target)) {
-                //calculate adjustment vector here
-
-            } else if (sideCheck(boid, target)) {
-                //calculate adjustment vector here
-
+        if(collisionThreats.size > 0) {
+            for (int i = 0; i < collisionThreats.size; i++) {
+                Entity target = collisionThreats.get(i);
+                //TODO another distance check for so checkLeft checkRight are not carried out unless within close prox
+                int turn = Intersector.pointLineSide(boid.position.x, boid.position.y, (tmpVec.set((boid.getPosition())).add(boid.getVelocity())).x, (tmpVec.set((boid.getPosition())).add(boid.getVelocity())).y, target.getPosition().x, target.getPosition().y);
+//                if (lookHalfAheadCheck(boid, target)) {
+//                    adjustment.set(boid.getVelocity());
+//                    if(turn == 0) {
+//                        adjustment.scl(0.6f);
+//                        adjustmentSet = true;
+//                    }
+//                    else if(turn == -1) {
+//                        adjustment.rotate(-4f, 0f, 0f, 1f);  //turns right
+//                        System.out.println("collision , turn right");
+//                        adjustmentSet = true;
+//
+//                    } else if (turn == 1) {
+//                        adjustment.rotate(4f, 0f, 0f, 1f);  //turns left
+//                        System.out.println("collision , turn left");
+//                        adjustmentSet = true;
+//                    }
+//                } else
+                 if(turn == -1) {
+                    if (checkLeft(boid, target)) {
+                        //calculate adjustment vector here
+                        //should be able to use the tmpVec and tmpVec2 used to calc true.
+                        adjustment.set(boid.getVelocity());
+//                        adjustment.scl(0.5f);
+                        adjustment.rotate(-25f, 0f, 0f, 1f);  //turns right
+                        adjustmentSet = true;
+                        System.out.println("collision, close left");
+                    }
+                }
+                else if(turn == 1) {
+                    if (checkRight(boid, target)) {
+                        adjustment.set(boid.getVelocity());
+//                        adjustment.scl(0.5f);
+                        adjustment.rotate(25f, 0f, 0f, 1f);  //turns left
+                        adjustmentSet = true;
+                        System.out.println("collision, close right");
+                    }
+                }
+                if(!adjustmentSet){
+                    if (lookHalfAheadCheck(boid, target)) {
+                        //TODO add side check for left or right turn
+                        //calculate adjustment vector here
+                        adjustment.set(boid.getVelocity());
+//                        adjustment.scl(0.8f);
+                        if(turn == -1) {
+                            adjustment.rotate(-10f, 0f, 0f, 1f);  //turns right
+                            System.out.println("collision half ahead, turn right");
+                        } else if (turn == 1) {
+                            adjustment.rotate(10f, 0f, 0f, 1f);  //turns left
+                            System.out.println("collision half ahead, turn left");
+                        }
+                    } else if (lookAheadCheck(boid, target)) {
+                        //calculate adjustment vector here
+                        adjustment.set(boid.getVelocity());
+//                        adjustment.scl(0.8f);
+                        if(turn == -1) {
+                            adjustment.rotate(-5f, 0f, 0f, 1f);  //turns right
+                            System.out.println("collision ahead, turn right");
+                        } else if (turn == 1) {
+                            adjustment.rotate(5f, 0f, 0f, 1f);   //turns left
+                            System.out.println("collision ahead, turn left");
+                        }
+                    }
+                }
             }
         }
         return adjustment;
+    }
+
+    private boolean collisionCheck(Boid boid, Entity target){
+        //collision check here
+        boolean collision = false;
+        tmpVec.set(boid.getPosition());
+        //check new position that is 2xthe current velocity ahead( 2 moves ahead not accounting for acceleration)
+        tmpVec2.set(boid.getVelocity());
+        tmpVec.add(tmpVec2);
+        tmpVec.sub(target.getPosition());
+
+        if (tmpVec.len() < 8f) {
+            collision = true;
+        }
+        return collision;
     }
 
     /**
@@ -107,9 +181,12 @@ public class CollisionManager {
         boolean collision = false;
         tmpVec.set(boid.getPosition());
         //check new position that is 2xthe current velocity ahead( 2 moves ahead not accounting for acceleration)
-        tmpVec.add(tmpVec2.set(boid.getVelocity()).scl(2f));
+        tmpVec2.set(boid.getVelocity());
+        tmpVec2.scl(4f);
+        tmpVec.add(tmpVec2);
         tmpVec.sub(target.getPosition());
-        if (tmpVec.len() < 20f) {
+
+        if (tmpVec.len() < 8f) {
             collision = true;
         }
         return collision;
@@ -127,9 +204,12 @@ public class CollisionManager {
         boolean collision = false;
         tmpVec.set(boid.getPosition());
         //check new position that is the current velocity ahead( 1 moves ahead not accounting for acceleration)
-        tmpVec.add(tmpVec2.set(boid.getVelocity()));
+        tmpVec2.set(boid.getVelocity());
+        tmpVec2.scl(2f);
+        tmpVec.add(tmpVec2);
         tmpVec.sub(target.getPosition());
-        if (tmpVec.len() < 20f) {
+
+        if (tmpVec.len() < 8f) {
             collision = true;
         }
         return collision;
@@ -142,7 +222,7 @@ public class CollisionManager {
      * @param target  the possible Entity that the boid may collide with
      * @return  a boolean as to whether a collision will occur on current Vector
      */
-    private boolean sideCheck(Boid boid, Entity target) {
+    private boolean checkRight(Boid boid, Entity target) {
         //collision check here
         boolean collision = false;
         //need to add 0.5f velocity to current position,
@@ -151,23 +231,29 @@ public class CollisionManager {
         tmpVec.set(boid.getPosition());
         tmpVec2.set(boid.getVelocity());
         tmpVec2.scl(0.5f);
-        //TODO maybe separate these checks into one for each side, as they will require different actions.??
-        for (int i = 0; i < 2; i++) {
-            if(i ==0) {
-                tmpVec2.rotate(45f,0f,0f,0f);
-                tmpVec.add(tmpVec2);
-                tmpVec.sub(target.getPosition());
-                if (tmpVec.len() < 20f) {
-                    collision = true;
-                }
-            } else {
-                tmpVec2.rotate(-45f,0f,0f,0f);
-                tmpVec.add(tmpVec2);
-                tmpVec.sub(target.getPosition());
-                if (tmpVec.len() < 20f) {
-                    collision = true;
-                }
-            }
+        tmpVec2.rotate(-25f,0f,0f,1f);
+        tmpVec.add(tmpVec2);
+        tmpVec.sub(target.getPosition());
+        if (tmpVec.len() < 8f) {
+            collision = true;
+        }
+        return collision;
+    }
+
+    private boolean checkLeft(Boid boid, Entity target) {
+        //collision check here
+        boolean collision = false;
+        //need to add 0.5f velocity to current position,
+        //project a new position off at +/- 45degrees from current velocity
+        //then check the collision by distance of centres of boid/target
+        tmpVec.set(boid.getPosition());
+        tmpVec2.set(boid.getVelocity());
+        tmpVec2.scl(0.5f);
+        tmpVec2.rotate(25f,0f,0f,1f);
+        tmpVec.add(tmpVec2);
+        tmpVec.sub(target.getPosition());
+        if (tmpVec.len() < 8f) {
+            collision = true;
         }
         return collision;
     }

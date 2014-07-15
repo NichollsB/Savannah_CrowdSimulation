@@ -74,18 +74,28 @@ public class Boid extends Entity {
         this.acceleration.set(acceleration);
     }
 
-    public void setNewVelocity(){
-        velocity.add(acceleration).limit(maxSpeed);
-    }
+
     public void move() {
         //TODO: Add in better limiter for speed. Possibly??
         //move
+//        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
+        velocity.add(acceleration).limit(maxSpeed);
         position.add(velocity);
         updateCircle();
         //check for out of bounds
         checkInBounds();
     }
 
+    public void setNewVelocity(Vector3 newVel){
+        velocity.set(newVel);
+    }
+
+    public void move2() {
+        position.add(velocity);
+        updateCircle();
+        //check for out of bounds
+        checkInBounds();
+    }
 
 
     private void checkInBounds() {

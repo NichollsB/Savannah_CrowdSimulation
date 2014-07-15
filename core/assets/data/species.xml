@@ -3,7 +3,7 @@
 <!--xml file for species based information-->
 <settings>
     <species id="0" name="zebra">
-        <number>100</number>
+        <number>50</number>
         <byte>0</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle.png</spriteLocation>
         <sightRadius>200f</sightRadius>
