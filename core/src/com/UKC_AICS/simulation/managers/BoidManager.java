@@ -35,7 +35,13 @@ public class BoidManager extends Manager {
 
 
     private static BoidGrid boidGrid;
-
+      
+    
+    // for counting population
+    public int pop1 = 0;
+    public int pop2 = 0;
+   	public int pop3 = 0;
+    	
     public BoidManager(SimulationManager parent) {
 
         this.parent = parent;
@@ -171,11 +177,30 @@ public class BoidManager extends Manager {
 
         //TODO: Look into making this so it can be threaded.
 
+    	//Reset population count
+    	
+    	pop1 = 0;
+    	pop2 = 0;
+    	pop3 = 0;
+    	
         Boid boid;
         for (int i = 0; i < boids.size; i++) {
             boid = boids.get(i);
             byte species = boid.getSpecies();
 
+            //counts current population
+            
+            if (species==1){
+            	pop1++;
+            }
+            else if(species==2){
+            	pop2++;
+            }
+            else{
+            	pop3++;
+            }
+            
+            
             // find relevant boids
 
             Array<Boid> nearBoids = new Array<Boid>();
@@ -284,11 +309,11 @@ public class BoidManager extends Manager {
             //tell the grid to update its position.
             boidGrid.update(boid);
         }
+        
+        //System.out.println(pop1+" "+pop2+" "+pop3);
     }
     
-    
-    	
-    	
+     	
     public void updateAge(){
     	for(Boid b : boids){
             int bday = b.getBirthDay();
@@ -298,8 +323,7 @@ public class BoidManager extends Manager {
     	}
     }
     
-    
-    
+     
 
     public void rebuildTree(Array<Boid> boids) {
         quadtree = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
