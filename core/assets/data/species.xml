@@ -10,7 +10,7 @@
         <flockRadius>120f</flockRadius>
         <nearRadius>40f</nearRadius>
         <maxSpeed>1.5f</maxSpeed>
-        <maxForce>0.02f</maxForce>
+        <maxForce>0.04f</maxForce>
         <lifespan>80f</lifespan>
         <!--<cohesion>0.1f</cohesion>-->
         <!--<separation>0.9f</separation>-->
@@ -21,7 +21,7 @@
         <wander>0.1f</wander>
     </species>
     <species id="1" name="wildebeest">
-        <number>10</number>
+        <number>0</number>
         <byte>1</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle2.png</spriteLocation>
         <sightRadius>180f</sightRadius>
@@ -39,7 +39,7 @@
         <wander>0.1f</wander>
     </species>
     <species id="2" name="gazelles">
-        <number>10f</number>
+        <number>0</number>
         <byte>2</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle3.png</spriteLocation>
         <sightRadius>250f</sightRadius>

@@ -69,7 +69,9 @@ public class SimulationScreen implements Screen {
             renderSpriteBatches();
 
             try {
-                Thread.sleep((long) (1000 / 60 - Gdx.graphics.getDeltaTime())); //FIXME: this can go negative after leaving the screen alone for a while. crashes program
+                long number = (long) (1000 / 60 - Gdx.graphics.getDeltaTime());
+                if(number < 0) number = 0;
+                Thread.sleep(number); //FIXME: this can go negative after leaving the screen alone for a while. crashes program
             } catch (InterruptedException e) {
                 System.out.print("Error...");
                 e.printStackTrace();

@@ -114,7 +114,7 @@ public class Boid extends Entity {
         //move
         velocity.add(acceleration).limit(maxSpeed);
 
-        velocity.sub(acceleration.set(velocity).scl(0.05f)); //drag attempt
+        velocity.sub(acceleration.set(velocity).scl(0.05f)); //drag attempt; using the acceleration vector (not actually anything to do with acceleration)
 
         position.add(velocity);
         bounds.setPosition(position.x, position.y);

@@ -10,8 +10,8 @@ import com.badlogic.gdx.math.Vector3;
 /**
  * Created by Emily on 10/07/2014.
  */
-public class Eat extends State{
-    public Eat(StateMachine parent, BoidManager bm) {
+public class EatGrass extends State{
+    public EatGrass(StateMachine parent, BoidManager bm) {
         super(parent, bm);
     }
 
@@ -20,11 +20,12 @@ public class Eat extends State{
         byte grassAmount = WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("grass");
 
         if( grassAmount >= 10 && boid.hunger < 80) {
-            boid.setAcceleration(new Vector3(0f, 0f, 0f).sub(boid.velocity));
+//            boid.setAcceleration(new Vector3(0f, 0f, 0f).sub(boid.velocity));
             grassAmount -= 1;
             boid.hunger += 1;
             WorldManager.changeTileOnLayer(boid.position.x, boid.position.y, "grass", grassAmount);
         } else {
+            System.out.println(boid + "\n Just quit EATGRASS state "  );
             return true;
         }
 

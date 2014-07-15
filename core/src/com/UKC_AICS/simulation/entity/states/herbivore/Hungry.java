@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+
 import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
 
 /**
@@ -32,7 +34,9 @@ public class Hungry extends State {
         } else {
 
             if (WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("grass") >= 20) {
-                parent.pushState(boid, new Eat(parent, bm));
+                System.out.println(boid + "\n Just posted EATGRASS state "  );
+                parent.pushState(boid, new EatGrass(parent, bm));
+                boid.setAcceleration(new Vector3(boid.velocity).scl(0.01f));
             }
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());

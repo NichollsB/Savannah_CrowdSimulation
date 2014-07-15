@@ -29,9 +29,11 @@ public class HerbDefault extends State {
 
 
         if(boid.thirst < 15) {
+            System.out.println(boid + "\n Just posted Thirsty state "  );
             parent.pushState(boid, new Thirsty(parent, bm));
         }
         else if(boid.hunger < 15) {
+            System.out.println(boid + "\n Just posted Hungry state "  );
             parent.pushState(boid, new Hungry(parent,bm));
         } else {
 
@@ -80,8 +82,8 @@ public class HerbDefault extends State {
             steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
 
-            steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.2f));
-            steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.2f));
+//            steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.2f));
+//            steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.2f));
 
             // NaN check
 //            if (steering.x != steering.x) {

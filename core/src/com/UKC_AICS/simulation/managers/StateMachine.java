@@ -3,7 +3,6 @@ package com.UKC_AICS.simulation.managers;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.behaviours.*;
 import com.UKC_AICS.simulation.entity.states.State;
-import com.UKC_AICS.simulation.entity.states.herbivore.Eat;
 import com.UKC_AICS.simulation.entity.states.herbivore.HerbDefault;
 import com.UKC_AICS.simulation.entity.states.herbivore.Hungry;
 

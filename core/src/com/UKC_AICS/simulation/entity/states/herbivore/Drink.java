@@ -4,6 +4,7 @@ import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.StateMachine;
+import com.badlogic.gdx.math.Vector3;
 
 /**
  * Created by Emily on 11/07/2014.
@@ -17,10 +18,11 @@ public class Drink extends State {
     public boolean update(Boid boid) {
 
         if(boid.thirst > 80) { //and check there is enough water is still there to drink from.
+            System.out.println(boid + "\n Just quit DRINK state ");
             return true;
         } else {
             // drink from tile
-            boid.thirst += 2;
+            boid.thirst += 0.1;
             return false;
         }
     }
