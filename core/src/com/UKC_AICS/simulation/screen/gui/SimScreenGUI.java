@@ -22,9 +22,9 @@ public class SimScreenGUI extends Stage {
 	
 	//Sizing perameters
 	private final int 
-			NORTH_HEIGHT = 80,
-			EAST_WIDTH = 80,
-			WEST_WIDTH = 80,
+			NORTH_HEIGHT = 50,
+			EAST_WIDTH = 50,
+			WEST_WIDTH = 50,
 			SOUTH_HEIGHT = 80;
 	private final Rectangle screenRect = new Rectangle(1,1,1,1);
 	//Changing components:
