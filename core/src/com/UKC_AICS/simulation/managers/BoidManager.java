@@ -34,7 +34,7 @@ public class BoidManager extends Manager {
     private HashMap<String, Behaviour> behaviours = new HashMap<String, Behaviour>();
 
 
-    private BoidGrid boidGrid;
+    private static BoidGrid boidGrid;
 
     public BoidManager(SimulationManager parent) {
 
@@ -51,6 +51,21 @@ public class BoidManager extends Manager {
         behaviours.put("repeller", new Repeller());
 
     }
+    
+    
+    public static void createBoid(byte species, int age ,int bDay ,float pX ,float pY ,float pZ ,float vX ,float vY ,float vZ) {
+    	Boid boid = new Boid(species);
+    	
+    	boid.setAge(age);
+    	boid.setBirthDay(bDay);
+    	boid.setPosition(pX,pY,pZ);
+    	boid.setVelocity(vX,vY,vZ);
+    	
+    	boids.add(boid);
+//      quadtree.insert(boid);
+     	boidGrid.addBoid(boid);
+    }
+    
 
 
     public void createBoid(byte species) {
@@ -130,9 +145,12 @@ public class BoidManager extends Manager {
     }
 
     public void clearBoidList() {
-
+       
+    	for(Boid boid : boids){
+    	boidGrid.removeBoid(boid);
+    	}
         boids.clear();
-
+       
 
     }
 

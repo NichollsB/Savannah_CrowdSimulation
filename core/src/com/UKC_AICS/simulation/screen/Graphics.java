@@ -124,7 +124,11 @@ public class Graphics {
 	 * @param boidArray the Array of boids to store
 	 */
 	public void initBoidSprites(Array<Boid> boidArray, HashMap<Byte, String> fileLocations){
+<<<<<<< HEAD:core/src/com/UKC_AICS/simulation/screen/Graphics.java
 		spriteManager.loadAssets_Boids(fileLocations, true);
+=======
+		spriteManager.loadAssets(fileLocations, true);
+>>>>>>> develop:core/src/com/UKC_AICS/simulation/screen/BoidGraphics.java
 		boidsArray = boidArray;
 		boidSprite = new Sprite(defaultTexture);
 		boidSprite.setOrigin((defaultTexture.getWidth()/2), defaultTexture.getHeight()/2);

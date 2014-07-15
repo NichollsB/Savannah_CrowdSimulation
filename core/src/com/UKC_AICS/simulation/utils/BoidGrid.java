@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,8 +92,8 @@ public class BoidGrid {
         }
         return boid; //in case of chaining.
     }
-
-
+    
+  
     public void update(Boid boid) {
         Vector2 pos = cells.get(boid);
 

@@ -147,6 +147,17 @@ public class SimScreenGUI extends Stage {
             	System.out.println("Saving");
             }
         });
+        
+      //Load button
+        final TextButton loadButton = new TextButton("Load", skin, "default");
+        loadButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            	simScreen.simulationManager.clear();
+            	simScreen.simulationManager.load();
+            	System.out.println("Loading");
+            }
+        });
 
         // Switch mode button.
         final TextButton switchButton = new TextButton("Switch", skin,"default");
@@ -158,6 +169,7 @@ public class SimScreenGUI extends Stage {
 
             }
         });
+
 
         HorizontalGroup southGroup = new HorizontalGroup();
 //        southGroup.addActor(fps);
@@ -192,6 +204,7 @@ public class SimScreenGUI extends Stage {
    	 	
     	westTable.add("west");
     	return westTable;
+
 
     }
     
