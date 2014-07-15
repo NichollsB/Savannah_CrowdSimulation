@@ -224,8 +224,8 @@ public class BoidManager extends Manager {
             steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
             
-            steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.2f));
-            steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.2f));
+            steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
+            steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
 
             // NaN check
 //            if (steering.x != steering.x) {
