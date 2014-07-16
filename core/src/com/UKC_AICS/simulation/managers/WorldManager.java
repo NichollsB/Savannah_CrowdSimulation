@@ -1,6 +1,9 @@
 package com.UKC_AICS.simulation.managers;
 
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.utils.ObjectGrid;
 import com.UKC_AICS.simulation.utils.QuadTree;
 import com.UKC_AICS.simulation.world.LandMap;
 import com.badlogic.gdx.Gdx;
@@ -24,14 +27,15 @@ public class WorldManager extends Manager {
 
     private Array<Entity> objects = new Array<Entity>();
     private QuadTree objects_map;
+    private ObjectGrid objectGrid;
 
     public WorldManager(int width, int height) {
         size = new Vector3(width/TILE_SIZE, height/TILE_SIZE, 1);
 
         objects_map = new QuadTree(0, new Rectangle(0,0,width,height));
+        objectGrid = new ObjectGrid(60, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         map = new LandMap(width, height);
-
     }
 
 

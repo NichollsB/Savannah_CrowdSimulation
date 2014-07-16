@@ -33,6 +33,7 @@ public class BoidGrid {
 
     private Map<Boid, Vector2> cells = new HashMap<Boid, Vector2>();
     private Array<Boid>[][] grid;
+    public  Vector3 inverseCellSize;
 
     /**
      * Constructor
@@ -53,6 +54,8 @@ public class BoidGrid {
                 grid[i][j] = new Array<Boid>();
             }
         }
+
+        inverseCellSize = new Vector3(1/cell_size, 1/cell_size, 0f);
     }
 
 

@@ -21,6 +21,7 @@
         <alignment>0.5f</alignment>
         <wander>0.1f</wander>
     </species>
+
     <species id="1" name="wildebeest">
         <number>20</number>
         <byte>1</byte>  <!-- this is the sub-type -->
@@ -40,6 +41,7 @@
         <alignment>0.5f</alignment>
         <wander>0.1f</wander>
     </species>
+
     <species id="2" name="gazelle">
         <number>20</number>
         <byte>2</byte>  <!-- this is the sub-type -->
@@ -58,7 +60,7 @@
     </species>
 
     <species id="3" name="lion">
-        <number>5</number>
+        <number>0</number>
         <byte>2</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/lion.png</spriteLocation>
         <diet>"carnivore"</diet>

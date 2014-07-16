@@ -3,7 +3,7 @@ package com.UKC_AICS.simulation.managers;
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Species;
-import com.UKC_AICS.simulation.entity.behaviours.*;
+import com.UKC_AICS.simulation.entity.behaviours.Behaviour;
 import com.UKC_AICS.simulation.utils.BoidGrid;
 import com.UKC_AICS.simulation.utils.MathsUtils;
 import com.UKC_AICS.simulation.utils.QuadTree;
@@ -22,15 +22,19 @@ import java.util.Random;
 public class BoidManager extends Manager {
 
 
-
     public static Array<Boid> boids = new Array<Boid>();
     private static BoidGrid boidGrid;
+
     public final SimulationManager parent;
-    public HashMap<String, Behaviour> behaviours = new HashMap<String, Behaviour>();
+
     private QuadTree quadtree;
-//    private Vector3 steering = new Vector3();
     private Random rand = new Random();
     private StateMachine stateMachine;
+
+//    private HashMap<String, Behaviour> behaviours = new HashMap<String, Behaviour>();
+
+    CollisionManager collisionManager = new CollisionManager();
+
 
     public BoidManager(SimulationManager parent) {
 
@@ -42,22 +46,23 @@ public class BoidManager extends Manager {
 
         stateMachine = new StateMachine(this);
     }
-    
-    
+
+
     public void createBoid(byte species, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ) {
-    	Boid boid = new Boid(species);
-    	
-    	boid.setAge(age);
-    	boid.setBirthDay(bDay);
-    	boid.setPosition(pX,pY,pZ);
-    	boid.setVelocity(vX,vY,vZ);
-    	
+        Boid boid = new Boid(species);
+
+        boid.setAge(age);
+        boid.setBirthDay(bDay);
+        boid.setPosition(pX, pY, pZ);
+        boid.setVelocity(vX, vY, vZ);
+
         addToLists(boid);
     }
 
 
     /**
      * create boid from the species file.
+     *
      * @param species
      */
     public void createBoid(Species species) {
@@ -94,13 +99,14 @@ public class BoidManager extends Manager {
         boid.hunger = rand.nextInt(120) + 20;
         boid.thirst = rand.nextInt(150) + 50;
         //random start age
-        boid.age = rand.nextInt((int)species.getLifespan());
+        boid.age = rand.nextInt((int) species.getLifespan());
 
         addToLists(boid);
     }
 
     /**
      * create a copy of a boid.
+     *
      * @param oldBoid
      * @return
      */
@@ -120,13 +126,14 @@ public class BoidManager extends Manager {
 
     /**
      * removes all the boids from the boidGrid one-by-one TODO: make a method in boidGrid to do this better.
-     *
+     * <p/>
      * and clears the boids list.
      */
     public void clearBoidList() {
 
-        for(Boid boid : boids){
+        for (Boid boid : boids) {
             getBoidGrid().removeBoid(boid);
+            stateMachine.removeBoid(boid);
         }
         boids.clear();
     }
@@ -141,6 +148,7 @@ public class BoidManager extends Manager {
      * called by the update in SimulationManager
      * <p/>
      * this will loop through the boids and update them
+     *
      * @param dayIncrement
      */
     public void update(boolean dayIncrement) {
@@ -154,14 +162,17 @@ public class BoidManager extends Manager {
             //apply movement to it.
             boid.move();
 
-            if(checkForDeath(boid)) {
+            if (checkForDeath(boid)) {
                 continue;
             } else {
-
-                //tell the grid to update its position.
                 getBoidGrid().update(boid);
             }
+            // NaN check
+//            if (steering.x != steering.x) {
+//                System.out.println("blerpy");
+//            }
         }
+
         //do aging here, purely on a day increment basis, so we'll see swathes of death everytime the day increments.
         if (dayIncrement) {
             updateAges();
@@ -169,7 +180,7 @@ public class BoidManager extends Manager {
     }
 
     public boolean checkForDeath(final Boid boid) {
-        if( boid.hunger <= -20) {
+        if (boid.hunger <= -20) {
             removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of hunger :( ");
             return true;
@@ -181,7 +192,7 @@ public class BoidManager extends Manager {
 //            return true;
 //        }
         float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
-        if( boid.age > lifespan)  {
+        if (boid.age > lifespan) {
             removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of age related issues :( ");
             return true;
@@ -190,17 +201,17 @@ public class BoidManager extends Manager {
     }
 
 
-    public void updateAges(){
-    	for(Boid b : boids){
+    public void updateAges() {
+        for (Boid b : boids) {
             b.age++;
 //            int bday = b.getBirthDay();
 //            int day = SimulationManager.getDay();
 //            int newAge = bday + (day - bday);
 //            b.setAge(newAge);
-    	}
+        }
     }
-    
-    
+
+
     public void removeBoid(Boid boid) {
 
         boids.removeValue(boid, false);
@@ -227,6 +238,6 @@ public class BoidManager extends Manager {
     }
 
     public Boid getBoidAt(int screenX, int screenY) {
-        return boidGrid.findBoidAt(screenX,screenY);
+        return boidGrid.findBoidAt(screenX, screenY);
     }
 }
