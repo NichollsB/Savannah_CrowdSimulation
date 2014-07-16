@@ -35,6 +35,7 @@ public class StaXParser {
     static final String MAXFORCE = "maxForce";
     static final String MAXSPEED = "maxSpeed";
     static final String LIFESPAN = "lifespan";
+    static final String DIET = "diet";
 
     @SuppressWarnings({ "unchecked", "null" })
     public HashMap<Byte, Species> readConfig(String configFile) {
@@ -91,6 +92,15 @@ public class StaXParser {
                                 .equals(SPRITELOCATION)) {
                             event = eventReader.nextEvent();
                             species.setSpriteLocation(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(DIET)) {
+                            event = eventReader.nextEvent();
+                            species.setDiet(event.asCharacters().getData());
                             continue;
                         }
                     }

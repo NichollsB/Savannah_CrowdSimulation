@@ -23,6 +23,7 @@ public class Species {
     private float alignment;
     private float wander;
     private float lifespan;
+    private String diet;
 
 
     public String getName() {
@@ -127,5 +128,13 @@ public class Species {
     }
     public void setLifespan(float lifespan) {
         this.lifespan = lifespan;
+    }
+
+    public String getDiet() {
+        return diet;
+    }
+
+    public void setDiet(String diet) {
+        this.diet = diet;
     }
 }

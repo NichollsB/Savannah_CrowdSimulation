@@ -105,7 +105,7 @@ public class SimulationManager extends Manager {
             int number = species.getNumber();
 
             for (int i = 0; i < number; i++) {
-                boidManager.createBoid(species);  //TODO get the subType int from xml file
+                boidManager.createBoid(species);
             }
             //Find the species texture file location
             fileLocations.put(spByte, species.getSpriteLocation());

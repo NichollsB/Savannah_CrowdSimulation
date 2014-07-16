@@ -64,12 +64,15 @@ public class StateMachine {
     public void addBoid(Boid boid, State initialState) {
         if( ! boidStates.containsKey(boid)) {
             Stack<State> stack = new Stack<State>();
+            stack.add(getDefaultState(boid.getSpecies()));
             stack.add(initialState);
-            if(boid.getSpecies() == 1) {
-                stack.add(new Hungry(this, boidManager));
-            }
             boidStates.put(boid, stack);
         }
+    }
+
+    private State getDefaultState(byte species) {
+        String diet = SimulationManager.speciesData.get(species).getDiet();
+        return null;
     }
 
     public void addBoid(Boid boid) {

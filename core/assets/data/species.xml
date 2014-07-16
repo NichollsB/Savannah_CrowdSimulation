@@ -3,9 +3,10 @@
 <!--xml file for species based information-->
 <settings>
     <species id="0" name="zebra">
-        <number>10</number>
+        <number>20</number>
         <byte>0</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle.png</spriteLocation>
+        <diet>"herbivore"</diet>
         <sightRadius>180f</sightRadius>
         <flockRadius>120f</flockRadius>
         <nearRadius>40f</nearRadius>
@@ -21,9 +22,10 @@
         <wander>0.1f</wander>
     </species>
     <species id="1" name="wildebeest">
-        <number>0</number>
+        <number>20</number>
         <byte>1</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle2.png</spriteLocation>
+        <diet>"herbivore"</diet>
         <sightRadius>180f</sightRadius>
         <flockRadius>120f</flockRadius>
         <nearRadius>40f</nearRadius>
@@ -38,10 +40,28 @@
         <alignment>0.5f</alignment>
         <wander>0.1f</wander>
     </species>
-    <species id="2" name="gazelles">
-        <number>0</number>
+    <species id="2" name="gazelle">
+        <number>20</number>
         <byte>2</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle3.png</spriteLocation>
+        <diet>"herbivore"</diet>
+        <sightRadius>250f</sightRadius>
+        <flockRadius>80f</flockRadius>
+        <nearRadius>15f</nearRadius>
+        <maxSpeed>3.5f</maxSpeed>
+        <maxForce>0.2f</maxForce>
+        <lifespan>25f</lifespan>
+        <cohesion>0.5f</cohesion>
+        <separation>0.5f</separation>
+        <alignment>0.5f</alignment>
+        <wander>0.1f</wander>
+    </species>
+
+    <species id="3" name="lion">
+        <number>5</number>
+        <byte>2</byte>  <!-- this is the sub-type -->
+        <spriteLocation>data/triangle3.png</spriteLocation>
+        <diet>"herbivore"</diet>
         <sightRadius>250f</sightRadius>
         <flockRadius>80f</flockRadius>
         <nearRadius>15f</nearRadius>

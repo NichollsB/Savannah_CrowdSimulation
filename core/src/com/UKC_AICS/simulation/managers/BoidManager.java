@@ -170,8 +170,7 @@ public class BoidManager extends Manager {
 
     public boolean checkForDeath(final Boid boid) {
         if( boid.hunger <= -20) {
-            boids.removeValue(boid, false);
-            getBoidGrid().removeBoid(boid);
+            removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of hunger :( ");
             return true;
         }
@@ -183,8 +182,7 @@ public class BoidManager extends Manager {
 //        }
         float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
         if( boid.age > lifespan)  {
-            boids.removeValue(boid, false);
-            getBoidGrid().removeBoid(boid);
+            removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of age related issues :( ");
             return true;
         }
@@ -203,7 +201,12 @@ public class BoidManager extends Manager {
     }
     
     
-    
+    public void removeBoid(Boid boid) {
+
+        boids.removeValue(boid, false);
+        getBoidGrid().removeBoid(boid);
+        stateMachine.removeBoid(boid);
+    }
 
     public void rebuildTree(Array<Boid> boids) {
         quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.screenWidth, Constants.screenHeight));
