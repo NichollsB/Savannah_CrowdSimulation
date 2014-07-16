@@ -33,7 +33,7 @@ public class BoidManager extends Manager {
 
 //    private HashMap<String, Behaviour> behaviours = new HashMap<String, Behaviour>();
 
-    CollisionManager collisionManager = new CollisionManager();
+//    CollisionManager collisionManager = new CollisionManager();
 
 
     public BoidManager(SimulationManager parent) {
