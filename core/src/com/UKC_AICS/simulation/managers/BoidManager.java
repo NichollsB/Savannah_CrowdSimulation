@@ -241,7 +241,7 @@ public class BoidManager extends Manager {
             //TODO this is where to use new collisionManager
             Array<Entity> collisionObjects = parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
-//            collisionObjects.addAll(boidGrid.findNearby(boid.getPosition()));   //add boids nearby to collision check
+            collisionObjects.addAll(boidGrid.findNearby(boid.getPosition()));   //add boids nearby to collision check
             //TODO add close by boids to the collisonObjects Array later
             Vector3 collisionAdjustment = null;
 
