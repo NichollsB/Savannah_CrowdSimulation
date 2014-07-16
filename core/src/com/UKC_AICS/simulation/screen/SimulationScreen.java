@@ -81,14 +81,14 @@ public class SimulationScreen implements Screen {
         if (render) {
         	simViewcamera.update();
 
-        	time = System.nanoTime();
-        	if(time >= nextRender){
+//        	time = System.nanoTime();
+//        	if(time >= nextRender){
         		update = false;
 	            gui.fps.setText(getFPSString() + simulationManager.getTime());
 	            tickPhysics(delta);
 	            renderSpriteBatches();
-	            nextRender = System.nanoTime() + (long)33333333.33333333;
-        	}
+//	            nextRender = System.nanoTime() + (long)33333333.33333333;
+//        	}
 
 	            try {
 	                Thread.sleep((long) (1000 / 60 - Gdx.graphics.getDeltaTime()));
