@@ -60,8 +60,8 @@
     <species id="3" name="lion">
         <number>5</number>
         <byte>2</byte>  <!-- this is the sub-type -->
-        <spriteLocation>data/triangle3.png</spriteLocation>
-        <diet>"herbivore"</diet>
+        <spriteLocation>data/lion.png</spriteLocation>
+        <diet>"carnivore"</diet>
         <sightRadius>250f</sightRadius>
         <flockRadius>80f</flockRadius>
         <nearRadius>15f</nearRadius>

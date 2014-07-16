@@ -3,6 +3,7 @@ package com.UKC_AICS.simulation.managers;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.behaviours.*;
 import com.UKC_AICS.simulation.entity.states.State;
+import com.UKC_AICS.simulation.entity.states.carnivore.CarnDefault;
 import com.UKC_AICS.simulation.entity.states.herbivore.HerbDefault;
 import com.UKC_AICS.simulation.entity.states.herbivore.Hungry;
 
@@ -72,7 +73,15 @@ public class StateMachine {
 
     private State getDefaultState(byte species) {
         String diet = SimulationManager.speciesData.get(species).getDiet();
-        return null;
+        if(diet.equals("herbivore")) {
+            return new HerbDefault(this, boidManager);
+        }
+        else if(diet.equals("carnivore")) {
+            return new CarnDefault(this, boidManager);
+        }
+        else {
+            return null;
+        }
     }
 
     public void addBoid(Boid boid) {

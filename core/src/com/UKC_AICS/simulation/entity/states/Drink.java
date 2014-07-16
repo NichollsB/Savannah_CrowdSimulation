@@ -1,4 +1,4 @@
-package com.UKC_AICS.simulation.entity.states.herbivore;
+package com.UKC_AICS.simulation.entity.states;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.states.State;

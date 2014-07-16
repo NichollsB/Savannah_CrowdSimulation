@@ -1,7 +1,8 @@
-package com.UKC_AICS.simulation.entity.states.herbivore;
+package com.UKC_AICS.simulation.entity.states;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.states.Drink;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
