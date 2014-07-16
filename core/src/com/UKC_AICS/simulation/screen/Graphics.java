@@ -61,7 +61,7 @@ public class Graphics {
 			
 			
 			//spriteManager.drawTileCache();
-			batch.disableBlending();
+			batch.enableBlending();
 			batch.begin();
 			//drawGrass
 			//int x=0, y=0;

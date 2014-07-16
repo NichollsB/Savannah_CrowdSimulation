@@ -32,6 +32,7 @@ public class Boid extends Entity {
         position = pos.cpy();
         velocity = vel.cpy();
 //        orientation = new Vector3();
+        initCircle();
     }
     public Boid(byte spec) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -39,6 +40,7 @@ public class Boid extends Entity {
         position = new Vector3();
         velocity = new Vector3();
 //        orientation = new Vector3();
+        initCircle();
     }
 
     public Boid(byte spec, Vector3 pos, Vector3 vel) {
@@ -47,6 +49,7 @@ public class Boid extends Entity {
         position = pos.cpy();
         velocity = vel.cpy();
 //        orientation = new Vector3();
+        initCircle();
     }
 
 
@@ -62,6 +65,7 @@ public class Boid extends Entity {
 
         position = new Vector3();
         velocity = new Vector3();
+        initCircle();
     }
 
 
@@ -70,16 +74,29 @@ public class Boid extends Entity {
         this.acceleration.set(acceleration);
     }
 
+
     public void move() {
         //TODO: Add in better limiter for speed. Possibly??
         //move
+//        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
         velocity.add(acceleration).limit(maxSpeed);
         velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
         position.add(velocity);
+        updateCircle();
         //check for out of bounds
         checkInBounds();
     }
 
+    public void setNewVelocity(Vector3 newVel){
+        velocity.set(newVel);
+    }
+
+    public void move2() {
+        position.add(velocity);
+        updateCircle();
+        //check for out of bounds
+        checkInBounds();
+    }
 
 
     private void checkInBounds() {
