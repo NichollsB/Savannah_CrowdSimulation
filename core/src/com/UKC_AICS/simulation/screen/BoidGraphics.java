@@ -44,7 +44,8 @@ public class BoidGraphics {
 	public void update(SpriteBatch batch){
 		if(spriteManager.update()){
 			
-			batch.disableBlending();
+//			batch.disableBlending();
+            batch.enableBlending();
 			batch.begin();
 			byte b = 0;
 			if(boidsArray.size>0){
