@@ -278,6 +278,9 @@ public class BoidManager extends Manager {
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
                 steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
+                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
+                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
+
 
                 boid.setAcceleration(steering);
                 //apply it.
@@ -296,21 +299,8 @@ public class BoidManager extends Manager {
                 //tell the grid to update its position.
                 boidGrid.update(boid);
             }
-            
-//            steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.2f));
-//            steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.2f));
 
-//            //check if new postion overlaps with any boids in Cell
-//            Boid steeringAdjust = collisionManager.checkCollision(tempCircle, boids, boid);
-//            //if there is a boid to avoid
-//            float newLimit = 2f;
-//            boolean limitLen = false;
-//            if (steeringAdjust != null) {
-//                Vector3 tmp = steeringAdjust.getPosition();
-//                tmp.sub(boid.getPosition());
-//                newLimit = tmp.len();
-//                limitLen = true;
-//            }
+
 
             // NaN check
 //            if (steering.x != steering.x) {
