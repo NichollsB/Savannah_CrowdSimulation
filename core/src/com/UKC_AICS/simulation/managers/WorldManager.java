@@ -1,8 +1,6 @@
 package com.UKC_AICS.simulation.managers;
 
 import com.UKC_AICS.simulation.entity.Entity;
-import com.UKC_AICS.simulation.entity.*;
-import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.utils.ObjectGrid;
 import com.UKC_AICS.simulation.utils.QuadTree;
 import com.UKC_AICS.simulation.world.LandMap;

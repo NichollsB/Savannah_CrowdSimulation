@@ -14,6 +14,7 @@ public class Boid extends Entity {
         THIRSTY,
         EVADE;
 
+
         public int getStateID() {
             return ordinal();
         }
@@ -33,7 +34,7 @@ public class Boid extends Entity {
     public float thirst = 0;
     public float panic = 0;
 
-    public State state = State.DEFAULT;
+    public String state = "default";
 
     public int age = 0;
     public int birthDay = 0;
@@ -227,10 +228,11 @@ public class Boid extends Entity {
     public String toString() {
         String string = "";
 
-        string += "BOID: " + "\n" + "\t position:" + position.toString() + "\n";
-        string += "\t hunger:" + hunger + "\n";
-        string += "\t thirst:" + thirst + "\n";
-        string += "\t age:" + age + "\n";
+        string += "BOID: " + "\t" + "\t position:" + position.toString() ;
+        string += "\t hunger:" + hunger;
+        string += "\t thirst:" + thirst;
+        string += "\t age:" + age ;
+        string += "\t state:" + state;
 
         return string;
     }

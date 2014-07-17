@@ -2,10 +2,10 @@ package com.UKC_AICS.simulation.entity.states.herbivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.entity.states.Thirsty;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
-import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.StateMachine;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -57,11 +57,11 @@ public class HerbDefault extends State {
             for (Boid b : nearBoids) {
                 steering.set(boid.getPosition());
                 steering.sub(b.getPosition());
-                if (steering.len() > boid.flockRadius) {
+                if (steering.len2() > boid.flockRadius * boid.flockRadius) {
                     nearBoids.removeValue(b, true);
                 }
                 //if the boid is outside the flock radius it CANT also be in the "too close" range
-                else if (steering.len() < boid.nearRadius) {
+                else if (steering.len2() < boid.nearRadius * boid.nearRadius) {
                     closeBoids.add(b);
                 }
             }

@@ -34,7 +34,7 @@ public class CarnDefault extends State{
         }
         else if(boid.hunger < 15) {
             System.out.println(boid + "\n Just posted Hungry state "  );
-            parent.pushState(boid, new Hungry(parent,bm));
+            parent.pushState(boid, new Hunt(parent,bm));
         } else {
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
