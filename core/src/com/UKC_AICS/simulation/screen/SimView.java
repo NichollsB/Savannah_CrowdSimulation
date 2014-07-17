@@ -1,9 +1,9 @@
 package com.UKC_AICS.simulation.screen;
 
-import java.util.HashMap;
-
 import com.UKC_AICS.simulation.entity.Boid;
 import com.badlogic.gdx.utils.Array;
+
+import java.util.HashMap;
 
 public interface SimView {
 	

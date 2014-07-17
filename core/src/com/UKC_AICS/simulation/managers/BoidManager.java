@@ -3,7 +3,6 @@ package com.UKC_AICS.simulation.managers;
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Species;
-import com.UKC_AICS.simulation.entity.behaviours.Behaviour;
 import com.UKC_AICS.simulation.utils.BoidGrid;
 import com.UKC_AICS.simulation.utils.MathsUtils;
 import com.UKC_AICS.simulation.utils.QuadTree;
@@ -12,7 +11,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.HashMap;
 import java.util.Random;
 
 

@@ -1,10 +1,8 @@
 package com.UKC_AICS.simulation.entity.states;
 
 import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.StateMachine;
-import com.badlogic.gdx.math.Vector3;
 
 /**
  * Created by Emily on 11/07/2014.

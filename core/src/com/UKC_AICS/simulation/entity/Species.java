@@ -1,7 +1,5 @@
 package com.UKC_AICS.simulation.entity;
 
-import java.lang.*;
-
 /**
  * Created by james on 03/07/2014.
  */

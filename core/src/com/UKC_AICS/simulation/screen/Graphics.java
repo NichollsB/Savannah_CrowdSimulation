@@ -1,20 +1,17 @@
 package com.UKC_AICS.simulation.screen;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-
+import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.glutils.FileTextureData;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectMap;
-import com.UKC_AICS.simulation.entity.*;
-import com.UKC_AICS.simulation.entity.Object;
+
+import java.util.HashMap;
 
 /**
  * 
@@ -31,9 +28,9 @@ public class Graphics {
 	//private ObjectMap<Boid, Sprite> boidMap = new ObjectMap<Boid, Sprite>();
 	private Array<Boid> boidsArray;
 	private Array<Entity> entityArray;
-	private Texture defaultTexture = new Texture(Gdx.files.internal("triangle2.png"));
+	private Texture defaultTexture = new Texture(Gdx.files.internal("data/triangle2.png"));
 	//TEMPORARY
-	private Texture altTexture = new Texture(Gdx.files.internal("triangle3.png"));
+	private Texture altTexture = new Texture(Gdx.files.internal("data/triangle3.png"));
 	private Sprite altSprite;
 	
 	private SpriteManager spriteManager = new SpriteManager();

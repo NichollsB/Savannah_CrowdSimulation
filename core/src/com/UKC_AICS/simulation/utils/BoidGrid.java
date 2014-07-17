@@ -1,11 +1,10 @@
 package com.UKC_AICS.simulation.utils;
 
-import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Boid;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 

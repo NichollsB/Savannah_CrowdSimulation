@@ -5,7 +5,6 @@ import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.StateMachine;
 import com.UKC_AICS.simulation.managers.WorldManager;
-import com.badlogic.gdx.math.Vector3;
 
 /**
  * Created by Emily on 10/07/2014.
