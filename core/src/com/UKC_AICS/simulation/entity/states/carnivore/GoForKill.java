@@ -24,11 +24,19 @@ public class GoForKill extends State {
     public boolean update(Boid boid) {
         //TODO  Needs to have a target and use the pursuit behaviour
 
-        steering.set(0f,0f,0f);
-        steering.add(behaviours.get("pursuit").act(boid, target));
+        //TODO kill prey on collision detection
 
-        boid.setAcceleration(steering);
-        
-        return false;
+        //TODO place corpse on prey kill
+
+        if (true) {  //TODO add some check for pursuing kill?
+            steering.set(0f, 0f, 0f);
+            steering.add(behaviours.get("pursuit").act(boid, target));
+
+            boid.setAcceleration(steering);
+
+            return false;
+        } else {
+            return true;
+        }
     }
 }
