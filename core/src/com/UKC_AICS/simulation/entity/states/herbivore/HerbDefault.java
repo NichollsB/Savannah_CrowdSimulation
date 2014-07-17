@@ -67,10 +67,10 @@ public class HerbDefault extends State {
             }
 
             //store the steering movement
-            boid.setAcceleration(steering);//TODO this is where to use new collisionManager
+            boid.setAcceleration(steering);  //Resets acceleration to 0f,0f,0f
             Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
-            Array<Entity> collisionObjects = new Array<Entity>(dummyObjects); // = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
+            Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
 
             tempVec = behaviours.get("collision").act(collisionObjects, boid);
@@ -111,15 +111,7 @@ public class HerbDefault extends State {
                 boid.setAcceleration(steering);
 
             } else {
-                //set new velocity to rotated previous velocity
-                //                collisionAdjustment.nor();
-                //                collisionAdjustment.limit(boid.maxForce);
-                //                collisionAdjustment.scl(boid.maxSpeed);
-//                boid.setNewVelocity(tempVec);
-
                 boid.setAcceleration(tempVec);
-                //apply it.
-//                boid.move2();
             }
         }
         return false; //base state so no popping.
