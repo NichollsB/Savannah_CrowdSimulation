@@ -204,6 +204,7 @@ public class SimulationManager extends Manager {
         return worldManager.getObjectsNearby(point);
     }
 
+
     public byte[][] getMapTiles() {
         return worldManager.getTiles();
     }
@@ -223,5 +224,10 @@ public class SimulationManager extends Manager {
 
     public Boid getBoidAt(int screenX, int screenY) {
         return boidManager.getBoidAt(screenX,screenY);
+    }
+    
+    //Added by Ben Nicholls for graphics purposes
+    public HashMap<String, byte[][]> getFullInfo(){
+    	return worldManager.getMapInfo();
     }
 }

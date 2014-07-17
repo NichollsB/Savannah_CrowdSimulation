@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -45,10 +47,14 @@ public class Graphics {
 	
 	private OrthographicCamera camera = new OrthographicCamera();
 	
+	private TileGraphics dynamicTiles;
+	private Texture simBase;
+	
+	ShapeRenderer back = new ShapeRenderer();
+	
 	public Graphics(int width, int height){
 		renderWidth = width;
 		renderHeight = height;
-		
 	}
 	
 
@@ -57,29 +63,37 @@ public class Graphics {
 	 * @param batch is the SpriteBatch to render the boid sprites in
 	 */
 	public void update(SpriteBatch batch){
+		batch.enableBlending();
+		
 		if(spriteManager.update()){
-			
-			
 			//spriteManager.drawTileCache();
-			batch.enableBlending();
+			back.begin(ShapeType.Filled);
+	    	back.setColor(0.8f,0.7f,0.5f,1f);
+	    	back.rect(0, 0, renderWidth, renderHeight);
+	    	back.end();
 			batch.begin();
+			if(dynamicTiles != null)
+		        
+		    	
+				dynamicTiles.updateTiles(batch);
+			
 			//drawGrass
 			//int x=0, y=0;
 //			Texture tex;
-			if(tileMap.length > 0){
-				for(int y = 0; y < renderHeight; y+=16){
-					for(int x = 0; x < renderWidth; x+=16){
-						//tex = spriteManager.getGrassTexture();
-						sprite = spriteManager.getGrassTexture();
-						sprite.setPosition(x, y);
-						sprite.draw(batch);
-//						batch.draw(sprite, x, y);
-						//x+=16;
-						//System.out.println("x " + x + " y " + y);
-					}
-					//y+=16;
-				}
-			}
+//			if(tileMap.length > 0){
+//				for(int y = 0; y < renderHeight; y+=16){
+//					for(int x = 0; x < renderWidth; x+=16){
+//						//tex = spriteManager.getGrassTexture();
+//						sprite = spriteManager.getGrassTexture();
+//						sprite.setPosition(x, y);
+//						sprite.draw(batch);
+////						batch.draw(sprite, x, y);
+//						//x+=16;
+//						//System.out.println("x " + x + " y " + y);
+//					}
+//					//y+=16;
+//				}
+//			}
 			
 			byte b = 0;
 			if(entityArray.size>0){
@@ -104,9 +118,10 @@ public class Graphics {
 				}
 			}
 			batch.end();
-			batch.enableBlending();
+			
 			
 		}
+		batch.enableBlending();
 		/*if(boidMap.size>0){
 			 Boid boid;
 			 for(Iterator<Boid> boids = boidMap.keys(); boids.hasNext();){
@@ -149,14 +164,16 @@ public class Graphics {
 		spriteManager.loadAssets_Objects(types);
 	}
 	
-	public void initTileSprites(byte[][] map){
+	public void initTileSprites(HashMap<String, byte[][]> tileLayers){
 		/*spriteManager.loadAssets_Tiles();
 		tileMap = map;
 		spriteManager.createTileCache(map);*/
 		
-		tileMap = map;
-//		System.out.println(map.length);
-		spriteManager.loadAssets_Tiles();
+//		tileMap = map;
+////		System.out.println(map.length);
+//		spriteManager.loadAssets_Tiles();
+		dynamicTiles = new TileGraphics(tileLayers, spriteManager);
+		
 	}
 	
 	/**

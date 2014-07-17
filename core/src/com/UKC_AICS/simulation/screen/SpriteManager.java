@@ -28,8 +28,9 @@ public class SpriteManager {
 //			}};
 	
 	//World Tiling:
-	private ObjectMap<Integer, String> tileFiles = new ObjectMap<Integer, String>(){{
-		put(0, "data/grass_tile_x16.png");
+	private ObjectMap<String, String> tileFiles = new ObjectMap<String, String>(){{
+		put("grass", "data/grass_tile_x16.png");
+		put("water", "data/water_tile_x16.png");
 	}}
 	;
 	
@@ -50,7 +51,7 @@ public class SpriteManager {
 	private ObjectMap<Integer, Sprite> objectSprites;
 	private Array<Array<Sprite>> entitySprites;
 	
-	private ObjectMap<Integer, Sprite> tileTextures;
+	private ObjectMap<String, Sprite> tileTextures;
 	private SpriteCache tileCache = new SpriteCache();
 	private int tile;
 	private boolean tilesLoaded = false, tilesCreated = false;
@@ -75,7 +76,7 @@ public class SpriteManager {
 		created = false;
 		Sprite sprite;
 		Texture spriteTexture;
-		tileTextures = new ObjectMap<Integer, Sprite>(tileFiles.size);
+		tileTextures = new ObjectMap<String, Sprite>(tileFiles.size);
 		/*for(Integer tile: tileFiles.keys()){
 			if(assetManager.isLoaded(tileFiles.get(tile))){
 				spriteTexture = assetManager.get(tileFiles.get(tile), Texture.class);
@@ -88,7 +89,7 @@ public class SpriteManager {
 				tilesLoaded = false;
 		}*/
 		
-		for(Integer tile : tileFiles.keys()){
+		for(String tile : tileFiles.keys()){
 			if(assetManager.isLoaded(tileFiles.get(tile))){
 				spriteTexture = assetManager.get(tileFiles.get(tile), Texture.class);
 				tileTextures.put(tile, new Sprite(spriteTexture));
@@ -119,7 +120,7 @@ public class SpriteManager {
 //				System.out.println("Not loaded");
 ////				created = false;
 //			}
-			created = true;
+			
 		}
 //		for(Integer object : objects.keys()){
 //			if(assetManager.isLoaded(objects.get(object))){
@@ -129,6 +130,7 @@ public class SpriteManager {
 //			else
 //				created = false;
 //		}
+		created = true;
 	}
 	
 	
@@ -192,8 +194,8 @@ public class SpriteManager {
 		return null;
 	}
 	
-	public Sprite getGrassTexture(){
-		return tileTextures.get(0);
+	public Sprite getGrassTexture(String name){
+		return tileTextures.get(name);
 	}
 	
 	public Sprite getSprite(Byte type, Byte subType){
@@ -205,6 +207,16 @@ public class SpriteManager {
 		}
 	}
 
+	private boolean loadAsset(String fileLocation){
+		try {
+			assetManager.load(fileLocation, Texture.class);
+			return true;
+		} 
+		catch(NullPointerException e) {
+			System.out.println("Texture file, or file location " + fileLocation + " is missing");
+			return false;
+		}
+	}
 	/**
 	 * Set the AssetManager to loading a set of entities textures (for creation of sprites), and add
 	 * the string location to an associated map for processing once loaded
@@ -217,13 +229,14 @@ public class SpriteManager {
 		String fileStr;
 		for(Byte entity : entityTextureLocation.keySet()){
 			fileStr = entityTextureLocation.get(entity);
-			assetManager.load(fileStr, Texture.class);
-			if(continuousEntities){
-				boidsFiles.put(entity.intValue(), fileStr);
+			if(loadAsset(fileStr)){
+				if(continuousEntities){
+					boidsFiles.put(entity.intValue(), fileStr);
+				}
+	//			else {
+	//				objectsFiles.put(entity.intValue(), fileStr);
+	//			}
 			}
-//			else {
-//				objectsFiles.put(entity.intValue(), fileStr);
-//			}
 			
 		}
 	}
@@ -234,16 +247,30 @@ public class SpriteManager {
 		for(Byte type : objs){
 			filename = objectsFiles.get((int)type);
 			//System.out.println(filename);
-			assetManager.load(filename, Texture.class);
+			loadAsset(filename);
+
 		}
 	}
 	
 	public void loadAssets_Tiles(){
 		tilesLoaded = false;
 		String fileLocation;
-		for(Integer type : tileFiles.keys()){
-			fileLocation = tileFiles.get(type);
-			assetManager.load(fileLocation, Texture.class);
+		for(String tile : tileFiles.keys()){
+			fileLocation = tileFiles.get(tile);
+			loadAsset(fileLocation);
 		}
+	}
+
+	public boolean loadAssets_Tile(String tile) {
+		//Need to change this, as with others to retrieving region of texture atlas, but this will do for now
+		if(loadAsset(tileFiles.get(tile))){
+			return true;
+		}
+		return false;
+	}
+
+	public Sprite getTileSprite(String layer) {
+//		System.out.println("Getting layer " + layer + " " + tileTextures.get(layer));
+		return tileTextures.get(layer);
 	}
 }

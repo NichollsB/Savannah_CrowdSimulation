@@ -14,6 +14,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -26,6 +28,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 
 import java.util.HashMap;
+
+import javafx.scene.paint.Color;
 
 /**
  * @author Emily
@@ -123,6 +127,7 @@ public class SimulationScreen implements Screen {
      */
     private void renderSpriteBatches() {
     	clearOpenGL();
+    	
     	//Update the simulation view and render, clipping to the scissor rectangle provided by the specified gui
     	//area for the view
     	simViewport.update();
@@ -196,7 +201,7 @@ public class SimulationScreen implements Screen {
         initialiseCameras(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         boidGraphics.initBoidSprites(simulationManager.getBoids(), simulationManager.getTextureLocations());
         boidGraphics.initObjSprites(simulationManager.getObjects());
-        boidGraphics.initTileSprites(simulationManager.getMapTiles());
+        boidGraphics.initTileSprites(simulationManager.getFullInfo());
         //boidGraphics.initTileSprites(simulationManager.getMapTiles());
     }
 
