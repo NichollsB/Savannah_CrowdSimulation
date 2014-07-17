@@ -115,7 +115,7 @@ public class Collision extends Behaviour {
                         //should be able to use the tmpVec and tmpVec2 used to calc true.
                         adjustment.set(boid.getVelocity());
 //                        adjustment.scl(0.5f);
-                        adjustment.rotate(HALF_AHEAD_TURN, 0f, 0f, 1f);  //turns right
+                        adjustment.rotate(HALF_AHEAD_TURN/2f, 0f, 0f, 1f);  //turns right
                         adjustmentSet = true;
 //                        System.out.println("collision, close left");
                     }
@@ -124,7 +124,7 @@ public class Collision extends Behaviour {
                     if (checkRight(boid, target)) {
                         adjustment.set(boid.getVelocity());
 //                        adjustment.scl(0.5f);
-                        adjustment.rotate(-HALF_AHEAD_TURN, 0f, 0f, 1f);  //turns left
+                        adjustment.rotate(-HALF_AHEAD_TURN/2f, 0f, 0f, 1f);  //turns left
                         adjustmentSet = true;
 //                        System.out.println("collision, close right");
                     }

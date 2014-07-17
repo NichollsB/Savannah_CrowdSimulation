@@ -68,17 +68,19 @@ public class HerbDefault extends State {
 
             //store the steering movement
             boid.setAcceleration(steering);//TODO this is where to use new collisionManager
-            Array<Entity> collisionObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
+            Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
+            Array<Entity> collisionObjects = new Array<Entity>(dummyObjects); // = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
-            //TODO add close by boids to the collisonObjects Array later
+
             tempVec = behaviours.get("collision").act(collisionObjects, boid);
 
             steering.set(0f, 0f, 0f);
+            boid.setAcceleration(steering);
 
+            // Check if collision avoidance is required.  True if no collisions
             if (tempVec.equals(steering)) {
                 //find objects nearby
-                Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
                 for (Entity dummyObject : dummyObjects) {
                     Entity ent = dummyObject;
@@ -93,7 +95,6 @@ public class HerbDefault extends State {
 
                 steering.set(0f, 0f, 0f);
 
-
                 float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
                 float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
                 float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
@@ -104,12 +105,10 @@ public class HerbDefault extends State {
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
                 steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
-                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
-                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
-
+//                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
+//                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
 
                 boid.setAcceleration(steering);
-
 
             } else {
                 //set new velocity to rotated previous velocity
