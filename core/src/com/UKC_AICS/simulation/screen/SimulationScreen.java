@@ -1,8 +1,8 @@
 package com.UKC_AICS.simulation.screen;
 
-import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.UKC_AICS.simulation.screen.gui.SimViewport;
 import com.badlogic.gdx.Gdx;
@@ -15,15 +15,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.UKC_AICS.simulation.managers.SimulationManager;
 
 import java.util.HashMap;
 

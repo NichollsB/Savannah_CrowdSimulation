@@ -1,5 +1,7 @@
 package com.UKC_AICS.simulation.utils;
 
+import com.UKC_AICS.simulation.managers.BoidManagerOld;
+
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -9,8 +11,6 @@ import javax.xml.stream.events.XMLEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
-import com.UKC_AICS.simulation.managers.BoidManagerOld;
 
 /**
  * Created by Matt on 08/07/2014.

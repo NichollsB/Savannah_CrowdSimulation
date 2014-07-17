@@ -5,7 +5,6 @@ import com.UKC_AICS.simulation.entity.behaviours.*;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.entity.states.carnivore.CarnDefault;
 import com.UKC_AICS.simulation.entity.states.herbivore.HerbDefault;
-import com.UKC_AICS.simulation.entity.states.herbivore.Hungry;
 
 import java.util.HashMap;
 import java.util.Map;
