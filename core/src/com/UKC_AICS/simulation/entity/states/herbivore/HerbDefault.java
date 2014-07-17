@@ -115,8 +115,9 @@ public class HerbDefault extends State {
                 //                collisionAdjustment.nor();
                 //                collisionAdjustment.limit(boid.maxForce);
                 //                collisionAdjustment.scl(boid.maxSpeed);
-                boid.setNewVelocity(tempVec);
+//                boid.setNewVelocity(tempVec);
 
+                boid.setAcceleration(tempVec);
                 //apply it.
 //                boid.move2();
             }
