@@ -28,9 +28,9 @@ public class Graphics {
 	//private ObjectMap<Boid, Sprite> boidMap = new ObjectMap<Boid, Sprite>();
 	private Array<Boid> boidsArray;
 	private Array<Entity> entityArray;
-	private Texture defaultTexture = new Texture(Gdx.files.internal("triangle2.png"));
+	private Texture defaultTexture = new Texture(Gdx.files.internal("data/triangle2.png"));
 	//TEMPORARY
-	private Texture altTexture = new Texture(Gdx.files.internal("triangle3.png"));
+	private Texture altTexture = new Texture(Gdx.files.internal("data/triangle3.png"));
 	private Sprite altSprite;
 	
 	private SpriteManager spriteManager = new SpriteManager();

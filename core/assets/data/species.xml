@@ -6,7 +6,7 @@
         <number>20</number>
         <byte>0</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle.png</spriteLocation>
-        <diet>"herbivore"</diet>
+        <diet>herbivore</diet>
         <sightRadius>180f</sightRadius>
         <flockRadius>120f</flockRadius>
         <nearRadius>40f</nearRadius>
@@ -26,7 +26,7 @@
         <number>20</number>
         <byte>1</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle2.png</spriteLocation>
-        <diet>"herbivore"</diet>
+        <diet>herbivore</diet>
         <sightRadius>180f</sightRadius>
         <flockRadius>120f</flockRadius>
         <nearRadius>40f</nearRadius>
@@ -46,7 +46,7 @@
         <number>20</number>
         <byte>2</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle3.png</spriteLocation>
-        <diet>"herbivore"</diet>
+        <diet>herbivore</diet>
         <sightRadius>250f</sightRadius>
         <flockRadius>80f</flockRadius>
         <nearRadius>15f</nearRadius>
@@ -60,13 +60,13 @@
     </species>
 
     <species id="3" name="lion">
-        <number>0</number>
-        <byte>2</byte>  <!-- this is the sub-type -->
-        <spriteLocation>data/lion.png</spriteLocation>
-        <diet>"carnivore"</diet>
+        <number>5</number>
+        <byte>3</byte>  <!-- this is the sub-type -->
+        <spriteLocation>data/predator.png</spriteLocation>
+        <diet>carnivore</diet>
         <sightRadius>250f</sightRadius>
         <flockRadius>80f</flockRadius>
-        <nearRadius>15f</nearRadius>
+        <nearRadius>20f</nearRadius>
         <maxSpeed>3.5f</maxSpeed>
         <maxForce>0.2f</maxForce>
         <lifespan>25f</lifespan>
