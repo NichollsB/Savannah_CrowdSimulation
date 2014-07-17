@@ -42,6 +42,8 @@ public class StateMachine {
 
         behaviours.put("collision", new Collision2());
 
+        behaviours.put("pursuit", new Pursuit());
+
         boidStates = new HashMap<Boid, Stack<State>>();
     }
 

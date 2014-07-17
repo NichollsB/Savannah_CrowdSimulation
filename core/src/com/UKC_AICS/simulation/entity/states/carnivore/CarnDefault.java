@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.entity.states.carnivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.behaviours.Pursuit;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.entity.states.Thirsty;
 import com.UKC_AICS.simulation.managers.BoidManager;
@@ -32,9 +33,18 @@ public class CarnDefault extends State{
             System.out.println(boid + "\n Just posted Thirsty state "  );
             parent.pushState(boid, new Thirsty(parent, bm));
         }
-        else if(boid.hunger < 15) {
+        else if(boid.hunger < 50) {
             System.out.println(boid + "\n Just posted Hungry state "  );
-            parent.pushState(boid, new Hunt(parent,bm));
+//            parent.pushState(boid, new Hunt(parent,bm));
+            Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
+            Boid targ = null;
+            for (int i = 0; i < nearBoids.size; i++) {
+                 if(!boid.equals(nearBoids.get(i))) {
+                     targ = nearBoids.get(i);
+                 }
+
+            }
+            parent.pushState(boid, new GoForKill(parent,bm, targ));
         } else {
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());

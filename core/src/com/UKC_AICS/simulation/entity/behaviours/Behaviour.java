@@ -28,4 +28,8 @@ public abstract class Behaviour {
         return null;
     }
 
+    public Vector3 act(Boid boid, Boid target) {
+        return null;
+    }
+
 }
