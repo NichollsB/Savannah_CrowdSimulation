@@ -182,6 +182,7 @@ public class SimScreenGUI extends Stage {
         southTable.add(resetButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
         southTable.add(switchButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
         southTable.add(saveButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
+        southTable.add(loadButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
         //table.add(graphicsWindow).size(500f,500f);
         southTable.add(console).size(300f,30f).bottom();
 		return southTable;
