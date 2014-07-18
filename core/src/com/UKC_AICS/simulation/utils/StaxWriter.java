@@ -1,23 +1,15 @@
 package com.UKC_AICS.simulation.utils;
 
-	import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
+import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.managers.BoidManagerOld;
+import com.badlogic.gdx.math.Vector3;
 
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-import javax.xml.stream.events.Characters;
-import javax.xml.stream.events.EndElement;
-import javax.xml.stream.events.StartDocument;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
-
-import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.managers.BoidManager;
-import com.badlogic.gdx.math.Vector3;
+import javax.xml.stream.events.*;
+import java.io.FileOutputStream;
 
 /**
  * 
@@ -53,7 +45,7 @@ import com.badlogic.gdx.math.Vector3;
 	    eventWriter.add(configStartElement);
 	    eventWriter.add(end);
 	 
-	    	for(Boid b : BoidManager.boids) {  
+	    	for(Boid b : BoidManagerOld.boids) {
 	 
 	    		int ageInt = b.getAge();
 	    		String age = "" + ageInt;

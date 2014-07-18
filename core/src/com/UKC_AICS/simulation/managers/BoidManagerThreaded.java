@@ -2,10 +2,10 @@ package com.UKC_AICS.simulation.managers;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
-import com.UKC_AICS.simulation.entity.behaviours.*;
-import com.UKC_AICS.simulation.utils.QuadTree;
 import com.UKC_AICS.simulation.entity.Species;
+import com.UKC_AICS.simulation.entity.behaviours.*;
 import com.UKC_AICS.simulation.utils.BoidGrid;
+import com.UKC_AICS.simulation.utils.QuadTree;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -127,8 +127,9 @@ public class BoidManagerThreaded extends Manager {
      * called by the update in SimulationManager
      * <p/>
      * this will loop through the boids and update them
+     * @param dayIncrement
      */
-    public void update() {
+    public void update(boolean dayIncrement) {
 //        rebuildTree(boids);
         //loop through boids and ask them to do their thing.
 
@@ -358,10 +359,10 @@ public class BoidManagerThreaded extends Manager {
 
     public void updateAge() {
         for (Boid b : boids) {
-            int bday = Boid.getBirthDay();
+            int bday = b.getBirthDay();
             int day = SimulationManager.getDay();
             int newAge = bday + (day - bday);
-            Boid.setAge(newAge);
+            b.setAge(newAge);
         }
     }
 

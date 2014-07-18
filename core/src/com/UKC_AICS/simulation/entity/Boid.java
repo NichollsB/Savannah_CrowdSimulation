@@ -1,30 +1,43 @@
 package com.UKC_AICS.simulation.entity;
 
-import com.badlogic.gdx.Gdx;
+import com.UKC_AICS.simulation.Constants;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 /**
  * @author Emily
  */
 public class Boid extends Entity {
+    public enum State {
+        DEFAULT,
+        HUNGRY,
+        THIRSTY,
+        EVADE;
 
+
+        public int getStateID() {
+            return ordinal();
+        }
+    }
     //boids own specific variants on the species.
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //
-    
-    //Present for each species
-     // - individula weightings will go here.
+    private Vector3 acceleration = new Vector3();
 
     public float sightRadius = 200f;
     public float flockRadius = 100f;
     public float nearRadius = 20f;
 
-    private Vector3 acceleration = new Vector3();
+    public Rectangle bounds = new Rectangle();
 
+    public float hunger = 0;
+    public float thirst = 0;
+    public float panic = 0;
 
+    public String state = "default";
 
-    public static int Age = 0;
-    public static int birthDay = 0;
+    public int age = 0;
+    public int birthDay = 0;
 
     public Boid( Vector3 pos, Vector3 vel) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -32,6 +45,7 @@ public class Boid extends Entity {
         position = pos.cpy();
         velocity = vel.cpy();
 //        orientation = new Vector3();
+        initCircle();
     }
     public Boid(byte spec) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -39,6 +53,7 @@ public class Boid extends Entity {
         position = new Vector3();
         velocity = new Vector3();
 //        orientation = new Vector3();
+        initCircle();
     }
 
     public Boid(byte spec, Vector3 pos, Vector3 vel) {
@@ -47,6 +62,7 @@ public class Boid extends Entity {
         position = pos.cpy();
         velocity = vel.cpy();
 //        orientation = new Vector3();
+        initCircle();
     }
 
 
@@ -62,37 +78,84 @@ public class Boid extends Entity {
 
         position = new Vector3();
         velocity = new Vector3();
+        bounds.set(position.x, position.y, 10, 10);
+        initCircle();
+    }
+
+    /**
+     *
+     * Copy constructor
+     *
+     * @param boid the boid to make a copy of.
+     */
+    public Boid(Boid boid) {
+        type = 1;
+        subType =  boid.getSubType();
+        nearRadius = boid.nearRadius;
+        sightRadius = boid.sightRadius;
+        flockRadius = boid.flockRadius;
+
+        maxSpeed = boid.maxSpeed;
+        maxForce = boid.maxForce;
+
+        position = new Vector3(boid.getPosition());
+        velocity = new Vector3(boid.getVelocity());
+
+        hunger = boid.hunger;
+        thirst = boid.thirst;
+        age = boid.age;
+
+        bounds = boid.bounds;
     }
 
 
     public void setAcceleration(Vector3 acceleration) {
-
         this.acceleration.set(acceleration);
     }
+
 
     public void move() {
         //TODO: Add in better limiter for speed. Possibly??
         //move
+//        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
         velocity.add(acceleration).limit(maxSpeed);
+        bounds.setPosition(position.x, position.y);
+        velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
         position.add(velocity);
+        updateCircle();
+        //check for out of bounds
+        checkInBounds();
+
+
+        //TODO: potentially have different species "degrade" at different rates
+        hunger -= (float) 0.5 /60;
+        thirst -= (float) 2 /60;
+    }
+
+    public void setNewVelocity(Vector3 newVel){
+        velocity.set(newVel);
+    }
+
+    public void move2() {
+        position.add(velocity);
+        updateCircle();
         //check for out of bounds
         checkInBounds();
     }
 
 
-
     private void checkInBounds() {
         //TODO make this access the simulation map size, as this will be different from screen size eventually.
-        if(position.x > Gdx.graphics.getWidth()) {
-            position.x -= Gdx.graphics.getWidth();
+        if(position.x > Constants.screenWidth) {
+            position.x -= Constants.screenWidth;
         } else if(position.x < 0) {
-            position.x += Gdx.graphics.getWidth();
+            position.x += Constants.screenWidth;
         }
 
-        if(position.y > Gdx.graphics.getHeight()) {
-            position.y -= Gdx.graphics.getHeight();
+        if(position.y > Constants.screenHeight) {
+            position.y -= Constants.screenHeight;
         } else if(position.y < 0) {
-            position.y += Gdx.graphics.getHeight();
+            position.y += Constants.screenHeight;
         }
     }
 
@@ -106,7 +169,7 @@ public class Boid extends Entity {
         this.position = position;
     }
     public void setPosition( float x, float y, float z) {
-        this.position = new Vector3(x, y, z);
+        setPosition(new Vector3(x, y, z));
     }
 
     public Vector3 getVelocity() {
@@ -117,16 +180,23 @@ public class Boid extends Entity {
        this.birthDay = birthDay;     
     }   
     
-    public static int getBirthDay() {
+    public int getBirthDay() {
     	return birthDay;    	
     }
-    
-    public static void setAge(int newAge) {
-    	Age = newAge;	 
+
+    public void setAge(int newAge) {
+        age = newAge;
     }
-    public static int getAge() {
-    	return Age;	 
+    public void age() {
+        age++;
     }
+
+    public int getAge() {
+    	return age;
+    }
+
+
+
     /**
      * explicit setting to a defined velocity.
      *
@@ -153,6 +223,18 @@ public class Boid extends Entity {
 
     public byte getSpecies() {
         return subType;
+    }
+
+    public String toString() {
+        String string = "";
+
+        string += "BOID: " + "\t" + "\t position:" + position.toString() ;
+        string += "\t hunger:" + hunger;
+        string += "\t thirst:" + thirst;
+        string += "\t age:" + age ;
+        string += "\t state:" + state;
+
+        return string;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.UKC_AICS.simulation.entity.behaviours;
 
-import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.Entity;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
@@ -24,6 +25,10 @@ public abstract class Behaviour {
 //        return null;
     }
     public Vector3 act(Array<Entity> objects, Boid boid) {
+        return null;
+    }
+
+    public Vector3 act(Boid boid, Boid target) {
         return null;
     }
 

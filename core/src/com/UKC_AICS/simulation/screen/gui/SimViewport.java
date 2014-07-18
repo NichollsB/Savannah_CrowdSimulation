@@ -2,7 +2,7 @@ package com.UKC_AICS.simulation.screen.gui;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.*;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
 public class SimViewport extends ScalingViewport {
 

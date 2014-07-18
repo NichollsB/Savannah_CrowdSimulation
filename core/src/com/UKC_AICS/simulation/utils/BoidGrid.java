@@ -1,11 +1,10 @@
 package com.UKC_AICS.simulation.utils;
 
-import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Boid;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +32,7 @@ public class BoidGrid {
 
     private Map<Boid, Vector2> cells = new HashMap<Boid, Vector2>();
     private Array<Boid>[][] grid;
+    public  Vector3 inverseCellSize;
 
     /**
      * Constructor
@@ -53,13 +53,16 @@ public class BoidGrid {
                 grid[i][j] = new Array<Boid>();
             }
         }
+
+        inverseCellSize = new Vector3(1/cell_size, 1/cell_size, 0f);
     }
 
 
     public void addBoid(Boid boid) {
         Vector2 cell_pos = new Vector2((int) boid.getPosition().x / cellSize, (int) boid.getPosition().y / cellSize);
         cells.put(boid, cell_pos);
-        if (cell_pos.y == cellHeight-1 || cell_pos.x == 0 || cell_pos.y ==0 || cell_pos.x == cellWidth -1){
+
+        if (cell_pos.y > cellHeight-1 || cell_pos.x < 0 || cell_pos.y < 0 || cell_pos.x > cellWidth -1){
             System.out.print("derp");
         }
         grid[(int) cell_pos.x][(int) cell_pos.y].add(boid);
@@ -86,9 +89,9 @@ public class BoidGrid {
             }
             //TESTED, dont think this is needed.
             //to make sure it hasn't been put to its new pos already //seems a bit silly????
-//            if (grid[curCellX][curCellY].contains(boid, true)) {
-//                grid[curCellX][curCellY].removeValue(boid, true);
-//            }
+            if (grid[curCellX][curCellY].contains(boid, true)) {
+                grid[curCellX][curCellY].removeValue(boid, true);
+            }
         }
         return boid; //in case of chaining.
     }
@@ -297,5 +300,23 @@ public class BoidGrid {
 //        }
 
         return bnearby;
+    }
+
+
+    public Boid findBoidAt(int screenX, int screenY) {
+
+        int cellX = screenX / cellSize;
+        int cellY = screenY / cellSize;
+
+        Array<Boid> boids = new Array<Boid>();
+        findBoidsInCell(boids, cellX, cellY);
+
+        for (Boid boid : boids) {
+            if(boid.bounds.contains(screenX,screenY)) {
+                return boid;
+            }
+        }
+
+        return null;
     }
 }

@@ -4,6 +4,7 @@ import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.entity.Species;
+import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.UKC_AICS.simulation.utils.StaXParser;
 import com.UKC_AICS.simulation.utils.StaXParserLoad;
 import com.UKC_AICS.simulation.utils.StaxWriter;
@@ -21,9 +22,11 @@ import java.util.Iterator;
  */
 public class SimulationManager extends Manager {
 
+    final SimulationScreen parent;
     //    static final BoidManagerThreaded boidManager = new BoidManagerThreaded();
 //    static final BoidManagerThreadedTwo boidManager = new BoidManagerThreadedTwo();
 //    BoidManagerThreadedThree boidManager = new BoidManagerThreadedThree(this);
+//    BoidManagerOld boidManager = new BoidManagerOld(this);
     BoidManager boidManager = new BoidManager(this);
     WorldManager worldManager = new WorldManager(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
@@ -38,7 +41,7 @@ public class SimulationManager extends Manager {
     static final HashMap<Byte, String> speciesByte = new HashMap<Byte, String>();
 
     StaXParser staXParser = new StaXParser();
-    static HashMap<Byte, Species> speciesData;
+    public static HashMap<Byte, Species> speciesData;
     
     HashMap<Byte, String> fileLocations;
     
@@ -49,7 +52,8 @@ public class SimulationManager extends Manager {
      * <p/>
      * Possibly store the data lookup tables here? like subType data for example
      */
-    public SimulationManager() {
+    public SimulationManager(SimulationScreen parent) {
+        this.parent = parent;
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
 
         generateBoids();
@@ -58,11 +62,28 @@ public class SimulationManager extends Manager {
         Object obj = new Object((byte)2,(byte)1,355,450);
         objTypes.add(obj.getType());
         worldManager.putObject(obj);
+
         obj = new Object((byte)2,(byte)1,500,200);
-//        obj = new Object((byte)2,(byte)1,900,300);
+////        obj = new Object((byte)2,(byte)1,900,300);
         worldManager.putObject(obj);
+
         obj = new Object((byte)3,(byte)1,755,450);
         objTypes.add(obj.getType());
+        worldManager.putObject(obj);
+
+        obj = new Object((byte)2,(byte)1,400,600);
+        worldManager.putObject(obj);
+        obj = new Object((byte)2,(byte)1,160,200);
+        worldManager.putObject(obj);
+        obj = new Object((byte)2,(byte)1,160,400);
+        worldManager.putObject(obj);
+        obj = new Object((byte)2,(byte)1,180,600);
+        worldManager.putObject(obj);
+        obj = new Object((byte)2,(byte)1,1100,200);
+        worldManager.putObject(obj);
+        obj = new Object((byte)2,(byte)1,1100,400);
+        worldManager.putObject(obj);
+        obj = new Object((byte)2,(byte)1,1100,600);
         worldManager.putObject(obj);
 
     }
@@ -101,25 +122,34 @@ public class SimulationManager extends Manager {
             int number = species.getNumber();
 
             for (int i = 0; i < number; i++) {
-                boidManager.createBoid(species);  //TODO get the subType int from xml file
+                boidManager.createBoid(species);
             }
             //Find the species texture file location
             fileLocations.put(spByte, species.getSpriteLocation());
         }
     }
-    
+
     public void clear(){
     	boidManager.clearBoidList();
-    	
     }
     
-    public void update() {
-        boidManager.update();
-        worldManager.update();
-        tick();
+//    public void update() {
+//        boidManager.update();
+//        worldManager.update();
+//        tick();
+
+    public void update(boolean dayIncrement) {
+        dayIncrement = tick();
+        boidManager.update(dayIncrement);
+        worldManager.update(dayIncrement);
     }
 
-    private void tick() {
+    /**
+     *
+     * @return whether the time has "ticked" over a dya or not.
+     */
+    private boolean tick() {
+        boolean increment = false;
         if (minutes < 59) {
             minutes += 1;
         } else if (hours < 23) {
@@ -129,22 +159,25 @@ public class SimulationManager extends Manager {
             hours = 0;
             days += 1;
             setDay();
+            increment = true;
         } else {
             days = 0;
             weeks += 1;
             setDay();
+            increment = true;
         }
+        return increment;
 //        System.out.println(minutes + " mins; " + hours + " hrs; " + days + " days; " + weeks + " wks.");
     }
 
     public String getTime() {
-        return " Time " + minutes + " mins; " + hours + " hrs; "
+        return " Time " + hours + " hrs; "
                 + days + " days; " + weeks + " wks.";
     }
 
     public void setDay() {
     	currentDay++;
-    	boidManager.updateAge();
+//    	boidManager.updateAge(); //moved this to boidmanager
     }
     
    public static int getDay() {
@@ -183,4 +216,12 @@ public class SimulationManager extends Manager {
 		// TODO Auto-generated method stub
 		return fileLocations;
 	}
+
+    public HashMap<String, Byte> getTileInfo(int screenX, int screenY) {
+        return worldManager.getTileInfoAt(screenX,screenY);
+    }
+
+    public Boid getBoidAt(int screenX, int screenY) {
+        return boidManager.getBoidAt(screenX,screenY);
+    }
 }

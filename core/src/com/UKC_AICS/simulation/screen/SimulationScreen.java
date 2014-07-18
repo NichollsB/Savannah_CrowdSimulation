@@ -1,8 +1,8 @@
 package com.UKC_AICS.simulation.screen;
 
-import java.util.HashMap;
-
 import com.UKC_AICS.simulation.Simulation;
+import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.UKC_AICS.simulation.screen.gui.SimViewport;
 import com.badlogic.gdx.Gdx;
@@ -15,15 +15,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.UKC_AICS.simulation.managers.SimulationManager;
+
+import java.util.HashMap;
 
 /**
  * @author Emily
@@ -39,7 +35,7 @@ public class SimulationScreen implements Screen {
 
     private Environment environment; //lighting things
 
-    public SimulationManager simulationManager = new SimulationManager();
+    public SimulationManager simulationManager = new SimulationManager(this);
 
     private BitmapFont font = new BitmapFont();
 
@@ -55,7 +51,7 @@ public class SimulationScreen implements Screen {
     
     private Graphics boidGraphics;
 
-    private SimScreenGUI gui; // Creates gui instance for this screen
+    public SimScreenGUI gui; //= new SimScreenGUI(this); // Creates gui instance for this screen
 
     private InputMultiplexer input;
     private InputManager inputManager;
@@ -68,35 +64,47 @@ public class SimulationScreen implements Screen {
         setup();
         
     }
+
     private long time = 0;
     private long nextRender = 0;
     @Override
     public void render(float delta) {
         //kind of the update loop.
         if (running) {
-            simulationManager.update();
+            simulationManager.update(false); //this is false here because all managers need to take a boolean. Actual decideing is done in SimulationManager.
         }
 
         // checks if simulation needs to be rendered or can be run "offline"
         if (render) {
+//<<<<<<< .merge_file_a11712
+//
+//            gui.fps.setText(getFPSString() + simulationManager.getTime());
+//            tickPhysics(delta);
+//            clearOpenGL();
+//            boidGraphics.update(spriteBatch);
+//            renderSpriteBatches();
+//
+//=======
         	simViewcamera.update();
 
-        	time = System.nanoTime();
-        	if(time >= nextRender){
+//        	time = System.nanoTime();
+//        	if(time >= nextRender){
         		update = false;
 	            gui.fps.setText(getFPSString() + simulationManager.getTime());
 	            tickPhysics(delta);
 	            renderSpriteBatches();
-	            nextRender = System.nanoTime() + (long)33333333.33333333;
-        	}
+//	            nextRender = System.nanoTime() + (long)33333333.33333333;
+//        	}
 
-	            try {
-	                Thread.sleep((long) (1000 / 60 - Gdx.graphics.getDeltaTime()));
-	            } catch (InterruptedException e) {
-	                System.out.print("Error...");
-	                e.printStackTrace();
-	            }
-	       
+
+                try {
+                    long number = (long) (1000 / 60 - Gdx.graphics.getDeltaTime());
+                    if(number < 0) number = 0;
+                    Thread.sleep(number); //FIXME: this can go negative after leaving the screen alone for a while. crashes program
+                } catch (InterruptedException e) {
+                    System.out.print("Error...");
+                    e.printStackTrace();
+                }
         } else {
             clearOpenGL();
             gui.fps.setText(getFPSString() + simulationManager.getTime());
@@ -149,9 +157,16 @@ public class SimulationScreen implements Screen {
      */
     private void initialiseCameras(int width, int height) {
         //create a camera. perspective? orthographic? etc etc.
+//<<<<<<< .merge_file_a11712
+//        camera = new OrthographicCamera();
+//        camera.setToOrtho(false);
+//    	inputManager = new InputManager(this, Constants.screenWidth, Constants.screenHeight, camera);
+//    	input = new InputMultiplexer();
+//=======
     	viewRect =  gui.getViewArea();
     	uiCamera = gui.getCamera();
     	uiViewport = gui.getViewport();
+//>>>>>>> .merge_file_a11656
 
         simViewcamera = (OrthographicCamera) boidGraphics.getCamera();
         simViewport = new SimViewport(Scaling.none, width, height, simViewcamera);
@@ -254,7 +269,13 @@ public class SimulationScreen implements Screen {
      */
     public void pickPoint(int screenX, int screenY) {
         //What should happen when clicking on the screen
-        gui.setConsole("x: " + screenX + " y: " + screenY);
+        Boid boid = simulationManager.getBoidAt(screenX,screenY);
+        if (boid == null) {
+            HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
+            gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
+        } else {
+            System.out.println(boid);
+        }
 
     }
 

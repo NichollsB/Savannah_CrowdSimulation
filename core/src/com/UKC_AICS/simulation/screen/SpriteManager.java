@@ -1,14 +1,13 @@
 package com.UKC_AICS.simulation.screen;
 
-import java.util.HashMap;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteCache;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+
+import java.util.HashMap;
 
 public class SpriteManager {
 	
