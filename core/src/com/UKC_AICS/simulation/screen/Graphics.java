@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -51,6 +52,7 @@ public class Graphics {
 	private Texture simBase;
 	
 	ShapeRenderer back = new ShapeRenderer();
+	private HashMap<Byte, float[]> boidColours = new HashMap<Byte, float[]>();
 	
 	public Graphics(int width, int height){
 		renderWidth = width;
@@ -109,6 +111,15 @@ public class Graphics {
 				for(Boid boid : boidsArray){
 					sprite = spriteManager.getSprite(b, boid.getSpecies());
 					updateSpritePosition(boid, sprite);
+					if(boidColours.containsKey(boid.getSpecies())){
+						float colour[] = boidColours.get(boid.getSpecies());
+						sprite.setColor(colour[0], colour[1], colour[2], 1f);
+					}
+					else{
+						sprite.setColor(Color.WHITE);
+					}
+				
+					
 					sprite.draw(batch);
 					/*if(boid.species == 1){
 						altSprite.draw(batch);
@@ -138,17 +149,22 @@ public class Graphics {
 	 * Pass in and store the boids and initialise the boidSprite to a sprite with the default texture
 	 * @param boidArray the Array of boids to store
 	 */
-	public void initBoidSprites(Array<Boid> boidArray, HashMap<Byte, String> fileLocations){
+	public void initBoidSprites(HashMap<Byte, String> fileLocations){
 
 		spriteManager.loadAssets_Boids(fileLocations, true);
-
-		boidsArray = boidArray;
 		boidSprite = new Sprite(defaultTexture);
 		boidSprite.setOrigin((defaultTexture.getWidth()/2), defaultTexture.getHeight()/2);
 		
 		altSprite = new Sprite(altTexture);
 		boidSprite.setOrigin((altTexture.getWidth()/2), altTexture.getHeight()/2);
 
+	}
+	public void setBoidSprite_Colours(HashMap<Byte, float[]> rgbValues) {
+		boidColours = rgbValues;
+	}
+	
+	public void setBoids(Array<Boid> boidArray){
+		this.boidsArray = boidArray;
 	}
 	
 	public void initObjSprites (Array<Entity> entityArray){
@@ -194,6 +210,9 @@ public class Graphics {
 	public Camera getCamera(){
 		return camera;
 	}
+
+
+	
 	
 
 }

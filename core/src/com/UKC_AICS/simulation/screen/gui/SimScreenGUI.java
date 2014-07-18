@@ -194,13 +194,13 @@ public class SimScreenGUI extends Stage {
     
     private Table createEast(Table t){
     	Table eastTable = new Table(skin);
-    	t.add(eastTable).left().width(EAST_WIDTH).fillY().expandY();
+    	t.add(eastTable).right().width(EAST_WIDTH).fillY().expandY();
     	eastTable.add("east");
     	return eastTable;
     }
     private Table createWest(Table t){
     	Table westTable = new Table(skin);
-    	t.add(westTable).right().width(WEST_WIDTH).fillY().expandY();
+    	t.add(westTable).left().width(WEST_WIDTH).fillY().expandY();
    	 	
     	westTable.add("west");
     	return westTable;

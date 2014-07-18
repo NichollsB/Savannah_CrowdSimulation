@@ -5,7 +5,8 @@
     <species id="0" name="zebra">
         <number>20</number>
         <byte>0</byte>  <!-- this is the sub-type -->
-        <spriteLocation>data/triangle.png</spriteLocation>
+        <spritergb r = "0" g="0" b="1"/>
+        <spriteLocation>data/trianglewhite_test.png</spriteLocation>
         <diet>"herbivore"</diet>
         <sightRadius>180f</sightRadius>
         <flockRadius>120f</flockRadius>

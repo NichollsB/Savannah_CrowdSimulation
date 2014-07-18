@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.utils;
 
 import com.UKC_AICS.simulation.entity.Species;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -9,6 +10,7 @@ import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -36,6 +38,8 @@ public class StaXParser {
     static final String MAXSPEED = "maxSpeed";
     static final String LIFESPAN = "lifespan";
     static final String DIET = "diet";
+    
+    static final String SPRITERGB = "spritergb";
 
     @SuppressWarnings({ "unchecked", "null" })
     public HashMap<Byte, Species> readConfig(String configFile) {
@@ -193,6 +197,41 @@ public class StaXParser {
                             continue;
                         }
                     }
+                    /////////////////////////////////////////////////////
+                    //Added by Ben Nicholls for graphics purposes
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(SPRITERGB)) {
+                        	float rgb[] = {0f, 0f, 0f};
+                        	Iterator iterator = event.asStartElement().getAttributes();
+                            while (iterator.hasNext()) {
+                              Attribute attribute = (Attribute) iterator.next();
+                              String name = attribute.getName().toString();
+                              String value = attribute.getValue();
+                              try {
+	                              if(name == "r"){
+	                            	  	rgb[0] = Float.parseFloat(value);
+	                            	  
+	                              }
+	                              else if(name == "g"){
+	                            	  rgb[1] = Float.parseFloat(attribute.getValue());
+	                              }
+	                              else if(name == "b"){
+	                            	  rgb[2] = Float.parseFloat(attribute.getValue());
+	                              }
+                              }
+                              catch (NumberFormatException nfe) {
+                        		  System.out.println("Non-numeric value in "+ name + " colour attribute of species xml");
+                        	  }
+                              species.setRGB(rgb);
+                            }
+//                            event = eventReader.nextEvent();
+                            
+//                            species.setSpriteLocation(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+                    ////////////////////////////////////////////////
                 }
                 // If we reach the end of an item element, we add it to the list
                 if (event.isEndElement()) {
@@ -201,6 +240,9 @@ public class StaXParser {
                         speciesData.put(species.getSpbyte(), species);
                     }
                 }
+                
+                
+      
 
             }
         } catch (FileNotFoundException e) {

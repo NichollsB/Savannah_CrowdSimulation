@@ -86,15 +86,7 @@ public class SimulationScreen implements Screen {
 
         // checks if simulation needs to be rendered or can be run "offline"
         if (render) {
-//<<<<<<< .merge_file_a11712
-//
-//            gui.fps.setText(getFPSString() + simulationManager.getTime());
-//            tickPhysics(delta);
-//            clearOpenGL();
-//            boidGraphics.update(spriteBatch);
-//            renderSpriteBatches();
-//
-//=======
+        	clearOpenGL();
         	simViewcamera.update();
 
 //        	time = System.nanoTime();
@@ -102,7 +94,9 @@ public class SimulationScreen implements Screen {
         		update = false;
 	            gui.fps.setText(getFPSString() + simulationManager.getTime());
 	            tickPhysics(delta);
+	            
 	            renderSpriteBatches();
+	            renderUIBatch();
 //	            nextRender = System.nanoTime() + (long)33333333.33333333;
 //        	}
 
@@ -117,16 +111,22 @@ public class SimulationScreen implements Screen {
                 }
         } else {
             clearOpenGL();
+            renderUIBatch();
             gui.fps.setText(getFPSString() + simulationManager.getTime());
 //            renderSpriteBatches();
         }
     }
 
+    private void renderUIBatch(){
+    	uiViewport.update();
+        simViewBatch.setProjectionMatrix(uiCamera.combined);
+        gui.update(simViewBatch);
+    }
     /**
      * Calls the update method to trigger the rendering calls in the gui and simulation view
      */
     private void renderSpriteBatches() {
-    	clearOpenGL();
+    	
     	
     	//Update the simulation view and render, clipping to the scissor rectangle provided by the specified gui
     	//area for the view
@@ -136,9 +136,7 @@ public class SimulationScreen implements Screen {
     	boidGraphics.update(simViewBatch);
     	ScissorStack.popScissors();
     	//Update and render the gui
-    	uiViewport.update();
-        simViewBatch.setProjectionMatrix(uiCamera.combined);
-        gui.update(simViewBatch);
+
         simViewBatch.flush();
     }
 
@@ -199,7 +197,9 @@ public class SimulationScreen implements Screen {
     	boidGraphics = new Graphics(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         setupCameraController();
         initialiseCameras(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        boidGraphics.initBoidSprites(simulationManager.getBoids(), simulationManager.getTextureLocations());
+        boidGraphics.setBoids(simulationManager.getBoids());
+        boidGraphics.initBoidSprites(simulationManager.getTextureLocations());
+        boidGraphics.setBoidSprite_Colours(simulationManager.getRGBValues());
         boidGraphics.initObjSprites(simulationManager.getObjects());
         boidGraphics.initTileSprites(simulationManager.getFullInfo());
         //boidGraphics.initTileSprites(simulationManager.getMapTiles());

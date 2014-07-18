@@ -44,6 +44,7 @@ public class SimulationManager extends Manager {
     public static HashMap<Byte, Species> speciesData;
     
     HashMap<Byte, String> fileLocations;
+    HashMap<Byte, float[]> speciesRGB = new HashMap<Byte, float[]>(); 
     
 
     /**
@@ -125,7 +126,11 @@ public class SimulationManager extends Manager {
                 boidManager.createBoid(species);
             }
             //Find the species texture file location
-            fileLocations.put(spByte, species.getSpriteLocation());
+            if(species.hasSpriteLocation())
+            	fileLocations.put(spByte, species.getSpriteLocation());
+            if(species.hasRGB())
+            	speciesRGB.put(spByte, species.getRGB());
+            
         }
     }
 
@@ -216,6 +221,9 @@ public class SimulationManager extends Manager {
 	public HashMap<Byte, String> getTextureLocations() {
 		// TODO Auto-generated method stub
 		return fileLocations;
+	}
+	public HashMap<Byte, float[]> getRGBValues(){
+		return speciesRGB;
 	}
 
     public HashMap<String, Byte> getTileInfo(int screenX, int screenY) {
