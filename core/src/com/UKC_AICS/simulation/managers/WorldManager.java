@@ -19,7 +19,7 @@ public class WorldManager extends Manager {
 
     private static final int TILE_SIZE = 16;
     private static LandMap map;
-    private Vector3 size;
+    private static Vector3 size;
 //    private HashMap<String, byte[][]> information_layers = new HashMap<String, byte[][]>();
 
 
@@ -100,8 +100,13 @@ public class WorldManager extends Manager {
         HashMap<String, Byte> layers = new HashMap<String, Byte>();
         int mapX = x/TILE_SIZE;
         int mapY = y/TILE_SIZE;
-        for (String layer : map.information_layers.keySet()) {
-            layers.put(layer, map.information_layers.get(layer)[mapX][mapY]);
+        if (mapX >= 0 && mapX < size.x &&
+                mapY >= 0 && mapY < size.y) {
+
+
+            for (String layer : map.information_layers.keySet()) {
+                layers.put(layer, map.information_layers.get(layer)[mapX][mapY]);
+            }
         }
         return layers;
     }
