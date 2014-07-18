@@ -42,6 +42,7 @@ public class StateMachine {
 
         behaviours.put("collision", new Collision2());
 
+        behaviours.put("seek", new Seek());
         behaviours.put("pursuit", new Pursuit());
 
         boidStates = new HashMap<Boid, Stack<State>>();
@@ -97,6 +98,10 @@ public class StateMachine {
         if(boidStates.containsKey(boid)) {
             boidStates.remove(boid);
         }
+    }
+
+    public boolean checkBoid(Boid boid) {
+       return boidStates.containsKey(boid);
     }
 
     public void pushState(Boid boid, State state) {
