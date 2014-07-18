@@ -36,15 +36,9 @@ public class CarnDefault extends State{
         else if(boid.hunger < 50) {
             System.out.println(boid + "\n Just posted Hungry state "  );
 //            parent.pushState(boid, new Hunt(parent,bm));
-            Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
-            Boid targ = null;
-            for (int i = 0; i < nearBoids.size; i++) {
-                 if(!boid.equals(nearBoids.get(i))) {
-                     targ = nearBoids.get(i);
-                 }
+            //This is test GoForKill state change, CHANGE to Hunt State
 
-            }
-            parent.pushState(boid, new GoForKill(parent,bm, targ));
+            parent.pushState(boid, new Hunt(parent,bm));
         } else {
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());

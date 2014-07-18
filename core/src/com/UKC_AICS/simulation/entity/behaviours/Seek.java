@@ -17,7 +17,7 @@ public class Seek extends Behaviour {
         throw new Error("Seek is not to be used in this manner. Try static access Seek.act(Boid boid, Vector3 target)");
     }
 
-    static Vector3 act(Boid boid, Vector3 target) {
+    static public Vector3 act(Boid boid, Vector3 target) {
         vec.set(target.sub(boid.getPosition()));
         vec.nor().scl(boid.maxSpeed);
         vec.sub(boid.getVelocity());
