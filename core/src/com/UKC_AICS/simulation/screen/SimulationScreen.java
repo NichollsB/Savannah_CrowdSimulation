@@ -92,7 +92,9 @@ public class SimulationScreen implements Screen {
         		update = false;
 	            gui.fps.setText(getFPSString() + simulationManager.getTime());
 	            tickPhysics(delta);
+	            clearOpenGL();
 	            renderSpriteBatches();
+	            renderUIBatch();
 //	            nextRender = System.nanoTime() + (long)33333333.33333333;
 //        	}
 
@@ -107,16 +109,23 @@ public class SimulationScreen implements Screen {
                 }
         } else {
             clearOpenGL();
+            renderUIBatch();
             gui.fps.setText(getFPSString() + simulationManager.getTime());
 //            renderSpriteBatches();
         }
     }
 
+    private void renderUIBatch(){
+    	uiViewport.update();
+        simViewBatch.setProjectionMatrix(uiCamera.combined);
+        gui.update(simViewBatch);
+    }
     /**
      * Calls the update method to trigger the rendering calls in the gui and simulation view
      */
     private void renderSpriteBatches() {
-    	clearOpenGL();
+    	
+    	
     	//Update the simulation view and render, clipping to the scissor rectangle provided by the specified gui
     	//area for the view
     	simViewport.update();
@@ -125,9 +134,7 @@ public class SimulationScreen implements Screen {
     	boidGraphics.update(simViewBatch);
     	ScissorStack.popScissors();
     	//Update and render the gui
-    	uiViewport.update();
-        simViewBatch.setProjectionMatrix(uiCamera.combined);
-        gui.update(simViewBatch);
+
         simViewBatch.flush();
     }
 
