@@ -30,64 +30,20 @@ public class Reproduce extends State {
             Array<Boid> closeBoids = new Array<Boid>();
 
             for (Boid b : nearBoids) {
-                if (boid.state.equals(b.state)) {
-                    steering.set(boid.getPosition());
-                    steering.sub(b.getPosition());
-                    if (steering.len2() > boid.flockRadius * boid.flockRadius) {
-                        nearBoids.removeValue(b, true);
-                    }
-                    //if the boid is outside the flock radius it CANT also be in the "too close" range
-                    else if (steering.len2() < boid.nearRadius * boid.nearRadius) {
-                        closeBoids.add(b);
-                    }
+                //see if the boid is the same species and in the same state - should be Reproduce.
+                if (boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state)) {
+
                 }
-            }
-
-            //store the steering movement
-            boid.setAcceleration(steering);  //Resets acceleration to 0f,0f,0f
-            Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
-
-            Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
-            collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
-
-            tempVec = behaviours.get("collision").act(collisionObjects, boid);
-
-            steering.set(0f, 0f, 0f);
-            boid.setAcceleration(steering);
-
-            // Check if collision avoidance is required.  True if no collisions
-            if (tempVec.equals(steering)) {
-
-                for (Entity dummyObject : dummyObjects) {
-                    Entity ent = dummyObject;
-                    steering.set(boid.position);
-                    steering.sub(ent.position);
-
-                    if (steering.len2() > boid.sightRadius * boid.sightRadius) {
-                        dummyObjects.removeValue(ent, false);
-                    }
+                steering.set(boid.getPosition());
+                steering.sub(b.getPosition());
+                if (steering.len2() > boid.flockRadius * boid.flockRadius) {
+                    nearBoids.removeValue(b, true);
+                }
+                //if the boid is outside the flock radius it CANT also be in the "too close" range
+                else if (steering.len2() < boid.nearRadius * boid.nearRadius) {
+                    closeBoids.add(b);
                 }
 
-
-                steering.set(0f, 0f, 0f);
-
-                float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
-                float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
-                float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
-                float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander();
-
-                steering.add(behaviours.get("cohesion").act(nearBoids, dummyObjects, boid).scl(coh));
-                steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
-                steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
-                steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
-
-//                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
-//                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
-
-                boid.setAcceleration(steering);
-
-            } else {
-                boid.setAcceleration(tempVec);
             }
 
 
@@ -100,3 +56,50 @@ public class Reproduce extends State {
 
 
 }
+
+////store the steering movement
+//boid.setAcceleration(steering);  //Resets acceleration to 0f,0f,0f
+//        Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
+//
+//        Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
+//        collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
+//
+//        tempVec = behaviours.get("collision").act(collisionObjects, boid);
+//
+//        steering.set(0f, 0f, 0f);
+//        boid.setAcceleration(steering);
+//
+//        // Check if collision avoidance is required.  True if no collisions
+//        if (tempVec.equals(steering)) {
+//
+//        for (Entity dummyObject : dummyObjects) {
+//        Entity ent = dummyObject;
+//        steering.set(boid.position);
+//        steering.sub(ent.position);
+//
+//        if (steering.len2() > boid.sightRadius * boid.sightRadius) {
+//        dummyObjects.removeValue(ent, false);
+//        }
+//        }
+//
+//
+//        steering.set(0f, 0f, 0f);
+//
+//        float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
+//        float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
+//        float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
+//        float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander();
+//
+//        steering.add(behaviours.get("cohesion").act(nearBoids, dummyObjects, boid).scl(coh));
+//        steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
+//        steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
+//        steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
+//
+////                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
+////                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
+//
+//        boid.setAcceleration(steering);
+//
+//        } else {
+//        boid.setAcceleration(tempVec);
+//        }
