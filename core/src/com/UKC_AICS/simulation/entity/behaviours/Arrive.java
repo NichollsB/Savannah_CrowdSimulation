@@ -10,13 +10,13 @@ import com.badlogic.gdx.utils.Array;
  */
 public class Arrive extends Behaviour {
 
-    static Vector3 vec = new Vector3();
-
     public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
         throw new Error("Arrive is not to be used in this manner. Try static access Arrive.act(Boid boid, Vector3 target)");
     }
 
     public static Vector3 act(Boid boid, Vector3 target) {
+
+        Vector3 vec = new Vector3();
         vec.set(target.sub(boid.getPosition()));
         float dist = vec.len();
         if(dist > 0 ) {
