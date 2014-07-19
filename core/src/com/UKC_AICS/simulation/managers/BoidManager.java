@@ -178,6 +178,7 @@ public class BoidManager extends Manager {
     }
 
     public boolean checkForDeath(final Boid boid) {
+        float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
         if (boid.hunger <= -20) {
             removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of hunger :( ");
@@ -189,8 +190,7 @@ public class BoidManager extends Manager {
 //            parent.parent.gui.setConsole(" A boid just died of thirst :( ");
 //            return true;
 //        }
-        float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
-        if (boid.age > lifespan) {
+        else if (boid.age > lifespan) {
             removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of age related issues :( ");
             return true;

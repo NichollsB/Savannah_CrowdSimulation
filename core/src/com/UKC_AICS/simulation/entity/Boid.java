@@ -1,6 +1,7 @@
 package com.UKC_AICS.simulation.entity;
 
 import com.UKC_AICS.simulation.Constants;
+import com.UKC_AICS.simulation.entity.states.herbivore.Reproduce;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -8,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
  * @author Emily
  */
 public class Boid extends Entity {
+
     public enum State {
         DEFAULT,
         HUNGRY,
@@ -220,6 +222,9 @@ public class Boid extends Entity {
 //    public void setOrientation(float x, float y, float z) {
 //        this.orientation = new Vector3(x,y,z);
 //    }
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public byte getSpecies() {
         return subType;

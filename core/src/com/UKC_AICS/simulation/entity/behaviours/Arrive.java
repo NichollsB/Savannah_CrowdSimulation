@@ -16,7 +16,7 @@ public class Arrive extends Behaviour {
         throw new Error("Arrive is not to be used in this manner. Try static access Arrive.act(Boid boid, Vector3 target)");
     }
 
-    static Vector3 act(Boid boid, Vector3 target) {
+    public static Vector3 act(Boid boid, Vector3 target) {
         vec.set(target.sub(boid.getPosition()));
         float dist = vec.len();
         if(dist > 0 ) {

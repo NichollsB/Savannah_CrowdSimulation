@@ -52,7 +52,7 @@
         <nearRadius>15f</nearRadius>
         <maxSpeed>3.5f</maxSpeed>
         <maxForce>0.2f</maxForce>
-        <lifespan>25f</lifespan>
+        <lifespan>50</lifespan>
         <cohesion>0.5f</cohesion>
         <separation>0.5f</separation>
         <alignment>0.5f</alignment>
@@ -69,7 +69,7 @@
         <nearRadius>100f</nearRadius>
         <maxSpeed>3.5f</maxSpeed>
         <maxForce>0.2f</maxForce>
-        <lifespan>25f</lifespan>
+        <lifespan>200f</lifespan>
         <cohesion>0.5f</cohesion>
         <separation>0.8f</separation>
         <alignment>0.3f</alignment>

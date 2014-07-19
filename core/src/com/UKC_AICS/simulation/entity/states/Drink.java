@@ -16,6 +16,7 @@ public class Drink extends State {
     public boolean update(Boid boid) {
 
         if(boid.thirst > 80) { //and check there is enough water is still there to drink from.
+            boid.setState(this.toString());
             System.out.println(boid + "\n Just quit DRINK state ");
             return true;
         } else {
