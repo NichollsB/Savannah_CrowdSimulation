@@ -23,6 +23,10 @@ public class StaXParserLoad {
     static final String POSITION = "position";
     static final String VELOCITY  = "velocity";
     static final String SPECIES = "species";
+    static final String COHESION = "cohesion";
+    static final String ALIGNMENT = "alignment";
+    static final String SEPARATION = "separation";
+    static final String WANDER = "wander";
     private int age = 0;
     private int bDay = 0;
 
@@ -100,6 +104,42 @@ public class StaXParserLoad {
                                 .equals(SPECIES)) {
                             event = eventReader.nextEvent();
                           spec = Byte.valueOf(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(COHESION)) {
+                            event = eventReader.nextEvent();
+                      
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(ALIGNMENT)) {
+                            event = eventReader.nextEvent();
+                          
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(SEPARATION)) {
+                            event = eventReader.nextEvent();
+                         
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(WANDER)) {
+                            event = eventReader.nextEvent();
+                         
                             continue;
                         }
                     }
