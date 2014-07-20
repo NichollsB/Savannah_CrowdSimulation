@@ -27,7 +27,7 @@ public class BoidManager extends Manager {
 
     private QuadTree quadtree;
     private Random rand = new Random();
-    private StateMachine stateMachine;
+    private static StateMachine stateMachine;
 
 //    private HashMap<String, Behaviour> behaviours = new HashMap<String, Behaviour>();
 
@@ -46,7 +46,7 @@ public class BoidManager extends Manager {
     }
 
 
-    public void createBoid(byte species, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ) {
+    public static void createBoid(byte species, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ) {
         Boid boid = new Boid(species);
 
         boid.setAge(age);
@@ -115,7 +115,7 @@ public class BoidManager extends Manager {
 
     }
 
-    private void addToLists(Boid boid) {
+    private static void addToLists(Boid boid) {
         boids.add(boid);
 //        quadtree.insert(boid);
         getBoidGrid().addBoid(boid);

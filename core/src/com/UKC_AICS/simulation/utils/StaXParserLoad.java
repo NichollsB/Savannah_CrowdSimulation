@@ -1,6 +1,6 @@
 package com.UKC_AICS.simulation.utils;
 
-import com.UKC_AICS.simulation.managers.BoidManagerOld;
+import com.UKC_AICS.simulation.managers.BoidManager;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -150,7 +150,7 @@ public class StaXParserLoad {
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
                     if (endElement.getName().getLocalPart() == (BOID)) {
-                        BoidManagerOld.createBoid(spec, age, bDay, fltArray[0], fltArray[1], fltArray[2], fltArray2[0], fltArray2[1], fltArray2[2]);
+                        BoidManager.createBoid(spec, age, bDay, fltArray[0], fltArray[1], fltArray[2], fltArray2[0], fltArray2[1], fltArray2[2]);
                     }
                 }
 
