@@ -12,27 +12,30 @@ public class EAmain {
 	private int popNum = 0;
 	private int breedingAge;
 	//Crossover rate
-	private float crossRate;
+	private double crossRate = 0.5;
 	//Mutation rate
-	private float muteRate;
+	private double muteRate =0.02;
+	static int geneLength = 8;
 	
+	//May move this elsewhere...probably to Boid.???
+	private float[] genes = new float[geneLength];
 	
-	
-	
+	private ArrayList<Boid> selected = new ArrayList<Boid>();
 	private ArrayList<Boid> population = new ArrayList<Boid>();
 	private ArrayList<Double> fValList = new ArrayList<Double>();
 	private ArrayList<Double> fitnessList = new ArrayList<Double>();
 	private ArrayList<Double> probablityList = new ArrayList<Double>();
 	private Random r = new Random();
-	//Check for valid population members
 	
+	
+	
+	//Check for valid population members
 	private void validCheck() {
-		if(b.getAge()>breedingAge && same species && same herd){
+		//TODO 
 			//add to population
 			popNum++;
 		}
-	}
-	//Add to population
+	
 	
 	
 	
@@ -40,21 +43,20 @@ public class EAmain {
 	//Calculate fitness
 	public void calculateFitness() {
 		double fitness = 0.0;
-	//Get average thirst over lifetime
-	//Get average hunger over lifetime
-	//Get average panic level over lifetime
-	//Get average rest over lifetime
-	//Get injuries and other status effects	
+		//TODO
 		
 		//Add to fitnessList
 	}
+	
+	
+	
 	
 	public void calculateProbabilty() {
 		double totalFitness = 0.0;
 		double f = 0.0;
 		double p = 0.0;
 		double totalProbability = 0.0;
-		double probability;
+	
 		//calculate total fitness
 		for(double fitness :fitnessList){ 
 			f=1/(1+fitness);
@@ -69,19 +71,87 @@ public class EAmain {
 		}
 	}
 	
+	
+	
+	
+	
 	//Selection
 	public void selection() {
-		double rangeMin = 0.0;
-		double rangeMax = 1.0;
-		ArrayList<Double> cVal = new ArrayList<Double>();
+		double rangeMin = probablityList.get(0);
+		double rangeMax = probablityList.get(popNum);
+		boolean found = false;
+		//Find two different boids
 		
+		//Select random number
+		while(found == false){
+		
+			double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+		
+			//Find boids
+			
+			for (int i = 0; i==popNum ; i++){
+				if(probablityList.get(i) <=randomValue && randomValue<probablityList.get(i+1)){	
+					//TODO
+					//select boid
+					selected.add(population.get(i));
+				}
+				else{
+					System.out.println("random value not in probability list range");
+				}
+			}
+		
+			if(selected.get(0)==selected.get(1)){
+				found=true;
+			}
+			else{
+				selected.remove(1);
+			}
+		
+		}
 	}
+	
+	
+	
+	
 	//Crossover
 	public void crossover() {
 		
+		
+		
+		
+	   
+	        // Loop through genes
+	       // for (int i = 0; i < indiv1.size(); i++) {
+	            // Crossover
+	         //   if (Math.random() <= crossRate) {
+	          //      newChromosome.setGene(i, getGene(i));
+	          //  } else {
+	          //      newChromosome.setGene(i, indiv2.getGene(i));
+	          //  }
+	       // }
+	      
 	}
+	
+	
+	
+	
+	
+	
+	
 	//Mutation
 	public void mutation() {
+		//loop throught genes
+		//if greater mute
+		
+		
+	   // for (int i = 0; i < indiv.size(); i++) {
+           // if (Math.random() <= mutationRate) {
+                // Create random gene
+           //     byte gene = (byte) Math.round(Math.random());
+           //     indiv.setGene(i, gene);
+         //   }
+      //  }
+		
 		
 	}
 	

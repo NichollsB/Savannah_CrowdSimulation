@@ -38,6 +38,14 @@ public class Boid extends Entity {
 
     public int age = 0;
     public int birthDay = 0;
+    
+    public float cohesion = 0;
+    public float separation = 0;
+    public float alignment = 0;
+    public float wander = 0;
+    
+    		
+    public Float[] gene;
 
     public Boid( Vector3 pos, Vector3 vel) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -236,5 +244,41 @@ public class Boid extends Entity {
 
         return string;
     }
-
+    
+    public void setGene() {
+    	gene[0] = cohesion;
+    	gene[1] = separation;
+    	gene[2] = alignment;
+    	gene[3] = wander;
+    	
+    }      
+    
+    public Float[] getGene() {
+    	return gene;
+    }
+      
+    public void setCohesion( float cohesion) {
+        this.cohesion = cohesion; 
+    }
+    public void setSpearation( float separation) {
+    	this.separation = separation;
+    }
+    public void setAlignment( float alignment) {
+    	this.alignment = alignment;
+    }
+    public void setWander( float wander) {
+        this.wander = wander;
+    }
+    public float getCohesion() {
+    	return cohesion;
+    }
+    public float getSeparation() {
+    	return separation;
+    }
+    public float getAlignment() {
+    	return alignment;
+    }
+    public float getWander() {
+        return wander;
+    }
 }
