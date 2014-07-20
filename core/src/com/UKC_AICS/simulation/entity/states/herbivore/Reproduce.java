@@ -64,9 +64,20 @@ public class Reproduce extends State {
                     }
 
                 }
+                if(tempVec.len2() < 10f) {
+                    System.out.println("boid made a baby");
+//                    bm.createBoid(boid); //create copy of self.
+                    boid.hunger = 15;
+                    boid.thirst = 15;
+                    nearest.hunger = 15;
+                    nearest.thirst = 15;
+                }
                 steering.set(0f,0f,0f);
 
                 steering.add(Arrive.act(boid, nearest.getPosition()));
+
+                boid.setAcceleration(steering);
+
             } else {
                 //stay with the herd
 

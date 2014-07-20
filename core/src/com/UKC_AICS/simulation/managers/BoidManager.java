@@ -21,6 +21,8 @@ public class BoidManager extends Manager {
 
 
     public static Array<Boid> boids = new Array<Boid>();
+    public static Array<Boid> removalBoids = new Array<Boid>();
+    public static Array<Boid> additionBoids = new Array<Boid>();
     private static BoidGrid boidGrid;
 
     public final SimulationManager parent;
@@ -40,7 +42,6 @@ public class BoidManager extends Manager {
         setBoidGrid(new BoidGrid(60, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
         quadtree = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-
 
         stateMachine = new StateMachine(this);
     }
@@ -87,8 +88,6 @@ public class BoidManager extends Manager {
 
         int yVel = (rand.nextInt(2 * maxYVel) - maxYVel);
 
-
-//        boid.setBirthDay(SimulationManager.getDay());
 //        boid.setOrientation(xOrient, yOrient, 0);
 
         boid.setPosition(xPos, yPos, 0);
@@ -97,7 +96,7 @@ public class BoidManager extends Manager {
         boid.hunger = rand.nextInt(120) + 20;
         boid.thirst = rand.nextInt(150) + 50;
         //random start age
-        boid.age = rand.nextInt((int) species.getLifespan());
+        boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the population to be too old.
 
         addToLists(boid);
     }
@@ -175,6 +174,15 @@ public class BoidManager extends Manager {
         if (dayIncrement) {
             updateAges();
         }
+
+        //handle the addition and removal of boids here, this does mean that the boid will potentially be interacted
+        // with in the current update tick.
+        while (removalBoids.size > 0) {
+            removeBoid(removalBoids.pop());
+        }
+        while(additionBoids.size > 0){
+            addToLists(additionBoids.pop());
+        }
     }
 
     public boolean checkForDeath(final Boid boid) {
@@ -210,6 +218,17 @@ public class BoidManager extends Manager {
     }
 
 
+    public void storeBoidForRemoval(Boid boid) {
+        if(!removalBoids.contains(boid, false)) {
+            removalBoids.add(boid);
+        }
+    }
+
+    public void storeBoidForAddition(Boid boid) {
+        if(!additionBoids.contains(boid, false)) {
+            additionBoids.add(boid);
+        }
+    }
     public void removeBoid(Boid boid) {
 
         boids.removeValue(boid, false);
