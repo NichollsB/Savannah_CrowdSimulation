@@ -43,12 +43,16 @@ public class HerbDefault extends State {
 
 
         if (boid.thirst < 15) {
-            System.out.println(boid + "\n Just posted Thirsty state ");
+            System.out.println(boid + "\nJust posted Thirsty state ");
             parent.pushState(boid, new Thirsty(parent, bm));
         } else if (boid.hunger < 15) {
-            System.out.println(boid + "\n Just posted Hungry state ");
+            System.out.println(boid + "\nJust posted Hungry state ");
             parent.pushState(boid, new Hungry(parent, bm));
+        } else if (boid.age > 10 && boid.hunger > 70 && boid.thirst > 70) {
+            System.out.println(boid + "\nJust posted Reproduce state ");
+            parent.pushState(boid, new Reproduce(parent, bm));
         } else {
+            boid.setState(this.toString());
 
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());

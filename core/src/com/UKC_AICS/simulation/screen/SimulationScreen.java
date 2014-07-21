@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.screen;
 
+import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.managers.SimulationManager;
@@ -150,6 +151,9 @@ public class SimulationScreen implements Screen {
     public void resize(int width, int height) {
     	//Call the gui resize method and retrieve the viewRect specifying the provided area in which the
     	//simulation will be viewed - also update and center the viewports with the resize dimensions
+        Constants.screenHeight = height;
+        Constants.screenWidth = width;
+
     	gui.resize(width, height);
         viewRect = gui.getViewArea();
         simViewport.update(width, height, true);

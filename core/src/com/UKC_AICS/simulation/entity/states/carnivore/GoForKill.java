@@ -40,7 +40,7 @@ public class GoForKill extends State {
             } else {
                 //Target has been killed.
                 //TODO drop a corpse
-                //TODO this is supposed to remove boid when killed --> throws concurrent error with statemachine
+
 //                bm.removeBoid(target);
 
                 return true;

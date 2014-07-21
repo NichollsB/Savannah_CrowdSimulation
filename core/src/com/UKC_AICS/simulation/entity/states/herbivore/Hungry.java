@@ -30,6 +30,7 @@ public class Hungry extends State {
             // pop
             return true; //stop looking for food.
         } else {
+            boid.setState(this.toString());
 
             if (WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("grass") >= 20) {
                 System.out.println(boid + "\n Just posted EATGRASS state "  );
