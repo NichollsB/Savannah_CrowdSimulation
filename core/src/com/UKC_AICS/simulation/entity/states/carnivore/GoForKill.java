@@ -23,6 +23,7 @@ public class GoForKill extends State {
 
     @Override
     public boolean update(Boid boid) {
+        //check boid still exists
         if (parent.checkBoid(target)) {
             //TODO  Needs to have a target and use the pursuit behaviour
 
@@ -30,7 +31,18 @@ public class GoForKill extends State {
 
             //TODO place corpse on prey kill
 
-            if (boid.getPosition().cpy().sub(target.getPosition()).len() > 16f) {  //TODO add some check for pursuing kill?
+            //distance between boid and target
+            float distance = boid.getPosition().cpy().sub(target.getPosition()).len();
+
+            //check if target is collided  and killed
+            if (distance <= 16f) {  //TODO add some check for pursuing kill?
+                //Target has been killed.
+                //TODO drop a corpse
+
+                bm.storeBoidForRemoval(target);
+                return true;
+            //check target is still within sight range
+            } else if (distance < boid.sightRadius){
                 steering.set(0f, 0f, 0f);
                 steering.add(Pursuit.act(boid, target));
 
@@ -38,11 +50,6 @@ public class GoForKill extends State {
 
                 return false;
             } else {
-                //Target has been killed.
-                //TODO drop a corpse
-
-//                bm.removeBoid(target);
-
                 return true;
             }
 

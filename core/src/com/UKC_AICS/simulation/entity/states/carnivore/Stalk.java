@@ -24,29 +24,33 @@ public class Stalk extends State {
 
     @Override
     public boolean update(Boid boid) {
+        //check boid still exists
         if(parent.checkBoid(target)) {
-        Vector3 tv = new Vector3(0f,0f,0f);
-        Vector3 targetPos = new Vector3(0f,0f,0f);
-        targetPos.set(target.getPosition());
-        tv.set(target.getVelocity());
-        tv.scl(-1f);
-        tv.nor().scl(10f);
-        targetPos.add(tv);
+            float distance = boid.getPosition().cpy().sub(target.getPosition()).len();
+            //check still within sight
+            if (distance < boid.sightRadius) {
+                Vector3 tv = new Vector3(0f, 0f, 0f);
+                Vector3 targetPos = new Vector3(0f, 0f, 0f);
+                targetPos.set(target.getPosition());
+                tv.set(target.getVelocity());
+                tv.scl(-1f);
+                tv.nor().scl(10f);
+                targetPos.add(tv);
 
-        steering.set(Seek.act(boid, targetPos));
+                steering.set(Seek.act(boid, targetPos));
 
 
-
-          //Check is boid is still in list.  If not pop to hunt (for corpse)
-        //check if prey is close enought to be chased down
-            if(boid.getPosition().cpy().sub(target.getPosition()).len() < 100f) {
-                parent.pushState(boid, new GoForKill(parent,bm, target));
+                //Check is boid is still in list.  If not pop to hunt (for corpse)
+                //check if prey is close enought to be chased down
+                if (boid.getPosition().cpy().sub(target.getPosition()).len() < 100f) {
+                    parent.pushState(boid, new GoForKill(parent, bm, target));
+                }
             }
             //TODO Stalk steering behaviour --> follow leader
 
         } else {
             return true;
         }
-        return false;
+        return true;
     }
 }

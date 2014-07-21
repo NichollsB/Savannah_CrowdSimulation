@@ -50,7 +50,7 @@
         <sightRadius>250f</sightRadius>
         <flockRadius>80f</flockRadius>
         <nearRadius>15f</nearRadius>
-        <maxSpeed>3.5f</maxSpeed>
+        <maxSpeed>3.4f</maxSpeed>
         <maxForce>0.2f</maxForce>
         <lifespan>50</lifespan>
         <cohesion>0.5f</cohesion>
