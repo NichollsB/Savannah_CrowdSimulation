@@ -32,8 +32,8 @@ public class Boid extends Entity {
 
     public Rectangle bounds = new Rectangle();
 
-    public float hunger = 0;
-    public float thirst = 0;
+    public float hunger = 40;
+    public float thirst = 40;
     public float panic = 0;
 
     public String state = "default";
@@ -55,7 +55,6 @@ public class Boid extends Entity {
         position = pos.cpy();
         velocity = vel.cpy();
 //        orientation = new Vector3();
-        initCircle();
     }
     public Boid(byte spec) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -63,7 +62,6 @@ public class Boid extends Entity {
         position = new Vector3();
         velocity = new Vector3();
 //        orientation = new Vector3();
-        initCircle();
     }
 
     public Boid(byte spec, Vector3 pos, Vector3 vel) {
@@ -72,7 +70,6 @@ public class Boid extends Entity {
         position = pos.cpy();
         velocity = vel.cpy();
 //        orientation = new Vector3();
-        initCircle();
     }
 
 
@@ -86,12 +83,11 @@ public class Boid extends Entity {
         maxSpeed = species.getMaxSpeed();
         maxForce = species.getMaxForce();
 
-        position = new Vector3();
+        position = new Vector3(500f,500f,0f);
         velocity = new Vector3();
         orientation = Math.toDegrees(Math.atan2( - velocity.x, velocity.y));
 
         bounds.set(position.x, position.y, 16, 16);
-        initCircle();
     }
 
     /**
@@ -122,7 +118,6 @@ public class Boid extends Entity {
         age = boid.age;
 
         bounds = new Rectangle(boid.bounds);
-        initCircle();
     }
 
 
@@ -139,7 +134,6 @@ public class Boid extends Entity {
         bounds.setPosition(position.x, position.y);
         velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
         position.add(velocity);
-        updateCircle();
         //check for out of bounds
         checkInBounds();
 
@@ -153,16 +147,9 @@ public class Boid extends Entity {
         velocity.set(newVel);
     }
 
-    public void move2() {
-        position.add(velocity);
-        updateCircle();
-        //check for out of bounds
-        checkInBounds();
-    }
-
-
     private void checkInBounds() {
         //TODO make this access the simulation map size, as this will be different from screen size eventually.
+
 
 
         if(position.x > Constants.screenWidth - bounds.height/2) {
@@ -170,14 +157,12 @@ public class Boid extends Entity {
         } else if(position.x < + bounds.width/2) {
             position.x = position.x + Constants.screenWidth - bounds.height;
         }
-
         if(position.y > Constants.screenHeight - bounds.width/2) {
             position.y = position.y - Constants.screenHeight + bounds.width;
         } else if(position.y < bounds.width/2) {
             position.y = position.y + Constants.screenHeight - bounds.width;
         }
 
-//        if(position.x > Constants.screenWidth && position.y > Constants.screenHeight)
     }
 
 

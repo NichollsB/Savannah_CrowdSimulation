@@ -24,8 +24,8 @@ public class WorldManager extends Manager {
 //    private HashMap<String, byte[][]> information_layers = new HashMap<String, byte[][]>();
 
 
-    private Array<Entity> objects = new Array<Entity>();
-    private QuadTree objects_map;
+    private static Array<Entity> objects = new Array<Entity>();
+    private static QuadTree objects_map;
     private ObjectGrid objectGrid;
 
     public WorldManager(int width, int height) {
@@ -43,13 +43,13 @@ public class WorldManager extends Manager {
 
     }
 
-    public void putObject(Entity entity, int x, int y) {
+    public static void putObject(Entity entity, int x, int y) {
         putObject(entity, new Vector3(x,y,0));
     }
-    public void putObject(Entity entity) {
+    public static void putObject(Entity entity) {
         putObject(entity, entity.getPosition());
     }
-    public void putObject(Entity entity, Vector3 position) {
+    public  static void putObject(Entity entity, Vector3 position) {
         if(entity.getPosition().x != position.x || entity.getPosition().y != position.y){
             entity.setPosition(position);
         }
