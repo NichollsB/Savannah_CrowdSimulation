@@ -195,8 +195,11 @@ public class SimScreenGUI extends Stage {
     
     private Table createEast(Table t){
     	Table eastTable = new Table(skin);
+    	eastTable.setFillParent(true);
     	t.add(eastTable).right().width(EAST_WIDTH).fillY().expandY();
-    	eastTable.add("east");
+    	Table scrollTable = new Table();
+    	final ScrollPane boidInfo = new ScrollPane(scrollTable, skin);
+    	eastTable.add(scrollTable);
     	return eastTable;
     }
     private Table createWest(Table t){

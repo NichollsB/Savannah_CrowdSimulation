@@ -105,7 +105,6 @@ public class InputManager implements InputProcessor{
         if (amount < 0 && camera.zoom > 0.1) {
             camera.zoom -= 0.1f;
         }
-        System.out.println("zoom " + camera.zoom);
         return true;
 	}
 
