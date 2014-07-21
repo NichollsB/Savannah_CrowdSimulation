@@ -64,13 +64,17 @@ public class Reproduce extends State {
                     }
 
                 }
-                if(tempVec.len2() < 10f) {
+                if(tempVec.len2() < 10f && nearest.hunger>60 && nearest.thirst > 60) {
                     System.out.println("boid made a baby");
 //                    bm.createBoid(boid); //create copy of self.
-                    boid.hunger = 15;
-                    boid.thirst = 15;
-                    nearest.hunger = 15;
-                    nearest.thirst = 15;
+                    Boid baby = new Boid(boid);
+                    baby.setAge(0);
+                    bm.storeBoidForAddition(baby);
+                    boid.hunger = 0;
+                    boid.thirst = 0;
+                    nearest.hunger = 0;
+                    nearest.thirst = 0;
+                    return true;
                 }
                 steering.set(0f,0f,0f);
 

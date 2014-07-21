@@ -81,8 +81,8 @@ public class BoidManager extends Manager {
         int maxYVel = 1;
 
 
-        int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
-        int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        int xPos = 500;//rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+        int yPos = 500;//rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
 
         int xVel = (rand.nextInt(2 * maxXVel) - maxXVel);
 

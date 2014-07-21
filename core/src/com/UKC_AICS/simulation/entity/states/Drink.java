@@ -17,7 +17,7 @@ public class Drink extends State {
 
         if(boid.thirst > 80) { //and check there is enough water is still there to drink from.
             boid.setState(this.toString());
-            System.out.println(boid + "\n Just quit DRINK state ");
+//            System.out.println(boid + "\n Just quit DRINK state ");
             return true;
         } else {
             // drink from tile
