@@ -28,6 +28,7 @@ public class Thirsty extends State {
         if ( boid.thirst > 60) {
             return true;
         } else {
+            boid.setState(this.toString());
             //search for water
             byte waterAmount = WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("water");
             if(waterAmount >= 10) {

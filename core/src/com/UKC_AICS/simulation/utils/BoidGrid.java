@@ -251,7 +251,7 @@ public class BoidGrid {
 
         if ( cellX < 0 || cellX >= grid.length ||
                 cellY < 0 || cellY >= grid[0].length) {
-            System.out.println("out of bounds  /t"   + cellX + "/" + grid.length + "/t" + cellY  + "/" + grid.length);
+            System.out.println("out of bounds  \t"   + cellX + "/" + grid.length + "\t" + cellY  + "/" + grid.length);
         }
         findBoidsInCell(nearby, cellX,        cellY);
         findBoidsInCell(nearby, cellX + 1,    cellY);
