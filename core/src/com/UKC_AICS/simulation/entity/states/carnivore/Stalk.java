@@ -26,9 +26,9 @@ public class Stalk extends State {
     public boolean update(Boid boid) {
         //check boid still exists
         if(parent.checkBoid(target)) {
-            float distance = boid.getPosition().cpy().sub(target.getPosition()).len();
+            float distance = boid.getPosition().cpy().sub(target.getPosition()).len2();
             //check still within sight
-            if (distance < boid.sightRadius) {
+            if (distance < boid.sightRadius*boid.sightRadius) {
                 Vector3 tv = new Vector3(0f, 0f, 0f);
                 Vector3 targetPos = new Vector3(0f, 0f, 0f);
                 targetPos.set(target.getPosition());
@@ -38,19 +38,19 @@ public class Stalk extends State {
                 targetPos.add(tv);
 
                 steering.set(Seek.act(boid, targetPos));
+                System.out.println("Target stalked: " + target.getSpecies() + " species, " + target.position.x + ", " + target.position.y);
 
 
                 //Check is boid is still in list.  If not pop to hunt (for corpse)
                 //check if prey is close enought to be chased down
-                if (distance < 100f) {
+                if (distance < 200f * 200f) {
                     parent.pushState(boid, new GoForKill(parent, bm, target));
                 }
             }
             //TODO Stalk steering behaviour --> follow leader
-
+            return false;
         } else {
             return true;
         }
-        return true;
     }
 }

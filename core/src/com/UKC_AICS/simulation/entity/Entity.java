@@ -12,19 +12,6 @@ public class Entity {
     public byte type = 0; //what category of object is it? // 1 == boid(any boid),
     public byte subType = 0; //what type of object is it? // for boids this would be subType
 
-    public Circle circle;
-
-    protected void initCircle() {
-        circle = new Circle(position.x, position.y, 8f);
-    }
-    public void updateCircle() {
-        circle.setPosition(position.x,position.y);
-    }
-    public Circle getCircle(){
-        return circle;
-    }
-
-
     /**
      *
      * @return the position of the object as a Vector3 for its map location.

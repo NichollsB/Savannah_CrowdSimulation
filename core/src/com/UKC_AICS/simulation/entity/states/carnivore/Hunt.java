@@ -1,7 +1,7 @@
 package com.UKC_AICS.simulation.entity.states.carnivore;
 
-import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
@@ -33,6 +33,7 @@ public class Hunt extends State {
 
             Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
+            Array<Entity> foodCorpse = new Array<Entity>(dummyObjects);
             //TODO check for food/corpse objects first
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
@@ -106,18 +107,26 @@ public class Hunt extends State {
 //        }
             //temporary arbitrary selection of first boid as chosen prey
 
-                Array<Boid> rmList = new Array<Boid>();
-                for (Boid target : closeBoids) {
-                    if (boid.getSpecies() == target.getSpecies()) {
-                        rmList.add(target);
-                    }
+            for(Entity food : foodCorpse) {
+                if(food.getType() == 0 && food.getSubType() == 0) {
+                    parent.pushState(boid, new Eat(parent, bm, food));
+                    return false;
                 }
-                //remove all same species/byte boids from possible target array
-                closeBoids.removeAll(rmList, false);
+            }
+
+            Array<Boid> rmList = new Array<Boid>();
+            for (Boid target : closeBoids) {
+                if (boid.getSpecies() == target.getSpecies()) {
+                    rmList.add(target);
+                }
+            }
+            //remove all same species/byte boids from possible target array
+            closeBoids.removeAll(rmList, false);
             if (closeBoids.size > 0) {
                 //TODO change this to pick closest none same species boid/ weak/ injured
                 target = closeBoids.first();
-                parent.pushState(boid, new Stalk(parent, bm, target));  //Pushs to stalk mode on prey target
+                parent.pushState(boid, new Stalk(parent, bm, target));
+                 return false;//Pushs to stalk mode on prey target
             }
             // pop
             return false; //stop looking for food.

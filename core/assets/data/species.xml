@@ -64,7 +64,7 @@
         <byte>3</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/predator.png</spriteLocation>
         <diet>carnivore</diet>
-        <sightRadius>250f</sightRadius>
+        <sightRadius>400f</sightRadius>
         <flockRadius>150f</flockRadius>
         <nearRadius>100f</nearRadius>
         <maxSpeed>3.5f</maxSpeed>
