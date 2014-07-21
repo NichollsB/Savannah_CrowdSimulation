@@ -94,7 +94,7 @@ public class Collision2 extends Behaviour {
                 if (collisionCheck(boid, target)) {
                     adjustment.set(tmpVec);
                     adjustment.nor();
-                    adjustment.scl(MAX_AVOID_FORCE);
+                    adjustment.scl(boid.maxForce);
 //                    adjustment.scl(0.6f);
                     adjustmentSet = true;
 
@@ -106,7 +106,7 @@ public class Collision2 extends Behaviour {
                         //should be able to use the tmpVec and tmpVec2 used to calc true.
                         adjustment.set(tmpVec);
                         adjustment.nor();
-                        adjustment.scl(MAX_AVOID_FORCE);
+                        adjustment.scl(boid.maxForce);
                         adjustmentSet = true;
 //                        System.out.println("collision, close left");
                     }
@@ -115,7 +115,7 @@ public class Collision2 extends Behaviour {
                     if (checkRight(boid, target)) {
                         adjustment.set(tmpVec);
                         adjustment.nor();
-                        adjustment.scl(MAX_AVOID_FORCE);
+                        adjustment.scl(boid.maxForce);
                         adjustmentSet = true;
 //                        System.out.println("collision, close right");
                     }
@@ -126,14 +126,14 @@ public class Collision2 extends Behaviour {
                         //calculate adjustment vector here
                         adjustment.set(tmpVec);
                         adjustment.nor();
-                        adjustment.scl(MAX_AVOID_FORCE);
+                        adjustment.scl(boid.maxForce);
 //
                         }
                     } else if (lookAheadCheck(boid, target)) {
                         //calculate adjustment vector here
                     adjustment.set(tmpVec);
                     adjustment.nor();
-                    adjustment.scl(MAX_AVOID_FORCE);
+                    adjustment.scl(boid.maxForce);
 //
                     }
 //                }

@@ -164,8 +164,8 @@ public class Graphics {
 	public void updateSpritePosition(Boid boid, Sprite sprite){
 		//for(Iterator<Boid> boids = boidMap.keys(); boids.hasNext();){
 			Vector3 position = boid.getPosition();
-			Vector3 velocity = boid.getVelocity();
-			double rot = Math.toDegrees(Math.atan2( - velocity.x, velocity.y)); //made x negative.
+			//Vector3 velocity = boid.getVelocity();
+			double rot = boid.getOrientation();
 			sprite.setPosition(position.x, position.y);
 			sprite.setRotation((float) rot);
 

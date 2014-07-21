@@ -80,7 +80,8 @@ public class Boid extends Entity {
 
         position = new Vector3();
         velocity = new Vector3();
-        bounds.set(position.x, position.y, 10, 10);
+        orientation = Math.toDegrees(Math.atan2( - velocity.x, velocity.y));
+        bounds.set(position.x, position.y, 16, 16);
         initCircle();
     }
 
@@ -102,6 +103,7 @@ public class Boid extends Entity {
 
         position = new Vector3(boid.getPosition());
         velocity = new Vector3(boid.getVelocity());
+        orientation = Math.toDegrees(Math.atan2( - velocity.x, velocity.y));
 
         hunger = boid.hunger;
         thirst = boid.thirst;
@@ -212,9 +214,11 @@ public class Boid extends Entity {
     }
 
 
-//    public Vector3 getOrientation() {
-//        return orientation;
-//    }
+    public double getOrientation() {
+//        orientation = ( orientation +Math.toDegrees(Math.atan2( - velocity.x, velocity.y)) ) / 2;
+        return Math.toDegrees(Math.atan2( - velocity.x, velocity.y));
+//        return orientation ; //made x negative.//orientation;
+    }
 //
 //    public void setOrientation(Vector3 orientation) {
 //        this.orientation = orientation;

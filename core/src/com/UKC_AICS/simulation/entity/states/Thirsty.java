@@ -32,7 +32,7 @@ public class Thirsty extends State {
             //search for water
             byte waterAmount = WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("water");
             if(waterAmount >= 10) {
-                System.out.println(boid + "\n Just posted DRINK state ");
+//                System.out.println(boid + "\n Just posted DRINK state ");
                 parent.pushState(boid, new Drink(parent, bm));
                 boid.setAcceleration(new  Vector3(boid.velocity).scl(0.01f));
             }
