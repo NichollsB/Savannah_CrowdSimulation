@@ -89,6 +89,7 @@ public class Boid extends Entity {
         position = new Vector3();
         velocity = new Vector3();
         orientation = Math.toDegrees(Math.atan2( - velocity.x, velocity.y));
+
         bounds.set(position.x, position.y, 16, 16);
         initCircle();
     }
@@ -111,7 +112,10 @@ public class Boid extends Entity {
 
         position = new Vector3(boid.getPosition());
         velocity = new Vector3(boid.getVelocity());
+
         orientation = Math.toDegrees(Math.atan2( - velocity.x, velocity.y));
+
+        velocity = new Vector3(); //boid.getVelocity());
 
         hunger = boid.hunger;
         thirst = boid.thirst;
@@ -159,6 +163,8 @@ public class Boid extends Entity {
 
     private void checkInBounds() {
         //TODO make this access the simulation map size, as this will be different from screen size eventually.
+
+
         if(position.x > Constants.screenWidth - bounds.height/2) {
             position.x = position.x - Constants.screenWidth + bounds.height;
         } else if(position.x < + bounds.width/2) {
@@ -182,6 +188,7 @@ public class Boid extends Entity {
 
     public void setPosition(Vector3 position) {
         this.position = position;
+        this.bounds.setPosition(position.x, position.y);
     }
     public void setPosition( float x, float y, float z) {
         setPosition(new Vector3(x, y, z));

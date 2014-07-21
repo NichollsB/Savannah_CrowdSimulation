@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.managers;
 
+import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.utils.ObjectGrid;
 import com.UKC_AICS.simulation.utils.QuadTree;
@@ -31,7 +32,7 @@ public class WorldManager extends Manager {
         size = new Vector3(width/TILE_SIZE, height/TILE_SIZE, 1);
 
         objects_map = new QuadTree(0, new Rectangle(0,0,width,height));
-        objectGrid = new ObjectGrid(60, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        objectGrid = new ObjectGrid(60, Constants.screenWidth, Constants.screenHeight);
 
         map = new LandMap(width, height);
     }
@@ -62,7 +63,7 @@ public class WorldManager extends Manager {
     }
 
     public void rebuildTree(Array<Entity> objects) {
-        objects_map = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        objects_map = new QuadTree(0, new Rectangle(0, 0, Constants.screenWidth, Constants.screenHeight));
         for (Entity boid : objects)
             objects_map.insert(boid);
     }

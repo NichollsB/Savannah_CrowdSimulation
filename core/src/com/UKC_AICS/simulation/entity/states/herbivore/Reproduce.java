@@ -34,7 +34,7 @@ public class Reproduce extends State {
 
             for (Boid b : nearBoids) {
                 //see if the boid is the same species and in the same state - should be Reproduce.
-                if (boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state)) {
+                if (boid != b && boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state)) {
                     potentialMates.add(b);
                 }
                 steering.set(boid.getPosition());
@@ -65,7 +65,7 @@ public class Reproduce extends State {
 
                 }
                 if(tempVec.len2() < 10f && nearest.hunger>60 && nearest.thirst > 60) {
-                    System.out.println("boid made a baby");
+                    System.out.println("boid made a baby " + boid.getSpecies());
 //                    bm.createBoid(boid); //create copy of self.
                     Boid baby = new Boid(boid);
                     baby.setAge(0);

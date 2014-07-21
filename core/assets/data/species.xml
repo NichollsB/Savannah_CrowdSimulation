@@ -3,7 +3,7 @@
 <!--xml file for species based information-->
 <settings>
     <species name="zebra">
-        <number>20</number>
+        <number>10</number>
         <byte>0</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle.png</spriteLocation>
         <diet>herbivore</diet>
@@ -23,7 +23,7 @@
     </species>
 
     <species name="wildebeest">
-        <number>20</number>
+        <number>10</number>
         <byte>1</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle2.png</spriteLocation>
         <diet>herbivore</diet>
@@ -43,15 +43,15 @@
     </species>
 
     <species name="gazelle">
-        <number>20</number>
+        <number>10</number>
         <byte>2</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle3.png</spriteLocation>
         <diet>herbivore</diet>
         <sightRadius>250f</sightRadius>
         <flockRadius>80f</flockRadius>
         <nearRadius>15f</nearRadius>
-        <maxSpeed>3.5f</maxSpeed>
-        <maxForce>0.2f</maxForce>
+        <maxSpeed>3.4f</maxSpeed>
+        <maxForce>0.15f</maxForce>
         <lifespan>50</lifespan>
         <cohesion>0.5f</cohesion>
         <separation>0.5f</separation>
@@ -60,7 +60,7 @@
     </species>
 
     <species name="lion">
-        <number>5</number>
+        <number>3</number>
         <byte>3</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/predator.png</spriteLocation>
         <diet>carnivore</diet>
