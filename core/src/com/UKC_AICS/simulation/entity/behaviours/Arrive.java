@@ -18,9 +18,9 @@ public class Arrive extends Behaviour {
 
         Vector3 vec = new Vector3();
         vec.set(target.sub(boid.getPosition()));
-        float dist = vec.len();
+        float dist = vec.len2();
         if(dist > 0 ) {
-            float speed = boid.maxSpeed * (dist / boid.sightRadius);
+            float speed = boid.maxSpeed * (dist / boid.sightRadius*boid.sightRadius);
             speed = Math.min(boid.maxSpeed, speed);
             vec.nor().scl(speed);
             vec.sub(boid.getVelocity());
