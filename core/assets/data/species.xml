@@ -30,8 +30,8 @@
         <sightRadius>180f</sightRadius>
         <flockRadius>120f</flockRadius>
         <nearRadius>40f</nearRadius>
-        <maxSpeed>1.5f</maxSpeed>
-        <maxForce>0.02f</maxForce>
+        <maxSpeed>2f</maxSpeed>
+        <maxForce>0.04f</maxForce>
         <lifespan>80f</lifespan>
         <!--<cohesion>0.1f</cohesion>-->
         <!--<separation>0.9f</separation>-->

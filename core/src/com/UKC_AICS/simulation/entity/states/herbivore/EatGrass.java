@@ -25,7 +25,7 @@ public class EatGrass extends State{
             boid.hunger += 1;
             WorldManager.changeTileOnLayer(boid.position.x, boid.position.y, "grass", grassAmount);
         } else {
-            System.out.println(boid + "\n Just quit EATGRASS state "  );
+//            System.out.println(boid + "\n Just quit EATGRASS state "  );
             return true;
         }
 

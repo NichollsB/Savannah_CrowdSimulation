@@ -115,7 +115,8 @@ public class Boid extends Entity {
         thirst = boid.thirst;
         age = boid.age;
 
-        bounds = boid.bounds;
+        bounds = new Rectangle(boid.bounds);
+        initCircle();
     }
 
 
@@ -156,16 +157,16 @@ public class Boid extends Entity {
 
     private void checkInBounds() {
         //TODO make this access the simulation map size, as this will be different from screen size eventually.
-        if(position.x > Constants.screenWidth) {
-            position.x -= Constants.screenWidth;
-        } else if(position.x < 0) {
-            position.x += Constants.screenWidth;
+        if(position.x > Constants.screenWidth - bounds.height/2) {
+            position.x -= Constants.screenWidth; // + bounds.height;
+        } else if(position.x < + bounds.width/2) {
+            position.x += Constants.screenWidth; // - bounds.height;
         }
 
-        if(position.y > Constants.screenHeight) {
-            position.y -= Constants.screenHeight;
-        } else if(position.y < 0) {
-            position.y += Constants.screenHeight;
+        if(position.y > Constants.screenHeight - bounds.width/2) {
+            position.y = position.y - Constants.screenHeight; //+ bounds.width/2;
+        } else if(position.y < bounds.width/2) {
+            position.y = position.y + Constants.screenHeight; // - bounds.width/2;
         }
     }
 

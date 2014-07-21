@@ -30,11 +30,11 @@ public class CarnDefault extends State{
 
 
         if(boid.thirst < 15) {
-            System.out.println(boid + "\n Just posted Thirsty state "  );
+//            System.out.println(boid + "\n Just posted Thirsty state "  );
             parent.pushState(boid, new Thirsty(parent, bm));
         }
         else if(boid.hunger < 50) {
-            System.out.println(boid + "\n Just posted Hungry state "  );
+//            System.out.println(boid + "\n Just posted Hungry state "  );
 //            parent.pushState(boid, new Hunt(parent,bm));
             //This is test GoForKill state change, CHANGE to Hunt State
 
