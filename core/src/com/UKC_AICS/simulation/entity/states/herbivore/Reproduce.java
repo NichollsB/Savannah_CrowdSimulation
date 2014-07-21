@@ -65,7 +65,7 @@ public class Reproduce extends State {
 
                 }
                 if(tempVec.len2() < 10f && nearest.hunger>60 && nearest.thirst > 60) {
-                    System.out.println("boid made a baby");
+                    System.out.println("boid made a baby " + boid.getSpecies());
 //                    bm.createBoid(boid); //create copy of self.
                     Boid baby = new Boid(boid);
                     baby.setAge(0);

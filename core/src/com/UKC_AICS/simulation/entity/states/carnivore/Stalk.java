@@ -42,7 +42,7 @@ public class Stalk extends State {
 
                 //Check is boid is still in list.  If not pop to hunt (for corpse)
                 //check if prey is close enought to be chased down
-                if (boid.getPosition().cpy().sub(target.getPosition()).len() < 100f) {
+                if (distance < 100f) {
                     parent.pushState(boid, new GoForKill(parent, bm, target));
                 }
             }

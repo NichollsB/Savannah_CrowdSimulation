@@ -46,7 +46,18 @@ public class BoidManager extends Manager {
         stateMachine = new StateMachine(this);
     }
 
-
+    /**
+     * This createBoid is for StaXParseLoader
+     * @param species
+     * @param age
+     * @param bDay
+     * @param pX
+     * @param pY
+     * @param pZ
+     * @param vX
+     * @param vY
+     * @param vZ
+     */
     public static void createBoid(byte species, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ) {
         Boid boid = new Boid(species);
 

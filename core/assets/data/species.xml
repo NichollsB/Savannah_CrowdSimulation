@@ -3,7 +3,7 @@
 <!--xml file for species based information-->
 <settings>
     <species name="zebra">
-        <number>20</number>
+        <number>10</number>
         <byte>0</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle.png</spriteLocation>
         <diet>herbivore</diet>
@@ -23,7 +23,7 @@
     </species>
 
     <species name="wildebeest">
-        <number>20</number>
+        <number>10</number>
         <byte>1</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle2.png</spriteLocation>
         <diet>herbivore</diet>
@@ -43,7 +43,7 @@
     </species>
 
     <species name="gazelle">
-        <number>20</number>
+        <number>10</number>
         <byte>2</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle3.png</spriteLocation>
         <diet>herbivore</diet>
@@ -60,7 +60,7 @@
     </species>
 
     <species name="lion">
-        <number>5</number>
+        <number>3</number>
         <byte>3</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/predator.png</spriteLocation>
         <diet>carnivore</diet>

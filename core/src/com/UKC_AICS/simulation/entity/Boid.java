@@ -88,7 +88,7 @@ public class Boid extends Entity {
 
         position = new Vector3();
         velocity = new Vector3();
-        bounds.set(position.x, position.y, 10, 10);
+        bounds.set(position.x, position.y, 16, 16);
         initCircle();
     }
 
@@ -109,7 +109,7 @@ public class Boid extends Entity {
         maxForce = boid.maxForce;
 
         position = new Vector3(boid.getPosition());
-        velocity = new Vector3(boid.getVelocity());
+        velocity = new Vector3(); //boid.getVelocity());
 
         hunger = boid.hunger;
         thirst = boid.thirst;
@@ -157,16 +157,20 @@ public class Boid extends Entity {
 
     private void checkInBounds() {
         //TODO make this access the simulation map size, as this will be different from screen size eventually.
-        if(position.x > Constants.screenWidth - bounds.height/2) {
-            position.x -= Constants.screenWidth; // + bounds.height;
-        } else if(position.x < + bounds.width/2) {
-            position.x += Constants.screenWidth; // - bounds.height;
+        if(position.x > Constants.screenWidth - bounds.width/2) {
+            System.out.println("out X " + position.x);
+            position.x = position.x - Constants.screenWidth + bounds.height;
+        } else if(position.x <  bounds.width/2) {
+            System.out.println("out X " + position.x);
+            position.x = position.x + Constants.screenWidth - bounds.height;
         }
 
-        if(position.y > Constants.screenHeight - bounds.width/2) {
-            position.y = position.y - Constants.screenHeight; //+ bounds.width/2;
-        } else if(position.y < bounds.width/2) {
-            position.y = position.y + Constants.screenHeight; // - bounds.width/2;
+        if(position.y > Constants.screenHeight - bounds.height/2) {
+            System.out.println("out Y " + position.y);
+            position.y = position.y - Constants.screenHeight + bounds.width;
+        } else if(position.y < bounds.height/2) {
+            System.out.println("out Y " + position.y);
+            position.y = position.y + Constants.screenHeight - bounds.width;
         }
     }
 
