@@ -35,8 +35,6 @@ public class CarnDefault extends State{
         }
         else if(boid.hunger < 50) {
 //            System.out.println(boid + "\n Just posted Hungry state "  );
-            //This is test GoForKill state change, CHANGE to Hunt State
-
             parent.pushState(boid, new Hunt(parent,bm));
         } else {
 

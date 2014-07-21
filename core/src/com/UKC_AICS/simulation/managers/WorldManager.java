@@ -108,6 +108,9 @@ public class WorldManager extends Manager {
                 layers.put(layer, map.information_layers.get(layer)[mapX][mapY]);
             }
         }
+        else {
+            System.out.println("Im a bellend boid because I'm mysteriously out of bounds");
+        }
         return layers;
     }
 

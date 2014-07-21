@@ -29,30 +29,25 @@ public class BoidManager extends Manager {
 
     private QuadTree quadtree;
     private Random rand = new Random();
-    private StateMachine stateMachine;
-
-//    private HashMap<String, Behaviour> behaviours = new HashMap<String, Behaviour>();
-
-//    CollisionManager collisionManager = new CollisionManager();
-
+    private static StateMachine stateMachine;
 
     public BoidManager(SimulationManager parent) {
 
         this.parent = parent;
         setBoidGrid(new BoidGrid(60, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
-        quadtree = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.screenWidth, Constants.screenHeight));
 
         stateMachine = new StateMachine(this);
     }
 
 
-    public void createBoid(byte species, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ) {
+    public static void createBoid(byte species, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ) {
         Boid boid = new Boid(species);
 
         boid.setAge(age);
         boid.setBirthDay(bDay);
-        boid.setPosition(pX, pY, pZ);
+        boid.setPosition(500, 500, 0);
         boid.setVelocity(vX, vY, vZ);
 
         addToLists(boid);
@@ -60,29 +55,29 @@ public class BoidManager extends Manager {
 
 
     /**
-     * create boid from the species file.
+     * create boid from the species file and add straight into the lists
      *
      * @param species
      */
     public void createBoid(Species species) {
         Boid boid = new Boid(species);
 
-        int maxXPos = 1180;
-        int minXPos = 100;
-
-        int maxYPos = 620;
-        int minYPos = 100;
-
-        int maxXOrient = 10;
-        int maxYOrient = 10;
+//        int maxXPos = 1180;
+//        int minXPos = 100;
+//
+//        int maxYPos = 620;
+//        int minYPos = 100;
+//
+//        int maxXOrient = 10;
+//        int maxYOrient = 10;
 
 
         int maxXVel = 1;
         int maxYVel = 1;
 
 
-        int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
-        int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        int xPos = 500;//rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+        int yPos = 500;//rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
 
         int xVel = (rand.nextInt(2 * maxXVel) - maxXVel);
 
@@ -95,6 +90,7 @@ public class BoidManager extends Manager {
 
         boid.hunger = rand.nextInt(120) + 20;
         boid.thirst = rand.nextInt(150) + 50;
+
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the population to be too old.
 
@@ -102,7 +98,7 @@ public class BoidManager extends Manager {
     }
 
     /**
-     * create a copy of a boid.
+     * create a copy of a boid and add it straight to the lists..
      *
      * @param oldBoid
      * @return
@@ -114,7 +110,7 @@ public class BoidManager extends Manager {
 
     }
 
-    private void addToLists(Boid boid) {
+    private static void addToLists(Boid boid) {
         boids.add(boid);
 //        quadtree.insert(boid);
         getBoidGrid().addBoid(boid);

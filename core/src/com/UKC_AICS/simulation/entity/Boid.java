@@ -40,6 +40,14 @@ public class Boid extends Entity {
 
     public int age = 0;
     public int birthDay = 0;
+    
+    public float cohesion = 0;
+    public float separation = 0;
+    public float alignment = 0;
+    public float wander = 0;
+    
+    		
+    public Float[] gene;
 
     public Boid( Vector3 pos, Vector3 vel) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -109,7 +117,8 @@ public class Boid extends Entity {
         thirst = boid.thirst;
         age = boid.age;
 
-        bounds = boid.bounds;
+        bounds = new Rectangle(boid.bounds);
+        initCircle();
     }
 
 
@@ -150,17 +159,19 @@ public class Boid extends Entity {
 
     private void checkInBounds() {
         //TODO make this access the simulation map size, as this will be different from screen size eventually.
-        if(position.x > Constants.screenWidth) {
-            position.x -= Constants.screenWidth;
-        } else if(position.x < 0) {
-            position.x += Constants.screenWidth;
+        if(position.x > Constants.screenWidth - bounds.height/2) {
+            position.x = position.x - Constants.screenWidth + bounds.height;
+        } else if(position.x < + bounds.width/2) {
+            position.x = position.x + Constants.screenWidth - bounds.height;
         }
 
-        if(position.y > Constants.screenHeight) {
-            position.y -= Constants.screenHeight;
-        } else if(position.y < 0) {
-            position.y += Constants.screenHeight;
+        if(position.y > Constants.screenHeight - bounds.width/2) {
+            position.y = position.y - Constants.screenHeight + bounds.width;
+        } else if(position.y < bounds.width/2) {
+            position.y = position.y + Constants.screenHeight - bounds.width;
         }
+
+//        if(position.x > Constants.screenWidth && position.y > Constants.screenHeight)
     }
 
 
@@ -245,5 +256,41 @@ public class Boid extends Entity {
 
         return string;
     }
-
+    
+    public void setGene() {
+    	gene[0] = cohesion;
+    	gene[1] = separation;
+    	gene[2] = alignment;
+    	gene[3] = wander;
+    	
+    }      
+    
+    public Float[] getGene() {
+    	return gene;
+    }
+      
+    public void setCohesion( float cohesion) {
+        this.cohesion = cohesion; 
+    }
+    public void setSpearation( float separation) {
+    	this.separation = separation;
+    }
+    public void setAlignment( float alignment) {
+    	this.alignment = alignment;
+    }
+    public void setWander( float wander) {
+        this.wander = wander;
+    }
+    public float getCohesion() {
+    	return cohesion;
+    }
+    public float getSeparation() {
+    	return separation;
+    }
+    public float getAlignment() {
+    	return alignment;
+    }
+    public float getWander() {
+        return wander;
+    }
 }

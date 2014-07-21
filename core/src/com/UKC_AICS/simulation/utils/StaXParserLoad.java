@@ -1,6 +1,6 @@
 package com.UKC_AICS.simulation.utils;
 
-import com.UKC_AICS.simulation.managers.BoidManagerOld;
+import com.UKC_AICS.simulation.managers.BoidManager;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -23,6 +23,10 @@ public class StaXParserLoad {
     static final String POSITION = "position";
     static final String VELOCITY  = "velocity";
     static final String SPECIES = "species";
+    static final String COHESION = "cohesion";
+    static final String ALIGNMENT = "alignment";
+    static final String SEPARATION = "separation";
+    static final String WANDER = "wander";
     private int age = 0;
     private int bDay = 0;
 
@@ -103,6 +107,42 @@ public class StaXParserLoad {
                             continue;
                         }
                     }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(COHESION)) {
+                            event = eventReader.nextEvent();
+                      
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(ALIGNMENT)) {
+                            event = eventReader.nextEvent();
+                          
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(SEPARATION)) {
+                            event = eventReader.nextEvent();
+                         
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(WANDER)) {
+                            event = eventReader.nextEvent();
+                         
+                            continue;
+                        }
+                    }
 
                     
                 }
@@ -110,7 +150,7 @@ public class StaXParserLoad {
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
                     if (endElement.getName().getLocalPart() == (BOID)) {
-                        BoidManagerOld.createBoid(spec, age, bDay, fltArray[0], fltArray[1], fltArray[2], fltArray2[0], fltArray2[1], fltArray2[2]);
+                        BoidManager.createBoid(spec, age, bDay, fltArray[0], fltArray[1], fltArray[2], fltArray2[0], fltArray2[1], fltArray2[2]);
                     }
                 }
 

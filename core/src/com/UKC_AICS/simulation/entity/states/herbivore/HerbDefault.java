@@ -42,10 +42,10 @@ public class HerbDefault extends State {
 //            }
 
 
-        if (boid.thirst < 15) {
+        if (boid.thirst < 0) {
 //            System.out.println(boid + "\nJust posted Thirsty state ");
             parent.pushState(boid, new Thirsty(parent, bm));
-        } else if (boid.hunger < 15) {
+        } else if (boid.hunger < 0) {
 //            System.out.println(boid + "\nJust posted Hungry state ");
             parent.pushState(boid, new Hungry(parent, bm));
         } else if (boid.age > 10 && boid.hunger > 70 && boid.thirst > 70) {
