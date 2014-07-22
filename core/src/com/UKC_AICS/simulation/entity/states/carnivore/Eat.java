@@ -29,8 +29,8 @@ public class Eat extends State {
             boid.setAcceleration(boid.getVelocity());
             //TODO add checks, make sure corpse is next to boid
             System.out.println("EATING");
-            if(food.getMass() > 0.2f) {
-                food.reduceMass(0.2f);
+            if(food.getMass() > 3f) {
+                food.reduceMass(0.8f);
                 boid.hunger += 0.1f;
                 return false;
             } else {
