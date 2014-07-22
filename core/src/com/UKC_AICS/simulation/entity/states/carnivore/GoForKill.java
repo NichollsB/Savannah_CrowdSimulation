@@ -51,7 +51,7 @@ public class GoForKill extends State {
                     steering.add(Pursuit.act(boid, target));
                     boid.setAcceleration(steering);
 
-                    System.out.println("Kill chase: " + target.getSpecies() + " species, " + target.position.x + ", " + target.position.y);
+//                    System.out.println("Kill chase: " + target.getSpecies() + " species, " + target.position.x + ", " + target.position.y);
                     return false;
                 }
                 else {

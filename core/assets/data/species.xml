@@ -70,9 +70,9 @@
         <maxSpeed>3.5f</maxSpeed>
         <maxForce>0.2f</maxForce>
         <lifespan>200f</lifespan>
-        <cohesion>0.01f</cohesion>
-        <separation>0.02f</separation>
-        <alignment>0.01f</alignment>
+        <cohesion>0.1f</cohesion>
+        <separation>0.2f</separation>
+        <alignment>0.1f</alignment>
         <wander>0.1f</wander>
     </species>
 </settings>
