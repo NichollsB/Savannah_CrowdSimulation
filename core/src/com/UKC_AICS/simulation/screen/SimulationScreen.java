@@ -1,11 +1,13 @@
 package com.UKC_AICS.simulation.screen;
 
+import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.UKC_AICS.simulation.screen.gui.SimViewport;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
@@ -28,7 +30,7 @@ public class SimulationScreen implements Screen {
 
     private boolean render = true;   // for render pausing
     private boolean update = false;
-    boolean running = true;  //for play pausing.
+    boolean running = false;  //for play pausing.
 
     private final Simulation simulation;
     
@@ -69,6 +71,9 @@ public class SimulationScreen implements Screen {
     private long nextRender = 0;
     @Override
     public void render(float delta) {
+        // messy and doesnt work all the time
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
+            flipRunning();
         //kind of the update loop.
         if (running) {
             simulationManager.update(false); //this is false here because all managers need to take a boolean. Actual decideing is done in SimulationManager.
@@ -150,6 +155,7 @@ public class SimulationScreen implements Screen {
     public void resize(int width, int height) {
     	//Call the gui resize method and retrieve the viewRect specifying the provided area in which the
     	//simulation will be viewed - also update and center the viewports with the resize dimensions
+
     	gui.resize(width, height);
         viewRect = gui.getViewArea();
         simViewport.update(width, height, true);

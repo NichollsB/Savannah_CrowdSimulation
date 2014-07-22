@@ -21,6 +21,8 @@ public class BoidManager extends Manager {
 
 
     public static Array<Boid> boids = new Array<Boid>();
+    public static Array<Boid> removalBoids = new Array<Boid>();
+    public static Array<Boid> additionBoids = new Array<Boid>();
     private static BoidGrid boidGrid;
 
     public final SimulationManager parent;
@@ -41,23 +43,29 @@ public class BoidManager extends Manager {
 
         quadtree = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
-
         stateMachine = new StateMachine(this);
     }
 
-
-    public static void createBoid(byte species, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ, float cohesion, float separation, float alignment, float wander) {
+    /**
+     * This createBoid is for StaXParseLoader
+     * @param species
+     * @param age
+     * @param bDay
+     * @param pX
+     * @param pY
+     * @param pZ
+     * @param vX
+     * @param vY
+     * @param vZ
+     */
+    public static void createBoid(byte species, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ) {
         Boid boid = new Boid(species);
 
         boid.setAge(age);
         boid.setBirthDay(bDay);
         boid.setPosition(pX, pY, pZ);
         boid.setVelocity(vX, vY, vZ);
-        boid.setCohesion(cohesion);
-        boid.setSpearation(separation);
-        boid.setAlignment(alignment);
-        boid.setWander(wander);
-        boid.setGene(cohesion, separation, alignment, wander);
+
         addToLists(boid);
     }
 
@@ -84,15 +92,13 @@ public class BoidManager extends Manager {
         int maxYVel = 1;
 
 
-        int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
-        int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        int xPos = 500;//rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+        int yPos = 500;//rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
 
         int xVel = (rand.nextInt(2 * maxXVel) - maxXVel);
 
         int yVel = (rand.nextInt(2 * maxYVel) - maxYVel);
 
-
-//        boid.setBirthDay(SimulationManager.getDay());
 //        boid.setOrientation(xOrient, yOrient, 0);
 
         boid.setPosition(xPos, yPos, 0);
@@ -101,24 +107,8 @@ public class BoidManager extends Manager {
         boid.hunger = rand.nextInt(120) + 20;
         boid.thirst = rand.nextInt(150) + 50;
         //random start age
-        boid.age = rand.nextInt((int) species.getLifespan());
-        
-        
-        //TODO remove if it breaks everything-Matt
-        System.out.println("coh"+species.getCohesion());
-        System.out.println("sep"+species.getSeparation());
-        System.out.println("ali"+species.getAlignment());
-        System.out.println("wan"+species.getWander());
-        boid.setCohesion(species.getCohesion());
-        boid.setSpearation(species.getSeparation());
-        boid.setAlignment(species.getAlignment());
-        boid.setWander(species.getWander());
-        System.out.println("cohset"+boid.getCohesion());
-        System.out.println("sepset"+boid.getSeparation());
-        System.out.println("aliset"+boid.getAlignment());
-        System.out.println("wanset"+boid.getWander());
-        boid.setGene(species.getCohesion(),species.getSeparation(),species.getAlignment(),species.getWander());
-        //TODO keep after
+        boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the population to be too old.
+
         addToLists(boid);
     }
 
@@ -195,9 +185,19 @@ public class BoidManager extends Manager {
         if (dayIncrement) {
             updateAges();
         }
+
+        //handle the addition and removal of boids here, this does mean that the boid will potentially be interacted
+        // with in the current update tick.
+        while (removalBoids.size > 0) {
+            removeBoid(removalBoids.pop());
+        }
+        while(additionBoids.size > 0){
+            addToLists(additionBoids.pop());
+        }
     }
 
     public boolean checkForDeath(final Boid boid) {
+        float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
         if (boid.hunger <= -20) {
             removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of hunger :( ");
@@ -209,8 +209,7 @@ public class BoidManager extends Manager {
 //            parent.parent.gui.setConsole(" A boid just died of thirst :( ");
 //            return true;
 //        }
-        float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
-        if (boid.age > lifespan) {
+        else if (boid.age > lifespan) {
             removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of age related issues :( ");
             return true;
@@ -230,6 +229,17 @@ public class BoidManager extends Manager {
     }
 
 
+    public void storeBoidForRemoval(Boid boid) {
+        if(!removalBoids.contains(boid, false)) {
+            removalBoids.add(boid);
+        }
+    }
+
+    public void storeBoidForAddition(Boid boid) {
+        if(!additionBoids.contains(boid, false)) {
+            additionBoids.add(boid);
+        }
+    }
     public void removeBoid(Boid boid) {
 
         boids.removeValue(boid, false);

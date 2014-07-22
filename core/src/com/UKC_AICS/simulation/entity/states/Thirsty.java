@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.entity.states;
 
+import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.managers.BoidManager;
@@ -26,12 +27,16 @@ public class Thirsty extends State {
     public boolean update(Boid boid) {
         //am i still thirsty?
         if ( boid.thirst > 60) {
-            return true;
+            return true;  //not thirsty return to default
         } else {
+            boid.setState(this.toString());
+            if(boid.position.x < 0 || boid.position.x > Constants.screenWidth || boid.position.y < 0 || boid.position.y > Constants.screenHeight) {
+                System.out.println("I am out of bounds" + boid.position.x + " , " + boid.position.y);
+            }
             //search for water
             byte waterAmount = WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("water");
             if(waterAmount >= 10) {
-                System.out.println(boid + "\n Just posted DRINK state ");
+//                System.out.println(boid + "\n Just posted DRINK state ");
                 parent.pushState(boid, new Drink(parent, bm));
                 boid.setAcceleration(new  Vector3(boid.velocity).scl(0.01f));
             }

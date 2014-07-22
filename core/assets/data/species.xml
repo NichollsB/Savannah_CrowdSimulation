@@ -3,7 +3,7 @@
 <!--xml file for species based information-->
 <settings>
     <species name="zebra">
-        <number>20</number>
+        <number>10</number>
         <byte>0</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle.png</spriteLocation>
         <diet>herbivore</diet>
@@ -23,15 +23,15 @@
     </species>
 
     <species name="wildebeest">
-        <number>20</number>
+        <number>10</number>
         <byte>1</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle2.png</spriteLocation>
         <diet>herbivore</diet>
         <sightRadius>180f</sightRadius>
         <flockRadius>120f</flockRadius>
         <nearRadius>40f</nearRadius>
-        <maxSpeed>1.5f</maxSpeed>
-        <maxForce>0.02f</maxForce>
+        <maxSpeed>2f</maxSpeed>
+        <maxForce>0.04f</maxForce>
         <lifespan>80f</lifespan>
         <!--<cohesion>0.1f</cohesion>-->
         <!--<separation>0.9f</separation>-->
@@ -43,16 +43,16 @@
     </species>
 
     <species name="gazelle">
-        <number>20</number>
+        <number>10</number>
         <byte>2</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/triangle3.png</spriteLocation>
         <diet>herbivore</diet>
         <sightRadius>250f</sightRadius>
         <flockRadius>80f</flockRadius>
         <nearRadius>15f</nearRadius>
-        <maxSpeed>3.5f</maxSpeed>
+        <maxSpeed>3.4f</maxSpeed>
         <maxForce>0.2f</maxForce>
-        <lifespan>25f</lifespan>
+        <lifespan>50</lifespan>
         <cohesion>0.5f</cohesion>
         <separation>0.5f</separation>
         <alignment>0.5f</alignment>
@@ -60,16 +60,16 @@
     </species>
 
     <species name="lion">
-        <number>5</number>
+        <number>3</number>
         <byte>3</byte>  <!-- this is the sub-type -->
         <spriteLocation>data/predator.png</spriteLocation>
         <diet>carnivore</diet>
-        <sightRadius>250f</sightRadius>
+        <sightRadius>400f</sightRadius>
         <flockRadius>150f</flockRadius>
         <nearRadius>100f</nearRadius>
         <maxSpeed>3.5f</maxSpeed>
         <maxForce>0.2f</maxForce>
-        <lifespan>25f</lifespan>
+        <lifespan>200f</lifespan>
         <cohesion>0.5f</cohesion>
         <separation>0.8f</separation>
         <alignment>0.3f</alignment>

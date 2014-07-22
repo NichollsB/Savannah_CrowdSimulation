@@ -159,12 +159,15 @@ public class SimulationManager extends Manager {
             minutes = 0;
             hours += 1;
         } else if (days < 6) {
+            minutes = 0;
             hours = 0;
             days += 1;
             setDay();
             EAmain.Evolve();
             increment = true;
         } else {
+            minutes = 0;
+            hours = 0;
             days = 0;
             weeks += 1;
             setDay();

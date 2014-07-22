@@ -43,15 +43,16 @@ public class HerbDefault extends State {
 
 
         if (boid.thirst < 15) {
-            System.out.println(boid + "\nJust posted Thirsty state ");
+//            System.out.println(boid + "\nJust posted Thirsty state ");
             parent.pushState(boid, new Thirsty(parent, bm));
         } else if (boid.hunger < 15) {
-            System.out.println(boid + "\nJust posted Hungry state ");
+//            System.out.println(boid + "\nJust posted Hungry state ");
             parent.pushState(boid, new Hungry(parent, bm));
-        } else if (boid.hunger > 70 && boid.thirst > 70) {
-            System.out.println(boid + "\nJust posted Hungry state ");
+        } else if (boid.age > 10 && boid.hunger > 70 && boid.thirst > 70) {
+//            System.out.println(boid + "\nJust posted Reproduce state ");
             parent.pushState(boid, new Reproduce(parent, bm));
         } else {
+            boid.setState(this.toString());
 
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
@@ -73,9 +74,9 @@ public class HerbDefault extends State {
             boid.setAcceleration(steering);  //Resets acceleration to 0f,0f,0f
             Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
+            //Collision avoidance arrays
             Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
-
             tempVec = behaviours.get("collision").act(collisionObjects, boid);
 
             steering.set(0f, 0f, 0f);
@@ -84,12 +85,10 @@ public class HerbDefault extends State {
             // Check if collision avoidance is required.  True if no collisions
             if (tempVec.equals(steering)) {
                 //find objects nearby
-
                 for (Entity dummyObject : dummyObjects) {
                     Entity ent = dummyObject;
                     steering.set(boid.position);
                     steering.sub(ent.position);
-
                     if (steering.len2() > boid.sightRadius * boid.sightRadius) {
                         dummyObjects.removeValue(ent, false);
                     }
