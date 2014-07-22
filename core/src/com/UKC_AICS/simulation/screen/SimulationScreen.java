@@ -54,7 +54,7 @@ public class SimulationScreen implements Screen {
     private Camera uiCamera;
     private SimViewport simViewport;
     private Viewport uiViewport;
-    private SpriteBatch simViewBatch = new SpriteBatch();
+    private SpriteBatch simBatch = new SpriteBatch();
 
     private Rectangle viewRect;
     
@@ -83,67 +83,63 @@ public class SimulationScreen implements Screen {
         if (running) {
             simulationManager.update(false); //this is false here because all managers need to take a boolean. Actual decideing is done in SimulationManager.
         }
-
-        // checks if simulation needs to be rendered or can be run "offline"
-        if (render) {
-        	clearOpenGL();
-        	simViewcamera.update();
-
-//        	time = System.nanoTime();
-//        	if(time >= nextRender){
-        		update = false;
-	            gui.fps.setText(getFPSString() + simulationManager.getTime());
-	            tickPhysics(delta);
-	            
-	            renderSpriteBatches();
-	            renderUIBatch();
-//	            nextRender = System.nanoTime() + (long)33333333.33333333;
-//        	}
-
-
-                try {
-                    long number = (long) (1000 / 60 - Gdx.graphics.getDeltaTime());
-                    if(number < 0) number = 0;
-                    Thread.sleep(number); //FIXME: this can go negative after leaving the screen alone for a while. crashes program
-                } catch (InterruptedException e) {
-                    System.out.print("Error...");
-                    e.printStackTrace();
-                }
-        } else {
+        simBatch.enableBlending();
+//    	simBatch.begin();
+    	if (render) {
+    		 try {
+                 long number = (long) (1000 / 60 - Gdx.graphics.getDeltaTime());
+                 if(number < 0) number = 0;//fixed?
+                 Thread.sleep(number); //FIXME: this can go negative after leaving the screen alone for a while. crashes program
+             } catch (InterruptedException e) {
+                 System.out.print("Error...");
+                 e.printStackTrace();
+             }
+    	
+//            simBatch.disableBlending();
             clearOpenGL();
-            renderUIBatch();
-            gui.fps.setText(getFPSString() + simulationManager.getTime());
-//            renderSpriteBatches();
-        }
+//            simBatch.begin();
+            renderSpriteBatches(render);
+            renderUIBatch(render);
+//            simBatch.end();
+    	}
+     
+    	
+//        simBatch.flush();
+//        simBatch.end();
+//        Gdx.gl.glFlush();
+//        Gdx.gl.glFinish();
     }
 
-    private void renderUIBatch(){
+    private void renderUIBatch(boolean render){
+    	simBatch.begin();
+    	gui.fps.setText(getFPSString() + simulationManager.getTime());
     	uiViewport.update();
-        simViewBatch.setProjectionMatrix(uiCamera.combined);
-        gui.update(simViewBatch);
+        simBatch.setProjectionMatrix(uiCamera.combined);
+        gui.update(simBatch, render);
+        simBatch.end();
     }
     /**
      * Calls the update method to trigger the rendering calls in the gui and simulation view
      */
-    private void renderSpriteBatches() {
-    	
-    	
+    private void renderSpriteBatches(boolean render) {
     	//Update the simulation view and render, clipping to the scissor rectangle provided by the specified gui
     	//area for the view
-    	simViewport.update();
-    	simViewBatch.setProjectionMatrix(simViewcamera.combined);
-        ScissorStack.pushScissors(viewRect);
-    	boidGraphics.update(simViewBatch);
-    	ScissorStack.popScissors();
-    	//Update and render the gui
-
-        simViewBatch.flush();
+    	if(render){
+	    	simViewport.update();
+	    	simBatch.setProjectionMatrix(simViewcamera.combined);
+	        ScissorStack.pushScissors(viewRect);
+	    	simBatch.begin();
+	    	boidGraphics.update(simBatch, viewRect);
+	    	simBatch.end();
+	    	ScissorStack.popScissors();
+    	}
     }
 
     /**
      * clears the screen.
      */
     private void clearOpenGL() {
+    	//for some reason this method slows it down incredibly
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 1);
     }
@@ -284,8 +280,10 @@ public class SimulationScreen implements Screen {
         if (boid == null) {
             HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
             gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
+            gui.showBoidInfo(null, false);
         } else {
-            System.out.println(boid);
+//            System.out.println(boid);
+        	gui.showBoidInfo(boid, true);
         }
 
     }

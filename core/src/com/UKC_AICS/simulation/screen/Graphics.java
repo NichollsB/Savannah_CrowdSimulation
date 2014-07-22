@@ -13,7 +13,9 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.UKC_AICS.simulation.entity.*;
@@ -64,75 +66,77 @@ public class Graphics {
 	 * Update and render the sprites representing the boids. Renders via the SpriteBatch passed in.
 	 * @param batch is the SpriteBatch to render the boid sprites in
 	 */
-	public void update(SpriteBatch batch){
-		batch.enableBlending();
-		
-		if(spriteManager.update()){
-			//spriteManager.drawTileCache();
-			back.begin(ShapeType.Filled);
-	    	back.setColor(0.8f,0.7f,0.5f,1f);
-	    	back.rect(0, 0, renderWidth, renderHeight);
-	    	back.end();
-			batch.begin();
-			if(dynamicTiles != null)
-		        
-		    	
-				dynamicTiles.updateTiles(batch);
+	public void update(SpriteBatch batch, Rectangle scissor){
 			
-			//drawGrass
-			//int x=0, y=0;
-//			Texture tex;
-//			if(tileMap.length > 0){
-//				for(int y = 0; y < renderHeight; y+=16){
-//					for(int x = 0; x < renderWidth; x+=16){
-//						//tex = spriteManager.getGrassTexture();
-//						sprite = spriteManager.getGrassTexture();
-//						sprite.setPosition(x, y);
-//						sprite.draw(batch);
-////						batch.draw(sprite, x, y);
-//						//x+=16;
-//						//System.out.println("x " + x + " y " + y);
-//					}
-//					//y+=16;
-//				}
-//			}
 			
-			byte b = 0;
-			if(entityArray.size>0){
-				for(Entity entity : entityArray){
-					sprite = spriteManager.getObjectSprite(entity.getType());
-					Vector3 pos = entity.getPosition();
-					sprite.setPosition(pos.x, pos.y);
-					sprite.draw(batch);
-				}
+			if(spriteManager.update()){
+//				ScissorStack.pushScissors(scissor);
+//				spriteManager.drawTileCache();
+//				back.begin(ShapeType.Filled);
+//		    	back.setColor(0.8f,0.7f,0.5f,1f);
+//		    	back.rect(0, 0, renderWidth, renderHeight);
+//		    	back.end();
+//				batch.begin();
+				if(dynamicTiles != null)
+			        
+			    	
+					dynamicTiles.updateTiles(batch);
 				
-			}
-			if(boidsArray.size>0){
-				for(Boid boid : boidsArray){
-					sprite = spriteManager.getSprite(b, boid.getSpecies());
-					updateSpritePosition(boid, sprite);
-					if(boidColours.containsKey(boid.getSpecies())){
-						float colour[] = boidColours.get(boid.getSpecies());
-						sprite.setColor(colour[0], colour[1], colour[2], 1f);
-					}
-					else{
-						sprite.setColor(Color.WHITE);
-					}
+				//drawGrass
+				//int x=0, y=0;
+	//			Texture tex;
+	//			if(tileMap.length > 0){
+	//				for(int y = 0; y < renderHeight; y+=16){
+	//					for(int x = 0; x < renderWidth; x+=16){
+	//						//tex = spriteManager.getGrassTexture();
+	//						sprite = spriteManager.getGrassTexture();
+	//						sprite.setPosition(x, y);
+	//						sprite.draw(batch);
+	////						batch.draw(sprite, x, y);
+	//						//x+=16;
+	//						//System.out.println("x " + x + " y " + y);
+	//					}
+	//					//y+=16;
+	//				}
+	//			}
 				
+				byte b = 0;
+				if(entityArray.size>0){
+					for(Entity entity : entityArray){
+						sprite = spriteManager.getObjectSprite(entity.getType());
+						Vector3 pos = entity.getPosition();
+						sprite.setPosition(pos.x, pos.y);
+						sprite.draw(batch);
+					}
 					
-					sprite.draw(batch);
-					/*if(boid.species == 1){
-						altSprite.draw(batch);
-					}
-					else
-						boidSprite.draw(batch);*/
 				}
+				if(boidsArray.size>0){
+					for(Boid boid : boidsArray){
+						sprite = spriteManager.getSprite(b, boid.getSpecies());
+						updateSpritePosition(boid, sprite);
+						if(boidColours.containsKey(boid.getSpecies())){
+							float colour[] = boidColours.get(boid.getSpecies());
+							sprite.setColor(colour[0], colour[1], colour[2], 1f);
+							
+						}
+						else{
+							sprite.setColor(Color.WHITE);
+						}
+						sprite.draw(batch);
+						
+//						sprite.draw(batch);
+						/*if(boid.species == 1){
+							altSprite.draw(batch);
+						}
+						else
+							boidSprite.draw(batch);*/
+					}
+				}
+//				batch.end();
+//				ScissorStack.popScissors();
 			}
-			batch.end();
-			
 			
 		}
-		batch.enableBlending();
 		/*if(boidMap.size>0){
 			 Boid boid;
 			 for(Iterator<Boid> boids = boidMap.keys(); boids.hasNext();){
@@ -143,7 +147,7 @@ public class Graphics {
 			}
 		}*/
 		
-	}
+	
 	
 	/**
 	 * Pass in and store the boids and initialise the boidSprite to a sprite with the default texture

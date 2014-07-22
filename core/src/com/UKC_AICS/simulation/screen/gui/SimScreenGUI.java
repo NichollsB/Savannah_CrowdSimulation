@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.screen.gui;
 
+import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,29 +20,37 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Class for the creation of gui for simulationScreen
  */
 public class SimScreenGUI extends Stage {
-	
+	final private ScreenViewport uiViewport = new ScreenViewport();
+	private SimulationScreen simScreen;
+	public Stage stage;
+	private Skin skin;
+	Table table;
 	//Sizing perameters
 	private final int 
 			NORTH_HEIGHT = 50,
-			EAST_WIDTH = 50,
+			EAST_WIDTH = 200,
 			WEST_WIDTH = 50,
 			SOUTH_HEIGHT = 80;
 	private final Rectangle screenRect = new Rectangle(1,1,1,1);
 	//Changing components:
 	 TextArea console;
 
-    SimulationScreen simScreen;
-
-    public Stage stage;
-    Table table;
-    Skin skin;
-    public Label fps;
-
-    public Window graphicsWindow;
     
+
+    //east
+	 private Label boidInfo;
+	 private boolean showBoidInfo = false;
+	 private Boid boidDisplaying;
+    
+    
+    //South
+    public Label fps;
+    
+
+    //Centre
     private Table viewArea;
 
-    private ScreenViewport uiViewport = new ScreenViewport();
+    
     /**
      *
      * @param ss the simulationScreen creating the gui
@@ -67,37 +76,34 @@ public class SimScreenGUI extends Stage {
         table.setSize(width, height);
 //        table.setPosition(0, 0);
        
-        table.pack();
-        table.debug();
+//        table.pack();
+//        table.debug();
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-        fps = new Label(simScreen.getFPSString()+ simScreen.simulationManager.getTime(), skin);
+        
         stage.addActor(table);
 
         table.setFillParent(true);
 
-
-
         //
         console = new TextArea("console log",skin);
-        
-        //table.addActor(graphicsWindow);
+
         Table north = createNorth(table);
         table.row();
-        Table east = createEast(table);
-        viewArea = createCentre(table);
+        
     	
         Table west = createWest(table);
+        viewArea = createCentre(table);
+        Table east = createEast(table);
+        
         table.row();
         Table south = createSouth(table);
         
-        //table.add(createEast());
-        //table.row();
 
         table.pack();
         setViewRect(north, south, east, west);
-     //   System.out.println(this.getViewport().getViewportX());
-//        setViewRect();
-        //Gdx.input.setInputProcessor(stage);
+//        screenRect.set(0, 0, width, height);
+        
+
     }
     
   
@@ -170,7 +176,7 @@ public class SimScreenGUI extends Stage {
             }
         });
 
-
+        fps = new Label("0", skin);
         HorizontalGroup southGroup = new HorizontalGroup();
 //        southGroup.addActor(fps);
 //        fps.setWidth(500f);
@@ -195,11 +201,34 @@ public class SimScreenGUI extends Stage {
     
     private Table createEast(Table t){
     	Table eastTable = new Table(skin);
-    	eastTable.setFillParent(true);
-    	t.add(eastTable).right().width(EAST_WIDTH).fillY().expandY();
-    	Table scrollTable = new Table();
-    	final ScrollPane boidInfo = new ScrollPane(scrollTable, skin);
-    	eastTable.add(scrollTable);
+    	t.add(eastTable).left().width(EAST_WIDTH).fillY().expandY();
+//    	eastTable.add("east");
+    	
+    	Table scrollTable = new Table(skin);
+//    	scrollTable.add("east");
+
+    	boidInfo = new Label("some stuff ", skin);
+    	
+    	
+		scrollTable.add(boidInfo).left();
+		boidInfo.setAlignment(Align.left);
+//		boidInfo.setWrap(true);
+//		Slider slider = new Slider(0, 100, 1, false, skin);
+//		slider.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
+//		scrollTable.add(slider);
+		ScrollPane scroll = new ScrollPane(scrollTable, skin);
+    	InputListener stopTouchDown = new InputListener() {
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				event.stop();
+				return false;
+			}
+		};
+
+		scroll.setSmoothScrolling(true);
+		scroll.setScrollBarPositions(false, false);
+		eastTable.add(scroll).top().fill().expand();
+		eastTable.pack();
+		
     	return eastTable;
     }
     private Table createWest(Table t){
@@ -227,7 +256,7 @@ public class SimScreenGUI extends Stage {
     	if(screenRect!=null){
     		screenRect.setSize(width - (EAST_WIDTH + WEST_WIDTH),
     				height - (NORTH_HEIGHT + SOUTH_HEIGHT));
-    		screenRect.setPosition(EAST_WIDTH, SOUTH_HEIGHT);
+    		screenRect.setPosition(WEST_WIDTH, SOUTH_HEIGHT);
     	}
     }
     
@@ -248,12 +277,31 @@ public class SimScreenGUI extends Stage {
     	return screenRect;
     }
 
-	public void update(SpriteBatch batch) {
-        batch.begin();
+	public void update(SpriteBatch batch, boolean render) {
 
-        stage.draw();  //GUI stuff
-        Table.drawDebug(stage);  //debug lines for UI
+//		batch.begin();
+        if(render){
+        	if(showBoidInfo){
+        		boidInfo.setText(boidDisplaying.toString());
+        	}
+	        stage.act();
+	    
+	    	stage.draw();  //GUI stuff
+	    	
+        }
+//        batch.end();
+//        Table.drawDebug(stage);  //debug lines for UI
 //        font.draw(spriteBatch, getFPSString(), 0, 20);
-        batch.end();
+    	
+	}
+	
+	public void showBoidInfo(Boid boid, boolean show){
+		if(!show){
+			showBoidInfo= false;
+			return;
+		}
+		showBoidInfo = true;
+		boidDisplaying = boid;
+
 	}
 }
