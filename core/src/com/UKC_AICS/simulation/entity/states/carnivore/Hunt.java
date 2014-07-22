@@ -29,6 +29,7 @@ public class Hunt extends State {
     @Override
     public boolean update(Boid boid) {
 
+        //check still hungry
         if (boid.hunger < 50) {
 
             Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
@@ -91,6 +92,7 @@ public class Hunt extends State {
                 boid.setAcceleration(steering);
 
             } else {
+                //collision avoidance
                 boid.setAcceleration(tempVec);
             }
 
@@ -109,7 +111,7 @@ public class Hunt extends State {
 
             for(Entity food : foodCorpse) {
                 if(food.getType() == 0 && food.getSubType() == 0) {
-                    parent.pushState(boid, new Eat(parent, bm, food));
+                    parent.pushState(boid, new Eat(parent, bm, (Object) food));
                     return false;
                 }
             }
@@ -128,10 +130,9 @@ public class Hunt extends State {
                 parent.pushState(boid, new Stalk(parent, bm, target));
                  return false;//Pushs to stalk mode on prey target
             }
-            // pop
-            return false; //stop looking for food.
+            return false;
         } else {
-
+            //pop out if not hungry
             return true;
         }
     }
