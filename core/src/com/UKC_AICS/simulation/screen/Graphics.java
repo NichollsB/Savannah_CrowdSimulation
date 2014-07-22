@@ -82,7 +82,7 @@ public class Graphics {
 			if(entityArray.size>0){
 				for(Entity entity : entityArray){
 					sprite = spriteManager.getObjectSprite(entity.getType());
-					System.out.println("Sprite pos" + entity.getPosition());
+//					System.out.println("Sprite pos" + entity.getPosition());
 					if(sprite != null){
 						Vector3 pos = entity.getPosition();
 						sprite.setPosition(pos.x, pos.y);
