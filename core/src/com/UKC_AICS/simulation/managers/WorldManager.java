@@ -57,12 +57,12 @@ public class WorldManager extends Manager {
         objects.add(entity);
     }
 
-    public void removeObject(Entity entity) {
+    public static void removeObject(Entity entity) {
         objects.removeValue(entity, true);
         rebuildTree(objects);
     }
 
-    public void rebuildTree(Array<Entity> objects) {
+    public static void rebuildTree(Array<Entity> objects) {
         objects_map = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         for (Entity boid : objects)
             objects_map.insert(boid);
