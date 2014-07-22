@@ -46,14 +46,18 @@ public class BoidManager extends Manager {
     }
 
 
-    public static void createBoid(byte species, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ) {
+    public static void createBoid(byte species, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ, float cohesion, float separation, float alignment, float wander) {
         Boid boid = new Boid(species);
 
         boid.setAge(age);
         boid.setBirthDay(bDay);
         boid.setPosition(pX, pY, pZ);
         boid.setVelocity(vX, vY, vZ);
-
+        boid.setCohesion(cohesion);
+        boid.setSpearation(separation);
+        boid.setAlignment(alignment);
+        boid.setWander(wander);
+        boid.setGene(cohesion, separation, alignment, wander);
         addToLists(boid);
     }
 
@@ -98,7 +102,23 @@ public class BoidManager extends Manager {
         boid.thirst = rand.nextInt(150) + 50;
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan());
-
+        
+        
+        //TODO remove if it breaks everything-Matt
+        System.out.println("coh"+species.getCohesion());
+        System.out.println("sep"+species.getSeparation());
+        System.out.println("ali"+species.getAlignment());
+        System.out.println("wan"+species.getWander());
+        boid.setCohesion(species.getCohesion());
+        boid.setSpearation(species.getSeparation());
+        boid.setAlignment(species.getAlignment());
+        boid.setWander(species.getWander());
+        System.out.println("cohset"+boid.getCohesion());
+        System.out.println("sepset"+boid.getSeparation());
+        System.out.println("aliset"+boid.getAlignment());
+        System.out.println("wanset"+boid.getWander());
+        boid.setGene(species.getCohesion(),species.getSeparation(),species.getAlignment(),species.getWander());
+        //TODO keep after
         addToLists(boid);
     }
 
