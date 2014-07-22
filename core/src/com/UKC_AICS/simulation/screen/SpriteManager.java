@@ -230,9 +230,13 @@ public class SpriteManager {
 	public void loadAssets_Objects(Array<Byte> objs){
 		created = false;
 		String filename = "data/corpse_object_x16.png";
-		for(Byte type : objs){
-			filename = objectsFiles.get((int)type);
-			//System.out.println(filename);
+//		for(Byte type : objs){
+//			filename = objectsFiles.get((int)type);
+//			//System.out.println(filename);
+//			assetManager.load(filename, Texture.class);
+//		}
+		for(int type : objectsFiles.keys()){
+			filename = objectsFiles.get(type);
 			assetManager.load(filename, Texture.class);
 		}
 	}

@@ -29,7 +29,7 @@ public class StaXParserLoad {
     static final String WANDER = "wander";
     private int age = 0;
     private int bDay = 0;
-
+    private float cohesion, separation,  alignment, wander;
     private byte spec = 0; 
     public Float[] fltArray = new Float[3] ;
     public Float[] fltArray2 = new Float[3];
@@ -103,7 +103,7 @@ public class StaXParserLoad {
                         if (event.asStartElement().getName().getLocalPart()
                                 .equals(SPECIES)) {
                             event = eventReader.nextEvent();
-                          spec = Byte.valueOf(event.asCharacters().getData());
+                            spec = Byte.valueOf(event.asCharacters().getData());
                             continue;
                         }
                     }
@@ -112,7 +112,7 @@ public class StaXParserLoad {
                         if (event.asStartElement().getName().getLocalPart()
                                 .equals(COHESION)) {
                             event = eventReader.nextEvent();
-                      
+                            cohesion = Float.parseFloat(event.asCharacters().getData());
                             continue;
                         }
                     }
@@ -121,7 +121,7 @@ public class StaXParserLoad {
                         if (event.asStartElement().getName().getLocalPart()
                                 .equals(ALIGNMENT)) {
                             event = eventReader.nextEvent();
-                          
+                            alignment = Float.parseFloat(event.asCharacters().getData());
                             continue;
                         }
                     }
@@ -130,7 +130,7 @@ public class StaXParserLoad {
                         if (event.asStartElement().getName().getLocalPart()
                                 .equals(SEPARATION)) {
                             event = eventReader.nextEvent();
-                         
+                            separation = Float.parseFloat(event.asCharacters().getData());
                             continue;
                         }
                     }
@@ -139,7 +139,7 @@ public class StaXParserLoad {
                         if (event.asStartElement().getName().getLocalPart()
                                 .equals(WANDER)) {
                             event = eventReader.nextEvent();
-                         
+                            wander = Float.parseFloat(event.asCharacters().getData());
                             continue;
                         }
                     }
@@ -150,7 +150,7 @@ public class StaXParserLoad {
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
                     if (endElement.getName().getLocalPart() == (BOID)) {
-                        BoidManager.createBoid(spec, age, bDay, fltArray[0], fltArray[1], fltArray[2], fltArray2[0], fltArray2[1], fltArray2[2]);
+                        BoidManager.createBoid(spec, age, bDay, fltArray[0], fltArray[1], fltArray[2], fltArray2[0], fltArray2[1], fltArray2[2], cohesion, separation, alignment, wander);
                     }
                 }
 

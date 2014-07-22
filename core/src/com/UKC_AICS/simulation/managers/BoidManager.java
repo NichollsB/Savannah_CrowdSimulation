@@ -57,15 +57,23 @@ public class BoidManager extends Manager {
      * @param vX
      * @param vY
      * @param vZ
+     * @param wander 
+     * @param alignment 
+     * @param separation 
+     * @param cohesion 
      */
-    public static void createBoid(byte species, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ) {
+    public static void createBoid(byte species, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ, float cohesion, float separation, float alignment, float wander) {
         Boid boid = new Boid(species);
 
         boid.setAge(age);
         boid.setBirthDay(bDay);
         boid.setPosition(pX, pY, pZ);
         boid.setVelocity(vX, vY, vZ);
-
+        boid.setCohesion(cohesion);
+        boid.setAlignment(alignment);
+        boid.setSpearation(separation);
+        boid.setWander(wander);
+        boid.setGene(cohesion, separation, alignment, wander);
         addToLists(boid);
     }
 
@@ -109,6 +117,11 @@ public class BoidManager extends Manager {
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the population to be too old.
 
+        boid.setCohesion(species.getCohesion());
+        boid.setAlignment(species.getAlignment());
+        boid.setSpearation(species.getSeparation());
+        boid.setWander(species.getWander());
+        boid.setGene(species.getCohesion(), species.getAlignment(), species.getSeparation(), species.getWander());
         addToLists(boid);
     }
 

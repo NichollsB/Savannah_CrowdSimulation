@@ -46,8 +46,8 @@ public class Boid extends Entity {
     public float alignment = 0;
     public float wander = 0;
     
-    		
-    public Float[] gene;
+    public int geneSize=4;		
+    public Float[] gene= new Float[geneSize];
 
     public Boid( Vector3 pos, Vector3 vel) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -245,7 +245,7 @@ public class Boid extends Entity {
         return string;
     }
     
-    public void setGene() {
+    public void setGene(float cohesion, float separation, float alignment, float wander ) {
     	gene[0] = cohesion;
     	gene[1] = separation;
     	gene[2] = alignment;

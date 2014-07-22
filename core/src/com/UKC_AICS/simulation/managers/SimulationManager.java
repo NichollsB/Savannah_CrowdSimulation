@@ -1,5 +1,8 @@
 package com.UKC_AICS.simulation.managers;
 
+import EvolutionaryAlgorithm.EA2;
+import EvolutionaryAlgorithm.EAmain;
+
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
@@ -160,6 +163,7 @@ public class SimulationManager extends Manager {
             hours = 0;
             days += 1;
             setDay();
+            EAmain.Evolve();
             increment = true;
         } else {
             minutes = 0;
