@@ -1,20 +1,15 @@
 package com.UKC_AICS.simulation.utils;
 
-	import java.io.FileOutputStream;
+import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.managers.BoidManager;
+import com.badlogic.gdx.math.Vector3;
 
-    import javax.xml.stream.XMLEventFactory;
+import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
-    import javax.xml.stream.events.Characters;
-import javax.xml.stream.events.EndElement;
-import javax.xml.stream.events.StartDocument;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
-
-import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.managers.BoidManagerOld;
-    import com.badlogic.gdx.math.Vector3;
+import javax.xml.stream.events.*;
+import java.io.FileOutputStream;
 
 /**
  * 
@@ -50,7 +45,7 @@ import com.UKC_AICS.simulation.managers.BoidManagerOld;
 	    eventWriter.add(configStartElement);
 	    eventWriter.add(end);
 	 
-	    	for(Boid b : BoidManagerOld.boids) {
+	    	for(Boid b : BoidManager.boids) {
 	 
 	    		int ageInt = b.getAge();
 	    		String age = "" + ageInt;
@@ -66,8 +61,19 @@ import com.UKC_AICS.simulation.managers.BoidManagerOld;
 	    	
 	    		byte speciesByte = b.getSpecies();
 	    		String species = "" + speciesByte;
-	    	
-	    	
+	    		
+	    		float cohesionVal = b.getCohesion();
+	    		String cohesion = "" + cohesionVal;
+	    		
+	    		float alignmentVal = b.getAlignment();
+	    		String alignment = "" + alignmentVal;
+	    		
+	    		float separationVal = b.getSeparation();
+	    		String separation = "" + separationVal;
+	    		
+	    		float wanderVal = b.getWander();
+	    		String wander = "" + wanderVal;
+	    		
 	    		StartElement configElement = eventFactory.createStartElement("",
 	    				"", "boid");
 	    		eventWriter.add(configElement);
@@ -78,6 +84,10 @@ import com.UKC_AICS.simulation.managers.BoidManagerOld;
 	    		createNode(eventWriter, "position", position);
 	    		createNode(eventWriter, "velocity", velocity);
 	    		createNode(eventWriter, "species", species);
+	    		createNode(eventWriter, "cohesion", cohesion);
+	    		createNode(eventWriter, "alignment", alignment);
+	    		createNode(eventWriter, "separation", separation);
+	    		createNode(eventWriter, "wander", wander);
 	    	
 	    		eventWriter.add(eventFactory.createEndElement("", "", "boid"));
 	    		eventWriter.add(end);

@@ -1,6 +1,7 @@
 package com.UKC_AICS.simulation.entity;
 
 import com.UKC_AICS.simulation.Constants;
+import com.UKC_AICS.simulation.entity.states.herbivore.Reproduce;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -8,11 +9,13 @@ import com.badlogic.gdx.math.Vector3;
  * @author Emily
  */
 public class Boid extends Entity {
+
     public enum State {
         DEFAULT,
         HUNGRY,
         THIRSTY,
         EVADE;
+
 
         public int getStateID() {
             return ordinal();
@@ -29,17 +32,27 @@ public class Boid extends Entity {
 
     public Rectangle bounds = new Rectangle();
 
-    public float hunger = 0;
-    public float thirst = 0;
+    public float hunger = 40;
+    public float thirst = 40;
     public float panic = 0;
 
-    public State state = State.DEFAULT;
+    public String state = "default";
 
     public int age = 0;
     public int birthDay = 0;
     
+
     //Added to check if boid info is being displayed or not - for highlighting in graphics
 	public boolean tracked = false;
+
+    public float cohesion = 0;
+    public float separation = 0;
+    public float alignment = 0;
+    public float wander = 0;
+    
+    public int geneSize=4;		
+    public Float[] gene= new Float[geneSize];
+
 
     public Boid( Vector3 pos, Vector3 vel) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -47,7 +60,6 @@ public class Boid extends Entity {
         position = pos.cpy();
         velocity = vel.cpy();
 //        orientation = new Vector3();
-        initCircle();
     }
     public Boid(byte spec) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -55,7 +67,6 @@ public class Boid extends Entity {
         position = new Vector3();
         velocity = new Vector3();
 //        orientation = new Vector3();
-        initCircle();
     }
 
     public Boid(byte spec, Vector3 pos, Vector3 vel) {
@@ -64,7 +75,6 @@ public class Boid extends Entity {
         position = pos.cpy();
         velocity = vel.cpy();
 //        orientation = new Vector3();
-        initCircle();
     }
 
 
@@ -78,10 +88,9 @@ public class Boid extends Entity {
         maxSpeed = species.getMaxSpeed();
         maxForce = species.getMaxForce();
 
-        position = new Vector3();
+        position = new Vector3(500f,500f,0f);
         velocity = new Vector3();
-        bounds.set(position.x, position.y, 10, 10);
-        initCircle();
+        bounds.set(position.x, position.y, 16, 16);
     }
 
     /**
@@ -101,13 +110,13 @@ public class Boid extends Entity {
         maxForce = boid.maxForce;
 
         position = new Vector3(boid.getPosition());
-        velocity = new Vector3(boid.getVelocity());
+        velocity = new Vector3(); //boid.getVelocity());
 
         hunger = boid.hunger;
         thirst = boid.thirst;
         age = boid.age;
 
-        bounds = boid.bounds;
+        bounds = new Rectangle(boid.bounds);
     }
 
 
@@ -124,7 +133,6 @@ public class Boid extends Entity {
         bounds.setPosition(position.x, position.y);
         velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
         position.add(velocity);
-        updateCircle();
         //check for out of bounds
         checkInBounds();
 
@@ -138,26 +146,26 @@ public class Boid extends Entity {
         velocity.set(newVel);
     }
 
-    public void move2() {
-        position.add(velocity);
-        updateCircle();
-        //check for out of bounds
-        checkInBounds();
-    }
-
-
     private void checkInBounds() {
         //TODO make this access the simulation map size, as this will be different from screen size eventually.
-        if(position.x > Constants.screenWidth) {
-            position.x -= Constants.screenWidth;
-        } else if(position.x < 0) {
-            position.x += Constants.screenWidth;
+        if(position.x > Constants.screenWidth - bounds.width/2) {
+//            System.out.print("out X " + position.x);
+            position.x = position.x - Constants.screenWidth + bounds.height;
+//            System.out.println(" adjusted to " + position.x);
+        } else if(position.x <  bounds.width/2) {
+//            System.out.print("out X " + position.x);
+            position.x = position.x + Constants.screenWidth - bounds.height;
+//            System.out.println(" adjusted to " + position.x);
         }
 
-        if(position.y > Constants.screenHeight) {
-            position.y -= Constants.screenHeight;
-        } else if(position.y < 0) {
-            position.y += Constants.screenHeight;
+        if(position.y > Constants.screenHeight - bounds.height/2) {
+//            System.out.print("out Y " + position.y);
+            position.y = position.y - Constants.screenHeight + bounds.width;
+//            System.out.println(" adjusted to " + position.y);
+        } else if(position.y < bounds.height/2) {
+//            System.out.print("out Y " + position.y);
+            position.y = position.y + Constants.screenHeight - bounds.width;
+//            System.out.println(" adjusted to " + position.y);
         }
     }
 
@@ -222,6 +230,9 @@ public class Boid extends Entity {
 //    public void setOrientation(float x, float y, float z) {
 //        this.orientation = new Vector3(x,y,z);
 //    }
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public byte getSpecies() {
         return subType;
@@ -230,16 +241,54 @@ public class Boid extends Entity {
     public String toString() {
         String string = "";
 
-        string += "BOID: " + "\n" + "\t position:" + position.toString() + "\n";
-        string += "\t hunger:" + hunger + "\n";
-        string += "\t thirst:" + thirst + "\n";
-        string += "\t age:" + age + "\n";
+        string += "BOID: " + "\t" + "\t position:" + position.toString() ;
+        string += "\t hunger:" + hunger;
+        string += "\t thirst:" + thirst;
+        string += "\t age:" + age ;
+        string += "\t state:" + state;
 
         return string;
     }
-    
+
     public void setTracked(boolean tracked){
     	this.tracked = tracked;
+    }
+
+    public void setGene(float cohesion, float separation, float alignment, float wander ) {
+    	gene[0] = cohesion;
+    	gene[1] = separation;
+    	gene[2] = alignment;
+    	gene[3] = wander;
+    	
+    }      
+    
+    public Float[] getGene() {
+    	return gene;
+    }
+      
+    public void setCohesion( float cohesion) {
+        this.cohesion = cohesion; 
+    }
+    public void setSpearation( float separation) {
+    	this.separation = separation;
+    }
+    public void setAlignment( float alignment) {
+    	this.alignment = alignment;
+    }
+    public void setWander( float wander) {
+        this.wander = wander;
+    }
+    public float getCohesion() {
+    	return cohesion;
+    }
+    public float getSeparation() {
+    	return separation;
+    }
+    public float getAlignment() {
+    	return alignment;
+    }
+    public float getWander() {
+        return wander;
     }
 
 }

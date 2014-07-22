@@ -1,2 +1,596 @@
 <?xml version="1.0"?><boidlist>
+<boid>
+	<age>53</age>
+	<birthday>0</birthday>
+	<position>956.6217,705.7018,0.0</position>
+	<velocity>-0.41587076,-0.16666616,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>45</age>
+	<birthday>0</birthday>
+	<position>2.8501506,457.4542,0.0</position>
+	<velocity>-0.42351308,-0.4998558,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>69</age>
+	<birthday>0</birthday>
+	<position>621.0899,271.8539,0.0</position>
+	<velocity>-0.47676352,0.18005781,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>61</age>
+	<birthday>0</birthday>
+	<position>917.5978,703.4219,0.0</position>
+	<velocity>-0.077408366,-0.24404669,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>49</age>
+	<birthday>0</birthday>
+	<position>493.37454,716.19257,0.0</position>
+	<velocity>0.56270826,-0.32502997,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>31</age>
+	<birthday>0</birthday>
+	<position>636.92004,255.12926,0.0</position>
+	<velocity>-0.47573423,0.03530623,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>63</age>
+	<birthday>0</birthday>
+	<position>1132.7434,167.99019,0.0</position>
+	<velocity>-0.02668504,0.55415595,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>55</age>
+	<birthday>0</birthday>
+	<position>237.376,404.96686,0.0</position>
+	<velocity>-0.36705008,0.017034259,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>37</age>
+	<birthday>0</birthday>
+	<position>937.8939,5.5065765,0.0</position>
+	<velocity>-0.5765398,0.12119222,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>58</age>
+	<birthday>0</birthday>
+	<position>1265.1692,201.17807,0.0</position>
+	<velocity>0.33699256,-0.34697807,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>20</age>
+	<birthday>0</birthday>
+	<position>1033.8103,514.299,0.0</position>
+	<velocity>0.22067478,0.14096712,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>16</age>
+	<birthday>0</birthday>
+	<position>117.40613,99.431335,0.0</position>
+	<velocity>-0.22820641,0.48946157,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>30</age>
+	<birthday>0</birthday>
+	<position>639.33374,283.98257,0.0</position>
+	<velocity>-0.30158433,-0.12477285,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>13</age>
+	<birthday>0</birthday>
+	<position>256.92886,414.16852,0.0</position>
+	<velocity>-0.57879394,-0.1147139,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>15</age>
+	<birthday>0</birthday>
+	<position>511.18063,3.804337,0.0</position>
+	<velocity>0.18996617,0.3650566,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>65</age>
+	<birthday>0</birthday>
+	<position>250.99574,436.65475,0.0</position>
+	<velocity>-0.31329483,-0.205343,0.0</velocity>
+	<species>0</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>55</age>
+	<birthday>0</birthday>
+	<position>460.36133,438.24072,0.0</position>
+	<velocity>0.36139643,0.04906352,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>41</age>
+	<birthday>0</birthday>
+	<position>563.3562,256.91898,0.0</position>
+	<velocity>-0.38329437,0.03745908,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>20</age>
+	<birthday>0</birthday>
+	<position>947.1927,402.14914,0.0</position>
+	<velocity>-0.12860416,0.22187637,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>52</age>
+	<birthday>0</birthday>
+	<position>548.0131,275.43628,0.0</position>
+	<velocity>-0.13930105,0.34924194,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>0</age>
+	<birthday>0</birthday>
+	<position>877.70807,111.789856,0.0</position>
+	<velocity>0.22121103,0.11838972,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>37</age>
+	<birthday>0</birthday>
+	<position>905.2774,150.29773,0.0</position>
+	<velocity>0.08608228,-0.00253291,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>62</age>
+	<birthday>0</birthday>
+	<position>834.0178,93.384,0.0</position>
+	<velocity>0.28978094,-0.062503636,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>6</age>
+	<birthday>0</birthday>
+	<position>332.3923,120.667854,0.0</position>
+	<velocity>-0.32967597,0.2347473,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>62</age>
+	<birthday>0</birthday>
+	<position>865.9308,143.41838,0.0</position>
+	<velocity>0.059014816,0.2404711,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>61</age>
+	<birthday>0</birthday>
+	<position>102.29416,484.65567,0.0</position>
+	<velocity>0.35307547,-0.22227384,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>1</age>
+	<birthday>0</birthday>
+	<position>309.53995,126.67432,0.0</position>
+	<velocity>-0.19028479,-0.10722671,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>25</age>
+	<birthday>0</birthday>
+	<position>125.53563,134.79042,0.0</position>
+	<velocity>0.033531446,-0.16222657,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>22</age>
+	<birthday>0</birthday>
+	<position>305.41132,516.64594,0.0</position>
+	<velocity>-0.20409414,-0.29778782,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>51</age>
+	<birthday>0</birthday>
+	<position>1132.6582,104.75082,0.0</position>
+	<velocity>-0.022498367,-0.39779457,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>48</age>
+	<birthday>0</birthday>
+	<position>930.25336,443.31485,0.0</position>
+	<velocity>-1.4010401,-0.332696,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>44</age>
+	<birthday>0</birthday>
+	<position>817.04016,650.4673,0.0</position>
+	<velocity>-0.34141055,0.2877062,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>31</age>
+	<birthday>0</birthday>
+	<position>1002.20764,643.07574,0.0</position>
+	<velocity>0.24355929,0.5047722,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>0</age>
+	<birthday>0</birthday>
+	<position>358.17026,112.921104,0.0</position>
+	<velocity>-0.3269527,-0.078984275,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>48</age>
+	<birthday>0</birthday>
+	<position>303.8468,538.9349,0.0</position>
+	<velocity>-0.19125886,-0.19689564,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>34</age>
+	<birthday>0</birthday>
+	<position>574.4044,237.28276,0.0</position>
+	<velocity>-0.23104116,-0.07746448,0.0</velocity>
+	<species>1</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>4</age>
+	<birthday>0</birthday>
+	<position>1200.2964,382.6147,0.0</position>
+	<velocity>0.40102243,-1.197399,0.0</velocity>
+	<species>2</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>11</age>
+	<birthday>0</birthday>
+	<position>744.3149,347.03207,0.0</position>
+	<velocity>0.16574901,1.023193,0.0</velocity>
+	<species>2</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>6</age>
+	<birthday>0</birthday>
+	<position>654.35144,650.37396,0.0</position>
+	<velocity>-2.0219774,-2.683506,0.0</velocity>
+	<species>2</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>1</age>
+	<birthday>0</birthday>
+	<position>1002.73047,542.6748,0.0</position>
+	<velocity>0.5892993,0.1916896,0.0</velocity>
+	<species>2</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>14</age>
+	<birthday>0</birthday>
+	<position>1003.96844,526.3485,0.0</position>
+	<velocity>0.70476353,0.033345565,0.0</velocity>
+	<species>2</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>13</age>
+	<birthday>0</birthday>
+	<position>1184.9043,376.7237,0.0</position>
+	<velocity>0.5157888,-1.0309479,0.0</velocity>
+	<species>2</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>1</age>
+	<birthday>0</birthday>
+	<position>760.73016,344.5614,0.0</position>
+	<velocity>0.10843389,0.51322997,0.0</velocity>
+	<species>2</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>11</age>
+	<birthday>0</birthday>
+	<position>777.96954,351.81247,0.0</position>
+	<velocity>0.12180779,0.74482757,0.0</velocity>
+	<species>2</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>7</age>
+	<birthday>0</birthday>
+	<position>982.51135,531.7909,0.0</position>
+	<velocity>0.5261219,0.041691136,0.0</velocity>
+	<species>2</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>8</age>
+	<birthday>0</birthday>
+	<position>763.4174,366.90494,0.0</position>
+	<velocity>0.37441978,0.63335216,0.0</velocity>
+	<species>2</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>2</age>
+	<birthday>0</birthday>
+	<position>258.3638,164.14348,0.0</position>
+	<velocity>0.50854635,-2.2314825,0.0</velocity>
+	<species>2</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>2</age>
+	<birthday>0</birthday>
+	<position>950.8322,352.87546,0.0</position>
+	<velocity>-0.9374374,0.46310738,0.0</velocity>
+	<species>2</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>14</age>
+	<birthday>0</birthday>
+	<position>766.96,325.8375,0.0</position>
+	<velocity>0.4918428,0.77923715,0.0</velocity>
+	<species>2</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>0</age>
+	<birthday>0</birthday>
+	<position>944.3431,337.20285,0.0</position>
+	<velocity>-1.2221301,0.6591721,0.0</velocity>
+	<species>2</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>11</age>
+	<birthday>0</birthday>
+	<position>720.6929,59.093,0.0</position>
+	<velocity>-0.34843245,2.0141227,0.0</velocity>
+	<species>3</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.3</alignment>
+	<separation>0.8</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>0</age>
+	<birthday>0</birthday>
+	<position>192.92038,703.1854,0.0</position>
+	<velocity>1.4014709,0.8041904,0.0</velocity>
+	<species>3</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.3</alignment>
+	<separation>0.8</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>1</age>
+	<birthday>0</birthday>
+	<position>785.17145,435.8185,0.0</position>
+	<velocity>3.3560975,0.16188896,0.0</velocity>
+	<species>3</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.3</alignment>
+	<separation>0.8</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>12</age>
+	<birthday>0</birthday>
+	<position>678.43774,508.90967,0.0</position>
+	<velocity>1.206155,-0.25156516,0.0</velocity>
+	<species>3</species>
+	<cohesion>0.5</cohesion>
+	<alignment>0.3</alignment>
+	<separation>0.8</separation>
+	<wander>0.1</wander>
+</boid>
 </boidlist>

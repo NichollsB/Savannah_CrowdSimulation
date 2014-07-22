@@ -5,7 +5,6 @@ import com.UKC_AICS.simulation.entity.behaviours.*;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.entity.states.carnivore.CarnDefault;
 import com.UKC_AICS.simulation.entity.states.herbivore.HerbDefault;
-import com.UKC_AICS.simulation.entity.states.herbivore.Hungry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +40,10 @@ public class StateMachine {
         behaviours.put("attractor", new Attractor());
         behaviours.put("repeller", new Repeller());
 
-        behaviours.put("collision", new Collision());
+        behaviours.put("collision", new Collision2());
+
+        behaviours.put("seek", new Seek());
+        behaviours.put("pursuit", new Pursuit());
 
         boidStates = new HashMap<Boid, Stack<State>>();
     }
@@ -53,9 +55,11 @@ public class StateMachine {
             if(poppable) {
                 boidStates.get(boid).pop();
             }
+            boid.state = boidStates.get(boid).peek().toString();
         }
 //        states.peek().update(owner);
     }
+
     public void update(Boid boid) {
         boolean poppable = boidStates.get(boid).peek().update(boid);
         if(poppable) {
@@ -87,13 +91,17 @@ public class StateMachine {
     }
 
     public void addBoid(Boid boid) {
-        addBoid(boid, new HerbDefault(this, boidManager));
+        addBoid(boid, getDefaultState(boid.getSpecies()));
     }
 
     public void removeBoid(Boid boid){
         if(boidStates.containsKey(boid)) {
             boidStates.remove(boid);
         }
+    }
+
+    public boolean checkBoid(Boid boid) {
+       return boidStates.containsKey(boid);
     }
 
     public void pushState(Boid boid, State state) {

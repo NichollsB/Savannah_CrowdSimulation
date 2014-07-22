@@ -35,15 +35,16 @@ public class LandMap {
 
         byte[][] mapInfo = new byte[width / TILE_SIZE][height / TILE_SIZE];
 
+        // randomly assigns grass to tiles
         Random rand = new Random();
         for (int i = 0; i < mapInfo.length; i++) {
             for (int j = 0; j < mapInfo[i].length; j++) {
                 mapInfo[i][j] = (byte) rand.nextInt(100);
             }
         }
-
-
         information_layers.put("grass", mapInfo);
+
+        // randomly assigns water to tiles
         mapInfo = new byte[width / TILE_SIZE][height / TILE_SIZE];
         for (int i = 0; i < mapInfo.length; i++) {
             for (int j = 0; j < mapInfo[i].length; j++) {

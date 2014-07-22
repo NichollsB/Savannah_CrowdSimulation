@@ -1,11 +1,10 @@
 package com.UKC_AICS.simulation.utils;
 
-import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Boid;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -252,7 +251,7 @@ public class BoidGrid {
 
         if ( cellX < 0 || cellX >= grid.length ||
                 cellY < 0 || cellY >= grid[0].length) {
-            System.out.println("out of bounds  /t"   + cellX + "/" + grid.length + "/t" + cellY  + "/" + grid.length);
+            System.out.println("out of bounds  \t"   + cellX + "/" + grid.length + "\t" + cellY  + "/" + grid.length);
         }
         findBoidsInCell(nearby, cellX,        cellY);
         findBoidsInCell(nearby, cellX + 1,    cellY);
@@ -265,6 +264,13 @@ public class BoidGrid {
 
         findBoidsInCell(nearby, cellX,        cellY - 1);
         findBoidsInCell(nearby, cellX + 1,    cellY - 1);
+
+        return nearby;
+    }
+
+
+    public Array<Boid> findInSight(Boid boid) {
+        nearby.clear();
 
         return nearby;
     }

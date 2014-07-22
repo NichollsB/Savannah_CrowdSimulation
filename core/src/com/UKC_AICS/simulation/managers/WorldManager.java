@@ -1,8 +1,7 @@
 package com.UKC_AICS.simulation.managers;
 
+import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Entity;
-import com.UKC_AICS.simulation.entity.*;
-import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.utils.ObjectGrid;
 import com.UKC_AICS.simulation.utils.QuadTree;
 import com.UKC_AICS.simulation.world.LandMap;
@@ -21,19 +20,19 @@ public class WorldManager extends Manager {
 
     private static final int TILE_SIZE = 16;
     private static LandMap map;
-    private Vector3 size;
+    private static Vector3 size;
 //    private HashMap<String, byte[][]> information_layers = new HashMap<String, byte[][]>();
 
 
-    private Array<Entity> objects = new Array<Entity>();
-    private QuadTree objects_map;
+    private static Array<Entity> objects = new Array<Entity>();
+    private static QuadTree objects_map;
     private ObjectGrid objectGrid;
 
     public WorldManager(int width, int height) {
         size = new Vector3(width/TILE_SIZE, height/TILE_SIZE, 1);
 
         objects_map = new QuadTree(0, new Rectangle(0,0,width,height));
-        objectGrid = new ObjectGrid(60, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        objectGrid = new ObjectGrid(60, Constants.screenWidth, Constants.screenHeight);
 
         map = new LandMap(width, height);
     }
@@ -44,13 +43,13 @@ public class WorldManager extends Manager {
 
     }
 
-    public void putObject(Entity entity, int x, int y) {
+    public static void putObject(Entity entity, int x, int y) {
         putObject(entity, new Vector3(x,y,0));
     }
-    public void putObject(Entity entity) {
+    public static void putObject(Entity entity) {
         putObject(entity, entity.getPosition());
     }
-    public void putObject(Entity entity, Vector3 position) {
+    public  static void putObject(Entity entity, Vector3 position) {
         if(entity.getPosition().x != position.x || entity.getPosition().y != position.y){
             entity.setPosition(position);
         }
@@ -58,12 +57,12 @@ public class WorldManager extends Manager {
         objects.add(entity);
     }
 
-    public void removeObject(Entity entity) {
+    public static void removeObject(Entity entity) {
         objects.removeValue(entity, true);
         rebuildTree(objects);
     }
 
-    public void rebuildTree(Array<Entity> objects) {
+    public static void rebuildTree(Array<Entity> objects) {
         objects_map = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         for (Entity boid : objects)
             objects_map.insert(boid);
@@ -102,8 +101,13 @@ public class WorldManager extends Manager {
         HashMap<String, Byte> layers = new HashMap<String, Byte>();
         int mapX = x/TILE_SIZE;
         int mapY = y/TILE_SIZE;
-        for (String layer : map.information_layers.keySet()) {
-            layers.put(layer, map.information_layers.get(layer)[mapX][mapY]);
+        if (mapX >= 0 && mapX < size.x &&
+                mapY >= 0 && mapY < size.y) {
+
+
+            for (String layer : map.information_layers.keySet()) {
+                layers.put(layer, map.information_layers.get(layer)[mapX][mapY]);
+            }
         }
         return layers;
     }

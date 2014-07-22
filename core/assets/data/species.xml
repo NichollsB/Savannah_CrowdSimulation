@@ -2,11 +2,13 @@
 
 <!--xml file for species based information-->
 <settings>
-    <species id="0" name="zebra">
-        <number>20</number>
+    <species name="zebra">
+        <number>10</number>
         <byte>0</byte>  <!-- this is the sub-type -->
+
         <spritergb r = "0" g="0" b="1"/>
-        <diet>"herbivore"</diet>
+        <diet>herbivore</diet>
+
         <sightRadius>180f</sightRadius>
         <flockRadius>120f</flockRadius>
         <nearRadius>40f</nearRadius>
@@ -22,16 +24,17 @@
         <wander>0.1f</wander>
     </species>
 
-    <species id="1" name="wildebeest">
-        <number>20</number>
+    <species name="wildebeest">
+        <number>10</number>
         <byte>1</byte>  <!-- this is the sub-type -->
+
         <spritergb r = "1" g="0" b="0"/>
-        <diet>"herbivore"</diet>
+        <diet>herbivore</diet>
         <sightRadius>180f</sightRadius>
         <flockRadius>120f</flockRadius>
         <nearRadius>40f</nearRadius>
-        <maxSpeed>1.5f</maxSpeed>
-        <maxForce>0.02f</maxForce>
+        <maxSpeed>2f</maxSpeed>
+        <maxForce>0.04f</maxForce>
         <lifespan>80f</lifespan>
         <!--<cohesion>0.1f</cohesion>-->
         <!--<separation>0.9f</separation>-->
@@ -42,37 +45,39 @@
         <wander>0.1f</wander>
     </species>
 
-    <species id="2" name="gazelle">
-        <number>20</number>
+    <species name="gazelle">
+        <number>10</number>
         <byte>2</byte>  <!-- this is the sub-type -->
         <spritergb r = "0" g="1" b="0"/>
-        <diet>"herbivore"</diet>
+
+        <diet>herbivore</diet>
         <sightRadius>250f</sightRadius>
         <flockRadius>80f</flockRadius>
         <nearRadius>15f</nearRadius>
-        <maxSpeed>3.5f</maxSpeed>
+        <maxSpeed>3.4f</maxSpeed>
         <maxForce>0.2f</maxForce>
-        <lifespan>25f</lifespan>
+        <lifespan>50</lifespan>
         <cohesion>0.5f</cohesion>
         <separation>0.5f</separation>
         <alignment>0.5f</alignment>
         <wander>0.1f</wander>
     </species>
 
-    <species id="3" name="lion">
-        <number>0</number>
-        <byte>2</byte>  <!-- this is the sub-type -->
+
+    <species name="lion">
+        <number>3</number>
+        <byte>3</byte>  <!-- this is the sub-type -->
         <spritergb r = "1" g="0" b="1"/>
-        <diet>"carnivore"</diet>
-        <sightRadius>250f</sightRadius>
-        <flockRadius>80f</flockRadius>
-        <nearRadius>15f</nearRadius>
+        <diet>carnivore</diet>
+        <sightRadius>400f</sightRadius>
+        <flockRadius>150f</flockRadius>
+        <nearRadius>100f</nearRadius>
         <maxSpeed>3.5f</maxSpeed>
         <maxForce>0.2f</maxForce>
-        <lifespan>25f</lifespan>
-        <cohesion>0.5f</cohesion>
-        <separation>0.5f</separation>
-        <alignment>0.5f</alignment>
+        <lifespan>200f</lifespan>
+        <cohesion>0.01f</cohesion>
+        <separation>0.02f</separation>
+        <alignment>0.01f</alignment>
         <wander>0.1f</wander>
     </species>
 </settings>

@@ -2,16 +2,14 @@ package com.UKC_AICS.simulation.entity.states.herbivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
-import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.entity.states.State;
+import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.UKC_AICS.simulation.managers.StateMachine;
 import com.UKC_AICS.simulation.managers.WorldManager;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 
 import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
 
@@ -32,9 +30,10 @@ public class Hungry extends State {
             // pop
             return true; //stop looking for food.
         } else {
+            boid.setState(this.toString());
 
             if (WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("grass") >= 20) {
-                System.out.println(boid + "\n Just posted EATGRASS state "  );
+//                System.out.println(boid + "\n Just posted EATGRASS state "  );
                 parent.pushState(boid, new EatGrass(parent, bm));
                 boid.setAcceleration(new Vector3(boid.velocity).scl(0.01f));
             }

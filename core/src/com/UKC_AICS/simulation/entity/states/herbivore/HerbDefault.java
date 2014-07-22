@@ -2,10 +2,10 @@ package com.UKC_AICS.simulation.entity.states.herbivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.entity.states.Thirsty;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
-import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.StateMachine;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -43,12 +43,16 @@ public class HerbDefault extends State {
 
 
         if (boid.thirst < 15) {
-            System.out.println(boid + "\n Just posted Thirsty state ");
+//            System.out.println(boid + "\nJust posted Thirsty state ");
             parent.pushState(boid, new Thirsty(parent, bm));
         } else if (boid.hunger < 15) {
-            System.out.println(boid + "\n Just posted Hungry state ");
+//            System.out.println(boid + "\nJust posted Hungry state ");
             parent.pushState(boid, new Hungry(parent, bm));
+        } else if (boid.age > 10 && boid.hunger > 70 && boid.thirst > 70) {
+//            System.out.println(boid + "\nJust posted Reproduce state ");
+            parent.pushState(boid, new Reproduce(parent, bm));
         } else {
+            boid.setState(this.toString());
 
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
@@ -57,34 +61,34 @@ public class HerbDefault extends State {
             for (Boid b : nearBoids) {
                 steering.set(boid.getPosition());
                 steering.sub(b.getPosition());
-                if (steering.len() > boid.flockRadius) {
+                if (steering.len2() > boid.flockRadius * boid.flockRadius) {
                     nearBoids.removeValue(b, true);
                 }
                 //if the boid is outside the flock radius it CANT also be in the "too close" range
-                else if (steering.len() < boid.nearRadius) {
+                else if (steering.len2() < boid.nearRadius * boid.nearRadius) {
                     closeBoids.add(b);
                 }
             }
 
             //store the steering movement
-            boid.setAcceleration(steering);//TODO this is where to use new collisionManager
-            Array<Entity> collisionObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
+            boid.setAcceleration(steering);  //Resets acceleration to 0f,0f,0f
+            Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
+            //Collision avoidance arrays
+            Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
-            //TODO add close by boids to the collisonObjects Array later
             tempVec = behaviours.get("collision").act(collisionObjects, boid);
 
             steering.set(0f, 0f, 0f);
+            boid.setAcceleration(steering);
 
+            // Check if collision avoidance is required.  True if no collisions
             if (tempVec.equals(steering)) {
                 //find objects nearby
-                Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
-
                 for (Entity dummyObject : dummyObjects) {
                     Entity ent = dummyObject;
                     steering.set(boid.position);
                     steering.sub(ent.position);
-
                     if (steering.len2() > boid.sightRadius * boid.sightRadius) {
                         dummyObjects.removeValue(ent, false);
                     }
@@ -92,7 +96,6 @@ public class HerbDefault extends State {
 
 
                 steering.set(0f, 0f, 0f);
-
 
                 float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
                 float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
@@ -104,22 +107,13 @@ public class HerbDefault extends State {
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
                 steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
-                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
-                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
-
+//                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
+//                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
 
                 boid.setAcceleration(steering);
 
-
             } else {
-                //set new velocity to rotated previous velocity
-                //                collisionAdjustment.nor();
-                //                collisionAdjustment.limit(boid.maxForce);
-                //                collisionAdjustment.scl(boid.maxSpeed);
-                boid.setNewVelocity(tempVec);
-
-                //apply it.
-//                boid.move2();
+                boid.setAcceleration(tempVec);
             }
         }
         return false; //base state so no popping.
