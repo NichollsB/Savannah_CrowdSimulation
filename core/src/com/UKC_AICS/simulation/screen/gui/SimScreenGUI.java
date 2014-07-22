@@ -284,6 +284,8 @@ public class SimScreenGUI extends Stage {
         	if(showBoidInfo){
         		boidInfo.setText(boidDisplaying.toString());
         	}
+        	else 
+        		boidInfo.setText("");
 	        stage.act();
 	    
 	    	stage.draw();  //GUI stuff
@@ -296,12 +298,13 @@ public class SimScreenGUI extends Stage {
 	}
 	
 	public void showBoidInfo(Boid boid, boolean show){
+		if(boidDisplaying!= null)boidDisplaying.setTracked(false);
 		if(!show){
 			showBoidInfo= false;
 			return;
 		}
 		showBoidInfo = true;
 		boidDisplaying = boid;
-
+		boidDisplaying.setTracked(true);
 	}
 }

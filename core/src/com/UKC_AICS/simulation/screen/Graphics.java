@@ -33,10 +33,11 @@ public class Graphics {
 	
 	//private SpriteBatch boidBatch;
 	private Sprite boidSprite;
+	private Sprite selectedBoidSprite;
 	//private ObjectMap<Boid, Sprite> boidMap = new ObjectMap<Boid, Sprite>();
 	private Array<Boid> boidsArray;
 	private Array<Entity> entityArray;
-	private Texture defaultTexture = new Texture(Gdx.files.internal("triangle2.png"));
+	private Texture defaultBoidTexture;
 	//TEMPORARY
 	private Texture altTexture = new Texture(Gdx.files.internal("triangle3.png"));
 	private Sprite altSprite;
@@ -113,15 +114,25 @@ public class Graphics {
 				if(boidsArray.size>0){
 					for(Boid boid : boidsArray){
 						sprite = spriteManager.getSprite(b, boid.getSpecies());
+						if(sprite == null){
+//							sprite = (!boid.tracked ? spriteManager.getDefaults()[0] : spriteManager.getDefaults()[1]);
+							if(boid.tracked){
+								sprite = spriteManager.getDefaults()[1];
+								updateSpritePosition(boid, sprite);
+								sprite.draw(batch);
+							}
+							sprite = spriteManager.getDefaults()[0];
+							if(boidColours.containsKey(boid.getSpecies())){
+								float colour[] = boidColours.get(boid.getSpecies());
+								sprite.setColor(colour[0], colour[1], colour[2], 1f);
+								
+							}
+							else{
+								sprite.setColor(Color.WHITE);
+							}
+						}
 						updateSpritePosition(boid, sprite);
-						if(boidColours.containsKey(boid.getSpecies())){
-							float colour[] = boidColours.get(boid.getSpecies());
-							sprite.setColor(colour[0], colour[1], colour[2], 1f);
-							
-						}
-						else{
-							sprite.setColor(Color.WHITE);
-						}
+
 						sprite.draw(batch);
 						
 //						sprite.draw(batch);
@@ -156,11 +167,11 @@ public class Graphics {
 	public void initBoidSprites(HashMap<Byte, String> fileLocations){
 
 		spriteManager.loadAssets_Boids(fileLocations, true);
-		boidSprite = new Sprite(defaultTexture);
-		boidSprite.setOrigin((defaultTexture.getWidth()/2), defaultTexture.getHeight()/2);
-		
-		altSprite = new Sprite(altTexture);
-		boidSprite.setOrigin((altTexture.getWidth()/2), altTexture.getHeight()/2);
+//		boidSprite = new Sprite(defaultBoidTexture);
+//		boidSprite.setOrigin((defaultBoidTexture.getWidth()/2), defaultBoidTexture.getHeight()/2);
+//		
+//		altSprite = new Sprite(altTexture);
+//		boidSprite.setOrigin((altTexture.getWidth()/2), altTexture.getHeight()/2);
 
 	}
 	public void setBoidSprite_Colours(HashMap<Byte, float[]> rgbValues) {
@@ -206,7 +217,8 @@ public class Graphics {
 			Vector3 position = boid.getPosition();
 			Vector3 velocity = boid.getVelocity();
 			double rot = Math.toDegrees(Math.atan2( - velocity.x, velocity.y)); //made x negative.
-			sprite.setPosition(position.x, position.y);
+			sprite.setPosition(boid.getPosition().x - sprite.getWidth()/2, 
+					boid.getPosition().y - sprite.getHeight()/2);
 			sprite.setRotation((float) rot);
 
 	}

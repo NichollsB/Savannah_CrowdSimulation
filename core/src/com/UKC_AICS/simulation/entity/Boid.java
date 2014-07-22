@@ -37,6 +37,9 @@ public class Boid extends Entity {
 
     public int age = 0;
     public int birthDay = 0;
+    
+    //Added to check if boid info is being displayed or not - for highlighting in graphics
+	public boolean tracked = false;
 
     public Boid( Vector3 pos, Vector3 vel) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -233,6 +236,10 @@ public class Boid extends Entity {
         string += "\t age:" + age + "\n";
 
         return string;
+    }
+    
+    public void setTracked(boolean tracked){
+    	this.tracked = tracked;
     }
 
 }

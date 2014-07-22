@@ -12,6 +12,11 @@ import com.badlogic.gdx.utils.ObjectMap;
 
 public class SpriteManager {
 	
+	private static Sprite defaultBoid;
+	private final static String defaultBoid_path = "data/newTriangle.png";
+	private static Sprite defaultBoid_selected;
+	private final static String defaultBoid_selected_path = "data/newTriangle_highlight.png";
+	
 //	//Full filemap
 //	private ObjectMap<String, ObjectMap<Integer, String>> filesMap = 
 //			new ObjectMap<String, ObjectMap<Integer, String>>(){{
@@ -63,6 +68,8 @@ public class SpriteManager {
 	
 	public SpriteManager(){
 		//loadAssets();
+		assetManager.load(defaultBoid_path, Texture.class);
+		assetManager.load(defaultBoid_selected_path, Texture.class);
 	}
 	
 	public boolean update(){
@@ -130,6 +137,26 @@ public class SpriteManager {
 //			else
 //				created = false;
 //		}
+		
+		//Create defaults
+		if(assetManager.isLoaded(defaultBoid_path)){
+			spriteTexture = assetManager.get(defaultBoid_path, Texture.class);
+			defaultBoid = new Sprite(spriteTexture);
+			defaultBoid.setOrigin(spriteTexture.getWidth()/2, spriteTexture.getHeight()/2);
+			defaultBoid.setSize(spriteTexture.getWidth(), spriteTexture.getHeight());
+//			defaultBoid.setCenter(spriteTexture.getWidth()/2, spriteTexture.getHeight()/2);
+//			defaultBoid.setOriginCenter();
+		}
+		if(assetManager.isLoaded(defaultBoid_selected_path)){
+			spriteTexture = assetManager.get(defaultBoid_selected_path, Texture.class);
+			defaultBoid_selected = new Sprite(spriteTexture);
+			defaultBoid_selected.setSize(spriteTexture.getWidth(), spriteTexture.getHeight());
+////			defaultBoid.setOrigin(spriteTexture.getWidth()/2, spriteTexture.getHeight()/2);
+//			
+//			defaultBoid.setCenter(spriteTexture.getWidth()/2, spriteTexture.getHeight()/2);
+//			defaultBoid_selected.setOriginCenter();
+		}
+		
 		created = true;
 	}
 	
@@ -272,5 +299,10 @@ public class SpriteManager {
 	public Sprite getTileSprite(String layer) {
 //		System.out.println("Getting layer " + layer + " " + tileTextures.get(layer));
 		return tileTextures.get(layer);
+	}
+	
+	public Sprite[] getDefaults(){
+		Sprite[] defaultArray = {defaultBoid, defaultBoid_selected};
+		return defaultArray;
 	}
 }
