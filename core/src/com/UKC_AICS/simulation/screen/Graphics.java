@@ -39,7 +39,7 @@ public class Graphics {
 	private Array<Entity> entityArray;
 	private Texture defaultBoidTexture;
 	//TEMPORARY
-	private Texture altTexture = new Texture(Gdx.files.internal("triangle3.png"));
+//	private Texture altTexture = new Texture(Gdx.files.internal("triangle3.png"));
 	private Sprite altSprite;
 	
 	private SpriteManager spriteManager = new SpriteManager();

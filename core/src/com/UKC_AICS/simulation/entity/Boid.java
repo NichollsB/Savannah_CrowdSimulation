@@ -241,11 +241,11 @@ public class Boid extends Entity {
     public String toString() {
         String string = "";
 
-        string += "BOID: " + "\t" + "\t position:" + position.toString() ;
-        string += "\t hunger:" + hunger;
-        string += "\t thirst:" + thirst;
-        string += "\t age:" + age ;
-        string += "\t state:" + state;
+        string += "BOID: " + "\t" + "\t position: \n \t" + position.toString() ;
+        string += "\n\t hunger:" + hunger;
+        string += "\n\t thirst:" + thirst;
+        string += "\n\t age:" + age ;
+        string += "\n\t state:" + state;
 
         return string;
     }

@@ -38,7 +38,7 @@ public class SimulationScreen implements Screen {
 
     private boolean render = true;   // for render pausing
     private boolean update = false;
-    boolean running = true;  //for play pausing.
+    boolean running = false;  //for play pausing.
 
     private final Simulation simulation;
     
