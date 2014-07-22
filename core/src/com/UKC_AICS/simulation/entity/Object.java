@@ -34,6 +34,15 @@ public class Object extends Entity {
         }
     }
 
+    //TODO add corpse decay into world manager (every day?)
+    public void corpseDecay() {
+        mass -= 0.5;
+    }
+
+    public void corpseDecay(float decay) {
+        mass -= decay;
+    }
+
     public float getMass() {
         return mass;
     }
