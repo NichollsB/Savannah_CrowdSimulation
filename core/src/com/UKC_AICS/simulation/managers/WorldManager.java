@@ -115,4 +115,9 @@ public class WorldManager extends Manager {
     public static void changeTileOnLayer(float x, float y, String layer, byte newValue) {
         map.changeTileOnLayer((int)x,(int)y,layer, newValue);
     }
+    
+  //Added by Ben Nicholls for graphics purposes - very probably temporary
+    public HashMap<String, byte[][]> getMapInfo(){
+    	return map.information_layers;
+    }
 }

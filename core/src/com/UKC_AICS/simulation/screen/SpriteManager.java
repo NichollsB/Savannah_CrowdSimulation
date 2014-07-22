@@ -1,5 +1,8 @@
 package com.UKC_AICS.simulation.screen;
 
+import java.util.HashMap;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -7,9 +10,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteCache;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
-import java.util.HashMap;
-
 public class SpriteManager {
+	
+	private static Sprite defaultBoid;
+	private final static String defaultBoid_path = "data/newTriangle.png";
+	private static Sprite defaultBoid_selected;
+	private final static String defaultBoid_selected_path = "data/newTriangle_highlight.png";
 	
 //	//Full filemap
 //	private ObjectMap<String, ObjectMap<Integer, String>> filesMap = 
@@ -27,8 +33,9 @@ public class SpriteManager {
 //			}};
 	
 	//World Tiling:
-	private ObjectMap<Integer, String> tileFiles = new ObjectMap<Integer, String>(){{
-		put(0, "data/grass_tile_x16.png");
+	private ObjectMap<String, String> tileFiles = new ObjectMap<String, String>(){{
+		put("grass", "data/grass_tile_x16.png");
+		put("water", "data/water_tile_x16.png");
 	}}
 	;
 	
@@ -49,7 +56,7 @@ public class SpriteManager {
 	private ObjectMap<Integer, Sprite> objectSprites;
 	private Array<Array<Sprite>> entitySprites;
 	
-	private ObjectMap<Integer, Sprite> tileTextures;
+	private ObjectMap<String, Sprite> tileTextures;
 	private SpriteCache tileCache = new SpriteCache();
 	private int tile;
 	private boolean tilesLoaded = false, tilesCreated = false;
@@ -61,6 +68,8 @@ public class SpriteManager {
 	
 	public SpriteManager(){
 		//loadAssets();
+		assetManager.load(defaultBoid_path, Texture.class);
+		assetManager.load(defaultBoid_selected_path, Texture.class);
 	}
 	
 	public boolean update(){
@@ -74,7 +83,7 @@ public class SpriteManager {
 		created = false;
 		Sprite sprite;
 		Texture spriteTexture;
-		tileTextures = new ObjectMap<Integer, Sprite>(tileFiles.size);
+		tileTextures = new ObjectMap<String, Sprite>(tileFiles.size);
 		/*for(Integer tile: tileFiles.keys()){
 			if(assetManager.isLoaded(tileFiles.get(tile))){
 				spriteTexture = assetManager.get(tileFiles.get(tile), Texture.class);
@@ -87,7 +96,7 @@ public class SpriteManager {
 				tilesLoaded = false;
 		}*/
 		
-		for(Integer tile : tileFiles.keys()){
+		for(String tile : tileFiles.keys()){
 			if(assetManager.isLoaded(tileFiles.get(tile))){
 				spriteTexture = assetManager.get(tileFiles.get(tile), Texture.class);
 				tileTextures.put(tile, new Sprite(spriteTexture));
@@ -118,7 +127,7 @@ public class SpriteManager {
 //				System.out.println("Not loaded");
 ////				created = false;
 //			}
-			created = true;
+			
 		}
 //		for(Integer object : objects.keys()){
 //			if(assetManager.isLoaded(objects.get(object))){
@@ -128,6 +137,27 @@ public class SpriteManager {
 //			else
 //				created = false;
 //		}
+		
+		//Create defaults
+		if(assetManager.isLoaded(defaultBoid_path)){
+			spriteTexture = assetManager.get(defaultBoid_path, Texture.class);
+			defaultBoid = new Sprite(spriteTexture);
+			defaultBoid.setOrigin(spriteTexture.getWidth()/2, spriteTexture.getHeight()/2);
+			defaultBoid.setSize(spriteTexture.getWidth(), spriteTexture.getHeight());
+//			defaultBoid.setCenter(spriteTexture.getWidth()/2, spriteTexture.getHeight()/2);
+//			defaultBoid.setOriginCenter();
+		}
+		if(assetManager.isLoaded(defaultBoid_selected_path)){
+			spriteTexture = assetManager.get(defaultBoid_selected_path, Texture.class);
+			defaultBoid_selected = new Sprite(spriteTexture);
+			defaultBoid_selected.setSize(spriteTexture.getWidth(), spriteTexture.getHeight());
+////			defaultBoid.setOrigin(spriteTexture.getWidth()/2, spriteTexture.getHeight()/2);
+//			
+//			defaultBoid.setCenter(spriteTexture.getWidth()/2, spriteTexture.getHeight()/2);
+//			defaultBoid_selected.setOriginCenter();
+		}
+		
+		created = true;
 	}
 	
 	
@@ -191,8 +221,8 @@ public class SpriteManager {
 		return null;
 	}
 	
-	public Sprite getGrassTexture(){
-		return tileTextures.get(0);
+	public Sprite getGrassTexture(String name){
+		return tileTextures.get(name);
 	}
 	
 	public Sprite getSprite(Byte type, Byte subType){
@@ -204,6 +234,16 @@ public class SpriteManager {
 		}
 	}
 
+	private boolean loadAsset(String fileLocation){
+		try {
+			assetManager.load(fileLocation, Texture.class);
+			return true;
+		} 
+		catch(NullPointerException e) {
+			System.out.println("Texture file, or file location " + fileLocation + " is missing");
+			return false;
+		}
+	}
 	/**
 	 * Set the AssetManager to loading a set of entities textures (for creation of sprites), and add
 	 * the string location to an associated map for processing once loaded
@@ -216,13 +256,14 @@ public class SpriteManager {
 		String fileStr;
 		for(Byte entity : entityTextureLocation.keySet()){
 			fileStr = entityTextureLocation.get(entity);
-			assetManager.load(fileStr, Texture.class);
-			if(continuousEntities){
-				boidsFiles.put(entity.intValue(), fileStr);
+			if(loadAsset(fileStr)){
+				if(continuousEntities){
+					boidsFiles.put(entity.intValue(), fileStr);
+				}
+	//			else {
+	//				objectsFiles.put(entity.intValue(), fileStr);
+	//			}
 			}
-//			else {
-//				objectsFiles.put(entity.intValue(), fileStr);
-//			}
 			
 		}
 	}
@@ -230,23 +271,38 @@ public class SpriteManager {
 	public void loadAssets_Objects(Array<Byte> objs){
 		created = false;
 		String filename = "data/corpse_object_x16.png";
-//		for(Byte type : objs){
-//			filename = objectsFiles.get((int)type);
-//			//System.out.println(filename);
-//			assetManager.load(filename, Texture.class);
-//		}
-		for(int type : objectsFiles.keys()){
-			filename = objectsFiles.get(type);
-			assetManager.load(filename, Texture.class);
+		for(Byte type : objs){
+			filename = objectsFiles.get((int)type);
+			//System.out.println(filename);
+			loadAsset(filename);
+
 		}
 	}
 	
 	public void loadAssets_Tiles(){
 		tilesLoaded = false;
 		String fileLocation;
-		for(Integer type : tileFiles.keys()){
-			fileLocation = tileFiles.get(type);
-			assetManager.load(fileLocation, Texture.class);
+		for(String tile : tileFiles.keys()){
+			fileLocation = tileFiles.get(tile);
+			loadAsset(fileLocation);
 		}
+	}
+
+	public boolean loadAssets_Tile(String tile) {
+		//Need to change this, as with others to retrieving region of texture atlas, but this will do for now
+		if(loadAsset(tileFiles.get(tile))){
+			return true;
+		}
+		return false;
+	}
+
+	public Sprite getTileSprite(String layer) {
+//		System.out.println("Getting layer " + layer + " " + tileTextures.get(layer));
+		return tileTextures.get(layer);
+	}
+	
+	public Sprite[] getDefaults(){
+		Sprite[] defaultArray = {defaultBoid, defaultBoid_selected};
+		return defaultArray;
 	}
 }

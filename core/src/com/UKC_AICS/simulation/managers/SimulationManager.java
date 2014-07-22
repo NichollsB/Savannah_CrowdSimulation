@@ -47,6 +47,7 @@ public class SimulationManager extends Manager {
     public static HashMap<Byte, Species> speciesData;
     
     HashMap<Byte, String> fileLocations;
+    HashMap<Byte, float[]> speciesRGB = new HashMap<Byte, float[]>(); 
     
 
     /**
@@ -128,7 +129,11 @@ public class SimulationManager extends Manager {
                 boidManager.createBoid(species);
             }
             //Find the species texture file location
-            fileLocations.put(spByte, species.getSpriteLocation());
+            if(species.hasSpriteLocation())
+            	fileLocations.put(spByte, species.getSpriteLocation());
+            if(species.hasRGB())
+            	speciesRGB.put(spByte, species.getRGB());
+            
         }
     }
 
@@ -211,6 +216,7 @@ public class SimulationManager extends Manager {
         return worldManager.getObjectsNearby(point);
     }
 
+
     public byte[][] getMapTiles() {
         return worldManager.getTiles();
     }
@@ -223,6 +229,9 @@ public class SimulationManager extends Manager {
 		// TODO Auto-generated method stub
 		return fileLocations;
 	}
+	public HashMap<Byte, float[]> getRGBValues(){
+		return speciesRGB;
+	}
 
     public HashMap<String, Byte> getTileInfo(int screenX, int screenY) {
         return worldManager.getTileInfoAt(screenX,screenY);
@@ -230,5 +239,10 @@ public class SimulationManager extends Manager {
 
     public Boid getBoidAt(int screenX, int screenY) {
         return boidManager.getBoidAt(screenX,screenY);
+    }
+    
+    //Added by Ben Nicholls for graphics purposes
+    public HashMap<String, byte[][]> getFullInfo(){
+    	return worldManager.getMapInfo();
     }
 }

@@ -41,6 +41,10 @@ public class Boid extends Entity {
     public int age = 0;
     public int birthDay = 0;
     
+
+    //Added to check if boid info is being displayed or not - for highlighting in graphics
+	public boolean tracked = false;
+
     public float cohesion = 0;
     public float separation = 0;
     public float alignment = 0;
@@ -48,6 +52,7 @@ public class Boid extends Entity {
     
     public int geneSize=4;		
     public Float[] gene= new Float[geneSize];
+
 
     public Boid( Vector3 pos, Vector3 vel) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -236,15 +241,19 @@ public class Boid extends Entity {
     public String toString() {
         String string = "";
 
-        string += "BOID: " + "\t" + "\t position:" + position.toString() ;
-        string += "\t hunger:" + hunger;
-        string += "\t thirst:" + thirst;
-        string += "\t age:" + age ;
-        string += "\t state:" + state;
+        string += "BOID: " + "\t" + "\t position: \n \t" + position.toString() ;
+        string += "\n\t hunger:" + hunger;
+        string += "\n\t thirst:" + thirst;
+        string += "\n\t age:" + age ;
+        string += "\n\t state:" + state;
 
         return string;
     }
-    
+
+    public void setTracked(boolean tracked){
+    	this.tracked = tracked;
+    }
+
     public void setGene(float cohesion, float separation, float alignment, float wander ) {
     	gene[0] = cohesion;
     	gene[1] = separation;
@@ -281,4 +290,5 @@ public class Boid extends Entity {
     public float getWander() {
         return wander;
     }
+
 }
