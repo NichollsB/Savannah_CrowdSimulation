@@ -39,7 +39,7 @@ public class Stalk extends State {
                     targetPos.add(tv);
 
                     steering.set(Seek.act(boid, targetPos));
-                    System.out.println("Target stalked: " + target.getSpecies() + " species, " + target.position.x + ", " + target.position.y);
+//                    System.out.println("Target stalked: " + target.getSpecies() + " species, " + target.position.x + ", " + target.position.y);
 
 
                     //Check is boid is still in list.  If not pop to hunt (for corpse)
