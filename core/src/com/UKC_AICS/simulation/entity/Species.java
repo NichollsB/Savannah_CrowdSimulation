@@ -23,6 +23,7 @@ public class Species {
     private float lifespan;
     private String diet;
 
+    private float rgb[];
 
     public String getName() {
         return name;
@@ -45,12 +46,7 @@ public class Species {
         this.spbyte = spbyte;
     }
 
-    public String getSpriteLocation() {
-        return spriteLocation;
-    }
-    public void setSpriteLocation(String spriteLocation) {
-        this.spriteLocation = spriteLocation;
-    }
+  
 
     public float getNearRadius() {
         return nearRadius;
@@ -135,4 +131,30 @@ public class Species {
     public void setDiet(String diet) {
         this.diet = diet;
     }
+    
+    public String getSpriteLocation() {
+        return spriteLocation;
+    }
+    public void setSpriteLocation(String spriteLocation) {
+        this.spriteLocation = spriteLocation;
+    }
+    public boolean hasSpriteLocation(){
+    	if(spriteLocation != null && !spriteLocation.isEmpty())
+    		return true;
+    	return false;
+    }
+    //Added by Ben Nicholls for graphics purposes - storing sprite colour
+    public void setRGB(float[] rgb){
+    	this.rgb = rgb;
+    }
+    public float[] getRGB(){
+    	return this.rgb;
+    }
+    public boolean hasRGB(){
+    	if(rgb != null && rgb.length == 3){
+    		return true;
+    	}
+    	return false;
+    }
+    
 }

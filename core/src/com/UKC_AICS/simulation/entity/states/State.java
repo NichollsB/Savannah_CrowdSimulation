@@ -22,7 +22,7 @@ abstract public class State {
     abstract public boolean update(Boid boid);
 
     public String toString() {
-        return this.getClass().toString();
+        return this.getClass().getSimpleName().toString();
     }
 
 }

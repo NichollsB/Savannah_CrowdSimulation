@@ -1,5 +1,8 @@
 package com.UKC_AICS.simulation.managers;
 
+import EvolutionaryAlgorithm.EA2;
+import EvolutionaryAlgorithm.EAmain;
+
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
@@ -44,6 +47,7 @@ public class SimulationManager extends Manager {
     public static HashMap<Byte, Species> speciesData;
     
     HashMap<Byte, String> fileLocations;
+    HashMap<Byte, float[]> speciesRGB = new HashMap<Byte, float[]>(); 
     
 
     /**
@@ -125,7 +129,11 @@ public class SimulationManager extends Manager {
                 boidManager.createBoid(species);
             }
             //Find the species texture file location
-            fileLocations.put(spByte, species.getSpriteLocation());
+            if(species.hasSpriteLocation())
+            	fileLocations.put(spByte, species.getSpriteLocation());
+            if(species.hasRGB())
+            	speciesRGB.put(spByte, species.getRGB());
+            
         }
     }
 
@@ -160,6 +168,7 @@ public class SimulationManager extends Manager {
             hours = 0;
             days += 1;
             setDay();
+            EAmain.Evolve();
             increment = true;
         } else {
             minutes = 0;
@@ -207,6 +216,7 @@ public class SimulationManager extends Manager {
         return worldManager.getObjectsNearby(point);
     }
 
+
     public byte[][] getMapTiles() {
         return worldManager.getTiles();
     }
@@ -219,6 +229,9 @@ public class SimulationManager extends Manager {
 		// TODO Auto-generated method stub
 		return fileLocations;
 	}
+	public HashMap<Byte, float[]> getRGBValues(){
+		return speciesRGB;
+	}
 
     public HashMap<String, Byte> getTileInfo(int screenX, int screenY) {
         return worldManager.getTileInfoAt(screenX,screenY);
@@ -226,5 +239,10 @@ public class SimulationManager extends Manager {
 
     public Boid getBoidAt(int screenX, int screenY) {
         return boidManager.getBoidAt(screenX,screenY);
+    }
+    
+    //Added by Ben Nicholls for graphics purposes
+    public HashMap<String, byte[][]> getFullInfo(){
+    	return worldManager.getMapInfo();
     }
 }

@@ -41,13 +41,18 @@ public class Boid extends Entity {
     public int age = 0;
     public int birthDay = 0;
     
+
+    //Added to check if boid info is being displayed or not - for highlighting in graphics
+	public boolean tracked = false;
+
     public float cohesion = 0;
     public float separation = 0;
     public float alignment = 0;
     public float wander = 0;
     
-    		
-    public Float[] gene;
+    public int geneSize=4;		
+    public Float[] gene= new Float[geneSize];
+
 
     public Boid( Vector3 pos, Vector3 vel) {
         this.type = 1; // this is for categorising it as a "boid" object.
@@ -131,7 +136,6 @@ public class Boid extends Entity {
         //move
 //        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
         velocity.add(acceleration).limit(maxSpeed);
-        bounds.setPosition(position.x, position.y);
         velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
         position.add(velocity);
         //check for out of bounds
@@ -141,6 +145,8 @@ public class Boid extends Entity {
         //TODO: potentially have different species "degrade" at different rates
         hunger -= (float) 0.5 /60;
         thirst -= (float) 2 /60;
+
+        bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
     }
 
     public void setNewVelocity(Vector3 newVel){
@@ -240,16 +246,20 @@ public class Boid extends Entity {
     public String toString() {
         String string = "";
 
-        string += "BOID: " + "\t" + "\t position:" + position.toString() ;
-        string += "\t hunger:" + hunger;
-        string += "\t thirst:" + thirst;
-        string += "\t age:" + age ;
-        string += "\t state:" + state;
+        string += "BOID: " + "\t" + "\t position: \n \t" + (int)position.x + "/" + (int)position.y;
+        string += "\n\t hunger:" + (int)hunger;
+        string += "\n\t thirst:" + (int)thirst;
+        string += "\n\t age:" + age ;
+        string += "\n\t state:" + state;
 
         return string;
     }
-    
-    public void setGene() {
+
+    public void setTracked(boolean tracked){
+    	this.tracked = tracked;
+    }
+
+    public void setGene(float cohesion, float separation, float alignment, float wander ) {
     	gene[0] = cohesion;
     	gene[1] = separation;
     	gene[2] = alignment;
@@ -285,4 +295,5 @@ public class Boid extends Entity {
     public float getWander() {
         return wander;
     }
+
 }

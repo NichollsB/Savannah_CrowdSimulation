@@ -2,9 +2,8 @@ package com.UKC_AICS.simulation.entity.states.carnivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
-import com.UKC_AICS.simulation.entity.behaviours.Pursuit;
+import com.UKC_AICS.simulation.entity.behaviours.Arrive;
 import com.UKC_AICS.simulation.entity.states.State;
-import com.UKC_AICS.simulation.entity.states.Thirsty;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.UKC_AICS.simulation.managers.StateMachine;
@@ -15,65 +14,78 @@ import com.badlogic.gdx.utils.Array;
 import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
 
 /**
- * Created by Emily on 16/07/2014.
+ * Created by James on 22/07/2014.
  */
-public class CarnDefault extends State{
-
+public class CarnReproduce extends State {
     private Vector3 tempVec = new Vector3();
 
-    public CarnDefault(StateMachine parent, BoidManager bm) {
+    public CarnReproduce(StateMachine parent, BoidManager bm) {
         super(parent, bm);
     }
 
     @Override
     public boolean update(Boid boid) {
-
-
-        if(boid.thirst < 15) {
-//            System.out.println(boid + "\n Just posted Thirsty state "  );
-            parent.pushState(boid, new Thirsty(parent, bm));
-        }
-        else if(boid.hunger < 50) {
-//            System.out.println(boid + "\n Just posted Hungry state "  );
-//            parent.pushState(boid, new Hunt(parent,bm));
-            //This is test GoForKill state change, CHANGE to Hunt State
-
-            parent.pushState(boid, new Hunt(parent, bm));
-        } else if (boid.age > 10 && boid.hunger > 65 && boid.thirst > 65) {
-//            System.out.println(boid + "\nJust posted Reproduce state ");
-                parent.pushState(boid, new CarnReproduce(parent, bm));
-        } else {
+        if (boid.hunger > 60 && boid.thirst > 60) {
+            boid.setState(this.toString());
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
+            Array<Boid> potentialMates = new Array<Boid>();
             Array<Boid> closeBoids = new Array<Boid>();
 
             for (Boid b : nearBoids) {
+                //see if the boid is the same species and in the same state - should be Reproduce.
+                if (boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state)) {
+                    potentialMates.add(b);
+                }
                 steering.set(boid.getPosition());
                 steering.sub(b.getPosition());
-                if (steering.len() > boid.flockRadius) {
+                if (steering.len2() > boid.flockRadius * boid.flockRadius) {
                     nearBoids.removeValue(b, true);
                 }
                 //if the boid is outside the flock radius it CANT also be in the "too close" range
-                else if (steering.len() < boid.nearRadius) {
+                else if (steering.len2() < boid.nearRadius * boid.nearRadius) {
                     closeBoids.add(b);
                 }
             }
+            //TODO need steering to find mates
+            if(potentialMates.size > 0  ) {
+                //pick the closest and go towards it!
+                Boid nearest = potentialMates.pop();
+                Boid other;
+                while(potentialMates.size > 0) {
+                    other = potentialMates.pop();
+                    steering.set(boid.getPosition());
+                    steering.sub(other.getPosition());
 
-            //store the steering movement
-            boid.setAcceleration(steering);   //Resets acceleration to 0f,0f,0f
-            Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
+                    tempVec.set(boid.getPosition());
+                    tempVec.sub(nearest.getPosition());
+                    if (tempVec.len2() < steering.len2()) {
+                        nearest = other;
+                    }
 
-            Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
-            collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
+                }
+                if(tempVec.len2() < 10f && nearest.hunger>60 && nearest.thirst > 60) {
+                    System.out.println("CARNIVORE boid made a baby " + boid.getSpecies());
+//                    bm.createBoid(boid); //create copy of self.
+                    Boid baby = new Boid(boid);
+                    baby.setAge(0);
+                    bm.storeBoidForAddition(baby);
+                    boid.hunger = 0;
+                    boid.thirst = 0;
+                    nearest.hunger = 0;
+                    nearest.thirst = 0;
+                    return true;
+                }
+                steering.set(0f,0f,0f);
 
-            tempVec = behaviours.get("collision").act(collisionObjects, boid);
+                steering.add(Arrive.act(boid, nearest.getPosition()));
 
-            steering.set(0f, 0f, 0f);
-            boid.setAcceleration(steering);
+                boid.setAcceleration(steering);
 
-            // Check if collision avoidance is required.  True if no collisions
-            if (tempVec.equals(steering)) {
-                //find objects nearby
+            } else {
+                //stay with the herd
+
+                Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
                 for (Entity dummyObject : dummyObjects) {
                     Entity ent = dummyObject;
@@ -102,12 +114,12 @@ public class CarnDefault extends State{
 //                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
 
                 boid.setAcceleration(steering);
-
-            } else {
-                boid.setAcceleration(tempVec);
             }
 
+            return false;
+
+        } else {
+            return true;
         }
-        return false; // this is a default state so should NOT be popped.
     }
 }

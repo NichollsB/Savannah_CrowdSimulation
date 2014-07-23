@@ -27,38 +27,44 @@ public class GoForKill extends State {
     @Override
     public boolean update(Boid boid) {
         //check boid still exists
-        if (parent.checkBoid(target)) {
-            //TODO  Needs to have a target and use the pursuit behaviour
+        if(boid.hunger < 50) {
+            if (parent.checkBoid(target)) {
 
-            //TODO kill prey on collision detection
+                //distance between boid and target
+                float distance = boid.getPosition().cpy().sub(target.getPosition()).len2();
 
-            //TODO place corpse on prey kill
+                //check if target is collided  and killed
+                if (distance <= 16f * 16f) {
+                    //Target has been killed.
+                    Object food = new Object((byte) 0, (byte) 0, new Vector3(target.position.x, target.position.y, 0f));
+                    WorldManager.putObject(food);
+                    bm.storeBoidForRemoval(target);
+                    boid.setVelocity(0f, 0f, 0f);
+                    boid.setAcceleration(boid.getVelocity());
+                    parent.pushState(boid, new Eat(parent, bm, food));
+                    return false;
 
-            //distance between boid and target
-            float distance = boid.getPosition().cpy().sub(target.getPosition()).len();
+                } //check target is still within sight range
+                else if (distance < boid.sightRadius * boid.sightRadius) {
+                    //pursue prey
+                    steering.set(0f, 0f, 0f);
+                    steering.add(Pursuit.act(boid, target));
+                    boid.setAcceleration(steering);
 
-            //check if target is collided  and killed
-            if (distance <= 16f) {  //TODO add some check for pursuing kill?
-                //Target has been killed.
-                //TODO drop a corpse
-                Object food = new Object((byte)0,(byte)0, new Vector3(target.position.x, target.position.y, 0f));
-                WorldManager.putObject(food);
-                bm.storeBoidForRemoval(target);
-                parent.pushState(boid, new Eat(parent, bm, target));
-                return true;
-            //check target is still within sight range
-            } else if (distance < boid.sightRadius){
-                steering.set(0f, 0f, 0f);
-                steering.add(Pursuit.act(boid, target));
-                boid.setAcceleration(steering);
+//                    System.out.println("Kill chase: " + target.getSpecies() + " species, " + target.position.x + ", " + target.position.y);
+                    return false;
+                }
+                else {
+                    //pop out if target is out of sight
+                    return true;
+                }
 
-                System.out.println("Kill chase: " + target.getSpecies() + " species, " + target.position.x + ", " + target.position.y);
-                return false;
             } else {
+                //pop out if target is dead
                 return true;
             }
-
         } else {
+            //pop out if not hungry
             return true;
         }
     }

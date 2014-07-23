@@ -1,5 +1,6 @@
 package EvolutionaryAlgorithm;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -8,7 +9,7 @@ import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.badlogic.gdx.scenes.scene2d.utils.Selection;
 
-public class EAmain {
+public class EA2 {
 
 	//Setup
 	private static int popNum = 0;
@@ -19,10 +20,11 @@ public class EAmain {
 	private static double muteRate =0.5;
 	static int geneLength = 4;
 	private static int someconstant = 0;
-	public static boolean rtmode = true;
+	public static boolean rtmode = false;
 	
 	private static ArrayList<Boid> selected = new ArrayList<Boid>();
 	private static ArrayList<Boid> population = new ArrayList<Boid>();
+	private static ArrayList<Boid> newPopulation = new ArrayList<Boid>();
 	private static ArrayList<Double> fitnessList = new ArrayList<Double>();
 	private static ArrayList<Double> probablityList = new ArrayList<Double>();
 	private static Random r = new Random();
@@ -48,7 +50,6 @@ public class EAmain {
 		}
 		crossover();
 		mutation();
-		clearAllLists();
 	}
 	
 	
@@ -90,7 +91,13 @@ public class EAmain {
 				population.add(b);
 				//add to population
 				popNum++;
+				System.out.print(b.getAge()+" ");
+				
 			}
+			
+		}System.out.println();
+		for(Boid b : population){
+			System.out.println(b.getAge());
 		}
 	}
 	
@@ -198,18 +205,20 @@ public class EAmain {
 				System.out.println("i VAL = "+i);
 				if(probablityList.get(i) <=randomValue && randomValue<probablityList.get(i+1)){	
 					
-					System.out.println("SELECTED");
+					System.out.println("i AM SELECTED");
 					System.out.println(population.get(i));
-					selected.add(population.get(i));
+					newPopulation.add(population.get(i));
 				}
 				else{
 					System.out.println("random value not in probability range");
 				}
 				
 			}
+		
+		
 			System.out.println();
-			System.out.println("SELECTED");
-			System.out.println(selected);
+			System.out.println("newpop");
+			System.out.println(newPopulation);
 	}
 	
 	
@@ -287,27 +296,19 @@ public class EAmain {
 	    for (int i = 0; i < geneLength; i++) {
 	    double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
 		float muteValue = muteMin + (muteMax - muteMin) * r.nextFloat();
-		System.out.println("Random"+randomValue);
-		System.out.println("MuteVal"+muteValue);
+		System.out.println(muteValue);
             if (randomValue <= muteRate) {
                 // Create random gene
             	
             	newGene[i] = muteValue;
             }
-        } 
+        }
+	    
 	    System.out.println(Arrays.toString(newGene));
+		
+		
 	}
 	
 	//create new boid with new parameters
 	
-	
-	public static void clearAllLists() {
-		selected.clear();
-		population.clear();
-		fitnessList.clear();
-		probablityList.clear();
-		geneList.clear();
-		popNum = 0;
-	
-	}
 }

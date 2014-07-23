@@ -268,6 +268,13 @@ public class BoidGrid {
         return nearby;
     }
 
+
+    public Array<Boid> findInSight(Boid boid) {
+        nearby.clear();
+
+        return nearby;
+    }
+
     public Array<Boid> findBoidsInCell(Array<Boid> bnearby, int cellX, int cellY) {
 
 

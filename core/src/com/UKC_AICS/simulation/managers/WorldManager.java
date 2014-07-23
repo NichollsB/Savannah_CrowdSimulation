@@ -57,13 +57,12 @@ public class WorldManager extends Manager {
         objects.add(entity);
     }
 
-    public void removeObject(Entity entity) {
+    public static void removeObject(Entity entity) {
         objects.removeValue(entity, true);
         rebuildTree(objects);
     }
-
-    public void rebuildTree(Array<Entity> objects) {
-        objects_map = new QuadTree(0, new Rectangle(0, 0, Constants.screenWidth, Constants.screenHeight));
+    public static void rebuildTree(Array<Entity> objects) {
+        objects_map = new QuadTree(0, new Rectangle(0, 0,  Constants.screenWidth, Constants.screenHeight));
         for (Entity boid : objects)
             objects_map.insert(boid);
     }
@@ -117,5 +116,10 @@ public class WorldManager extends Manager {
 
     public static void changeTileOnLayer(float x, float y, String layer, byte newValue) {
         map.changeTileOnLayer((int)x,(int)y,layer, newValue);
+    }
+    
+  //Added by Ben Nicholls for graphics purposes - very probably temporary
+    public HashMap<String, byte[][]> getMapInfo(){
+    	return map.information_layers;
     }
 }
