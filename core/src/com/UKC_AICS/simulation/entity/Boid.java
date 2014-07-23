@@ -221,9 +221,29 @@ public class Boid extends Entity {
     }
 
 
-//    public Vector3 getOrientation() {
-//        return orientation;
-//    }
+    public double getOrientation() {
+        if(velocity.len2() > 0) {
+            double newOrt = Math.toDegrees(Math.atan2(-velocity.x, velocity.y));
+            orientation = newOrt;
+            if (newOrt != orientation) {
+                double change = orientation - newOrt;
+                orientation = orientation + change / 2;
+                //            orientation /= 2;
+            }
+
+            while (orientation > 360) {
+                orientation -= 360;
+            }
+            while (orientation < 0) {
+                orientation += 360;
+
+            }
+            return newOrt; //made x negative.
+        }
+        else {
+            return orientation;
+        }
+    }
 //
 //    public void setOrientation(Vector3 orientation) {
 //        this.orientation = orientation;
@@ -247,6 +267,7 @@ public class Boid extends Entity {
         string += "\n\t thirst:" + (int)thirst;
         string += "\n\t age:" + age ;
         string += "\n\t state:" + state;
+        string += "\n\t orientation:" + (int)orientation;
 
         return string;
     }

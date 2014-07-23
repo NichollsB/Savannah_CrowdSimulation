@@ -224,7 +224,7 @@ public class Graphics {
 			sprite.setPosition(entity.getPosition().x - sprite.getWidth()/2, 
 					entity.getPosition().y - sprite.getHeight()/2);
 			if(velocity != null){
-				double rot = Math.toDegrees(Math.atan2( - velocity.x, velocity.y)); //made x negative.
+				double rot = entity.getOrientation();
 				sprite.setRotation((float) rot);
 			}
 
