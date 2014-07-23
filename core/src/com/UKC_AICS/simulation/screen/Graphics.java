@@ -106,8 +106,10 @@ public class Graphics {
 					for(Entity entity : entityArray){
 						sprite = spriteManager.getObjectSprite(entity.getType());
 						if(sprite!=null){
-							Vector3 pos = entity.getPosition();
-							sprite.setPosition(pos.x, pos.y);
+//							Vector3 pos = entity.getPosition();
+////							sprite.setPosition(pos.x, pos.y);
+							if(entity.getType() == 0 || entity.getType() == 1) System.out.println("corpse");
+							updateSpritePosition(entity, sprite);
 							sprite.draw(batch);
 						}
 					}
@@ -212,16 +214,19 @@ public class Graphics {
 	/**
 	 * sets the boidSprite to the Boid perameters current position and finds the equivalent rotation of the sprite from
 	 * the boid velcoity vector
-	 * @param boid The Boid that the boidSprite will be postioned to
+	 * @param entity The Boid that the boidSprite will be postioned to
 	 */
-	public void updateSpritePosition(Boid boid, Sprite sprite){
+	public void updateSpritePosition(Entity entity, Sprite sprite){
 		//for(Iterator<Boid> boids = boidMap.keys(); boids.hasNext();){
-			Vector3 position = boid.getPosition();
-			Vector3 velocity = boid.getVelocity();
-			double rot = Math.toDegrees(Math.atan2( - velocity.x, velocity.y)); //made x negative.
-			sprite.setPosition(boid.getPosition().x - sprite.getWidth()/2, 
-					boid.getPosition().y - sprite.getHeight()/2);
-			sprite.setRotation((float) rot);
+			Vector3 position = entity.getPosition();
+			Vector3 velocity = entity.getVelocity();
+			
+			sprite.setPosition(entity.getPosition().x - sprite.getWidth()/2, 
+					entity.getPosition().y - sprite.getHeight()/2);
+			if(velocity != null){
+				double rot = Math.toDegrees(Math.atan2( - velocity.x, velocity.y)); //made x negative.
+				sprite.setRotation((float) rot);
+			}
 
 	}
 	
