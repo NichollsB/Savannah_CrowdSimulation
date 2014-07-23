@@ -177,10 +177,10 @@ public class BoidGrid {
         int endY = startY + (int)boid.sightRadius;
         int sightRadLengthInCells = (int) boid.sightRadius / cellSize; //floored
         int startCellX = startX/cellSize;
-        int endCellX = startCellX + sightRadLengthInCells;
+        int endCellX = startCellX + sightRadLengthInCells * 2;
 
         int startCellY = startY/cellSize;
-        int endCellY = startCellY + sightRadLengthInCells;
+        int endCellY = startCellY + sightRadLengthInCells * 2;
         for(int i = startCellX; i < endCellX; i++) {
             for (int j = startCellY; j < endCellY; j++) {
                 findBoidsInCellNew(nearby, i, j);
@@ -207,15 +207,15 @@ public class BoidGrid {
 
         //do wrap arounds
         if ( oldCellX < 0) {
-            cellX = grid.length - 1;
+            cellX = grid.length - Math.abs(cellX) - 1;
         } else if ( cellX >= grid.length) {
-            cellX = 0;
+            cellX = grid.length - Math.abs(cellX) - 1;
         }
 
         if ( oldCellY < 0) {
-            cellY = grid[cellX].length - 1;
+            cellY = grid[cellX].length - Math.abs(cellY) - 1;
         } else if ( cellY >= grid[cellX].length) {
-            cellY = 0;
+            cellY = grid[cellX].length - Math.abs(cellY) - 1;
         }
 
 
