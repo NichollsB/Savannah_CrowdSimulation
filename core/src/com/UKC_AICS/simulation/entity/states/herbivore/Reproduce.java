@@ -115,7 +115,6 @@ public class Reproduce extends State {
 
                 boid.setAcceleration(steering);
             }
-
             return false;
 
         } else {

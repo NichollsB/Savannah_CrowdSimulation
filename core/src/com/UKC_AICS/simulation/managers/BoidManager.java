@@ -4,6 +4,7 @@ import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.utils.BoidGrid;
+import com.UKC_AICS.simulation.utils.BoidGridOld;
 import com.UKC_AICS.simulation.utils.MathsUtils;
 import com.UKC_AICS.simulation.utils.QuadTree;
 import com.badlogic.gdx.Gdx;
@@ -34,7 +35,7 @@ public class BoidManager extends Manager {
     public BoidManager(SimulationManager parent) {
 
         this.parent = parent;
-        setBoidGrid(new BoidGrid(60, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        setBoidGrid(new BoidGrid(60, Constants.screenWidth, Constants.screenHeight));
 
         quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.screenWidth, Constants.screenHeight));
 

@@ -58,7 +58,10 @@ public class HerbDefault extends State {
             boid.setState(this.toString());
 
 
-            Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
+            Array<Boid> nearBoids = new Array<Boid>(BoidManager.getBoidGrid().findNearby(boid.getPosition()));
+
+            Array<Boid> testNearBoids = BoidManager.getBoidGrid().findInSight(boid);
+
             Array<Boid> closeBoids = new Array<Boid>();
 
             for (Boid b : nearBoids) {

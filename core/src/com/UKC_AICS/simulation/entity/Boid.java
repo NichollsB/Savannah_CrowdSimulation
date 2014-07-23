@@ -141,6 +141,8 @@ public class Boid extends Entity {
         //check for out of bounds
         checkInBounds();
 
+        bounds.setPosition(position.x, position.y);
+
 
         //TODO: potentially have different species "degrade" at different rates
         hunger -= (float) 0.5 /60;
