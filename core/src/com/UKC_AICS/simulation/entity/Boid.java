@@ -130,7 +130,6 @@ public class Boid extends Entity {
         //move
 //        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
         velocity.add(acceleration).limit(maxSpeed);
-        bounds.setPosition(position.x, position.y);
         velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
         position.add(velocity);
         //check for out of bounds
@@ -140,6 +139,8 @@ public class Boid extends Entity {
         //TODO: potentially have different species "degrade" at different rates
         hunger -= (float) 0.5 /60;
         thirst -= (float) 2 /60;
+
+        bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
     }
 
     public void setNewVelocity(Vector3 newVel){
@@ -241,9 +242,9 @@ public class Boid extends Entity {
     public String toString() {
         String string = "";
 
-        string += "BOID: " + "\t" + "\t position: \n \t" + position.toString() ;
-        string += "\n\t hunger:" + hunger;
-        string += "\n\t thirst:" + thirst;
+        string += "BOID: " + "\t" + "\t position: \n \t" + (int)position.x + "/" + (int)position.y;
+        string += "\n\t hunger:" + (int)hunger;
+        string += "\n\t thirst:" + (int)thirst;
         string += "\n\t age:" + age ;
         string += "\n\t state:" + state;
 
