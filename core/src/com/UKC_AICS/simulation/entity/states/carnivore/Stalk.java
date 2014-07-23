@@ -1,11 +1,14 @@
 package com.UKC_AICS.simulation.entity.states.carnivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.Seek;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.StateMachine;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 
 import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
 
@@ -30,6 +33,10 @@ public class Stalk extends State {
                 float distance = boid.getPosition().cpy().sub(target.getPosition()).len2();
                 //check still within sight
                 if (distance < boid.sightRadius * boid.sightRadius) {
+                    Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
+                    Array<Entity> collisionObjects = new Array<Entity>(bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y)));
+                    collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
+
                     Vector3 tv = new Vector3(0f, 0f, 0f);
                     Vector3 targetPos = new Vector3(0f, 0f, 0f);
                     targetPos.set(target.getPosition());
@@ -41,6 +48,8 @@ public class Stalk extends State {
                     steering.set(Seek.act(boid, targetPos));
 //                    System.out.println("Target stalked: " + target.getSpecies() + " species, " + target.position.x + ", " + target.position.y);
 
+                    //Add collision avoidance
+                    steering.add(behaviours.get("collision").act(collisionObjects, boid));
 
                     //Check is boid is still in list.  If not pop to hunt (for corpse)
                     //check if prey is close enought to be chased down

@@ -105,13 +105,13 @@ public class Graphics {
 				if(entityArray.size>0){
 					for(Entity entity : entityArray){
 						sprite = spriteManager.getObjectSprite(entity.getType());
-						if(sprite!=null){
+                        if(sprite!=null){
 //							Vector3 pos = entity.getPosition();
 ////							sprite.setPosition(pos.x, pos.y);
-							if(entity.getType() == 0 || entity.getType() == 1) System.out.println("corpse");
-							updateSpritePosition(entity, sprite);
-							sprite.draw(batch);
-						}
+//                            if(entity.getType() == 0 || entity.getType() == 1) System.out.println("corpse");
+                            updateSpritePosition(entity, sprite);
+                            sprite.draw(batch);
+                        }
 					}
 					
 				}

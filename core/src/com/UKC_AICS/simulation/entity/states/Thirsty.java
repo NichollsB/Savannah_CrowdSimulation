@@ -64,11 +64,18 @@ public class Thirsty extends State {
                 //find objects nearby
                 Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
+                //Entities to check collision with
+                Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
+                collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
+
                 float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander() / 2;
 //                float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
                 float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
 
                 steering.set(0f, 0f, 0f);
+
+                //just add collision avoidance
+                steering.add(behaviours.get("collision").act(collisionObjects, boid));  //.scl(avoid)   //Maybe have some scaling for avoidance?
 
 //                steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));

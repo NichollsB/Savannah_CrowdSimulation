@@ -28,7 +28,9 @@ public class InputManager implements InputProcessor{
 
 	@Override
 	public boolean keyDown(int keycode) {
-		
+		if (keycode == Input.Keys.SPACE) {
+            screen.flipRunning();
+        }
 		return true;
 	}
 

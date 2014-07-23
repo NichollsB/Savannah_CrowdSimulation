@@ -43,7 +43,15 @@ public class Hungry extends State {
 
             /*
             * CELL  ATTEMPTS.
+            *
+            *
             */
+            //find objects nearby
+            Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
+
+            Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
+            collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
+
 
             for (Boid b : nearBoids) {
                 steering.set(boid.getPosition());
@@ -57,8 +65,7 @@ public class Hungry extends State {
                 }
             }
 
-            //find objects nearby
-            Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
+
 
 //            float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander() / 2;
             float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
@@ -69,6 +76,9 @@ public class Hungry extends State {
             steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
             steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
 //            steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
+
+            //Add collision avoidance
+            steering.add(behaviours.get("collision").act(collisionObjects, boid));
 
             steering.nor().scl(boid.maxSpeed / 2);
             steering.sub(boid.getVelocity());
