@@ -271,8 +271,8 @@ public class SpriteManager {
 	public void loadAssets_Objects(Array<Byte> objs){
 		created = false;
 		String filename = "data/corpse_object_x16.png";
-		for(Byte type : objs){
-			filename = objectsFiles.get((int)type);
+		for(int type : objectsFiles.keys()){
+			filename = objectsFiles.get(type);
 			//System.out.println(filename);
 			loadAsset(filename);
 

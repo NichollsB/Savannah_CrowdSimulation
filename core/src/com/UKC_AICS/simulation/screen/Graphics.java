@@ -105,9 +105,11 @@ public class Graphics {
 				if(entityArray.size>0){
 					for(Entity entity : entityArray){
 						sprite = spriteManager.getObjectSprite(entity.getType());
-						Vector3 pos = entity.getPosition();
-						sprite.setPosition(pos.x, pos.y);
-						sprite.draw(batch);
+						if(sprite!=null){
+							Vector3 pos = entity.getPosition();
+							sprite.setPosition(pos.x, pos.y);
+							sprite.draw(batch);
+						}
 					}
 					
 				}
@@ -183,7 +185,7 @@ public class Graphics {
 	}
 	
 	public void initObjSprites (Array<Entity> entityArray){
-		this.entityArray = new Array<Entity>(entityArray);
+		this.entityArray = entityArray;
 		Array<Byte> types = new Array<Byte>();
 		
 		for(Entity entity : entityArray){
