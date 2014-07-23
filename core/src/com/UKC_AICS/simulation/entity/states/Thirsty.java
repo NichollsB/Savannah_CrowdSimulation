@@ -38,7 +38,8 @@ public class Thirsty extends State {
             if(waterAmount >= 10) {
 //                System.out.println(boid + "\n Just posted DRINK state ");
                 parent.pushState(boid, new Drink(parent, bm));
-                boid.setAcceleration(new  Vector3(boid.velocity).scl(0.01f));
+                boid.setVelocity(0f, 0f, 0f);
+                boid.setAcceleration(boid.getVelocity());
             }
             else {
 

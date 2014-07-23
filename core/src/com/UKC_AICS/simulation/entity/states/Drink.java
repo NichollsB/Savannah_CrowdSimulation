@@ -20,6 +20,7 @@ public class Drink extends State {
 //            System.out.println(boid + "\n Just quit DRINK state ");
             return true;
         } else {
+
             // drink from tile
             boid.thirst += 0.1;
             return false;
