@@ -30,7 +30,7 @@ public class Thirsty extends State {
             return true;  //not thirsty return to default
         } else {
             boid.setState(this.toString());
-            if(boid.position.x < 0 || boid.position.x > Constants.screenWidth || boid.position.y < 0 || boid.position.y > Constants.screenHeight) {
+            if(boid.position.x < 0 || boid.position.x > Constants.mapWidth || boid.position.y < 0 || boid.position.y > Constants.mapHeight) {
                 System.out.println("I am out of bounds" + boid.position.x + " , " + boid.position.y);
             }
             //search for water

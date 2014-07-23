@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.managers;
 
+import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Species;
@@ -55,9 +56,9 @@ public class BoidManagerThreaded extends Manager {
 
     public BoidManagerThreaded() {
 
-        boidGrid = new BoidGrid(60, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        boidGrid = new BoidGrid(60, Constants.screenWidth, Constants.screenHeight);
 
-        quadtree = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.screenWidth, Constants.screenHeight));
 
         behaviours.put("separation", new Separation());
         behaviours.put("alignment", new Alignment());

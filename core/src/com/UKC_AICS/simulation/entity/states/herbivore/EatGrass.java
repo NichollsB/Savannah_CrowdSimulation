@@ -17,7 +17,7 @@ public class EatGrass extends State{
 
     @Override
     public boolean update(Boid boid) {
-        if(boid.position.x < 0 || boid.position.x > Constants.screenWidth || boid.position.y < 0 || boid.position.y > Constants.screenHeight) {
+        if(boid.position.x < 0 || boid.position.x > Constants.mapWidth || boid.position.y < 0 || boid.position.y > Constants.mapHeight) {
             System.out.println("I am out of bounds" + boid.position.x + " , " + boid.position.y);
         }
         byte grassAmount = WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("grass");

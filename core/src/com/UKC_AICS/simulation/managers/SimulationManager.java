@@ -3,6 +3,7 @@ package com.UKC_AICS.simulation.managers;
 import EvolutionaryAlgorithm.EA2;
 import EvolutionaryAlgorithm.EAmain;
 
+import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
@@ -31,7 +32,7 @@ public class SimulationManager extends Manager {
 //    BoidManagerThreadedThree boidManager = new BoidManagerThreadedThree(this);
 //    BoidManagerOld boidManager = new BoidManagerOld(this);
     BoidManager boidManager = new BoidManager(this);
-    WorldManager worldManager = new WorldManager(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+    WorldManager worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
 
     static public int minutes = 0;
     static public int hours = 0;

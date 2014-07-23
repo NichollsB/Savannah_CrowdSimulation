@@ -160,15 +160,15 @@ public class Boid extends Entity {
 
 
 
-        if(position.x > Constants.screenWidth - bounds.height/2) {
-            position.x = position.x - Constants.screenWidth + bounds.height;
+        if(position.x > Constants.mapWidth - bounds.height/2) {
+            position.x = position.x - Constants.mapWidth+ bounds.height;
         } else if(position.x < + bounds.width/2) {
-            position.x = position.x + Constants.screenWidth - bounds.height;
+            position.x = position.x + Constants.mapWidth- bounds.height;
         }
-        if(position.y > Constants.screenHeight - bounds.width/2) {
-            position.y = position.y - Constants.screenHeight + bounds.width;
+        if(position.y > Constants.mapHeight - bounds.width/2) {
+            position.y = position.y - Constants.mapHeight + bounds.width;
         } else if(position.y < bounds.width/2) {
-            position.y = position.y + Constants.screenHeight - bounds.width;
+            position.y = position.y + Constants.mapHeight - bounds.width;
         }
 
     }

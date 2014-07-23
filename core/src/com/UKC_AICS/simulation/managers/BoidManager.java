@@ -35,9 +35,9 @@ public class BoidManager extends Manager {
     public BoidManager(SimulationManager parent) {
 
         this.parent = parent;
-        setBoidGrid(new BoidGrid(60, Constants.screenWidth, Constants.screenHeight));
+        setBoidGrid(new BoidGrid(60, Constants.mapWidth, Constants.mapHeight));
 
-        quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.screenWidth, Constants.screenHeight));
+        quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.mapWidth, Constants.mapHeight));
 
         stateMachine = new StateMachine(this);
     }
@@ -258,7 +258,7 @@ public class BoidManager extends Manager {
     }
 
     public void rebuildTree(Array<Boid> boids) {
-        quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.screenWidth, Constants.screenHeight));
+        quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.mapWidth, Constants.mapHeight));
         for (Boid boid : boids)
             quadtree.insert(boid);
     }

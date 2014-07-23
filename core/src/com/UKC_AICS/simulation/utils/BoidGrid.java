@@ -202,27 +202,34 @@ public class BoidGrid {
         return nearby;
     }
 
-    private Array<Boid> findBoidsInCellNew(Array<Boid> bnearby, int oldCellX, int oldCellY) {
-        int cellX = oldCellX, cellY = oldCellY;
+    private Array<Boid> findBoidsInCellNew(Array<Boid> bnearby, int inCellX, int inCellY) {
+        int cellX = inCellX, cellY = inCellY;
 
         //do wrap arounds
-        if ( oldCellX < 0) {
-            cellX = grid.length - Math.abs(cellX) - 1;
+        if ( inCellX < 0) {
+            cellX = cellX + grid.length - 1;
         } else if ( cellX >= grid.length) {
             cellX = grid.length - Math.abs(cellX) - 1;
         }
 
-        if ( oldCellY < 0) {
-            cellY = grid[cellX].length - Math.abs(cellY) - 1;
+        if(cellX > grid.length || cellX < 0) {
+            System.out.println("cellx for boid grid find new cell is out");
+        }
+        if ( inCellY < 0) {
+            cellY = cellY  + grid[cellX].length - 1;
         } else if ( cellY >= grid[cellX].length) {
             cellY = grid[cellX].length - Math.abs(cellY) - 1;
         }
 
 
-        for (int i = 0; i < grid[cellX][cellY].size; i++) {
-//            if(!bnearby.contains(grid[cellX][cellY].get(i),true)) {
-            bnearby.add(grid[cellX][cellY].get(i));
-//            }
+        try {
+            for (int i = 0; i < grid[cellX][cellY].size; i++) {
+                //            if(!bnearby.contains(grid[cellX][cellY].get(i),true)) {
+                bnearby.add(grid[cellX][cellY].get(i));
+                //            }
+            }
+        }catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
 
         return bnearby;
