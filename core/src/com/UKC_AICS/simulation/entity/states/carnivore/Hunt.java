@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.entity.states.carnivore;
 
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.entity.behaviours.Seek;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
@@ -56,6 +57,8 @@ public class Hunt extends State {
 
             tempVec = behaviours.get("collision").act(collisionObjects, boid);
 
+
+
             steering.set(0f, 0f, 0f);
             boid.setAcceleration(steering);
 
@@ -75,6 +78,18 @@ public class Hunt extends State {
 
 
                 steering.set(0f, 0f, 0f);
+
+                //eat or add seek steering to get to corpse
+                for(Entity food : foodCorpse) {
+                    if(food.getType() == 0 && food.getSubType() == 0) {
+                        if(boid.getPosition().cpy().sub(food.getPosition()).len2() < 16f * 16f) {
+                            parent.pushState(boid, new Eat(parent, bm, (Object) food));
+                            return false;
+                        } else {
+                            steering.add(Seek.act(boid, food.getPosition()));
+                        }
+                    }
+                }
 
                 float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
                 float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
@@ -107,14 +122,8 @@ public class Hunt extends State {
 //                closeBoids.add(b);
 //            }
 //        }
-            //temporary arbitrary selection of first boid as chosen prey
 
-            for(Entity food : foodCorpse) {
-                if(food.getType() == 0 && food.getSubType() == 0) {
-                    parent.pushState(boid, new Eat(parent, bm, (Object) food));
-                    return false;
-                }
-            }
+
 
             Array<Boid> rmList = new Array<Boid>();
             for (Boid target : closeBoids) {

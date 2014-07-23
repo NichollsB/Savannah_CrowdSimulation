@@ -51,6 +51,7 @@ public class GoForKill extends State {
                     Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
                     Array<Entity> collisionObjects = new Array<Entity>(bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y)));
                     collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
+                    collisionObjects.removeValue(target,false);   //remove target from collision avoidance
 
                     //pursue prey
                     steering.set(0f, 0f, 0f);
