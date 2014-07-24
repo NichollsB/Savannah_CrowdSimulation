@@ -1,0 +1,32 @@
+MapSheet.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Ground_Map
+  rotate: false
+  xy: 2, 2
+  size: 1280, 720
+  orig: 1280, 720
+  offset: 0, 0
+  index: -1
+InitialGrass_Map
+  rotate: false
+  xy: 2, 724
+  size: 1072, 720
+  orig: 1280, 720
+  offset: 208, 0
+  index: -1
+Movable_Map
+  rotate: true
+  xy: 1076, 724
+  size: 560, 720
+  orig: 1280, 720
+  offset: 0, 0
+  index: -1
+Water_Map
+  rotate: false
+  xy: 1284, 2
+  size: 560, 720
+  orig: 1280, 720
+  offset: 0, 0
+  index: -1
