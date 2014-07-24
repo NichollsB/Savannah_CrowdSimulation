@@ -1,4 +1,4 @@
-MapSheet.png
+EnvSheet.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -17,7 +17,7 @@ InitialGrass_Map
   offset: 208, 0
   index: -1
 Movable_Map
-  rotate: true
+  rotate: false
   xy: 1076, 724
   size: 560, 720
   orig: 1280, 720
