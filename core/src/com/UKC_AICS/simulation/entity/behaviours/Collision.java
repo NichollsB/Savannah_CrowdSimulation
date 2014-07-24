@@ -18,11 +18,10 @@ public class Collision extends Behaviour {
     private Vector3 tmpVec2 = new Vector3(0f,0f,0f);
     Random rand = new Random();
 
-    float LOOK_AHEAD = 8f;
+    float MAX_AVOID_FORCE = 0.3f;
+    float LOOK_AHEAD = 20f;
     float HALF_LOOK_AHEAD = LOOK_AHEAD/2f;
 
-    float AHEAD_TURN = 2f;
-    float HALF_AHEAD_TURN = AHEAD_TURN*2f;
 
 //    public Boid checkCollision(Circle newCircle, Array<Boid> checkBoids, Boid boid){
 //        boolean collision = false;
@@ -81,7 +80,7 @@ public class Collision extends Behaviour {
                 tmpVec.set(boid.getPosition());
                 tmpVec.sub(target.getPosition());
                 //check if distance to target is less than boid sight range
-                if (tmpVec.len() < 16f) {
+                if (tmpVec.len() < 100f) {
                     //if close, add to the collision threats
                     collisionThreats.add(target);
                 }
@@ -92,39 +91,31 @@ public class Collision extends Behaviour {
                 Entity target = collisionThreats.get(i);
                 //TODO another distance check for so checkLeft checkRight are not carried out unless within close prox
                 int turn = Intersector.pointLineSide(boid.position.x, boid.position.y, (tmpVec.set((boid.getPosition())).add(boid.getVelocity())).x, (tmpVec.set((boid.getPosition())).add(boid.getVelocity())).y, target.getPosition().x, target.getPosition().y);
-//                if (collisionCheck(boid, target)) {
-//                    adjustment.set(boid.getVelocity());
-//                    if(turn == 0) {
-//                        adjustment.scl(0.6f);
-//                        adjustmentSet = true;
-//                    }
-//                    else if(turn == -1) {
-//                        adjustment.rotate(-4f, 0f, 0f, 1f);  //turns right
-//                        System.out.println("collision , turn right");
-//                        adjustmentSet = true;
-//
-//                    } else if (turn == 1) {
-//                        adjustment.rotate(4f, 0f, 0f, 1f);  //turns left
-//                        System.out.println("collision , turn left");
-//                        adjustmentSet = true;
-//                    }
-//                } else
+                if (collisionCheck(boid, target)) {
+                    adjustment.set(tmpVec);
+                    adjustment.nor();
+                    adjustment.scl(MAX_AVOID_FORCE);
+//                    adjustment.scl(0.6f);
+                    adjustmentSet = true;
+
+
+                } else
                 if(turn == -1) {
                     if (checkLeft(boid, target)) {
                         //calculate adjustment vector here
                         //should be able to use the tmpVec and tmpVec2 used to calc true.
-                        adjustment.set(boid.getVelocity());
-//                        adjustment.scl(0.5f);
-                        adjustment.rotate(HALF_AHEAD_TURN/2f, 0f, 0f, 1f);  //turns right
+                        adjustment.set(tmpVec);
+                        adjustment.nor();
+                        adjustment.scl(MAX_AVOID_FORCE);
                         adjustmentSet = true;
 //                        System.out.println("collision, close left");
                     }
                 }
                 else if(turn == 1) {
                     if (checkRight(boid, target)) {
-                        adjustment.set(boid.getVelocity());
-//                        adjustment.scl(0.5f);
-                        adjustment.rotate(-HALF_AHEAD_TURN/2f, 0f, 0f, 1f);  //turns left
+                        adjustment.set(tmpVec);
+                        adjustment.nor();
+                        adjustment.scl(MAX_AVOID_FORCE);
                         adjustmentSet = true;
 //                        System.out.println("collision, close right");
                     }
@@ -133,44 +124,19 @@ public class Collision extends Behaviour {
                     if (lookHalfAheadCheck(boid, target)) {
                         //TODO add side check for left or right turn
                         //calculate adjustment vector here
-                        adjustment.set(boid.getVelocity());
-//                        adjustment.scl(0.8f);
-                        if(turn == -1) {
-                            adjustment.rotate(HALF_AHEAD_TURN, 0f, 0f, 1f);  //turns right
-//                            System.out.println("collision half ahead, turn right");
-                        } else if (turn == 1) {
-                            adjustment.rotate(-HALF_AHEAD_TURN, 0f, 0f, 1f);  //turns left
-//                            System.out.println("collision half ahead, turn left");
-                        } else if (turn == 0) {
-                            if(rand.nextBoolean()) {
-                                adjustment.rotate(-HALF_AHEAD_TURN, 0f, 0f, 1f);  //turns left
-//                                System.out.println("collision half ahead, turn left");
-                            } else {
-                                adjustment.rotate(HALF_AHEAD_TURN, 0f, 0f, 1f);  //turns right
-//                                System.out.println("collision half ahead, turn right");
-                            }
+                        adjustment.set(tmpVec);
+                        adjustment.nor();
+                        adjustment.scl(MAX_AVOID_FORCE);
+//
                         }
                     } else if (lookAheadCheck(boid, target)) {
                         //calculate adjustment vector here
-                        adjustment.set(boid.getVelocity());
-//                        adjustment.scl(0.8f);
-                        if(turn == -1) {
-                            adjustment.rotate(AHEAD_TURN, 0f, 0f, 1f);  //turns right
-//                            System.out.println("collision ahead, turn right");
-                        } else if (turn == 1) {
-                            adjustment.rotate(-AHEAD_TURN, 0f, 0f, 1f);   //turns left
-//                            System.out.println("collision ahead, turn left");
-                        } else if (turn == 0) {
-                            if(rand.nextBoolean()) {
-                                adjustment.rotate(-AHEAD_TURN, 0f, 0f, 1f);  //turns left
-//                                System.out.println("collision half ahead, turn left");
-                            } else {
-                                adjustment.rotate(AHEAD_TURN, 0f, 0f, 1f);  //turns right
-//                                System.out.println("collision half ahead, turn right");
-                            }
-                        }
+                    adjustment.set(tmpVec);
+                    adjustment.nor();
+                    adjustment.scl(MAX_AVOID_FORCE);
+//
                     }
-                }
+//                }
             }
         }
         return adjustment;
@@ -181,11 +147,11 @@ public class Collision extends Behaviour {
         boolean collision = false;
         tmpVec.set(boid.getPosition());
         //check new position that is 2xthe current velocity ahead( 2 moves ahead not accounting for acceleration)
-        tmpVec2.set(boid.getVelocity());
-        tmpVec.add(tmpVec2);
+//        tmpVec2.set(boid.getVelocity());
+//        tmpVec.add(tmpVec2);
         tmpVec.sub(target.getPosition());
 
-        if (tmpVec.len() < 9f) {
+        if (tmpVec.len() < 8f) {
             collision = true;
         }
         return collision;
@@ -259,10 +225,10 @@ public class Collision extends Behaviour {
         tmpVec.set(boid.getPosition());
         tmpVec2.set(boid.getVelocity());
         tmpVec2.scl(0.8f);
-        tmpVec2.rotate(-25f,0f,0f,1f);
+        tmpVec2.rotate(25f,0f,0f,1f);
         tmpVec.add(tmpVec2);
         tmpVec.sub(target.getPosition());
-        if (tmpVec.len() < 4f) {
+        if (tmpVec.len() < 16f) {
             collision = true;
         }
         return collision;
@@ -277,10 +243,10 @@ public class Collision extends Behaviour {
         tmpVec.set(boid.getPosition());
         tmpVec2.set(boid.getVelocity());
         tmpVec2.scl(0.8f);
-        tmpVec2.rotate(25f,0f,0f,1f);
+        tmpVec2.rotate(-25f,0f,0f,1f);
         tmpVec.add(tmpVec2);
         tmpVec.sub(target.getPosition());
-        if (tmpVec.len() < 4f) {
+        if (tmpVec.len() < 16f) {
             collision = true;
         }
         return collision;
