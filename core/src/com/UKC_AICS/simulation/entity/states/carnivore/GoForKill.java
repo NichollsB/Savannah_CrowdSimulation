@@ -70,6 +70,7 @@ public class GoForKill extends State {
                     return true;
                 }
 
+
             } else {
                 //pop out if target is dead
                 return true;
