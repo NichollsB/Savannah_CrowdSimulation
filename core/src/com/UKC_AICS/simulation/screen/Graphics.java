@@ -105,13 +105,13 @@ public class Graphics {
 				if(entityArray.size>0){
 					for(Entity entity : entityArray){
 						sprite = spriteManager.getObjectSprite(entity.getType());
-						if(sprite!=null){
+                        if(sprite!=null){
 //							Vector3 pos = entity.getPosition();
 ////							sprite.setPosition(pos.x, pos.y);
-							if(entity.getType() == 0 || entity.getType() == 1) System.out.println("corpse");
-							updateSpritePosition(entity, sprite);
-							sprite.draw(batch);
-						}
+//                            if(entity.getType() == 0 || entity.getType() == 1) System.out.println("corpse");
+                            updateSpritePosition(entity, sprite);
+                            sprite.draw(batch);
+                        }
 					}
 					
 				}
@@ -224,7 +224,7 @@ public class Graphics {
 			sprite.setPosition(entity.getPosition().x - sprite.getWidth()/2, 
 					entity.getPosition().y - sprite.getHeight()/2);
 			if(velocity != null){
-				double rot = Math.toDegrees(Math.atan2( - velocity.x, velocity.y)); //made x negative.
+				double rot = entity.getOrientation();
 				sprite.setRotation((float) rot);
 			}
 

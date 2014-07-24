@@ -20,9 +20,11 @@ public class Drink extends State {
 //            System.out.println(boid + "\n Just quit DRINK state ");
             return true;
         } else {
+
             boid.setState(this.toString());
             boid.setAcceleration(new Vector3(0f,0f,0f));
             boid.setVelocity(new Vector3(0f,0f,0f));
+
             // drink from tile
             boid.thirst += 0.1;
             return false;

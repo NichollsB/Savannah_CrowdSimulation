@@ -40,7 +40,7 @@ public class StateMachine {
         behaviours.put("attractor", new Attractor());
         behaviours.put("repeller", new Repeller());
 
-        behaviours.put("collision", new Collision2());
+        behaviours.put("collision", new Collision());
 
         behaviours.put("seek", new Seek());
         behaviours.put("pursuit", new Pursuit());
