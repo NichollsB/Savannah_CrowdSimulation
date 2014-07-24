@@ -3,7 +3,7 @@
 <!--xml file for species based information-->
 <settings>
     <species name="zebra">
-        <number>10</number>
+        <number>20</number>
         <byte>0</byte>  <!-- this is the sub-type -->
 
         <spritergb r = "0" g="0" b="1"/>
@@ -25,7 +25,7 @@
     </species>
 
     <species name="wildebeest">
-        <number>10</number>
+        <number>50</number>
         <byte>1</byte>  <!-- this is the sub-type -->
 
         <spritergb r = "1" g="0" b="0"/>
@@ -46,7 +46,7 @@
     </species>
 
     <species name="gazelle">
-        <number>10</number>
+        <number>20</number>
         <byte>2</byte>  <!-- this is the sub-type -->
         <spritergb r = "0" g="1" b="0"/>
 

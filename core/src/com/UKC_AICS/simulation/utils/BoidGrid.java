@@ -171,15 +171,15 @@ public class BoidGrid {
     public Array<Boid> findInSight(Boid boid) {
         nearby.clear();
 
-        int startX = (int)boid.position.x - (int) boid.sightRadius;
-        int startY = (int)boid.position.y - (int) boid.sightRadius;
-        int endX = startX + (int)boid.sightRadius;
-        int endY = startY + (int)boid.sightRadius;
+        int startX = (int)boid.position.x;
+        int startY = (int)boid.position.y;
+//        int endX = startX + (int)boid.sightRadius;
+//        int endY = startY + (int)boid.sightRadius;
         int sightRadLengthInCells = (int) boid.sightRadius / cellSize; //floored
-        int startCellX = startX/cellSize;
+        int startCellX = startX/cellSize - sightRadLengthInCells;
         int endCellX = startCellX + sightRadLengthInCells * 2;
 
-        int startCellY = startY/cellSize;
+        int startCellY = startY/cellSize - sightRadLengthInCells;
         int endCellY = startCellY + sightRadLengthInCells * 2;
         for(int i = startCellX; i < endCellX; i++) {
             for (int j = startCellY; j < endCellY; j++) {
@@ -207,18 +207,18 @@ public class BoidGrid {
 
         //do wrap arounds
         if ( inCellX < 0) {
-            cellX = cellX + grid.length - 1;
+            cellX = cellX + grid.length;
         } else if ( cellX >= grid.length) {
-            cellX = grid.length - Math.abs(cellX) - 1;
+            cellX = cellX - grid.length;
         }
 
         if(cellX > grid.length || cellX < 0) {
             System.out.println("cellx for boid grid find new cell is out");
         }
         if ( inCellY < 0) {
-            cellY = cellY  + grid[cellX].length - 1;
+            cellY = cellY  + grid[cellX].length;
         } else if ( cellY >= grid[cellX].length) {
-            cellY = grid[cellX].length - Math.abs(cellY) - 1;
+            cellY = cellY - grid[cellX].length;
         }
 
 
