@@ -1,18 +1,25 @@
 package com.UKC_AICS.simulation.screen;
 
+import static com.UKC_AICS.simulation.Constants.TILE_SIZE;
+
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.UKC_AICS.simulation.screen.gui.SimViewport;
+import com.UKC_AICS.simulation.utils.EnvironmentLoader;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -29,7 +36,6 @@ import com.UKC_AICS.simulation.managers.SimulationManager;
 
 import java.util.HashMap;
 
-import javafx.scene.paint.Color;
 
 /**
  * @author Emily
@@ -65,14 +71,24 @@ public class SimulationScreen implements Screen {
 
     private InputMultiplexer input;
     private InputManager inputManager;
-    
-
 
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
         gui = new SimScreenGUI(this, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         setup();
         
+        
+        
+        //Test
+//        EnvironmentLoader.loadMaps(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//        byte[][] imgArray = EnvironmentLoader.getLayer_values("InitialGrass_Map");
+//        for(int x = 0; x < imgArray.length; x++){
+//        	for(int y = 0; y < imgArray[x].length; y++){
+//        		System.out.print(imgArray[x][y] + " : ");
+//        	}
+//        	System.out.println();
+//        }
+
     }
 
     private long time = 0;
@@ -190,9 +206,12 @@ public class SimulationScreen implements Screen {
      * 
      */
     public void setup() {
+    	EnvironmentLoader.loadMaps();
+    	
     	boidGraphics = new Graphics(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         setupCameraController();
         initialiseCameras(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        boidGraphics.initBackground();
         boidGraphics.setBoids(simulationManager.getBoids());
         boidGraphics.initBoidSprites(simulationManager.getTextureLocations());
         boidGraphics.setBoidSprite_Colours(simulationManager.getRGBValues());

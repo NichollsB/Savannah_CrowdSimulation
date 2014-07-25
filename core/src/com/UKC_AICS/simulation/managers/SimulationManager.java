@@ -245,4 +245,12 @@ public class SimulationManager extends Manager {
     public HashMap<String, byte[][]> getFullInfo(){
     	return worldManager.getMapInfo();
     }
+    
+    public Array<String> getSpeciesInfo(){
+    	Array<String> speciesInfo = new Array<String>();
+    	for(Byte species : speciesData.keySet()){
+    		speciesInfo.add(species.toString());
+    	}
+    	return speciesInfo;
+    }
 }
