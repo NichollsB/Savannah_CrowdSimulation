@@ -54,16 +54,15 @@ public abstract class EnvironmentLoader {
 		}
 	}
 	
-	public static void loadMaps(int width, int height){
-		loadMaps(atlasPath, width, height);
+	public static void loadMaps(){
+		loadMaps(atlasPath, mapPath);
 	}
-	public static void loadMaps(String filepath, int width, int height){
+	public static void loadMaps(String packfile_path, String packsheet_path){
 //		environments.put(name, 
 //				new TextureAtlas(defaultEnvAtlas_path));
-		FileHandle handle = Gdx.files.internal(atlasPath);
+		FileHandle handle = Gdx.files.internal(packfile_path);
 		environmentAtlas = new TextureAtlas(handle);
-		System.out.println("atlas " + environmentAtlas.toString());
-		handle = Gdx.files.internal(mapPath);
+		handle = Gdx.files.internal(packsheet_path);
 		environmentAtlas_pixmap = new Pixmap(handle);
 		
 		for(EnvironmentLayer layer : EnvironmentLayer.values()){
@@ -83,6 +82,15 @@ public abstract class EnvironmentLoader {
 //			layer.drawPixmap(environmentAtlas_pixmap, (int)region.offsetX, (int)region.offsetY, region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight());
 //			environmentLayers.put(region.name, layer);
 //		}
+	}
+	
+	public void loadLayer(String packfile_path, String packsheet_path){
+		try{
+			
+		}
+		catch(NullPointerException e){
+			
+		}
 	}
 	
 	/**

@@ -122,7 +122,7 @@ public class Graphics {
 						if(sprite!=null){
 //							Vector3 pos = entity.getPosition();
 ////							sprite.setPosition(pos.x, pos.y);
-							if(entity.getType() == 0 || entity.getType() == 1) System.out.println("corpse");
+//							if(entity.getType() == 0 || entity.getType() == 1) System.out.println("corpse");
 							updateSpritePosition(entity, sprite);
 							sprite.draw(batch);
 						}

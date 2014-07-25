@@ -206,7 +206,7 @@ public class SimulationScreen implements Screen {
      * 
      */
     public void setup() {
-    	EnvironmentLoader.loadMaps(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    	EnvironmentLoader.loadMaps();
     	
     	boidGraphics = new Graphics(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         setupCameraController();
