@@ -1,8 +1,8 @@
 package com.UKC_AICS.simulation.managers;
 
 import com.UKC_AICS.simulation.Constants;
-import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.Species;
+import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.utils.BoidGrid;
 import com.UKC_AICS.simulation.utils.MathsUtils;
 import com.UKC_AICS.simulation.utils.QuadTree;
@@ -213,6 +213,9 @@ public class BoidManager extends Manager {
         float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
         if (boid.hunger <= -20) {
             removeBoid(boid);
+            Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f));
+            WorldManager.putObject(food);
+
             parent.parent.gui.setConsole(" A boid just died of hunger :( ");
             return true;
         }
@@ -224,6 +227,8 @@ public class BoidManager extends Manager {
 //        }
         else if (boid.age > lifespan) {
             removeBoid(boid);
+            Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f));
+            WorldManager.putObject(food);
             parent.parent.gui.setConsole(" A boid just died of age related issues :( ");
             return true;
         }
@@ -242,8 +247,10 @@ public class BoidManager extends Manager {
     }
 
 
-    public void storeBoidForRemoval(Boid boid) {
+    public void storeBoidForRemoval(Boid boid, Object food) {
         if(!removalBoids.contains(boid, false)) {
+
+            WorldManager.putObject(food);
             removalBoids.add(boid);
         }
     }

@@ -15,20 +15,18 @@ public class Arrive2 extends Behaviour {
     }
 
     public static Vector3 act(Boid boid, Entity target) {
+    //TODO re-write arrival behaviour
+        Vector3 vec = new Vector3();
+        // distance between boid and target --> squared
+        float distance = boid.getPosition().cpy().sub(target.getPosition()).len2();
 
+        // check if within slowing distance
+        if(distance < boid.nearRadius * boid.nearRadius) {
 
+        }
 
+        //Velocity to slow down approach to target position
 
-//        Vector3 vec = new Vector3();
-//        vec.set(target.sub(boid.getPosition()));
-//        float dist = vec.len();
-//        if(dist > 0 ) {
-//            float speed = boid.maxSpeed * (dist / boid.sightRadius);
-//            speed = Math.min(boid.maxSpeed, speed);
-//            vec.nor().scl(speed);
-//            vec.sub(boid.getVelocity());
-//            vec.limit(boid.maxForce);
-//        }
-//        return vec;
+        return vec;
     }
 }
