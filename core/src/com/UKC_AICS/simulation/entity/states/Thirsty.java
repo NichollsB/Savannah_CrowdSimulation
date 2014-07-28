@@ -26,7 +26,7 @@ public class Thirsty extends State {
     @Override
     public boolean update(Boid boid) {
         //am i still thirsty?
-        if ( boid.thirst > 60) {
+        if ( boid.thirst < 45) {
             return true;  //not thirsty return to default
         } else {
             boid.setState(this.toString());

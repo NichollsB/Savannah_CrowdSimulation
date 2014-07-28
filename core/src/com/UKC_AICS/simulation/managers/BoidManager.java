@@ -1,8 +1,8 @@
 package com.UKC_AICS.simulation.managers;
 
 import com.UKC_AICS.simulation.Constants;
-import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.Species;
+import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.utils.BoidGrid;
 import com.UKC_AICS.simulation.utils.BoidGridOld;
 import com.UKC_AICS.simulation.utils.MathsUtils;
@@ -108,8 +108,8 @@ public class BoidManager extends Manager {
         boid.setPosition(xPos, yPos, 0);
         boid.setVelocity(xVel, yVel, 0);
 
-        boid.hunger = rand.nextInt(120) + 20;
-        boid.thirst = rand.nextInt(150) + 50;
+        boid.hunger = rand.nextInt(80);
+        boid.thirst = rand.nextInt(80);
 
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the population to be too old.
@@ -208,18 +208,24 @@ public class BoidManager extends Manager {
 
     public boolean checkForDeath(final Boid boid) {
         float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
-        if (boid.hunger <= -20) {
+        if (boid.hunger >= 120) {
+            Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f));
+            WorldManager.putObject(food);
             removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of hunger :( ");
             return true;
         }
-//        else if( boid.thirst <= -10) {
-//            boids.removeValue(boid, false);
-//            getBoidGrid().removeBoid(boid);
-//            parent.parent.gui.setConsole(" A boid just died of thirst :( ");
-//            return true;
-//        }
+        else if( boid.thirst >= 110) {
+            Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f));
+            WorldManager.putObject(food);
+            boids.removeValue(boid, false);
+            getBoidGrid().removeBoid(boid);
+            parent.parent.gui.setConsole(" A boid just died of thirst :( ");
+            return true;
+        }
         else if (boid.age > lifespan) {
+            Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f));
+            WorldManager.putObject(food);
             removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of age related issues :( ");
             return true;
@@ -237,10 +243,15 @@ public class BoidManager extends Manager {
 //            b.setAge(newAge);
         }
     }
-
-
     public void storeBoidForRemoval(Boid boid) {
         if(!removalBoids.contains(boid, false)) {
+            removalBoids.add(boid);
+        }
+    }
+
+    public void storeBoidForRemoval(Boid boid, Object food) {
+        if(!removalBoids.contains(boid, false)) {
+            WorldManager.putObject(food);
             removalBoids.add(boid);
         }
     }

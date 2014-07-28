@@ -42,13 +42,13 @@ public class HerbDefault extends State {
 //            }
 
 
-        if (boid.thirst < 15) {
+        if (boid.thirst > 85) {
 //            System.out.println(boid + "\nJust posted Thirsty state ");
             parent.pushState(boid, new Thirsty(parent, bm));
-        } else if (boid.hunger < 5) {
+        } else if (boid.hunger > 75) {
 //            System.out.println(boid + "\nJust posted Hungry state ");
             parent.pushState(boid, new Hungry(parent, bm));
-        } else if (boid.age > 10 && boid.hunger > 70 && boid.thirst > 70) {
+        } else if (boid.age > 10 && boid.hunger < 70 && boid.thirst < 70) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
             parent.pushState(boid, new Reproduce(parent, bm));
 //        } else if (boid.age > 10 && boid.hunger > 70 && boid.thirst > 70) {

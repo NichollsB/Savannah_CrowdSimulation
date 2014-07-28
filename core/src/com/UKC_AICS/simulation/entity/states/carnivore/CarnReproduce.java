@@ -3,6 +3,7 @@ package com.UKC_AICS.simulation.entity.states.carnivore;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.Arrive;
+import com.UKC_AICS.simulation.entity.behaviours.Arrive2;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
@@ -25,7 +26,7 @@ public class CarnReproduce extends State {
 
     @Override
     public boolean update(Boid boid) {
-        if (boid.hunger > 60 && boid.thirst > 60) {
+        if (boid.hunger < 60 && boid.thirst < 60) {
             boid.setState(this.toString());
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
@@ -33,8 +34,8 @@ public class CarnReproduce extends State {
             Array<Boid> closeBoids = new Array<Boid>();
 
             for (Boid b : nearBoids) {
-                //see if the boid is the same species and in the same state - should be Reproduce.
-                if (boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state)) {
+                //see if the boid is the same species and in the same state - should be Reproduce AND not self
+                if (boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state) && !boid.equals(b)) {
                     potentialMates.add(b);
                 }
                 steering.set(boid.getPosition());
@@ -64,21 +65,21 @@ public class CarnReproduce extends State {
                     }
 
                 }
-                if(tempVec.len2() < 10f && nearest.hunger>60 && nearest.thirst > 60) {
+                if(tempVec.len2() < 10f && nearest.hunger < 60 && nearest.thirst < 60) {
                     System.out.println("CARNIVORE boid made a baby " + boid.getSpecies());
 //                    bm.createBoid(boid); //create copy of self.
                     Boid baby = new Boid(boid);
                     baby.setAge(0);
                     bm.storeBoidForAddition(baby);
-                    boid.hunger = 0;
-                    boid.thirst = 0;
-                    nearest.hunger = 0;
-                    nearest.thirst = 0;
+                    boid.hunger = 100;
+                    boid.thirst = 100;
+                    nearest.hunger = 100;
+                    nearest.thirst = 100;
                     return true;
                 }
                 steering.set(0f,0f,0f);
 
-                steering.add(Arrive.act(boid, nearest.getPosition()));
+                steering.add(Arrive2.act(boid, nearest));
 
                 boid.setAcceleration(steering);
 

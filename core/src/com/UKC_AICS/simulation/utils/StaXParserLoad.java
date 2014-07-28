@@ -17,16 +17,16 @@ import java.io.InputStream;
  */
 public class StaXParserLoad {
 
-	static final String BOID = "boid";
-    static final String AGE = "age";
-    static final String BIRTHDAY = "birthday";
-    static final String POSITION = "position";
-    static final String VELOCITY  = "velocity";
-    static final String SPECIES = "species";
-    static final String COHESION = "cohesion";
-    static final String ALIGNMENT = "alignment";
-    static final String SEPARATION = "separation";
-    static final String WANDER = "wander";
+	private String BOID = "boid";
+	private String AGE = "age";
+    private String BIRTHDAY = "birthday";
+    private String POSITION = "position";
+    private String VELOCITY  = "velocity";
+    private String SPECIES = "species";
+    private String COHESION = "cohesion";
+    private String ALIGNMENT = "alignment";
+    private String SEPARATION = "separation";
+    private String WANDER = "wander";
     private int age = 0;
     private int bDay = 0;
     private float cohesion, separation,  alignment, wander;

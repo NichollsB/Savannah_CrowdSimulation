@@ -25,7 +25,7 @@ public class Reproduce extends State {
 
     @Override
     public boolean update(Boid boid) {
-        if (boid.hunger > 60 && boid.thirst > 60) {
+        if (boid.hunger < 35 && boid.thirst < 35) {
             boid.setState(this.toString());
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
@@ -33,8 +33,8 @@ public class Reproduce extends State {
             Array<Boid> closeBoids = new Array<Boid>();
 
             for (Boid b : nearBoids) {
-                //see if the boid is the same species and in the same state - should be Reproduce.
-                if (boid != b && boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state)) {
+                //see if the boid is the same species and in the same state - should be Reproduce AND not self
+                if (boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state) && !boid.equals(b)) {
                     potentialMates.add(b);
                 }
                 steering.set(boid.getPosition());
@@ -64,16 +64,16 @@ public class Reproduce extends State {
                     }
 
                 }
-                if(tempVec.len2() < 10f && nearest.hunger>60 && nearest.thirst > 60) {
+                if(tempVec.len2() < 10f && nearest.hunger < 40 && nearest.thirst < 40) {
                     System.out.println("boid made a baby " + boid.getSpecies());
 //                    bm.createBoid(boid); //create copy of self.
                     Boid baby = new Boid(boid);
                     baby.setAge(0);
                     bm.storeBoidForAddition(baby);
-                    boid.hunger = 0;
-                    boid.thirst = 0;
-                    nearest.hunger = 0;
-                    nearest.thirst = 0;
+                    boid.hunger = 100;
+                    boid.thirst = 100;
+                    nearest.hunger = 100;
+                    nearest.thirst = 100;
                     return true;
                 }
                 steering.set(0f,0f,0f);

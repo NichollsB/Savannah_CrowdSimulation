@@ -145,8 +145,8 @@ public class Boid extends Entity {
 
 
         //TODO: potentially have different species "degrade" at different rates
-        hunger -= (float) 0.5 /60;
-        thirst -= (float) 2 /60;
+        hunger += (float) 0.5 /60;
+        thirst += (float) 2 /60;
 
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
     }
@@ -287,6 +287,13 @@ public class Boid extends Entity {
     	gene[3] = wander;
     	
     }      
+    
+    public void setGene(Float[] newGene ) {
+    	for(int i = 0 ; i<geneSize; i++){
+    		gene[i] = newGene[i];
+    	}
+    	
+    }  
     
     public Float[] getGene() {
     	return gene;

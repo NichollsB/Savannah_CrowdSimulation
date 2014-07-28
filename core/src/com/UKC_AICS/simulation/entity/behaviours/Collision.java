@@ -18,7 +18,7 @@ public class Collision extends Behaviour {
     private Vector3 tmpVec2 = new Vector3(0f,0f,0f);
     Random rand = new Random();
 
-    float MAX_AVOID_FORCE = 0.3f;
+    float MAX_AVOID_FORCE = 0.15f;
     float LOOK_AHEAD = 20f;
     float HALF_LOOK_AHEAD = LOOK_AHEAD/2f;
 
