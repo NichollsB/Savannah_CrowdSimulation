@@ -32,7 +32,7 @@ public class SimulationManager extends Manager {
 //    BoidManagerOld boidManager = new BoidManagerOld(this);
     BoidManager boidManager = new BoidManager(this);
     WorldManager worldManager = new WorldManager(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-
+    EA2 ea = new EA2();
     static public int minutes = 0;
     static public int hours = 0;
     static public int days = 0;
@@ -168,7 +168,7 @@ public class SimulationManager extends Manager {
             hours = 0;
             days += 1;
             setDay();
-            EAmain.Evolve();
+            ea.Evolve();
             increment = true;
         } else {
             minutes = 0;

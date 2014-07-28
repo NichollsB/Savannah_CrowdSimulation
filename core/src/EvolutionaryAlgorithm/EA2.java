@@ -3,65 +3,78 @@ package EvolutionaryAlgorithm;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.managers.BoidManager;
-import com.badlogic.gdx.scenes.scene2d.utils.Selection;
+
 
 public class EA2 {
-
+    
 	//Setup
-	private static int popNum = 0;
-	static private int breedingAge = 4;
+	private  int popNum = 0;
+	private int breedingAge = 4;
 	//Crossover rate
-	private static double crossRate = 0.5;
+	private double crossRate = 0.5;
 	//Mutation rate
-	private static double muteRate =0.5;
-	static int geneLength = 4;
-	private static int someconstant = 0;
-	public static boolean rtmode = false;
-	
-	private static ArrayList<Boid> selected = new ArrayList<Boid>();
-	private static ArrayList<Boid> population = new ArrayList<Boid>();
-	private static ArrayList<Boid> newPopulation = new ArrayList<Boid>();
-	private static ArrayList<Double> fitnessList = new ArrayList<Double>();
-	private static ArrayList<Double> probablityList = new ArrayList<Double>();
-	private static Random r = new Random();
-	private static Float[] newGene = new Float[geneLength];
-	private static ArrayList<Float[]> geneList = new ArrayList<Float[]>();
+	private double muteRate =0.5;
+	private int geneLength = 4;
+	private int someconstant = 0;
+	public boolean rtmode = false;
 	
 	
+	 private ArrayList<Boid> population = new ArrayList<Boid>();
+	 private ArrayList<Double> fitnessList = new ArrayList<Double>();
+	 private ArrayList<Double> probablityList = new ArrayList<Double>();
+	 private Random r = new Random();
+	 private Float[] newGene = new Float[geneLength];
+	// private Float[] gene1 = new Float[geneLength];
+	// private Float[] gene2 = new Float[geneLength];
+	 private ArrayList<Float[]> geneList = new ArrayList<Float[]>();
+	 private ArrayList<Float[]> newGeneList = new ArrayList<Float[]>();
 	
+
 	
+	public void Evolve() {
 	
-	
-	
-	
-	
-	
-	public static void Evolve() {
-		mode();
 		validCheck();
 		calculateFitness();
 		calculateProbabilty();
+		mode();
 		for(int num = 0; num <someconstant; num++){
-		selection();
+		//TODO  issues keep gene the same
+			
+			
+			
+			Float[] tmp = new Float[geneLength];
+			System.arraycopy(selection(),0 ,tmp , 0, geneLength);
+			
+			
+			newGeneList.add(tmp);
+			
+
+		
+	
 		}
-		crossover();
-		mutation();
+		
+		for(Float[] gene : newGeneList) {
+		System.out.println("NEW GENE " + Arrays.toString(gene));
+		}
+
+		for(int i = 0; i<popNum ; i++){
+			population.get(i).setGene(newGeneList.get(i));
+		}
+			
 	}
+		
+		
 	
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	public static void mode() {
+	public   void mode() {
 		if (rtmode == true) {
 			someconstant = 2;
 		}
@@ -69,22 +82,15 @@ public class EA2 {
 			// use whole species population
 			
 			someconstant = popNum;
+			System.out.println("someconstant"+someconstant);
 		}
 	}
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	//Check for valid population members
-	private static void validCheck() {
+	private  void validCheck() {
 		
 		for(Boid b : BoidManager.boids){
 			if(b.getAge() >= breedingAge && b.getSpecies()==1){
@@ -99,23 +105,12 @@ public class EA2 {
 		for(Boid b : population){
 			System.out.println(b.getAge());
 		}
+		System.out.println("popnum " + popNum);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//Any
-	
-	
+
 	
 	//Calculate fitness
-	public static void calculateFitness() {
+	public  void calculateFitness() {
 		double fitness = 0.0;
 		
 		for(Boid b : population){
@@ -123,25 +118,12 @@ public class EA2 {
 			//Add to fitnessList
 			fitnessList.add(fitness);	
 		}
-		System.out.println("fitnessList");
-		System.out.println(fitnessList);
+
 		
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//Any
-	
-	public static void calculateProbabilty() {
+	public  void calculateProbabilty() {
 		double totalFitness = 0.0;
 		double p = 0.0;
 		double totalProbability = 0.0;
@@ -151,164 +133,153 @@ public class EA2 {
 			totalFitness = totalFitness + fitness;
 			
 		}
-		System.out.println(totalFitness);
-		System.out.println();
-		System.out.println("prob");
+		
 		for(double val : fitnessList){
 			p = val/totalFitness;
 			totalProbability = totalProbability + p;
 			probablityList.add(totalProbability);
-			System.out.print(totalProbability+" ");
+		
 		}
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	//Selection
-	public static void selection() {
+	public  Float[] selection() {
 		System.out.println();
 		System.out.println("SELECTION");
 		double rangeMin = probablityList.get(0);
 		double rangeMax = probablityList.get(popNum-1);
-		boolean found = false;
-		//Find two different boids
-		System.out.println("MIN" +rangeMin);
-		System.out.println("MAX" +rangeMax);
-		//Select random number
+		Float[] gene1 = new Float[geneLength];
+		Float[] gene2 = new Float[geneLength];
+		
 	
-		//TODO mode selection must be capable of selecting 2 individuals when running in real time
-		// must evolve entire population when in fast mode
-		
-		
-		// 
-		
+		//Select random number
+				
+		for(int j = 0 ; j<2 ; j++){
 		
 			double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
-			System.out.println();
-			System.out.println("random "+ randomValue);
-			//Find boids
-			
+
 			for(int i = 0; i<popNum ; i++){
-				System.out.println("i VAL = "+i);
+		//	
 				if(probablityList.get(i) <=randomValue && randomValue<probablityList.get(i+1)){	
 					
-					System.out.println("i AM SELECTED");
-					System.out.println(population.get(i));
-					newPopulation.add(population.get(i));
+		
+					geneList.add(population.get(i).getGene());
 				}
-				else{
-					System.out.println("random value not in probability range");
-				}
-				
+						
 			}
+			
+			
+		}
+		
+		gene1 = geneList.get(0);
+		gene2 = geneList.get(1);
+		
+		System.out.println("Gene 1 " + Arrays.toString(geneList.get(0)));
+		System.out.println("Gene 2 " + Arrays.toString(geneList.get(1)));
+		crossover(gene1 , gene2);
+		
+		geneList.clear();
 		
 		
-			System.out.println();
-			System.out.println("newpop");
-			System.out.println(newPopulation);
+		return newGene;
+		
 	}
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	//Crossover
-	public static void crossover() {
+	public   Float[] crossover(Float[] gene1, Float[] gene2) {
+		System.out.println();
+		System.out.println("CROSSOVER");
 		double rangeMax = 0;
 		double rangeMin = 1;
-		for(Boid b : selected) {
-			
-		geneList.add(b.getGene());
+        
 		
-		}
-		System.out.println("geneList");
-		for(Float[] gene : geneList) {
-			System.out.println(Arrays.toString(gene));
-		}
+		//System.out.println("geneList");
+		//for(Float[] gene : geneList) {
+			//System.out.println(Arrays.toString(gene));
+			
+		//}
 	        for (int i = 0; i < geneLength; i++) {
 	            // Crossover
 	        	double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
-	        	System.out.println("Random" + randomValue);
+	        	//System.out.println("Random" + randomValue);
 	            if (randomValue <= crossRate) {
-	            	Float[] gene1 = geneList.get(0);
+	            	
 	             newGene[i] = gene1[i];
 	            }
 	            else {
-	             Float[] gene2 = geneList.get(1);
+	             System.out.println("Cross at pos "+i);
 	             newGene[i] = gene2[i];
 	            }
 	        }
-	        System.out.println(Arrays.toString(newGene));
+	        System.out.println("BEFORE " +Arrays.toString( newGene));
+	        mutation(newGene);
+	       System.out.println("AFTER " +Arrays.toString( newGene));
+	        
+	       
+	        return newGene;
+	        
+	        
 	    }
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	//Mutation
-	public static void mutation() {
+	public  Float[] mutation(Float[] newGene) {
+		System.out.println();
+		System.out.println("MUTATION");
 		double rangeMax = 0;
 		double rangeMin = 1;
 		float muteMin = 0;
 		float muteMax = 1;
 		
-	
 		
-	    for (int i = 0; i < geneLength; i++) {
-	    double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
-		float muteValue = muteMin + (muteMax - muteMin) * r.nextFloat();
-		System.out.println(muteValue);
-            if (randomValue <= muteRate) {
-                // Create random gene
-            	
-            	newGene[i] = muteValue;
-            }
-        }
+		// get new gene for mutation
+		
+		//for(Float[] gene : newGeneList) {
+		//	System.out.println(Arrays.toString(gene));
+		//}
+		
+		
+		
+		//for(int i =0 ; i < newGeneList.size(); i++) {
+		//	System.out.println("current " + Arrays.toString(newGeneList.get(i)));	
+			
+			//Float[] temp = newGeneList.get(i);
+			
+			for(int j =0 ; j < geneLength ; j++) {
 	    
-	    System.out.println(Arrays.toString(newGene));
+				double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+				// System.out.println("RANDOM " + randomValue);
+				float muteValue = muteMin + (muteMax - muteMin) * r.nextFloat();
+			//	System.out.println("MUTEVAL " + muteValue);
+			//	System.out.println("Current gene" + newGene[j]);
 		
+				// change statement
+				if (randomValue >= muteRate){ 
+					newGene[j]= muteValue;
+				//	System.out.println("Change at position " + j);	
+			
+				}
+			}
+		//System.out.println("new gene " + Arrays.toString(newGene));
+		//System.out.println();
+		//for(Float[] gene : newGeneList) {
+			//System.out.println(Arrays.toString(gene));
+		//}
+		
+		//}
+			//System.out.println(Arrays.toString(newGene));
+		return newGene;
 		
 	}
 	
-	//create new boid with new parameters
+	
 	
 }
