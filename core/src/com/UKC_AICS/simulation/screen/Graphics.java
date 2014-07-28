@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -20,6 +21,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.utils.EnvironmentLoader;
+import com.UKC_AICS.simulation.utils.EnvironmentLoader.EnvironmentLayer;
 
 /**
  * 
@@ -57,6 +60,8 @@ public class Graphics {
 	ShapeRenderer back = new ShapeRenderer();
 	private HashMap<Byte, float[]> boidColours = new HashMap<Byte, float[]>();
 	
+	private AtlasSprite background;
+	
 	public Graphics(int width, int height){
 		renderWidth = width;
 		renderHeight = height;
@@ -78,11 +83,20 @@ public class Graphics {
 //		    	back.rect(0, 0, renderWidth, renderHeight);
 //		    	back.end();
 //				batch.begin();
-				if(dynamicTiles != null)
-			        
-			    	
+				try{
+					background.draw(batch);
+				}
+				catch(NullPointerException e){
+					System.out.println("Missing GROUND environment layer");
+				}
+				try{
 					dynamicTiles.updateTiles(batch);
-				
+				} catch(NullPointerException e) {
+					System.out.println("missing tile renderer");
+				}
+//				if(dynamicTiles != null)
+//					dynamicTiles.updateTiles(batch);
+//				
 				//drawGrass
 				//int x=0, y=0;
 	//			Texture tex;
@@ -112,6 +126,7 @@ public class Graphics {
                             updateSpritePosition(entity, sprite);
                             sprite.draw(batch);
                         }
+
 					}
 					
 				}
@@ -209,6 +224,9 @@ public class Graphics {
 //		spriteManager.loadAssets_Tiles();
 		dynamicTiles = new TileGraphics(tileLayers, spriteManager);
 		
+	}
+	public void initBackground(){
+		background = EnvironmentLoader.getLayer_sprite(EnvironmentLayer.GROUND);
 	}
 	
 	/**
