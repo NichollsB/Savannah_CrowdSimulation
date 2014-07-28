@@ -82,10 +82,11 @@ public class Hunt extends State {
                 //eat or add seek steering to get to corpse
                 for(Entity food : foodCorpse) {
                     if(food.getType() == 0 ){ //&& food.getSubType() == 0) {
-                        if(boid.getPosition().cpy().sub(food.getPosition()).len2() < 16f * 16f) {
+                        float distance = boid.getPosition().cpy().sub(food.getPosition()).len2();
+                        if(distance < 16f * 16f) {
                             parent.pushState(boid, new Eat(parent, bm, (Object) food));
                             return false;
-                        } else {
+                        } else if (distance < boid.sightRadius * boid.sightRadius) {
                             parent.pushState(boid, new ApproachCorpse(parent, bm, (Object) food));
                             return false;
                         }
