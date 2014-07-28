@@ -3,7 +3,9 @@ package EvolutionaryAlgorithm;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import java.util.Random;
+import java.util.HashMap;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.managers.BoidManager;
@@ -22,7 +24,7 @@ public class EA2 {
 	private int someconstant = 0;
 	public boolean rtmode = false;
 	
-	
+	 public HashMap<Byte, Float[]> heldValues = new HashMap<Byte,Float[]>();
 	 private ArrayList<Boid> population = new ArrayList<Boid>();
 	 private ArrayList<Double> fitnessList = new ArrayList<Double>();
 	 private ArrayList<Double> probabilityList = new ArrayList<Double>();
@@ -32,39 +34,73 @@ public class EA2 {
 	 private Float[] gene2 = new Float[geneLength];
 	 private ArrayList<Float[]> geneList = new ArrayList<Float[]>();
 	 private ArrayList<Float[]> newGeneList = new ArrayList<Float[]>();
-	
-
-	
+	 private byte currentSpecies = 0;
+	 public byte totalSpecies = 4;
+	 private Byte species = 0;
+	 
+	 
+	 
+	 private void setup(){
+		 species = 0;
+		 Float[] held0 = new Float[geneLength];
+		 held0[0] = null;
+		 held0[1] = null;
+		 held0[2] = null;
+		 held0[3] = null;
+		 
+		 heldValues.put(species,held0);
+		 species = 1;
+		 Float[] held1 = new Float[geneLength];
+		 held1[0] = 0.5f;
+		 held1[1] = 1f;
+		 held1[2] = 1f;
+		 held1[3] = null; 
+		 
+		 heldValues.put(species,held1);
+		 species = 2;
+		 Float[] held2 = new Float[geneLength];
+		 held2[0] = 2f;
+		 held2[1] = 1f;
+		 held2[2] = 1f;
+		 held2[3] = 2f;
+		 
+		 heldValues.put(species,held2);
+		 species = 3;
+		 Float[] held3 = new Float[geneLength];
+		 held3[0] = null;
+		 held3[1] = 1f;
+		 held3[2] = 1f;
+		 held3[3] = null;
+	 
+		 heldValues.put(species,held3);
+	 }
+	 
+	 
+	 
 	public void Evolve() {
-	
-		validCheck();
-		calculateFitness();
-		calculateProbabilty();
-		mode();
-		for(int num = 0; num <someconstant; num++){
-		//TODO  issues keep gene the same
-			
-			
-			
-			Float[] tmp = new Float[geneLength];
-			System.arraycopy(selection(),0 ,tmp , 0, geneLength);
-			
-			
-			newGeneList.add(tmp);
-			
+		setup();
+		for(byte i =0 ; i<totalSpecies; i++){
+			currentSpecies = i ;
+			System.out.println("Species "+ currentSpecies);
+			validCheck();
+			calculateFitness();
+			calculateProbabilty();
+			mode();
+			for(int num = 0; num <someconstant; num++){
+				Float[] tmp = new Float[geneLength];
+				System.arraycopy(selection(),0 ,tmp , 0, geneLength);	
+				newGeneList.add(tmp);
+			}
+			System.out.println("Held Values " + Arrays.toString(heldValues.get(currentSpecies)));
+			for(Float[] gene : newGeneList) {
+			System.out.println("NEW GENE " + Arrays.toString(gene));
+			}
 
-		
-	
+			for(int j = 0; j<popNum ; j++){
+				population.get(j).setGene(newGeneList.get(j));
+			}
+			reset();
 		}
-		
-		for(Float[] gene : newGeneList) {
-		System.out.println("NEW GENE " + Arrays.toString(gene));
-		}
-
-		for(int i = 0; i<popNum ; i++){
-			population.get(i).setGene(newGeneList.get(i));
-		}
-		reset();
 	}
 		
 	private void reset(){
@@ -100,7 +136,7 @@ public class EA2 {
 	private  void validCheck() {
 		
 		for(Boid b : BoidManager.boids){
-			if(b.getAge() >= breedingAge && b.getSpecies()==1){
+			if(b.getAge() >= breedingAge && b.getSpecies()==currentSpecies){
 				population.add(b);
 				//add to population
 				popNum++;
@@ -281,10 +317,21 @@ public class EA2 {
 		
 		//}
 			//System.out.println(Arrays.toString(newGene));
-		return newGene;
+		overwriteHeldValues(newGene);
+			return newGene;
 		
 	}
 	
+	private Float[] overwriteHeldValues(Float[] newGene) {
+		Float[] tmp = heldValues.get(currentSpecies);
+		for(int i = 0 ; i<geneLength ; i++){
+			if(tmp[i] != null){
+				newGene[i]=tmp[i];
+			}
+		}
+		
+		return newGene;
+	}
 	
 	
 }
