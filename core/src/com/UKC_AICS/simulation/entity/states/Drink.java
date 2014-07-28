@@ -26,7 +26,7 @@ public class Drink extends State {
             boid.setVelocity(new Vector3(0f,0f,0f));
 
             // drink from tile
-            boid.thirst -= 0.1;
+            boid.thirst -= 0.2;
             return false;
         }
     }

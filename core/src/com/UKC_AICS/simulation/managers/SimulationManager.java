@@ -35,7 +35,7 @@ public class SimulationManager extends Manager {
     BoidManager boidManager = new BoidManager(this);
     WorldManager worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
     EA2 ea = new EA2();
-    
+
     static public int minutes = 0;
     static public int hours = 0;
     static public int days = 0;

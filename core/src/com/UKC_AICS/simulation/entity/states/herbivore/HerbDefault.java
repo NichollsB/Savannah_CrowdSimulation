@@ -48,7 +48,7 @@ public class HerbDefault extends State {
         } else if (boid.hunger > 75) {
 //            System.out.println(boid + "\nJust posted Hungry state ");
             parent.pushState(boid, new Hungry(parent, bm));
-        } else if (boid.age > 10 && boid.hunger < 70 && boid.thirst < 70) {
+        } else if (boid.age > 10 && boid.hunger < 35 && boid.thirst < 35) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
             parent.pushState(boid, new Reproduce(parent, bm));
 //        } else if (boid.age > 10 && boid.hunger > 70 && boid.thirst > 70) {
@@ -67,17 +67,26 @@ public class HerbDefault extends State {
 
             for (Boid b : nearBoids) {
                 if (SimulationManager.speciesData.get(b.getSpecies()).getDiet().equals("carnivore")) {
-
+                    predators.add(b);
                 } else {
                     steering.set(boid.getPosition());
                     steering.sub(b.getPosition());
-                    if (steering.len2() > boid.flockRadius * boid.flockRadius) {
+                    if (steering.len() > boid.flockRadius) {
                         nearBoids.removeValue(b, true);
                     }
                     //if the boid is outside the flock radius it CANT also be in the "too close" range
-                    else if (steering.len2() < boid.nearRadius * boid.nearRadius) {
+                    else if (steering.len() < boid.nearRadius * boid.nearRadius) {
                         closeBoids.add(b);
                     }
+                }
+            }
+
+            if(predators.size > 0) {
+                for(Boid predator : predators) {
+                    boid.panic += 10;
+                }
+                if (boid.panic > 30) {
+                    parent.pushState(boid, new Panic(parent, bm));
                 }
             }
 

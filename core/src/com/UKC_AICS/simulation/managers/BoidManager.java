@@ -82,11 +82,11 @@ public class BoidManager extends Manager {
     public void createBoid(Species species) {
         Boid boid = new Boid(species);
 
-//        int maxXPos = 1180;
-//        int minXPos = 100;
-//
-//        int maxYPos = 620;
-//        int minYPos = 100;
+        int maxXPos = 1180;
+        int minXPos = 100;
+
+        int maxYPos = 620;
+        int minYPos = 100;
 //
 //        int maxXOrient = 10;
 //        int maxYOrient = 10;
@@ -96,8 +96,8 @@ public class BoidManager extends Manager {
         int maxYVel = 1;
 
 
-        int xPos = 500;//rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
-        int yPos = 500;//rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+        int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
 
         int xVel = (rand.nextInt(2 * maxXVel) - maxXVel);
 
@@ -113,6 +113,8 @@ public class BoidManager extends Manager {
 
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the population to be too old.
+
+        boid.group = (byte)rand.nextInt(10);
 
         boid.setCohesion(species.getCohesion());
         boid.setAlignment(species.getAlignment());
