@@ -284,6 +284,13 @@ public class Boid extends Entity {
     	
     }      
     
+    public void setGene(Float[] newGene ) {
+    	for(int i = 0 ; i<geneSize; i++){
+    		gene[i] = newGene[i];
+    	}
+    	
+    }  
+    
     public Float[] getGene() {
     	return gene;
     }
