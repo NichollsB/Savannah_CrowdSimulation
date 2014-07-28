@@ -112,8 +112,8 @@ public class BoidManager extends Manager {
         boid.setPosition(xPos, yPos, 0);
         boid.setVelocity(xVel, yVel, 0);
 
-        boid.hunger = rand.nextInt(120) + 20;
-        boid.thirst = rand.nextInt(150) + 50;
+        boid.hunger = rand.nextInt(80);
+        boid.thirst = rand.nextInt(80);
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the population to be too old.
 

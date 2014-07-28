@@ -24,7 +24,7 @@ public class Eat extends State {
 
     @Override
     public boolean update(Boid boid) {
-        if(boid.hunger > 25) {
+        if(boid.hunger > 35) {
             boid.setVelocity(0f, 0f, 0f);
             boid.setAcceleration(boid.getVelocity());
             //TODO add checks, make sure corpse is next to boid

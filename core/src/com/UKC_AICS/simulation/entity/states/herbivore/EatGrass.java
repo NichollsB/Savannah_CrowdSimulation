@@ -27,7 +27,7 @@ public class EatGrass extends State{
         }
         byte grassAmount = WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("grass");
 
-        if( grassAmount >= 10 && boid.hunger > 80) {
+        if( grassAmount >= 10 && boid.hunger > 20) {
 
             //Entities to check collision with
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());

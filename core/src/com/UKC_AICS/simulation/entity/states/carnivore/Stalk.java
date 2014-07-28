@@ -28,7 +28,7 @@ public class Stalk extends State {
     @Override
     public boolean update(Boid boid) {
         //check boid still exists
-        if(boid.hunger > 45) {
+        if(boid.hunger > 75) {
             if (parent.checkBoid(target)) {
                 float distance = boid.getPosition().cpy().sub(target.getPosition()).len2();
                 //check still within sight
