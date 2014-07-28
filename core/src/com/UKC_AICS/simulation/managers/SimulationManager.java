@@ -168,7 +168,9 @@ public class SimulationManager extends Manager {
             hours = 0;
             days += 1;
             setDay();
+
             ea.Evolve();
+
             increment = true;
         } else {
             minutes = 0;

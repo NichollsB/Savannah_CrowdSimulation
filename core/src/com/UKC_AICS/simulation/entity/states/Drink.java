@@ -15,14 +15,14 @@ public class Drink extends State {
     @Override
     public boolean update(Boid boid) {
 
-        if(boid.thirst > 80) { //and check there is enough water is still there to drink from.
+        if(boid.thirst < 25) { //and check there is enough water is still there to drink from.
             boid.setState(this.toString());
 //            System.out.println(boid + "\n Just quit DRINK state ");
             return true;
         } else {
 
             // drink from tile
-            boid.thirst += 0.1;
+            boid.thirst -= 0.1;
             return false;
         }
     }

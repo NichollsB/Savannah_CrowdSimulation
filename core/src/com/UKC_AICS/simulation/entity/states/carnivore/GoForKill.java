@@ -29,7 +29,7 @@ public class GoForKill extends State {
     @Override
     public boolean update(Boid boid) {
         //check boid still exists
-        if(boid.hunger < 50) {
+        if(boid.hunger > 60) {
             if (parent.checkBoid(target)) {
 
                 //distance between boid and target
@@ -38,9 +38,8 @@ public class GoForKill extends State {
                 //check if target is collided  and killed
                 if (distance <= 16f * 16f) {
                     //Target has been killed.
-                    Object food = new Object((byte) 0, (byte) 0, new Vector3(target.position.x, target.position.y, 0f));
-                    WorldManager.putObject(food);
-                    bm.storeBoidForRemoval(target);
+                    Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f));
+                    bm.storeBoidForRemoval(target, food);
                     boid.setVelocity(0f, 0f, 0f);
                     boid.setAcceleration(boid.getVelocity());
                     parent.pushState(boid, new Eat(parent, bm, food));
@@ -69,6 +68,7 @@ public class GoForKill extends State {
                     //pop out if target is out of sight
                     return true;
                 }
+
 
             } else {
                 //pop out if target is dead
