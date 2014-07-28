@@ -5,24 +5,21 @@ import com.UKC_AICS.simulation.entity.Entity;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-/**
- * Created by James on 17/07/2014.
- */
-public class Pursuit extends Behaviour {
+public class Evade extends Behaviour {
 
 
     static float STEPS_AHEAD = 3f;  //should look 3 steps ahead of prey (3f * velocity)
     static Vector3 vec = new Vector3();
 
     public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
-        throw new Error("Pursuit is not to be used in this manner. Try static access Pursuit.act(Boid boid, Vector3 target)");
+        throw new Error("Evade is not to be used in this manner. Try static access Evade.act(Boid boid, Vector3 target)");
     }
 
     public static Vector3 act(Boid boid, Boid target) {
 
-        vec.set(target.getPosition());
-        vec.add(target.getVelocity().cpy().scl(STEPS_AHEAD));  //should look 3 steps ahead of prey (3f * velocity)
-        vec.sub(boid.getPosition());
+        vec.set(boid.getPosition());
+        vec.add(boid.getVelocity().cpy().scl(STEPS_AHEAD));  //should look 3 steps ahead of prey (3f * velocity)
+        vec.sub(target.getPosition());
         vec.nor().scl(boid.maxSpeed);
         vec.sub(boid.getVelocity());
         vec.limit(boid.maxForce);

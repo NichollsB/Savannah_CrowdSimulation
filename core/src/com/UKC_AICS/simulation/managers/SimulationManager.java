@@ -120,7 +120,7 @@ public class SimulationManager extends Manager {
     public void generateBoids(){
     	//Create a map of species bytes to filenames for the boid sprite textures
     	fileLocations = new HashMap<Byte, String>();
-        // Looks through tempSpeciesData Hashmap for each species hashmap.  extracts number for that species and byte reference.
+
         Iterator it = speciesData.keySet().iterator();
         while (it.hasNext()) {
             Byte spByte = (Byte)it.next();

@@ -63,16 +63,21 @@ public class HerbDefault extends State {
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findInSight(boid);
 
             Array<Boid> closeBoids = new Array<Boid>();
+            Array<Boid> predators = new Array<Boid>();
 
             for (Boid b : nearBoids) {
-                steering.set(boid.getPosition());
-                steering.sub(b.getPosition());
-                if (steering.len2() > boid.flockRadius * boid.flockRadius) {
-                    nearBoids.removeValue(b, true);
-                }
-                //if the boid is outside the flock radius it CANT also be in the "too close" range
-                else if (steering.len2() < boid.nearRadius * boid.nearRadius) {
-                    closeBoids.add(b);
+                if (SimulationManager.speciesData.get(b.getSpecies()).getDiet().equals("carnivore")) {
+
+                } else {
+                    steering.set(boid.getPosition());
+                    steering.sub(b.getPosition());
+                    if (steering.len2() > boid.flockRadius * boid.flockRadius) {
+                        nearBoids.removeValue(b, true);
+                    }
+                    //if the boid is outside the flock radius it CANT also be in the "too close" range
+                    else if (steering.len2() < boid.nearRadius * boid.nearRadius) {
+                        closeBoids.add(b);
+                    }
                 }
             }
 
