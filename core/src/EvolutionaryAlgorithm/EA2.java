@@ -3,7 +3,6 @@ package EvolutionaryAlgorithm;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Random;
 
 import com.UKC_AICS.simulation.entity.Boid;
@@ -26,11 +25,11 @@ public class EA2 {
 	
 	 private ArrayList<Boid> population = new ArrayList<Boid>();
 	 private ArrayList<Double> fitnessList = new ArrayList<Double>();
-	 private ArrayList<Double> probablityList = new ArrayList<Double>();
+	 private ArrayList<Double> probabilityList = new ArrayList<Double>();
 	 private Random r = new Random();
 	 private Float[] newGene = new Float[geneLength];
-	// private Float[] gene1 = new Float[geneLength];
-	// private Float[] gene2 = new Float[geneLength];
+	 private Float[] gene1 = new Float[geneLength];
+	 private Float[] gene2 = new Float[geneLength];
 	 private ArrayList<Float[]> geneList = new ArrayList<Float[]>();
 	 private ArrayList<Float[]> newGeneList = new ArrayList<Float[]>();
 	
@@ -65,10 +64,18 @@ public class EA2 {
 		for(int i = 0; i<popNum ; i++){
 			population.get(i).setGene(newGeneList.get(i));
 		}
-			
+		reset();
 	}
 		
+	private void reset(){
+		population.clear();
+		newGeneList.clear();
+		fitnessList.clear();
+		probabilityList.clear();
+		geneList.clear();
 		
+		popNum = 0;
+	}
 	
 	
 	
@@ -137,7 +144,7 @@ public class EA2 {
 		for(double val : fitnessList){
 			p = val/totalFitness;
 			totalProbability = totalProbability + p;
-			probablityList.add(totalProbability);
+			probabilityList.add(totalProbability);
 		
 		}
 		
@@ -149,10 +156,8 @@ public class EA2 {
 	public  Float[] selection() {
 		System.out.println();
 		System.out.println("SELECTION");
-		double rangeMin = probablityList.get(0);
-		double rangeMax = probablityList.get(popNum-1);
-		Float[] gene1 = new Float[geneLength];
-		Float[] gene2 = new Float[geneLength];
+		double rangeMin = probabilityList.get(0);
+		double rangeMax = probabilityList.get(popNum-1);
 		
 	
 		//Select random number
@@ -163,7 +168,7 @@ public class EA2 {
 
 			for(int i = 0; i<popNum ; i++){
 		//	
-				if(probablityList.get(i) <=randomValue && randomValue<probablityList.get(i+1)){	
+				if(probabilityList.get(i) <=randomValue && randomValue<probabilityList.get(i+1)){	
 					
 		
 					geneList.add(population.get(i).getGene());
