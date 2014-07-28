@@ -25,7 +25,7 @@ public class CarnReproduce extends State {
 
     @Override
     public boolean update(Boid boid) {
-        if (boid.hunger > 60 && boid.thirst > 60) {
+        if (boid.hunger < 60 && boid.thirst < 60) {
             boid.setState(this.toString());
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
@@ -64,16 +64,16 @@ public class CarnReproduce extends State {
                     }
 
                 }
-                if(tempVec.len2() < 10f && nearest.hunger>60 && nearest.thirst > 60) {
+                if(tempVec.len2() < 10f && nearest.hunger < 60 && nearest.thirst < 60) {
                     System.out.println("CARNIVORE boid made a baby " + boid.getSpecies());
 //                    bm.createBoid(boid); //create copy of self.
                     Boid baby = new Boid(boid);
                     baby.setAge(0);
                     bm.storeBoidForAddition(baby);
-                    boid.hunger = 0;
-                    boid.thirst = 0;
-                    nearest.hunger = 0;
-                    nearest.thirst = 0;
+                    boid.hunger = 100;
+                    boid.thirst = 100;
+                    nearest.hunger = 100;
+                    nearest.thirst = 100;
                     return true;
                 }
                 steering.set(0f,0f,0f);

@@ -26,7 +26,7 @@ public class Hungry extends State {
     public boolean update(Boid boid) {
         //search for food.
 
-        if (boid.hunger > 60) {
+        if (boid.hunger < 40) {
             // pop
             return true; //stop looking for food.
         } else {

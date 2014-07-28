@@ -27,7 +27,7 @@ public class EatGrass extends State{
         }
         byte grassAmount = WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("grass");
 
-        if( grassAmount >= 10 && boid.hunger < 80) {
+        if( grassAmount >= 10 && boid.hunger > 80) {
 
             //Entities to check collision with
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
@@ -46,7 +46,7 @@ public class EatGrass extends State{
             boid.setState(this.toString());
 //            boid.setAcceleration(new Vector3(0f, 0f, 0f).sub(boid.velocity));
             grassAmount -= 1;
-            boid.hunger += 1;
+            boid.hunger -= 1;
             WorldManager.changeTileOnLayer(boid.position.x, boid.position.y, "grass", grassAmount);
         } else {
 //            System.out.println(boid + "\n Just quit EATGRASS state "  );

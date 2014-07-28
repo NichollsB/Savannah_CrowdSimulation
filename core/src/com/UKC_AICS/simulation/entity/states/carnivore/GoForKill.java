@@ -29,7 +29,7 @@ public class GoForKill extends State {
     @Override
     public boolean update(Boid boid) {
         //check boid still exists
-        if(boid.hunger < 50) {
+        if(boid.hunger > 60) {
             if (parent.checkBoid(target)) {
 
                 //distance between boid and target

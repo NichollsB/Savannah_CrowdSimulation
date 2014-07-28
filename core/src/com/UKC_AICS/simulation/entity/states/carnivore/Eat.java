@@ -24,14 +24,14 @@ public class Eat extends State {
 
     @Override
     public boolean update(Boid boid) {
-        if(boid.hunger < 90) {
+        if(boid.hunger > 25) {
             boid.setVelocity(0f, 0f, 0f);
             boid.setAcceleration(boid.getVelocity());
             //TODO add checks, make sure corpse is next to boid
 //            System.out.println("EATING");
             if(food.getMass() > 3f) {
                 food.reduceMass(0.1f);
-                boid.hunger += 0.4f;
+                boid.hunger -= 0.6f;
                 return false;
             } else {
                 //no food left on corpse
