@@ -212,23 +212,24 @@ public class BoidManager extends Manager {
     public boolean checkForDeath(final Boid boid) {
         float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
         if (boid.hunger >= 120) {
-            removeBoid(boid);
             Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f));
             WorldManager.putObject(food);
-
+            removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of hunger :( ");
             return true;
         }
         else if( boid.thirst >= 110) {
+            Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f));
+            WorldManager.putObject(food);
             boids.removeValue(boid, false);
             getBoidGrid().removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of thirst :( ");
             return true;
         }
         else if (boid.age > lifespan) {
-            removeBoid(boid);
             Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f));
             WorldManager.putObject(food);
+            removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of age related issues :( ");
             return true;
         }
@@ -245,11 +246,14 @@ public class BoidManager extends Manager {
 //            b.setAge(newAge);
         }
     }
-
+    public void storeBoidForRemoval(Boid boid) {
+        if(!removalBoids.contains(boid, false)) {
+            removalBoids.add(boid);
+        }
+    }
 
     public void storeBoidForRemoval(Boid boid, Object food) {
         if(!removalBoids.contains(boid, false)) {
-
             WorldManager.putObject(food);
             removalBoids.add(boid);
         }

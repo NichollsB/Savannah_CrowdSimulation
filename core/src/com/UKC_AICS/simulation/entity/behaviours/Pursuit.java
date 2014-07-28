@@ -21,10 +21,10 @@ public class Pursuit extends Behaviour {
     public static Vector3 act(Boid boid, Boid target) {
 
         vec.set(target.getPosition());
-        vec.add(target.getVelocity().scl(STEPS_AHEAD));  //should look 3 steps ahead of prey (3f * velocity)
+        vec.add(target.getVelocity().cpy().scl(STEPS_AHEAD));  //should look 3 steps ahead of prey (3f * velocity)
         vec.sub(boid.getPosition());
         vec.nor().scl(boid.maxSpeed);
-        vec.sub(boid.getVelocity());
+//        vec.sub(boid.getVelocity());
         vec.limit(boid.maxForce);
 
         return vec;

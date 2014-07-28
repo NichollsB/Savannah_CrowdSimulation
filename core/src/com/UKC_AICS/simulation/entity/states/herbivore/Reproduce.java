@@ -33,8 +33,8 @@ public class Reproduce extends State {
             Array<Boid> closeBoids = new Array<Boid>();
 
             for (Boid b : nearBoids) {
-                //see if the boid is the same species and in the same state - should be Reproduce.
-                if (boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state)) {
+                //see if the boid is the same species and in the same state - should be Reproduce AND not self
+                if (boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state) && !boid.equals(b)) {
                     potentialMates.add(b);
                 }
                 steering.set(boid.getPosition());

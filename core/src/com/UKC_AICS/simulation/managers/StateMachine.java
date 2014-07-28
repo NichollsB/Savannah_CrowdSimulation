@@ -44,6 +44,7 @@ public class StateMachine {
 
         behaviours.put("seek", new Seek());
         behaviours.put("pursuit", new Pursuit());
+        behaviours.put("arrive", new Arrive());
 
         boidStates = new HashMap<Boid, Stack<State>>();
     }
