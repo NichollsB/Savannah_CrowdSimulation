@@ -59,7 +59,7 @@ public class Reproduce extends State {
 
                     tempVec.set(boid.getPosition());
                     tempVec.sub(nearest.getPosition());
-                    if (tempVec.len2() < steering.len2()) {
+                    if (tempVec.len2() < steering.len2() && other.hunger>60 && other.thirst > 60) {
                         nearest = other;
                     }
 
@@ -115,7 +115,6 @@ public class Reproduce extends State {
 
                 boid.setAcceleration(steering);
             }
-
             return false;
 
         } else {

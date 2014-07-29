@@ -34,7 +34,7 @@ public class Stalk extends State {
                 float distance = boid.getPosition().cpy().sub(target.getPosition()).len2();
                 //check still within sight
                 if (distance < boid.sightRadius * boid.sightRadius) {
-                    Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
+                    Array<Boid> nearBoids = BoidManager.getBoidGrid().findInSight(boid);
                     Array<Entity> collisionObjects = new Array<Entity>(bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y)));
                     collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
                     collisionObjects.removeValue(target,false); //remove target from collision avoidance

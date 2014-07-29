@@ -8,7 +8,7 @@
     </object>
     <object id="01" name="wildebeest">
         <type>0</type> <!-- byte -->
-        <subtype>0</subtype> <!-- byte -->
+        <subtype>1</subtype> <!-- byte -->
         <spriteLocation>data/corpse_object_x16_2.png</spriteLocation>
     </object>
     <object id="02" name="gazelles">

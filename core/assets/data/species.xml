@@ -3,10 +3,10 @@
 <!--xml file for species based information-->
 <settings>
     <species name="zebra">
-        <number>10</number>
+        <number>20</number>
         <byte>0</byte>  <!-- this is the sub-type -->
 
-        <spritergb r = "0" g="0" b="1"/>
+        <spritergb r = "0" g="0" b="0.6"/>
         <diet>herbivore</diet>
 
         <sightRadius>180f</sightRadius>
@@ -25,10 +25,10 @@
     </species>
 
     <species name="wildebeest">
-        <number>10</number>
+        <number>50</number>
         <byte>1</byte>  <!-- this is the sub-type -->
 
-        <spritergb r = "1" g="0" b="0"/>
+        <spritergb r = "0.6" g="0" b="0"/>
         <diet>herbivore</diet>
         <sightRadius>180f</sightRadius>
         <flockRadius>120f</flockRadius>
@@ -46,16 +46,16 @@
     </species>
 
     <species name="gazelle">
-        <number>10</number>
+        <number>20</number>
         <byte>2</byte>  <!-- this is the sub-type -->
-        <spritergb r = "0" g="1" b="0"/>
+        <spritergb r = "0" g="0.6" b="0"/>
 
         <diet>herbivore</diet>
         <sightRadius>250f</sightRadius>
         <flockRadius>80f</flockRadius>
-        <nearRadius>15f</nearRadius>
+        <nearRadius>20</nearRadius>
         <maxSpeed>3.4f</maxSpeed>
-        <maxForce>0.2f</maxForce>
+        <maxForce>0.15f</maxForce>
         <lifespan>50</lifespan>
         <cohesion>0.5f</cohesion>
         <separation>0.5f</separation>
@@ -67,7 +67,7 @@
     <species name="lion">
         <number>3</number>
         <byte>3</byte>  <!-- this is the sub-type -->
-        <spritergb r = "1" g="0" b="1"/>
+        <spritergb r = "0.6" g="0" b="0.6"/>
         <diet>carnivore</diet>
         <sightRadius>400f</sightRadius>
         <flockRadius>150f</flockRadius>

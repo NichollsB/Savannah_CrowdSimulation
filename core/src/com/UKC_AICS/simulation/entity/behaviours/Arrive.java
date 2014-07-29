@@ -20,7 +20,7 @@ public class Arrive extends Behaviour {
         vec.set(target.cpy().sub(boid.getPosition()));
         float dist = vec.len();
         if(dist > 0 ) {
-            float speed = boid.maxSpeed * (dist / boid.sightRadius);
+            float speed = boid.maxSpeed * (dist / boid.sightRadius*boid.sightRadius);
             speed = Math.min(boid.maxSpeed, speed);
             vec.nor().scl(speed);
             vec.sub(boid.getVelocity());

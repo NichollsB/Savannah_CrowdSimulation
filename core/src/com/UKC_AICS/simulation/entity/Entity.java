@@ -1,6 +1,5 @@
 package com.UKC_AICS.simulation.entity;
 
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -9,9 +8,10 @@ import com.badlogic.gdx.math.Vector3;
 public class Entity {
     public Vector3 position; // explicitly 3d vectors for extensibility
     public Vector3 velocity; // explicitly 3d vectors for extensibility
+    public double orientation; // explicitly 3d vectors for extensibility
+
     public byte type = 0; //what category of object is it? // 1 == boid(any boid),
     public byte subType = 0; //what type of object is it? // for boids this would be subType
-    protected double orientation;
 
     /**
      *

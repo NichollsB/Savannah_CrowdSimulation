@@ -3,6 +3,7 @@ package com.UKC_AICS.simulation.managers;
 import EvolutionaryAlgorithm.EA2;
 import EvolutionaryAlgorithm.EAmain;
 
+import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
@@ -30,9 +31,11 @@ public class SimulationManager extends Manager {
 //    static final BoidManagerThreadedTwo boidManager = new BoidManagerThreadedTwo();
 //    BoidManagerThreadedThree boidManager = new BoidManagerThreadedThree(this);
 //    BoidManagerOld boidManager = new BoidManagerOld(this);
+
     BoidManager boidManager = new BoidManager(this);
-    WorldManager worldManager = new WorldManager(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+    WorldManager worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
     EA2 ea = new EA2();
+
     static public int minutes = 0;
     static public int hours = 0;
     static public int days = 0;
@@ -65,30 +68,31 @@ public class SimulationManager extends Manager {
         Array<Byte> objTypes = new Array<Byte>();
         Object obj = new Object((byte)2,(byte)1,355,450);
         objTypes.add(obj.getType());
-        worldManager.putObject(obj);
+        WorldManager.putObject(obj);
 
         obj = new Object((byte)2,(byte)1,500,200);
 ////        obj = new Object((byte)2,(byte)1,900,300);
-        worldManager.putObject(obj);
+        WorldManager.putObject(obj);
 
         obj = new Object((byte)3,(byte)1,755,450);
         objTypes.add(obj.getType());
-        worldManager.putObject(obj);
+        WorldManager.putObject(obj);
+        objTypes.add((byte)0);
 
         obj = new Object((byte)2,(byte)1,400,600);
-        worldManager.putObject(obj);
+        WorldManager.putObject(obj);
         obj = new Object((byte)2,(byte)1,160,200);
-        worldManager.putObject(obj);
+        WorldManager.putObject(obj);
         obj = new Object((byte)2,(byte)1,160,400);
-        worldManager.putObject(obj);
+        WorldManager.putObject(obj);
         obj = new Object((byte)2,(byte)1,180,600);
-        worldManager.putObject(obj);
+        WorldManager.putObject(obj);
         obj = new Object((byte)2,(byte)1,1100,200);
-        worldManager.putObject(obj);
+        WorldManager.putObject(obj);
         obj = new Object((byte)2,(byte)1,1100,400);
-        worldManager.putObject(obj);
+        WorldManager.putObject(obj);
         obj = new Object((byte)2,(byte)1,1100,600);
-        worldManager.putObject(obj);
+        WorldManager.putObject(obj);
 
     }
 
@@ -118,7 +122,7 @@ public class SimulationManager extends Manager {
     public void generateBoids(){
     	//Create a map of species bytes to filenames for the boid sprite textures
     	fileLocations = new HashMap<Byte, String>();
-        // Looks through tempSpeciesData Hashmap for each species hashmap.  extracts number for that species and byte reference.
+
         Iterator it = speciesData.keySet().iterator();
         while (it.hasNext()) {
             Byte spByte = (Byte)it.next();
@@ -167,17 +171,15 @@ public class SimulationManager extends Manager {
             minutes = 0;
             hours = 0;
             days += 1;
-            setDay();
-
+//            setDay();
             ea.Evolve();
-
             increment = true;
         } else {
             minutes = 0;
             hours = 0;
             days = 0;
             weeks += 1;
-            setDay();
+//            setDay();
             increment = true;
         }
         return increment;
