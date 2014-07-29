@@ -31,14 +31,14 @@ public class Hunt extends State {
     public boolean update(Boid boid) {
 
         //check still hungry
-        if (boid.hunger > 80) {
+        if (boid.hunger > 30) {
 
             Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
             Array<Entity> foodCorpse = new Array<Entity>(dummyObjects);
             //TODO check for food/corpse objects first
 
-            Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
+            Array<Boid> nearBoids = BoidManager.getBoidGrid().findInSight(boid); //.getPosition());
             Array<Boid> closeBoids = new Array<Boid>();
 
             for (Boid b : nearBoids) {
