@@ -27,9 +27,11 @@ public class Alignment extends Behaviour {
                 }
                 if (b.getSpecies() == boid.getSpecies()) {
                     if (b.group == boid.group) {
-                        tmpVec.add(b.getVelocity().cpy().scl(1.5f));
+                        tmpVec.add(b.getVelocity());
+                        tmpVec.add(b.getVelocity());
+                        num++;
                     } else {
-                        tmpVec.add(b.getVelocity().cpy().scl(0.8f));
+                        tmpVec.add(b.getVelocity());
                     }
                     num++;
                 }
