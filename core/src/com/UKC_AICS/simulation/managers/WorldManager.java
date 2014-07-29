@@ -1,7 +1,8 @@
 package com.UKC_AICS.simulation.managers;
 
 import com.UKC_AICS.simulation.Constants;
-import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.utils.ObjectGrid;
 import com.UKC_AICS.simulation.utils.QuadTree;
 import com.UKC_AICS.simulation.world.LandMap;
@@ -122,5 +123,18 @@ public class WorldManager extends Manager {
   //Added by Ben Nicholls for graphics purposes - very probably temporary
     public HashMap<String, byte[][]> getMapInfo(){
     	return map.information_layers;
+    }
+
+    private void decayCorpses(boolean dayIncrement) {
+        if(dayIncrement) {
+            for(Entity corpse : objects) {
+                if( corpse.getType()==0) {
+                    ((Object)corpse).corpseDecay(1f);
+                    if(((Object) corpse).getMass()<0.5f) {
+
+                    }
+                }
+            }
+        }
     }
 }
