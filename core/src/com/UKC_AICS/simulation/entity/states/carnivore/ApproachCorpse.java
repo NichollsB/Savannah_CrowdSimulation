@@ -22,7 +22,7 @@ public class ApproachCorpse extends State {
 
     @Override
     public boolean update(Boid boid) {
-        if(boid.hunger > 75) {
+        if(boid.hunger > 30) {
             float distance = boid.getPosition().cpy().sub(food.getPosition()).len2();
             if(distance < boid.sightRadius * boid.sightRadius) {
                 if (distance > 16f * 16f) {

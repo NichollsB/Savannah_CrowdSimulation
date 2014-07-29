@@ -38,7 +38,7 @@ public class Hungry extends State {
                 parent.pushState(boid, new EatGrass(parent, bm));
                 boid.setAcceleration(new Vector3(boid.velocity).scl(0.01f));
             }
-
+            //TODO add some steering to find food if there is none on tile
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
             Array<Boid> closeBoids = new Array<Boid>();
 

@@ -78,9 +78,9 @@ public class CarnReproduce extends State {
                     nearest.thirst = 100;
                     return true;
                 }
-                steering.set(0f,0f,0f);
+//                steering.set(0f,0f,0f);
 
-                steering.add(Arrive2.act(boid, nearest));
+                steering.add(Arrive.act(boid, nearest.getPosition()));
 
                 boid.setAcceleration(steering);
 

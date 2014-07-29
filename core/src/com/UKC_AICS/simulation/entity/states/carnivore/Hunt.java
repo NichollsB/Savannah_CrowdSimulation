@@ -33,7 +33,7 @@ public class Hunt extends State {
     public boolean update(Boid boid) {
 
         //check still hungry
-        if (boid.hunger > 30) {
+        if (boid.hunger > 32) {
 
             Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
