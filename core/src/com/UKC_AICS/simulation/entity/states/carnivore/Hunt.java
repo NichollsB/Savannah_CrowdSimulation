@@ -57,7 +57,8 @@ public class Hunt extends State {
             Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
 
-            tempVec = Collision.act(collisionObjects, boid);
+//            tempVec = Collision.act(collisionObjects, boid);
+            tempVec = behaviours.get("collision").act(collisionObjects, boid);
 
 
 
