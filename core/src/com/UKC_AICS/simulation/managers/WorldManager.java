@@ -42,7 +42,7 @@ public class WorldManager extends Manager {
 
     @Override
     public void update(boolean dayIncrement) {
-
+        decayCorpses(dayIncrement);
     }
 
     public static void putObject(Entity entity, int x, int y) {
@@ -130,8 +130,8 @@ public class WorldManager extends Manager {
             for(Entity corpse : objects) {
                 if( corpse.getType()==0) {
                     ((Object)corpse).corpseDecay(1f);
-                    if(((Object) corpse).getMass()<0.5f) {
-
+                    if(((Object)corpse).getMass()<0.5f) {
+                        removeObject(corpse);
                     }
                 }
             }

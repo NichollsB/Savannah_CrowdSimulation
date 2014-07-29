@@ -102,7 +102,7 @@ public class CarnDefault extends State{
 //                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
 //                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
 
-                steering.add(tempVec);
+//                steering.add(tempVec);
                 boid.setAcceleration(steering);
 
             } else {
