@@ -2,6 +2,8 @@ package com.UKC_AICS.simulation.entity.states.carnivore;
 
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.entity.behaviours.Behaviour;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.behaviours.Seek;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
@@ -55,7 +57,7 @@ public class Hunt extends State {
             Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
 
-            tempVec = behaviours.get("collision").act(collisionObjects, boid);
+            tempVec = Collision.act(collisionObjects, boid);
 
 
 

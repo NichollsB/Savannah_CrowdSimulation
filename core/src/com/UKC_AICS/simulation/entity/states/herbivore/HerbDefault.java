@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.entity.states.herbivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.entity.states.Thirsty;
 import com.UKC_AICS.simulation.managers.BoidManager;
@@ -77,7 +78,7 @@ public class HerbDefault extends State {
             //Collision avoidance arrays
             Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
-            tempVec = behaviours.get("collision").act(collisionObjects, boid);
+            tempVec = Collision.act(collisionObjects, boid);
 
             steering.set(0f, 0f, 0f);
             boid.setAcceleration(steering);

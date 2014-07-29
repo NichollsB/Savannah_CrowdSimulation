@@ -26,7 +26,7 @@ public class CarnReproduce extends State {
 
     @Override
     public boolean update(Boid boid) {
-        if (boid.hunger < 60 && boid.thirst < 60) {
+        if (boid.hunger < 45 && boid.thirst < 45) {
             boid.setState(this.toString());
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());

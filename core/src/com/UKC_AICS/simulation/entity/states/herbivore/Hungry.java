@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.entity.states.herbivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
@@ -78,7 +79,7 @@ public class Hungry extends State {
 //            steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
             //Add collision avoidance
-            steering.add(behaviours.get("collision").act(collisionObjects, boid));
+            steering.add(Collision.act(collisionObjects, boid));
 
             steering.nor().scl(boid.maxSpeed / 2);
             steering.sub(boid.getVelocity());

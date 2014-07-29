@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.entity.states.carnivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.behaviours.Pursuit;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.entity.states.Thirsty;
@@ -33,7 +34,7 @@ public class CarnDefault extends State{
 //            System.out.println(boid + "\n Just posted Thirsty state "  );
             parent.pushState(boid, new Thirsty(parent, bm));
         }
-        else if(boid.hunger > 70) {
+        else if(boid.hunger > 82) {
 //            System.out.println(boid + "\n Just posted Hungry state "  );
 //            parent.pushState(boid, new Hunt(parent,bm));
             //This is test GoForKill state change, CHANGE to Hunt State
@@ -66,7 +67,7 @@ public class CarnDefault extends State{
             Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
 
-            tempVec = behaviours.get("collision").act(collisionObjects, boid);
+            tempVec = Collision.act(collisionObjects, boid);
 
             steering.set(0f, 0f, 0f);
             boid.setAcceleration(steering);

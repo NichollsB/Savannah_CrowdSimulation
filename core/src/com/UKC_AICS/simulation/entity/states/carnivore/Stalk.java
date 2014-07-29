@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.entity.states.carnivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.behaviours.Seek;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
@@ -50,7 +51,7 @@ public class Stalk extends State {
 //                    System.out.println("Target stalked: " + target.getSpecies() + " species, " + target.position.x + ", " + target.position.y);
 
                     //Add collision avoidance
-                    steering.add(behaviours.get("collision").act(collisionObjects, boid));
+                    steering.add(Collision.act(collisionObjects, boid));
 
                     //Check is boid is still in list.  If not pop to hunt (for corpse)
                     //check if prey is close enought to be chased down
