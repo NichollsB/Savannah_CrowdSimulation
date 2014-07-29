@@ -21,8 +21,8 @@ public class Seek extends Behaviour {
         vec.set(target);
         vec.sub(boid.getPosition());
         vec.nor().scl(boid.maxSpeed);
-        vec.sub(boid.getVelocity());
-        vec.limit(boid.maxForce);
+//        vec.sub(boid.getVelocity());
+//        vec.limit(boid.maxForce);
 
         return vec;
     }

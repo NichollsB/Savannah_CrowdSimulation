@@ -41,8 +41,8 @@ public class Stalk extends State {
 
                     Vector3 tv = new Vector3(0f, 0f, 0f);
                     Vector3 targetPos = new Vector3(0f, 0f, 0f);
-                    targetPos.set(target.getPosition());
-                    tv.set(target.getVelocity());
+                    targetPos.set(target.getPosition().cpy());
+                    tv.set(target.getVelocity().cpy());
                     tv.scl(-1f);
                     tv.nor().scl(10f);
                     targetPos.add(tv);
@@ -53,6 +53,7 @@ public class Stalk extends State {
                     //Add collision avoidance
                     steering.add(Collision.act(collisionObjects, boid));
 
+                    boid.setAcceleration(steering);
                     //Check is boid is still in list.  If not pop to hunt (for corpse)
                     //check if prey is close enought to be chased down
                     if (distance < 200f * 200f) {

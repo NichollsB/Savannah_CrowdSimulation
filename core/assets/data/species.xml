@@ -65,11 +65,11 @@
 
 
     <species name="lion">
-        <number>3</number>
+        <number>5</number>
         <byte>3</byte>  <!-- this is the sub-type -->
         <spritergb r = "0.6" g="0" b="0.6"/>
         <diet>carnivore</diet>
-        <sightRadius>400f</sightRadius>
+        <sightRadius>300f</sightRadius>
         <flockRadius>150f</flockRadius>
         <nearRadius>100f</nearRadius>
         <maxSpeed>3.5f</maxSpeed>
