@@ -43,7 +43,7 @@ public class SimScreenGUI extends Stage {
     
     //South
     public Label fps;
-    
+
 
     //Centre
     private Table viewArea;
@@ -175,6 +175,7 @@ public class SimScreenGUI extends Stage {
         });
 
         fps = new Label("0", skin);
+      
         HorizontalGroup southGroup = new HorizontalGroup();
 //        southGroup.addActor(fps);
 //        fps.setWidth(500f);

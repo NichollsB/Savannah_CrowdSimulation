@@ -163,6 +163,9 @@ public class SimulationManager extends Manager {
         } else if (hours < 23) {
             minutes = 0;
             hours += 1;
+            //TODO work in progress - Matt
+           // boidManager.trackPop();
+            
         } else if (days < 6) {
             minutes = 0;
             hours = 0;
