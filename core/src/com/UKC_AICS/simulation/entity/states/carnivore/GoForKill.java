@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.entity.states.carnivore;
 
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.behaviours.Pursuit;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
@@ -57,6 +58,7 @@ public class GoForKill extends State {
                     steering.add(Pursuit.act(boid, target));
 
                     //Add collision avoidance
+//                    steering.add(Collision.act(collisionObjects, boid));
                     steering.add(behaviours.get("collision").act(collisionObjects, boid));
 
                     boid.setAcceleration(steering);

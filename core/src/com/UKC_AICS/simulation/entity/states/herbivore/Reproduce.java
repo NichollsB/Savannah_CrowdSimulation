@@ -33,8 +33,8 @@ public class Reproduce extends State {
             Array<Boid> closeBoids = new Array<Boid>();
 
             for (Boid b : nearBoids) {
-                //see if the boid is the same species and in the same state - should be Reproduce.
-                if (boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state)) {
+                //see if the boid is the same species and in the same state - should be Reproduce AND not self
+                if (boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state) && !boid.equals(b)) {
                     potentialMates.add(b);
                 }
                 steering.set(boid.getPosition());
@@ -59,7 +59,7 @@ public class Reproduce extends State {
 
                     tempVec.set(boid.getPosition());
                     tempVec.sub(nearest.getPosition());
-                    if (tempVec.len2() < steering.len2()) {
+                    if (tempVec.len2() < steering.len2() && other.hunger>60 && other.thirst > 60) {
                         nearest = other;
                     }
 
@@ -110,12 +110,13 @@ public class Reproduce extends State {
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
                 steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
+//                steering.add(behaviours.get("collision").act(collisionObjects, boid));
+
 //                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
 //                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
 
                 boid.setAcceleration(steering);
             }
-
             return false;
 
         } else {

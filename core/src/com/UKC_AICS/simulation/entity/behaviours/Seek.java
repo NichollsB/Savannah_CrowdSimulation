@@ -18,7 +18,8 @@ public class Seek extends Behaviour {
     }
 
     static public Vector3 act(Boid boid, Vector3 target) {
-        vec.set(target.sub(boid.getPosition()));
+        vec.set(target);
+        vec.sub(boid.getPosition());
         vec.nor().scl(boid.maxSpeed);
         vec.sub(boid.getVelocity());
         vec.limit(boid.maxForce);

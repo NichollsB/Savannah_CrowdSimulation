@@ -2,6 +2,8 @@ package com.UKC_AICS.simulation.entity.states.carnivore;
 
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.entity.behaviours.Behaviour;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.behaviours.Seek;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
@@ -31,14 +33,14 @@ public class Hunt extends State {
     public boolean update(Boid boid) {
 
         //check still hungry
-        if (boid.hunger > 80) {
+        if (boid.hunger > 32) {
 
             Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
             Array<Entity> foodCorpse = new Array<Entity>(dummyObjects);
             //TODO check for food/corpse objects first
 
-            Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
+            Array<Boid> nearBoids = BoidManager.getBoidGrid().findInSight(boid); //.getPosition());
             Array<Boid> closeBoids = new Array<Boid>();
 
             for (Boid b : nearBoids) {
@@ -55,6 +57,7 @@ public class Hunt extends State {
             Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
 
+//            tempVec = Collision.act(collisionObjects, boid);
             tempVec = behaviours.get("collision").act(collisionObjects, boid);
 
 
@@ -81,12 +84,14 @@ public class Hunt extends State {
 
                 //eat or add seek steering to get to corpse
                 for(Entity food : foodCorpse) {
-                    if(food.getType() == 0 && food.getSubType() == 0) {
-                        if(boid.getPosition().cpy().sub(food.getPosition()).len2() < 16f * 16f) {
+                    if(food.getType() == 0 ){ //&& food.getSubType() == 0) {
+                        float distance = boid.getPosition().cpy().sub(food.getPosition()).len2();
+                        if(distance < 16f * 16f) {
                             parent.pushState(boid, new Eat(parent, bm, (Object) food));
                             return false;
-                        } else {
-                            steering.add(Seek.act(boid, food.getPosition()));
+                        } else if (distance < boid.sightRadius * boid.sightRadius) {
+                            parent.pushState(boid, new ApproachCorpse(parent, bm, (Object) food));
+                            return false;
                         }
                     }
                 }

@@ -3,6 +3,7 @@ package com.UKC_AICS.simulation.entity.states.carnivore;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.Arrive;
+import com.UKC_AICS.simulation.entity.behaviours.Arrive2;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
@@ -25,7 +26,8 @@ public class CarnReproduce extends State {
 
     @Override
     public boolean update(Boid boid) {
-        if (boid.hunger < 60 && boid.thirst < 60) {
+        if (boid.hunger < 45 && boid.thirst < 45) {
+
             boid.setState(this.toString());
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
@@ -33,8 +35,8 @@ public class CarnReproduce extends State {
             Array<Boid> closeBoids = new Array<Boid>();
 
             for (Boid b : nearBoids) {
-                //see if the boid is the same species and in the same state - should be Reproduce.
-                if (boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state)) {
+                //see if the boid is the same species and in the same state - should be Reproduce AND not self
+                if (boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state) && !boid.equals(b)) {
                     potentialMates.add(b);
                 }
                 steering.set(boid.getPosition());
@@ -76,7 +78,7 @@ public class CarnReproduce extends State {
                     nearest.thirst = 100;
                     return true;
                 }
-                steering.set(0f,0f,0f);
+//                steering.set(0f,0f,0f);
 
                 steering.add(Arrive.act(boid, nearest.getPosition()));
 

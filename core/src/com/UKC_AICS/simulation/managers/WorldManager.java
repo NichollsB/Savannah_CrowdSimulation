@@ -5,7 +5,6 @@ import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.utils.ObjectGrid;
 import com.UKC_AICS.simulation.utils.QuadTree;
 import com.UKC_AICS.simulation.world.LandMap;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -20,6 +19,7 @@ public class WorldManager extends Manager {
 
     private static final int TILE_SIZE = 16;
     private static LandMap map;
+    private static Vector3 tileSize;
     private static Vector3 size;
 //    private HashMap<String, byte[][]> information_layers = new HashMap<String, byte[][]>();
 
@@ -29,10 +29,11 @@ public class WorldManager extends Manager {
     private ObjectGrid objectGrid;
 
     public WorldManager(int width, int height) {
-        size = new Vector3(width/TILE_SIZE, height/TILE_SIZE, 1);
+        tileSize = new Vector3(width/TILE_SIZE, height/TILE_SIZE, 1);
+        size = new Vector3(width, height, 1);
 
         objects_map = new QuadTree(0, new Rectangle(0,0,width,height));
-        objectGrid = new ObjectGrid(60, Constants.screenWidth, Constants.screenHeight);
+        objectGrid = new ObjectGrid(60, width, height);
 
         map = new LandMap(width, height);
     }
@@ -61,9 +62,8 @@ public class WorldManager extends Manager {
         objects.removeValue(entity, true);
         rebuildTree(objects);
     }
-
     public static void rebuildTree(Array<Entity> objects) {
-        objects_map = new QuadTree(0, new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        objects_map = new QuadTree(0, new Rectangle(0, 0,  size.x, size.x));
         for (Entity boid : objects)
             objects_map.insert(boid);
     }
@@ -77,11 +77,11 @@ public class WorldManager extends Manager {
     }
 
 //    public void createMap(int width, int height) {
-//        size = new Vector3(width, height, 1);
+//        tileSize = new Vector3(width, height, 1);
 //    }
 
     public Vector3 getSize() {
-        return size;
+        return tileSize;
     }
 
     public byte[][] getTiles() {
@@ -101,13 +101,16 @@ public class WorldManager extends Manager {
         HashMap<String, Byte> layers = new HashMap<String, Byte>();
         int mapX = x/TILE_SIZE;
         int mapY = y/TILE_SIZE;
-        if (mapX >= 0 && mapX < size.x &&
-                mapY >= 0 && mapY < size.y) {
+        if (mapX >= 0 && mapX < tileSize.x &&
+                mapY >= 0 && mapY < tileSize.y) {
 
 
             for (String layer : map.information_layers.keySet()) {
                 layers.put(layer, map.information_layers.get(layer)[mapX][mapY]);
             }
+        }
+        else {
+            System.out.println("Im a bellend boid because I'm mysteriously out of bounds");
         }
         return layers;
     }

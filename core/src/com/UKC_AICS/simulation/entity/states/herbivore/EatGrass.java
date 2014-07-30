@@ -3,6 +3,7 @@ package com.UKC_AICS.simulation.entity.states.herbivore;
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.StateMachine;
@@ -22,7 +23,7 @@ public class EatGrass extends State{
 
     @Override
     public boolean update(Boid boid) {
-        if(boid.position.x < 0 || boid.position.x > Constants.screenWidth || boid.position.y < 0 || boid.position.y > Constants.screenHeight) {
+        if(boid.position.x < 0 || boid.position.x > Constants.mapWidth || boid.position.y < 0 || boid.position.y > Constants.mapHeight) {
             System.out.println("I am out of bounds" + boid.position.x + " , " + boid.position.y);
         }
         byte grassAmount = WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("grass");
@@ -36,7 +37,8 @@ public class EatGrass extends State{
             steering.set(0f, 0f, 0f);
 
             //just add collision avoidance
-            steering.add(behaviours.get("collision").act(collisionObjects, boid));  //.scl(avoid)   //Maybe have some scaling for avoidance?
+//            steering.add(Collision.act(collisionObjects, boid));  //.scl(avoid)   //Maybe have some scaling for avoidance?
+            steering.add(behaviours.get("collision").act(collisionObjects, boid));
             steering.nor().scl(boid.maxSpeed / 2);
             steering.sub(boid.getVelocity());
             steering.limit(boid.maxForce);

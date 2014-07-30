@@ -3,6 +3,7 @@ package com.UKC_AICS.simulation.entity.states;
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.UKC_AICS.simulation.managers.StateMachine;
@@ -30,7 +31,7 @@ public class Thirsty extends State {
             return true;  //not thirsty return to default
         } else {
             boid.setState(this.toString());
-            if(boid.position.x < 0 || boid.position.x > Constants.screenWidth || boid.position.y < 0 || boid.position.y > Constants.screenHeight) {
+            if(boid.position.x < 0 || boid.position.x > Constants.mapWidth || boid.position.y < 0 || boid.position.y > Constants.mapHeight) {
                 System.out.println("I am out of bounds" + boid.position.x + " , " + boid.position.y);
             }
             //search for water
@@ -76,7 +77,8 @@ public class Thirsty extends State {
                 steering.set(0f, 0f, 0f);
 
                 //just add collision avoidance
-                steering.add(behaviours.get("collision").act(collisionObjects, boid));  //.scl(avoid)   //Maybe have some scaling for avoidance?
+//                steering.add(Collision.act(collisionObjects, boid));  //.scl(avoid)   //Maybe have some scaling for avoidance?
+                steering.add(behaviours.get("collision").act(collisionObjects, boid));
 
 //                steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));

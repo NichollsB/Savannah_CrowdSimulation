@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.entity.behaviours;
 
+import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.badlogic.gdx.math.Intersector;
@@ -14,50 +15,29 @@ import java.util.Random;
 public class Collision extends Behaviour {
 
     private float initialCheckRadius = 20f;
-    private Vector3 tmpVec = new Vector3(0f,0f,0f);
-    private Vector3 tmpVec2 = new Vector3(0f,0f,0f);
+    private  Vector3 tmpVec = new Vector3(0f,0f,0f);
+    private  Vector3 tmpVec2 = new Vector3(0f,0f,0f);
     Random rand = new Random();
 
-    float MAX_AVOID_FORCE = 0.3f;
-    float LOOK_AHEAD = 20f;
-    float HALF_LOOK_AHEAD = LOOK_AHEAD/2f;
+     float MAX_AVOID_FORCE = 0.15f;
+     float LOOK_AHEAD = 20f;
+     float HALF_LOOK_AHEAD = LOOK_AHEAD/2f;
 
+    public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
+        throw new Error("Collision is not to be used in this manner. Try static access Collision.act(Array<Entity> targets, Boid boid)");
+    }
 
-//    public Boid checkCollision(Circle newCircle, Array<Boid> checkBoids, Boid boid){
-//        boolean collision = false;
-//        Circle newPos = newCircle;
-//        Vector3 newVec = new Vector3(newPos.x, newPos.y, 0f);
-//        Array<Boid> boids = checkBoids;
-//        Array<Boid> overlap = new Array<Boid>();
-//        for (int i = 0; i < checkBoids.size; i++) {
-//             Boid check = boids.get(i);
-//            if(boid != check) {
-//                if (newCircle.overlaps(check.getCircle())) {
-//                    collision = true;
-//                    overlap.add(check);
-//                }
-//            }
-//        }
-//        Boid closest = null;
-//        for (int i = 0; i < overlap.size; i++) {
-//             if(closest == null) {
-//                 closest = overlap.get(i);
-//             }
-//            else if((newVec.cpy().sub(overlap.get(i).getPosition()).len() < ((newVec.cpy()).sub(closest.getPosition())).len())){
-//                closest = overlap.get(i);
-//            }
-//        }
-//        return closest;
-//    }
+//    public static Vector3 act(Boid boid) {
+//        tmpVec2.set(boid.getVelocity());
+//        int mapX = (int)boid.position.x/Constants.TILE_SIZE;
+//        int mapY = (int)boid.position.y/Constants.TILE_SIZE;
+//        //get tile info at position tile
 //
-//    public void checkObjectCollisions(Array<Entity> dummyObjects, Boid boid) {
-//        for (int i = 0; i < dummyObjects.size; i++) {
-//             if(boid.circle.overlaps(dummyObjects.get(i).circle)) {
+//        //ray cast to check when tile changes along velocity and retrieve tile info of new tiles
 //
-//             }
-//        }
+//
+//        return tmpVec;
 //    }
-
 
     /**
      * Checks the Array of targets for mostTreatening collision with boid
@@ -142,7 +122,13 @@ public class Collision extends Behaviour {
         return adjustment;
     }
 
-    private boolean collisionCheck(Boid boid, Entity target){
+    /**
+     * This will check current position collision of the boid with the target.
+     * @param boid the boid to be checked for collision
+     * @param target the target who the boid is checking collision with
+     * @return true on a collision, false if no collision
+     */
+    private  boolean collisionCheck(Boid boid, Entity target){
         //collision check here
         boolean collision = false;
         tmpVec.set(boid.getPosition());
@@ -151,7 +137,7 @@ public class Collision extends Behaviour {
 //        tmpVec.add(tmpVec2);
         tmpVec.sub(target.getPosition());
 
-        if (tmpVec.len() < 8f) {
+        if (tmpVec.len() < 16f) {
             collision = true;
         }
         return collision;
@@ -164,7 +150,7 @@ public class Collision extends Behaviour {
      * @param target  the possible Entity that the boid may collide with
      * @return  a boolean as to whether a collision will occur on current Vector
      */
-    private boolean lookAheadCheck(Boid boid, Entity target){
+    private  boolean lookAheadCheck(Boid boid, Entity target){
         //collision check here
         boolean collision = false;
         tmpVec.set(boid.getPosition());
@@ -190,7 +176,7 @@ public class Collision extends Behaviour {
      * @param target  the possible Entity that the boid may collide with
      * @return  a boolean as to whether a collision will occur on current Vector
      */
-    private boolean lookHalfAheadCheck(Boid boid, Entity target) {
+    private  boolean lookHalfAheadCheck(Boid boid, Entity target) {
         //collision check here
         boolean collision = false;
         tmpVec.set(boid.getPosition());
@@ -216,7 +202,7 @@ public class Collision extends Behaviour {
      * @param target  the possible Entity that the boid may collide with
      * @return  a boolean as to whether a collision will occur on current Vector
      */
-    private boolean checkRight(Boid boid, Entity target) {
+    private  boolean checkRight(Boid boid, Entity target) {
         //collision check here
         boolean collision = false;
         //need to add 0.5f velocity to current position,
@@ -234,7 +220,7 @@ public class Collision extends Behaviour {
         return collision;
     }
 
-    private boolean checkLeft(Boid boid, Entity target) {
+    private  boolean checkLeft(Boid boid, Entity target) {
         //collision check here
         boolean collision = false;
         //need to add 0.5f velocity to current position,

@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.entity.states.herbivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
@@ -37,7 +38,7 @@ public class Hungry extends State {
                 parent.pushState(boid, new EatGrass(parent, bm));
                 boid.setAcceleration(new Vector3(boid.velocity).scl(0.01f));
             }
-
+            //TODO add some steering to find food if there is none on tile
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
             Array<Boid> closeBoids = new Array<Boid>();
 
@@ -78,6 +79,7 @@ public class Hungry extends State {
 //            steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
             //Add collision avoidance
+//            steering.add(Collision.act(collisionObjects, boid));
             steering.add(behaviours.get("collision").act(collisionObjects, boid));
 
             steering.nor().scl(boid.maxSpeed / 2);
