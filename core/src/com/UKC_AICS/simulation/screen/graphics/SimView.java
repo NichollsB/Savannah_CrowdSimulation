@@ -1,4 +1,4 @@
-package com.UKC_AICS.simulation.screen;
+package com.UKC_AICS.simulation.screen.graphics;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.badlogic.gdx.utils.Array;

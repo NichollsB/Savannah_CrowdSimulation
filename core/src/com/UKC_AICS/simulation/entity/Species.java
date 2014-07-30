@@ -24,6 +24,9 @@ public class Species {
     private String diet;
 
     private float rgb[];
+    
+    //Added by Ben Nicholls for information output/graphics/ui
+	public boolean tracked;
 
     public String getName() {
         return name;
@@ -155,6 +158,11 @@ public class Species {
     		return true;
     	}
     	return false;
+    }
+    
+    //For tracking/gui/graphics
+    public void setTracked(boolean tracked){
+    	this.tracked = tracked;
     }
     
 }

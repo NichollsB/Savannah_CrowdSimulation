@@ -5,6 +5,7 @@ import static com.UKC_AICS.simulation.Constants.TILE_SIZE;
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.screen.graphics.Graphics;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.UKC_AICS.simulation.screen.gui.SimViewport;
 import com.UKC_AICS.simulation.utils.EnvironmentLoader;
@@ -145,7 +146,7 @@ public class SimulationScreen implements Screen {
 	    	simBatch.setProjectionMatrix(simViewcamera.combined);
 	        ScissorStack.pushScissors(viewRect);
 	    	simBatch.begin();
-	    	boidGraphics.update(simBatch, viewRect);
+	    	boidGraphics.update(simBatch);
 	    	simBatch.end();
 	    	ScissorStack.popScissors();
     	}
@@ -166,6 +167,7 @@ public class SimulationScreen implements Screen {
     	//simulation will be viewed - also update and center the viewports with the resize dimensions
     	gui.resize(width, height);
         viewRect = gui.getViewArea();
+        inputManager.resize(viewRect);
         simViewport.update(width, height, true);
         uiViewport.update(width, height, true);
     }
@@ -194,8 +196,9 @@ public class SimulationScreen implements Screen {
 
     	inputManager = new InputManager(this, (int)width, (int)height, simViewcamera);
     	input = new InputMultiplexer();
+    	input.addProcessor(inputManager);
         input.addProcessor(gui);  //sets up GUI
-        input.addProcessor(inputManager);
+        
 
         Gdx.input.setInputProcessor(input);
         resize(width, height);
@@ -211,6 +214,7 @@ public class SimulationScreen implements Screen {
     	boidGraphics = new Graphics(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         setupCameraController();
         initialiseCameras(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //Graphics components
         boidGraphics.initBackground();
         boidGraphics.setBoids(simulationManager.getBoids());
         boidGraphics.initBoidSprites(simulationManager.getTextureLocations());
@@ -218,6 +222,9 @@ public class SimulationScreen implements Screen {
         boidGraphics.initObjSprites(simulationManager.getObjects());
         boidGraphics.initTileSprites(simulationManager.getFullInfo());
         //boidGraphics.initTileSprites(simulationManager.getMapTiles());
+        
+        //UI
+        gui.createBoidTree(simulationManager.getSpeciesInfo(), simulationManager.getBoids());
     }
 
     /**
@@ -296,14 +303,17 @@ public class SimulationScreen implements Screen {
     public void pickPoint(int screenX, int screenY) {
         //What should happen when clicking on the screen
         Boid boid = simulationManager.getBoidAt(screenX,screenY);
-        if (boid == null) {
+        gui.selectBoid(boid);
+//        if (boid == null) {
             HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
             gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
-            gui.showBoidInfo(null, false);
-        } else {
-//            System.out.println(boid);
-        	gui.showBoidInfo(boid, true);
-        }
+            
+//            gui.showBoidInfo(null, false);
+//        } else {
+////            System.out.println(boid);
+////        	gui.showBoidInfo(boid, true);
+//        	gui.selectBoid(boid);
+//        }
 
     }
 

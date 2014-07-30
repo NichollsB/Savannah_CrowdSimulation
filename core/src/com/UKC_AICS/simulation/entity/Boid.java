@@ -237,7 +237,7 @@ public class Boid extends Entity {
     public byte getSpecies() {
         return subType;
     }
-
+    @Override
     public String toString() {
         String string = "";
 

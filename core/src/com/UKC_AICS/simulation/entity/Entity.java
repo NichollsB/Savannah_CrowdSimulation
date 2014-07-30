@@ -63,4 +63,11 @@ public class Entity {
     public void setVelocity(float x, float y, float z) {
         setVelocity(new Vector3(x, y, z));
     }
+    
+    public String toString(){
+    	 String string = "";
+
+         string += "ENTITY: " + "\t" + "\t position: \n \t" + position.toString() ;
+         return string;
+    }
 }

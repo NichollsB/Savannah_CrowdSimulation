@@ -1,4 +1,4 @@
-package com.UKC_AICS.simulation.screen;
+package com.UKC_AICS.simulation.screen.graphics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +19,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.sun.glass.ui.Application;
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.utils.EnvironmentLoader;
@@ -72,7 +73,7 @@ public class Graphics {
 	 * Update and render the sprites representing the boids. Renders via the SpriteBatch passed in.
 	 * @param batch is the SpriteBatch to render the boid sprites in
 	 */
-	public void update(SpriteBatch batch, Rectangle scissor){
+	public void update(SpriteBatch batch){
 			
 			
 			if(spriteManager.update()){
@@ -89,13 +90,9 @@ public class Graphics {
 				catch(NullPointerException e){
 					System.out.println("Missing GROUND environment layer");
 				}
-				try{
+//		
+				if(dynamicTiles != null)
 					dynamicTiles.updateTiles(batch);
-				} catch(NullPointerException e) {
-					System.out.println("missing tile renderer");
-				}
-//				if(dynamicTiles != null)
-//					dynamicTiles.updateTiles(batch);
 //				
 				//drawGrass
 				//int x=0, y=0;
@@ -130,25 +127,15 @@ public class Graphics {
 					
 				}
 				if(boidsArray.size>0){
+					Byte boidSelection = null;
 					for(Boid boid : boidsArray){
-						sprite = spriteManager.getSprite(b, boid.getSpecies());
-						if(sprite == null){
-//							sprite = (!boid.tracked ? spriteManager.getDefaults()[0] : spriteManager.getDefaults()[1]);
-							if(boid.tracked){
-								sprite = spriteManager.getDefaults()[1];
-								updateSpritePosition(boid, sprite);
-								sprite.draw(batch);
-							}
-							sprite = spriteManager.getDefaults()[0];
-							if(boidColours.containsKey(boid.getSpecies())){
-								float colour[] = boidColours.get(boid.getSpecies());
-								sprite.setColor(colour[0], colour[1], colour[2], 1f);
-								
-							}
-							else{
-								sprite.setColor(Color.WHITE);
-							}
+
+						if(boid.tracked){
+							altSprite = spriteManager.getBoid_HighlightSprite();
+							updateSpritePosition(boid, altSprite);
+							altSprite.draw(batch);
 						}
+						sprite = spriteManager.getBoid_Sprite(boid.getSpecies());
 						updateSpritePosition(boid, sprite);
 
 						sprite.draw(batch);
@@ -185,15 +172,12 @@ public class Graphics {
 	public void initBoidSprites(HashMap<Byte, String> fileLocations){
 
 		spriteManager.loadAssets_Boids(fileLocations, true);
-//		boidSprite = new Sprite(defaultBoidTexture);
-//		boidSprite.setOrigin((defaultBoidTexture.getWidth()/2), defaultBoidTexture.getHeight()/2);
-//		
-//		altSprite = new Sprite(altTexture);
-//		boidSprite.setOrigin((altTexture.getWidth()/2), altTexture.getHeight()/2);
+
 
 	}
 	public void setBoidSprite_Colours(HashMap<Byte, float[]> rgbValues) {
 		boidColours = rgbValues;
+		spriteManager.loadAssets_Boids(rgbValues);
 	}
 	
 	public void setBoids(Array<Boid> boidArray){
@@ -214,15 +198,7 @@ public class Graphics {
 	}
 	
 	public void initTileSprites(HashMap<String, byte[][]> tileLayers){
-		/*spriteManager.loadAssets_Tiles();
-		tileMap = map;
-		spriteManager.createTileCache(map);*/
-		
-//		tileMap = map;
-////		System.out.println(map.length);
-//		spriteManager.loadAssets_Tiles();
 		dynamicTiles = new TileGraphics(tileLayers, spriteManager);
-		
 	}
 	public void initBackground(){
 		background = EnvironmentLoader.getLayer_sprite(EnvironmentLayer.GROUND);

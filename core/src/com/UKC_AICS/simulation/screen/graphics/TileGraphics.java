@@ -1,14 +1,15 @@
-package com.UKC_AICS.simulation.screen;
+package com.UKC_AICS.simulation.screen.graphics;
 
 import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.utils.ObjectMap;
 
 public class TileGraphics {
 
-	private final ObjectMap<String, byte[][]> infoLayers = new ObjectMap<String, byte[][]>();
+	private HashMap<String, byte[][]> infoLayers = new HashMap<String, byte[][]>();
 	
 	private SpriteManager manager;
 	private byte[][] grassAmounts;
@@ -18,13 +19,9 @@ public class TileGraphics {
 	public TileGraphics(HashMap<String, byte[][]> infoLayers, SpriteManager manager){
 //		this.infoLayers = infoLayers;
 		this.manager = manager;
-//		this.manager.loadAssets_Tiles();
-		for(String key : infoLayers.keySet()){
-			if(this.manager.loadAssets_Tile(key)){
-				this.infoLayers.put(key, infoLayers.get(key));
-			}
-//			this.manager.loadAssets_Tile(key);
-		}
+		this.infoLayers = infoLayers;
+
+		this.manager.loadAssets_Tiles(null);
 	}
 	
 	public void updateTiles(Batch batch){
@@ -33,34 +30,47 @@ public class TileGraphics {
 			float amount;
 			float alpha;
 			int xPos = 0, yPos = 0;
-			for(String layer : infoLayers.keys()){
-				sprite = manager.getTileSprite(layer);
-				if(sprite != null){
+			for(String layer : infoLayers.keySet()){
+
+				AtlasSprite nextSprite;
+//				System.out.println(sprite);
+//				if(sprite != null){
 					xPos = 0;
 					yPos = 0;
 					byte[][] layermap = infoLayers.get(layer);
 					for(int x = 0; x < layermap.length; x++){
 						for(int y = 0; y<layermap[x].length; y++){
-							amount = (float)layermap[x][y]/100;
-							if(layer == "grass"){
-								sprite.setAlpha(amount);
+							amount = (float)layermap[x][y];
+//							if(layer == "grass"){
+//								sprite.setAlpha(amount);
+//							}
+//							else if(layer == "water" ){
+//								if(amount > 0.6){
+//									sprite.setAlpha(0.9f);
+//								}
+//								else
+//									sprite.setAlpha(0);
+//							}
+							if(layer == "water"){
+								amount = (amount > 60) ? 90f : 0;
+//								amount = 0;
 							}
-							else if(layer == "water" ){
-								if(amount > 0.6){
-									sprite.setAlpha(0.9f);
-								}
-								else
-									sprite.setAlpha(0);
-							}
-							sprite.setPosition(xPos, yPos);
-							sprite.draw(batch);
-							yPos += sprite.getHeight();
+							nextSprite = manager.getTileSprite(layer, amount);
+//							System.out.println(sprite);
+							if(nextSprite != null){
+								sprite = nextSprite;
+								sprite.setPosition(xPos, yPos);
+								sprite.draw(batch);
+							}	
+							if(sprite != null)
+								yPos += sprite.getHeight();
 						}
-						xPos += sprite.getWidth();
+						if(sprite != null)
+							xPos += sprite.getWidth();
 						yPos = 0;
 					}
 
-				}
+//				}
 			}
 //			batch.end();
 		}
