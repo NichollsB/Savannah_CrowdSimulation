@@ -1,9 +1,9 @@
-package com.UKC_AICS.simulation.screen.gui;
+package com.UKC_AICS.simulation.gui.controlutils;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.ObjectMap;
 
-public interface WindowListener {
+public interface DialogueWindowHandler {
 	
 	public void onConfirmed(ObjectMap<String, String> value, Window window);
 	

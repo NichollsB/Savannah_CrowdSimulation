@@ -1,5 +1,7 @@
 package com.UKC_AICS.simulation.screen.gui;
 
+import com.UKC_AICS.simulation.gui.controlutils.DialogueWindowHandler;
+import com.UKC_AICS.simulation.gui.controlutils.WindowInterface;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
@@ -23,7 +25,7 @@ public class SettingsWindow extends Window implements WindowInterface {
 	
 	private Skin skin;
 	
-	private final Array<WindowListener> listeners = new Array<WindowListener>();
+	private final Array<DialogueWindowHandler> listeners = new Array<DialogueWindowHandler>();
 	
 	private String name;
 
@@ -72,7 +74,7 @@ public class SettingsWindow extends Window implements WindowInterface {
 		TextButton button;
 		for(ButtonType type : buttons){
 			button = new TextButton(type.getName(), skin);
-			button.addListener(new optionsListener(this, type));
+			button.addListener(new OptionsListener(type));
 			optionsGroup.addActor(button);
 		}
 		return optionsGroup;
@@ -86,7 +88,7 @@ public class SettingsWindow extends Window implements WindowInterface {
 
 
 	@Override
-	public void registerListener(WindowListener listener) {
+	public void registerListener(DialogueWindowHandler listener) {
 		listeners.add(listener);
 		
 	}
@@ -94,7 +96,7 @@ public class SettingsWindow extends Window implements WindowInterface {
 
 	@Override
 	public void buttonSelected(ButtonType button) {
-		for(WindowListener listener : listeners){
+		for(DialogueWindowHandler listener : listeners){
 			switch (button) {
 				case ACCEPT :
 					ObjectMap<String, String> returnValues = new ObjectMap<String, String>();
@@ -112,7 +114,15 @@ public class SettingsWindow extends Window implements WindowInterface {
 		}
 	}
 
-	
+	class OptionsListener extends ClickListener {
+		ButtonType btn;
+		public OptionsListener(ButtonType btn){
+			this.btn = btn;
+		}
+		public void clicked (InputEvent event, float x, float y) {
+			buttonSelected(btn);
+		}
+	}
 
 
 	

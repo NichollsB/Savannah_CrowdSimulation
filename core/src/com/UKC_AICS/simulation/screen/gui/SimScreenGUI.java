@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Species;
+import com.UKC_AICS.simulation.gui.controlutils.DialogueWindowHandler;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,7 +26,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * Created by James on 02/07/2014.
  * Class for the creation of gui for simulationScreen
  */
-public class SimScreenGUI extends Stage implements WindowListener {
+public class SimScreenGUI extends Stage implements DialogueWindowHandler {
 	final private ScreenViewport uiViewport = new ScreenViewport();
 	private SimulationScreen simScreen;
 	public Stage stage;
@@ -61,7 +62,7 @@ public class SimScreenGUI extends Stage implements WindowListener {
     //West
     private Array<Boid> boids;
     private ObjectMap<Byte, String> species;
-    private final BoidTree boidTree = new BoidTree(skin, this);
+    private final BoidListWindow boidTree = new BoidListWindow("Boids", skin, this);
     private final HashMap<Byte, Tree.Node> speciesNodeMap = new HashMap<Byte, Tree.Node>();
     private final HashMap<Boid, Tree.Node> boidNodeMap = new HashMap<Boid, Tree.Node>();
     
@@ -235,7 +236,9 @@ public class SimScreenGUI extends Stage implements WindowListener {
     private Table createWest(Table t){
     	Table westTable = new Table(skin);
     	t.add(westTable).left().width(WEST_WIDTH).fillY().expandY();
-   	 	westTable.add(createScrollPane(boidTree)).top().fill().expand();
+    	westTable.add(new Label("Boids", skin));
+    	westTable.row();
+   	 	westTable.add(boidTree).top().fill().expand();
    	 	westTable.pack();
     	return westTable;
     }
@@ -244,9 +247,10 @@ public class SimScreenGUI extends Stage implements WindowListener {
     public void createBoidTree(HashMap<Byte, Species> species, Array<Boid> boids){
     	this.boids = boids;
     	for(Byte b : species.keySet()){
-    		boidTree.addBoidNode(b, species.get(b).getName(), species.get(b).toString(), null);
+//    		boidTree.addBoidNode(b, species.get(b).getName(), species.get(b).toString(), null);
+    		boidTree.addRootNode(b, species.get(b).getName(), species.get(b).toString());
     	}
-    	boidTree.addNodes(boids);
+    	boidTree.compareAndAddNodes(boids);
     }
     
     public void setConsole(String log){
@@ -295,7 +299,7 @@ public class SimScreenGUI extends Stage implements WindowListener {
 //        	else 
 //        		boidInfo.setText("");
         	if(boids != null)
-        		boidInfo.setText(boidTree.update(boids, true));
+        		boidInfo.setText(boidTree.update(boids, false));
 	        stage.act();
 	    
 	    	stage.draw();  //GUI stuff
@@ -348,8 +352,8 @@ public class SimScreenGUI extends Stage implements WindowListener {
 	}
 	
 	public void selectBoid(Boid boid){
-		if(boid == null) boidTree.selectBoid_Node(boid, false);
-		else boidTree.selectBoid_Node(boid, true);
+		if(boid == null) boidTree.selectNodeByBoid(boid, false);
+		else boidTree.selectNodeByBoid(boid, true);
 	}
 
 	//SETTINGS WINDOWS METHODS

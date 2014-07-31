@@ -1,8 +1,7 @@
-package com.UKC_AICS.simulation.utils.ControlUtils;
+package com.UKC_AICS.simulation.gui.controlutils;
 
 import java.util.HashMap;
 
-import com.UKC_AICS.simulation.screen.gui.WindowListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -12,7 +11,7 @@ import com.badlogic.gdx.utils.ObjectMap;
  * @author temp
  *
  */
-public class SettingsEditor implements WindowListener{
+public class SettingsEditor implements DialogueWindowHandler, TreeOptionsHandler{
 	
 	enum SettingType{
 		SPECIES("Species"),
@@ -40,12 +39,25 @@ public class SettingsEditor implements WindowListener{
 
 	@Override
 	public void onConfirmed(ObjectMap<String, String> value, Window window) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Settings Confirmed " + window.getName() + "\n"
+				+ "Field : Value");
+		for(String s : value.keys()){
+			System.out.println(s + " : " + value.get(s));
+		}
 	}
 
 	@Override
 	public void onCancelled(Window window) {
+		System.out.println("Settings cancelled" + window.getName());
+	}
+
+	@Override
+	public void onAdd(byte type, byte subtype, Object object) {
+		System.out.println("Add in tree window");
+	}
+
+	@Override
+	public void onRemove(byte type, byte subtype, Object object) {
 		// TODO Auto-generated method stub
 		
 	}

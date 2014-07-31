@@ -12,6 +12,9 @@ public class Entity {
 
     public byte type = 0; //what category of object is it? // 1 == boid(any boid),
     public byte subType = 0; //what type of object is it? // for boids this would be subType
+    
+    //Added by Ben Nicholls
+    public byte tertiaryType = 0;//Any additional sub-classification of boid or object
 
     /**
      *
@@ -64,17 +67,14 @@ public class Entity {
     public void setVelocity(float x, float y, float z) {
         setVelocity(new Vector3(x, y, z));
     }
-<<<<<<< HEAD
     
     public String toString(){
     	 String string = "";
 
          string += "ENTITY: " + "\t" + "\t position: \n \t" + position.toString() ;
          return string;
-=======
-
+    }
     public double getOrientation() {
         return orientation;
->>>>>>> develop
     }
 }

@@ -296,7 +296,7 @@ public class SimulationScreen implements Screen {
         //send delta to camera controller using its update.
         //send delta to camera using its update
     }
-
+    
     /**
      * Reacts to clicking on the simulations viewport - called by InputManagers touchDown method
      */
@@ -307,21 +307,7 @@ public class SimulationScreen implements Screen {
 //        if (boid == null) {
             HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
             gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
-<<<<<<< HEAD
-            
-//            gui.showBoidInfo(null, false);
-//        } else {
-////            System.out.println(boid);
-////        	gui.showBoidInfo(boid, true);
-//        	gui.selectBoid(boid);
-//        }
-=======
-//            gui.showBoidInfo(null, false);
-        } else {
-//            System.out.println(boid);
-        	gui.showBoidInfo(boid, true);
-        }
->>>>>>> develop
+
 
     }
 

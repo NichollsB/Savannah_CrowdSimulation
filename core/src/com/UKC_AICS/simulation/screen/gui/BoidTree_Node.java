@@ -7,35 +7,39 @@ import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 
 public class BoidTree_Node extends Node{
 	private Boid boid;
-	private Species species;
-	private byte spcByte;
-	private boolean isSpecies = false;
+	private boolean hasBoid = false;
 	
 	private String name;
-	private byte spByte;
+	private byte id;
 	private String info;
+	
+	private boolean root;
 	
 	public BoidTree_Node(Actor actor) {
 		super(actor);
 	}
-	public BoidTree_Node(Actor actor, String name, String info, byte species, boolean isSpecies, Boid boid) {
+	public BoidTree_Node(Actor actor, String name, String info, byte id, Boid boid, boolean root) {
 		super(actor);
 //		this.species = species;
 //		isSpecies = true;
 //		spcByte = species.getSpbyte();
 		this.name = name;
 		this.info = info;
-		this.spByte = species;
-		this.isSpecies = isSpecies;
-		this.boid = boid;
+		this.id = id;
+		this.root = root;
+		if(boid != null){
+			this.boid = boid;
+			hasBoid = true;
+		}
+		
 	}
 	
 	public Boid getBoid(){
 		return boid;
 	}
 	
-	public byte getSpecies(){
-		return spByte;
+	public byte getID(){
+		return id;
 	}
 	
 	
@@ -46,8 +50,13 @@ public class BoidTree_Node extends Node{
 	public String getInfo(){
 		return info;
 	}
-	public boolean isSpecies(){
-		return isSpecies;
+	
+	public boolean hasBoid(){
+		return hasBoid;
+	}
+	
+	public void setInfo(String info){
+		this.info = info;
 	}
 //	public BoidTree_Node(Actor actor, Boid boid) {
 //		super(actor);
@@ -66,5 +75,8 @@ public class BoidTree_Node extends Node{
 //		if(isSpecies) return null;
 //		return boid;
 //	}
+	public boolean isRoot() {
+		return root;
+	}
 
 }

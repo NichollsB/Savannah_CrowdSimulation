@@ -112,12 +112,14 @@ public class SpriteManager {
 		}
 		if(assetManager.isLoaded(defaultBoid_path)){
 			spriteTexture = assetManager.get(defaultBoid_path, Texture.class);
+			sprite = new Sprite(spriteTexture);
+			defaultBoid = sprite;
 			for(byte b : boidColors.keySet()){
 				if(!boidSprites.containsKey(b)){
-					defaultBoid = new Sprite(spriteTexture);
+//					defaultBoid = new Sprite(spriteTexture);
 					float[] color = boidColors.get(b);
-					defaultBoid.setColor(color[0], color[1], color[2], 1);
-					boidSprites.put(b, defaultBoid);
+					sprite.setColor(color[0], color[1], color[2], 1);
+					boidSprites.put(b, sprite);
 				}
 			}
 		}
@@ -245,6 +247,10 @@ public class SpriteManager {
 	}
 	public Sprite getBoid_Sprite(byte species){
 		return boidSprites.get(species);
+	}
+	
+	public Sprite getBoid_DefaultSprite(){
+		return defaultBoid;
 	}
 	
 }

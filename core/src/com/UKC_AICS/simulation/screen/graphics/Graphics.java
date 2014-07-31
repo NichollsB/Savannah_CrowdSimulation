@@ -130,47 +130,34 @@ public class Graphics {
 				if(boidsArray.size>0){
 					Byte boidSelection = null;
 					for(Boid boid : boidsArray){
-<<<<<<< HEAD:core/src/com/UKC_AICS/simulation/screen/graphics/Graphics.java
 
 						if(boid.tracked){
 							altSprite = spriteManager.getBoid_HighlightSprite();
 							updateSpritePosition(boid, altSprite);
 							altSprite.draw(batch);
-=======
-						sprite = spriteManager.getSprite(b, boid.getSpecies());
-						if(sprite == null){
-//							sprite = (!boid.tracked ? spriteManager.getDefaults()[0] : spriteManager.getDefaults()[1]);
-							if(boid.tracked){
-								sprite = spriteManager.getDefaults()[1];
-								updateSpritePosition(boid, sprite);
-								sprite.draw(batch);
-							}
-							sprite = spriteManager.getDefaults()[0];
-							if(boidColours.containsKey(boid.getSpecies())){
-								float colour[] = boidColours.get(boid.getSpecies()).clone();
-
-                                colour[0] = (colour[0] > 0f) ? (colour[0] + ((float) boid.group * 0.03f)) : colour[0];
-                                colour[1] = (colour[1] > 0f) ? (colour[1] + ((float) boid.group * 0.03f)) : colour[1];
-                                colour[2] = (colour[2] > 0f) ? (colour[2] + ((float) boid.group * 0.03f)) : colour[2];
-
-								sprite.setColor(colour[0], colour[1], colour[2], 1f);
-							}
-							else{
-								sprite.setColor(Color.WHITE);
-							}
->>>>>>> develop:core/src/com/UKC_AICS/simulation/screen/Graphics.java
 						}
-						sprite = spriteManager.getBoid_Sprite(boid.getSpecies());
+
+						//SETTING COLOUR METHOD
+						sprite = spriteManager.getBoid_DefaultSprite();
+						if(boidColours.containsKey(boid.getSpecies())){
+							float colour[] = boidColours.get(boid.getSpecies()).clone();
+
+                            colour[0] = (colour[0] > 0f) ? (colour[0] + ((float) boid.group * 0.03f)) : colour[0];
+                            colour[1] = (colour[1] > 0f) ? (colour[1] + ((float) boid.group * 0.03f)) : colour[1];
+                            colour[2] = (colour[2] > 0f) ? (colour[2] + ((float) boid.group * 0.03f)) : colour[2];
+
+							sprite.setColor(colour[0], colour[1], colour[2], 1f);
+						}
+						else{
+							sprite.setColor(Color.WHITE);
+						}
+						
+						//USING PRE-DEFINED SPRITES METHOD
+//						sprite = spriteManager.getBoid_Sprite(boid.getSpecies());
 						updateSpritePosition(boid, sprite);
 
 						sprite.draw(batch);
-						
-//						sprite.draw(batch);
-						/*if(boid.species == 1){
-							altSprite.draw(batch);
-						}
-						else
-							boidSprite.draw(batch);*/
+
 					}
 				}
 //				batch.end();
