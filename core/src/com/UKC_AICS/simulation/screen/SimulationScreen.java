@@ -307,6 +307,7 @@ public class SimulationScreen implements Screen {
 //        if (boid == null) {
             HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
             gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
+<<<<<<< HEAD
             
 //            gui.showBoidInfo(null, false);
 //        } else {
@@ -314,6 +315,13 @@ public class SimulationScreen implements Screen {
 ////        	gui.showBoidInfo(boid, true);
 //        	gui.selectBoid(boid);
 //        }
+=======
+//            gui.showBoidInfo(null, false);
+        } else {
+//            System.out.println(boid);
+        	gui.showBoidInfo(boid, true);
+        }
+>>>>>>> develop
 
     }
 

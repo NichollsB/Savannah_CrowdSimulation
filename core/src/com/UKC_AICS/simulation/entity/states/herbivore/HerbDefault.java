@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.entity.states.herbivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.entity.states.Thirsty;
 import com.UKC_AICS.simulation.managers.BoidManager;
@@ -42,32 +43,54 @@ public class HerbDefault extends State {
 //            }
 
 
-        if (boid.thirst < 15) {
+        if (boid.thirst > 85) {
 //            System.out.println(boid + "\nJust posted Thirsty state ");
             parent.pushState(boid, new Thirsty(parent, bm));
-        } else if (boid.hunger < 15) {
+        } else if (boid.hunger > 75) {
 //            System.out.println(boid + "\nJust posted Hungry state ");
             parent.pushState(boid, new Hungry(parent, bm));
-        } else if (boid.age > 10 && boid.hunger > 70 && boid.thirst > 70) {
+        } else if (boid.age > 10 && boid.hunger < 35 && boid.thirst < 35) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
             parent.pushState(boid, new Reproduce(parent, bm));
+//        } else if (boid.age > 10 && boid.hunger > 70 && boid.thirst > 70) {
+////            System.out.println(boid + "\nJust posted Reproduce state ");
+//            parent.pushState(boid, new Reproduce(parent, bm));
         } else {
             boid.setState(this.toString());
 
+//            old boid getter
+//            Array<Boid> nearBoids = new Array<Boid>(BoidManager.getBoidGrid().findNearby(boid.getPosition()));
 
-            Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
+            Array<Boid> nearBoids = BoidManager.getBoidGrid().findInSight(boid);
+
             Array<Boid> closeBoids = new Array<Boid>();
+            Array<Boid> predators = new Array<Boid>();
 
             for (Boid b : nearBoids) {
-                steering.set(boid.getPosition());
-                steering.sub(b.getPosition());
-                if (steering.len2() > boid.flockRadius * boid.flockRadius) {
-                    nearBoids.removeValue(b, true);
+                if (SimulationManager.speciesData.get(b.getSpecies()).getDiet().equals("carnivore")) {
+                    predators.add(b);
+                } else {
+                    steering.set(boid.getPosition());
+                    steering.sub(b.getPosition());
+                    if (steering.len() > boid.flockRadius) {
+                        nearBoids.removeValue(b, true);
+                    }
+                    //if the boid is outside the flock radius it CANT also be in the "too close" range
+                    else if (steering.len() < boid.nearRadius * boid.nearRadius) {
+                        closeBoids.add(b);
+                    }
                 }
-                //if the boid is outside the flock radius it CANT also be in the "too close" range
-                else if (steering.len2() < boid.nearRadius * boid.nearRadius) {
-                    closeBoids.add(b);
+            }
+
+            if(predators.size > 0) {
+                for(Boid predator : predators) {
+                    boid.panic += 10;
                 }
+                if (boid.panic > 30) {
+                    parent.pushState(boid, new Panic(parent, bm));
+                }
+            } else if (boid.panic > 0 && predators.size == 0) {
+                boid.panic -= 10;
             }
 
             //store the steering movement
@@ -77,6 +100,7 @@ public class HerbDefault extends State {
             //Collision avoidance arrays
             Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
+//            tempVec = Collision.act(collisionObjects, boid);
             tempVec = behaviours.get("collision").act(collisionObjects, boid);
 
             steering.set(0f, 0f, 0f);

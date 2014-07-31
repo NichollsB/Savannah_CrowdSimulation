@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by Emily on 02/07/2014.
  */
-public class BoidGrid {
+public class BoidGridSaved {
 
     //private static int CELL_SIZE;
 
@@ -41,7 +41,7 @@ public class BoidGrid {
      * @param w         How wide a space the grid is representing
      * @param h         How wide a space the grid is representing
      */
-    public BoidGrid(int cell_size, int w, int h) {
+    public BoidGridSaved(int cell_size, int w, int h) {
         this.cellSize = cell_size;
         cellWidth = (w / cell_size) + 1;
         cellHeight = (h / cell_size) + 1;
@@ -138,7 +138,95 @@ public class BoidGrid {
         return findNearby(new Vector3(x, y, z));
     }
 
-
+//    public Array<Boid> findNearby(Vector3 pos) {
+//
+//        //TODOnt: wrap-around looking
+//        nearby.clear();
+//
+//        int cellX = (int) pos.x / cellSize;
+//        int cellY = (int) pos.y / cellSize;
+//
+//        int _size = 0;
+//
+//
+//        if (cellX >= 0 && cellX < grid.length) {
+//
+//            if (cellY >= 0 && cellY < grid[cellX].length) {
+//
+//                // middle
+//                _size = grid[cellX][cellY].size;
+//                for (int i = 0; i < _size; i++) {
+//                    nearby.add(grid[cellX][cellY].get(i));
+//                }
+//            }
+//            if (cellY + 1 < grid[cellX].length) {
+//                _size = grid[cellX][cellY + 1].size;
+//                for (int i = 0; i < _size; i++) {
+//                    nearby.add(grid[cellX][cellY + 1].get(i));
+//                }
+//            }
+//            // bottom
+//            if (cellY - 1 >= 0 && cellY - 1 < grid[cellX].length) {
+//                _size = grid[cellX][cellY - 1].size;
+//                for (int i = 0; i < _size; i++) {
+//                    nearby.add(grid[cellX][cellY - 1].get(i));
+//                }
+//            }
+//
+//            // right column
+//            if (cellX + 1 < grid.length) {
+//                if (cellY >= 0 && cellY < grid[cellX + 1].length) {
+//                    // middle right
+//                    _size = grid[cellX + 1][cellY].size;
+//                    for (int i = 0; i < _size; i++) {
+//                        nearby.add(grid[cellX + 1][cellY].get(i));
+//                    }
+//                    if (cellY + 1 < grid[cellX + 1].length) {
+//                        // top right
+//                        _size = grid[cellX + 1][cellY + 1].size;
+//                        for (int i = 0; i < _size; i++) {
+//                            nearby.add(grid[cellX + 1][cellY + 1].get(i));
+//                        }
+//                    }
+//                }
+//                if (cellY - 1 >= 0 && cellY - 1 < grid[cellX + 1].length) {
+//                    // bottom right
+//                    _size = grid[cellX + 1][cellY - 1].size;
+//                    for (int i = 0; i < _size; i++) {
+//                        nearby.add(grid[cellX + 1][cellY - 1].get(i));
+//                    }
+//                }
+//            }
+//        }
+//
+//        // left column
+//        if (cellX - 1 >= 0 && cellX - 1 < grid.length) {
+//            if (cellY >= 0 && cellY < grid[cellX - 1].length) {
+//                // center left
+//                _size = grid[cellX - 1][cellY].size;
+//                for (int i = 0; i < _size; i++) {
+//                    nearby.add(grid[cellX - 1][cellY].get(i));
+//                }
+//
+//                // top left
+//                if (cellY + 1 < grid[cellX - 1].length) {
+//                    _size = grid[cellX - 1][cellY + 1].size;
+//                    for (int i = 0; i < _size; i++) {
+//                        nearby.add(grid[cellX - 1][cellY + 1].get(i));
+//                    }
+//                }
+//            }
+//
+//            if (cellY - 1 >= 0 && cellY - 1 < grid[cellX - 1].length) {
+//                // bottom left
+//                _size = grid[cellX - 1][cellY - 1].size;
+//                for (int i = 0; i < _size; i++) {
+//                    nearby.add(grid[cellX - 1][cellY - 1].get(i));
+//                }
+//            }
+//        }
+//        return nearby;
+//    }
 
     public Array<Boid> findNearby(Vector3 pos) {
         nearby.clear();
@@ -147,6 +235,19 @@ public class BoidGrid {
         int cellX = (int) pos.x / cellSize;
         int cellY = (int) pos.y / cellSize;
 
+//        int _size = 0;
+//        nearby.addAll(findBoidsInCell(nearby, cellX,        cellY));
+//        nearby.addAll(findBoidsInCell(nearby, cellX + 1,    cellY));
+//        nearby.addAll(findBoidsInCell(nearby, cellX + 1,    cellY + 1));
+//        nearby.addAll(findBoidsInCell(nearby, cellX,        cellY + 1));
+//
+//        nearby.addAll(findBoidsInCell(nearby, cellX - 1,    cellY  + 1));
+//        nearby.addAll(findBoidsInCell(nearby, cellX - 1,    cellY));
+//        nearby.addAll(findBoidsInCell(nearby, cellX - 1,    cellY - 1));
+//
+//        nearby.addAll(findBoidsInCell(nearby, cellX,        cellY - 1));
+//        nearby.addAll(findBoidsInCell(nearby, cellX + 1,    cellY - 1));
+//
 
         if ( cellX < 0 || cellX >= grid.length ||
                 cellY < 0 || cellY >= grid[0].length) {
@@ -171,68 +272,7 @@ public class BoidGrid {
     public Array<Boid> findInSight(Boid boid) {
         nearby.clear();
 
-        int startX = (int)boid.position.x;
-        int startY = (int)boid.position.y;
-//        int endX = startX + (int)boid.sightRadius;
-//        int endY = startY + (int)boid.sightRadius;
-        int sightRadLengthInCells = (int) boid.sightRadius / cellSize; //floored
-        int startCellX = startX/cellSize - sightRadLengthInCells;
-        int endCellX = startCellX + sightRadLengthInCells * 2;
-
-        int startCellY = startY/cellSize - sightRadLengthInCells;
-        int endCellY = startCellY + sightRadLengthInCells * 2;
-        for(int i = startCellX; i < endCellX; i++) {
-            for (int j = startCellY; j < endCellY; j++) {
-                findBoidsInCellNew(nearby, i, j);
-            }
-//            for (int j = startCellY - sightRadLengthInCells; j < startCellY; j++) {
-//                findBoidsInCell(nearby, i, j);
-//            }
-        }
-//        for(int i = startCellX - sightRadLengthInCells; i < startCellX; i++) {
-//            for (int j = startCellY; j < endCellY; j++) {
-//                findBoidsInCell(nearby, i, j);
-//            }
-//            for (int j = startCellY - sightRadLengthInCells; j < startCellY; j++) {
-//                findBoidsInCell(nearby, i, j);
-//            }
-//        }
-
-
         return nearby;
-    }
-
-    private Array<Boid> findBoidsInCellNew(Array<Boid> bnearby, int inCellX, int inCellY) {
-        int cellX = inCellX, cellY = inCellY;
-
-        //do wrap arounds
-        if ( inCellX < 0) {
-            cellX = cellX + grid.length;
-        } else if ( cellX >= grid.length) {
-            cellX = cellX - grid.length;
-        }
-
-        if(cellX > grid.length || cellX < 0) {
-            System.out.println("cellx for boid grid find new cell is out");
-        }
-        if ( inCellY < 0) {
-            cellY = cellY  + grid[cellX].length;
-        } else if ( cellY >= grid[cellX].length) {
-            cellY = cellY - grid[cellX].length;
-        }
-
-
-        try {
-            for (int i = 0; i < grid[cellX][cellY].size; i++) {
-                //            if(!bnearby.contains(grid[cellX][cellY].get(i),true)) {
-                bnearby.add(grid[cellX][cellY].get(i));
-                //            }
-            }
-        }catch (ArrayIndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
-
-        return bnearby;
     }
 
     public Array<Boid> findBoidsInCell(Array<Boid> bnearby, int cellX, int cellY) {

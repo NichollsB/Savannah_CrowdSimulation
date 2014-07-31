@@ -17,10 +17,10 @@ public class Arrive extends Behaviour {
     public static Vector3 act(Boid boid, Vector3 target) {
 
         Vector3 vec = new Vector3();
-        vec.set(target.sub(boid.getPosition()));
+        vec.set(target.cpy().sub(boid.getPosition()));
         float dist = vec.len();
         if(dist > 0 ) {
-            float speed = boid.maxSpeed * (dist / boid.sightRadius);
+            float speed = boid.maxSpeed * (dist / boid.sightRadius*boid.sightRadius);
             speed = Math.min(boid.maxSpeed, speed);
             vec.nor().scl(speed);
             vec.sub(boid.getVelocity());

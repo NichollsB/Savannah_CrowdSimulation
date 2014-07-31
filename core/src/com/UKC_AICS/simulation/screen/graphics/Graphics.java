@@ -116,24 +116,49 @@ public class Graphics {
 				if(entityArray.size>0){
 					for(Entity entity : entityArray){
 						sprite = spriteManager.getObjectSprite(entity.getType());
-						if(sprite!=null){
+                        if(sprite!=null){
 //							Vector3 pos = entity.getPosition();
 ////							sprite.setPosition(pos.x, pos.y);
-//							if(entity.getType() == 0 || entity.getType() == 1) System.out.println("corpse");
-							updateSpritePosition(entity, sprite);
-							sprite.draw(batch);
-						}
+//                            if(entity.getType() == 0 || entity.getType() == 1) System.out.println("corpse");
+                            updateSpritePosition(entity, sprite);
+                            sprite.draw(batch);
+                        }
+
 					}
 					
 				}
 				if(boidsArray.size>0){
 					Byte boidSelection = null;
 					for(Boid boid : boidsArray){
+<<<<<<< HEAD:core/src/com/UKC_AICS/simulation/screen/graphics/Graphics.java
 
 						if(boid.tracked){
 							altSprite = spriteManager.getBoid_HighlightSprite();
 							updateSpritePosition(boid, altSprite);
 							altSprite.draw(batch);
+=======
+						sprite = spriteManager.getSprite(b, boid.getSpecies());
+						if(sprite == null){
+//							sprite = (!boid.tracked ? spriteManager.getDefaults()[0] : spriteManager.getDefaults()[1]);
+							if(boid.tracked){
+								sprite = spriteManager.getDefaults()[1];
+								updateSpritePosition(boid, sprite);
+								sprite.draw(batch);
+							}
+							sprite = spriteManager.getDefaults()[0];
+							if(boidColours.containsKey(boid.getSpecies())){
+								float colour[] = boidColours.get(boid.getSpecies()).clone();
+
+                                colour[0] = (colour[0] > 0f) ? (colour[0] + ((float) boid.group * 0.03f)) : colour[0];
+                                colour[1] = (colour[1] > 0f) ? (colour[1] + ((float) boid.group * 0.03f)) : colour[1];
+                                colour[2] = (colour[2] > 0f) ? (colour[2] + ((float) boid.group * 0.03f)) : colour[2];
+
+								sprite.setColor(colour[0], colour[1], colour[2], 1f);
+							}
+							else{
+								sprite.setColor(Color.WHITE);
+							}
+>>>>>>> develop:core/src/com/UKC_AICS/simulation/screen/Graphics.java
 						}
 						sprite = spriteManager.getBoid_Sprite(boid.getSpecies());
 						updateSpritePosition(boid, sprite);
@@ -217,7 +242,7 @@ public class Graphics {
 			sprite.setPosition(entity.getPosition().x - sprite.getWidth()/2, 
 					entity.getPosition().y - sprite.getHeight()/2);
 			if(velocity != null){
-				double rot = Math.toDegrees(Math.atan2( - velocity.x, velocity.y)); //made x negative.
+				double rot = entity.getOrientation();
 				sprite.setRotation((float) rot);
 			}
 

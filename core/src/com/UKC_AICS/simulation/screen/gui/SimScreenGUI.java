@@ -53,7 +53,7 @@ public class SimScreenGUI extends Stage implements WindowListener {
     
     //South
     public Label fps;
-    
+
 
     //Centre
     private Table viewArea;
@@ -198,6 +198,7 @@ public class SimScreenGUI extends Stage implements WindowListener {
         });
 
         fps = new Label("0", skin);
+      
         HorizontalGroup southGroup = new HorizontalGroup();
 //        southGroup.addActor(fps);
 //        fps.setWidth(500f);

@@ -3,6 +3,7 @@ package com.UKC_AICS.simulation.entity.states;
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.UKC_AICS.simulation.managers.StateMachine;
@@ -26,11 +27,11 @@ public class Thirsty extends State {
     @Override
     public boolean update(Boid boid) {
         //am i still thirsty?
-        if ( boid.thirst > 60) {
+        if ( boid.thirst < 45) {
             return true;  //not thirsty return to default
         } else {
             boid.setState(this.toString());
-            if(boid.position.x < 0 || boid.position.x > Constants.screenWidth || boid.position.y < 0 || boid.position.y > Constants.screenHeight) {
+            if(boid.position.x < 0 || boid.position.x > Constants.mapWidth || boid.position.y < 0 || boid.position.y > Constants.mapHeight) {
                 System.out.println("I am out of bounds" + boid.position.x + " , " + boid.position.y);
             }
             //search for water
@@ -38,7 +39,8 @@ public class Thirsty extends State {
             if(waterAmount >= 10) {
 //                System.out.println(boid + "\n Just posted DRINK state ");
                 parent.pushState(boid, new Drink(parent, bm));
-                boid.setAcceleration(new  Vector3(boid.velocity).scl(0.01f));
+                boid.setVelocity(0f, 0f, 0f);
+                boid.setAcceleration(boid.getVelocity());
             }
             else {
 
@@ -64,11 +66,19 @@ public class Thirsty extends State {
                 //find objects nearby
                 Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
+                //Entities to check collision with
+                Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
+                collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
+
                 float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander() / 2;
 //                float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
                 float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
 
                 steering.set(0f, 0f, 0f);
+
+                //just add collision avoidance
+//                steering.add(Collision.act(collisionObjects, boid));  //.scl(avoid)   //Maybe have some scaling for avoidance?
+                steering.add(behaviours.get("collision").act(collisionObjects, boid));
 
 //                steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));

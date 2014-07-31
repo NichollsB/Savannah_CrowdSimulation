@@ -1,6 +1,7 @@
 package com.UKC_AICS.simulation.screen;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
@@ -34,7 +35,17 @@ public class InputManager implements InputProcessor{
 
 	@Override
 	public boolean keyDown(int keycode) {
-		
+
+        switch (keycode) {
+            case Keys.SPACE:
+                screen.flipRunning();
+                break;
+            case Keys.S:
+                screen.flipRender();
+                break;
+            default:
+                break;
+        }
 		return true;
 	}
 

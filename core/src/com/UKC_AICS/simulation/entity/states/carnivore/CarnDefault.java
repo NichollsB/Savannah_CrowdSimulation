@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.entity.states.carnivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.behaviours.Pursuit;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.entity.states.Thirsty;
@@ -29,17 +30,17 @@ public class CarnDefault extends State{
     public boolean update(Boid boid) {
 
 
-        if(boid.thirst < 15) {
+        if(boid.thirst > 65) {
 //            System.out.println(boid + "\n Just posted Thirsty state "  );
             parent.pushState(boid, new Thirsty(parent, bm));
         }
-        else if(boid.hunger < 50) {
+        else if(boid.hunger > 82) {
 //            System.out.println(boid + "\n Just posted Hungry state "  );
 //            parent.pushState(boid, new Hunt(parent,bm));
             //This is test GoForKill state change, CHANGE to Hunt State
 
             parent.pushState(boid, new Hunt(parent, bm));
-        } else if (boid.age > 10 && boid.hunger > 65 && boid.thirst > 65) {
+        } else if (boid.age > 10 && boid.hunger < 35 && boid.thirst < 35) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
                 parent.pushState(boid, new CarnReproduce(parent, bm));
         } else {
@@ -101,6 +102,7 @@ public class CarnDefault extends State{
 //                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
 //                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
 
+                steering.add(tempVec);
                 boid.setAcceleration(steering);
 
             } else {

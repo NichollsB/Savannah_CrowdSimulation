@@ -1,17 +1,17 @@
 package com.UKC_AICS.simulation.utils;
 
-import com.UKC_AICS.simulation.entity.Boid;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
+        import com.UKC_AICS.simulation.entity.Boid;
+        import com.badlogic.gdx.math.Vector2;
+        import com.badlogic.gdx.math.Vector3;
+        import com.badlogic.gdx.utils.Array;
 
-import java.util.HashMap;
-import java.util.Map;
+        import java.util.HashMap;
+        import java.util.Map;
 
 /**
  * Created by Emily on 02/07/2014.
  */
-public class BoidGrid {
+public class BoidGridOld {
 
     //private static int CELL_SIZE;
 
@@ -41,7 +41,7 @@ public class BoidGrid {
      * @param w         How wide a space the grid is representing
      * @param h         How wide a space the grid is representing
      */
-    public BoidGrid(int cell_size, int w, int h) {
+    public BoidGridOld(int cell_size, int w, int h) {
         this.cellSize = cell_size;
         cellWidth = (w / cell_size) + 1;
         cellHeight = (h / cell_size) + 1;
@@ -82,7 +82,7 @@ public class BoidGrid {
         int curCellX = (int) cPos.x;
         int curCellY = (int) cPos.y;
 
-        //sanity check
+        //sanity checks
         if (cellX >= 0 && cellX < grid.length && cellY >= 0 && cellY < grid[cellX].length) {
             if (grid[cellX][cellY].contains(boid, true)) {
                 grid[cellX][cellY].removeValue(boid, true);
@@ -95,8 +95,8 @@ public class BoidGrid {
         }
         return boid; //in case of chaining.
     }
-    
-  
+
+
     public void update(Boid boid) {
         Vector2 pos = cells.get(boid);
 
@@ -120,6 +120,7 @@ public class BoidGrid {
                 grid[cellX][cellY].add(boid);
                 grid[oldCellX][oldCellY].removeValue(boid, true);
 
+                //this really needs checking out
                 pos = cells.get(boid);
                 if (pos == null) {
                     cells.put(boid, pos);
@@ -133,12 +134,9 @@ public class BoidGrid {
 
     private Array<Boid> nearby = new Array<Boid>();
 
-
     public Array<Boid> findNearby(int x, int y, int z) {
         return findNearby(new Vector3(x, y, z));
     }
-
-
 
     public Array<Boid> findNearby(Vector3 pos) {
         nearby.clear();
@@ -146,7 +144,6 @@ public class BoidGrid {
 //        //TODO: account for potential variable "look" ranges. right now fixed to one cell distance around current one.
         int cellX = (int) pos.x / cellSize;
         int cellY = (int) pos.y / cellSize;
-
 
         if ( cellX < 0 || cellX >= grid.length ||
                 cellY < 0 || cellY >= grid[0].length) {
@@ -171,68 +168,7 @@ public class BoidGrid {
     public Array<Boid> findInSight(Boid boid) {
         nearby.clear();
 
-        int startX = (int)boid.position.x;
-        int startY = (int)boid.position.y;
-//        int endX = startX + (int)boid.sightRadius;
-//        int endY = startY + (int)boid.sightRadius;
-        int sightRadLengthInCells = (int) boid.sightRadius / cellSize; //floored
-        int startCellX = startX/cellSize - sightRadLengthInCells;
-        int endCellX = startCellX + sightRadLengthInCells * 2;
-
-        int startCellY = startY/cellSize - sightRadLengthInCells;
-        int endCellY = startCellY + sightRadLengthInCells * 2;
-        for(int i = startCellX; i < endCellX; i++) {
-            for (int j = startCellY; j < endCellY; j++) {
-                findBoidsInCellNew(nearby, i, j);
-            }
-//            for (int j = startCellY - sightRadLengthInCells; j < startCellY; j++) {
-//                findBoidsInCell(nearby, i, j);
-//            }
-        }
-//        for(int i = startCellX - sightRadLengthInCells; i < startCellX; i++) {
-//            for (int j = startCellY; j < endCellY; j++) {
-//                findBoidsInCell(nearby, i, j);
-//            }
-//            for (int j = startCellY - sightRadLengthInCells; j < startCellY; j++) {
-//                findBoidsInCell(nearby, i, j);
-//            }
-//        }
-
-
         return nearby;
-    }
-
-    private Array<Boid> findBoidsInCellNew(Array<Boid> bnearby, int inCellX, int inCellY) {
-        int cellX = inCellX, cellY = inCellY;
-
-        //do wrap arounds
-        if ( inCellX < 0) {
-            cellX = cellX + grid.length;
-        } else if ( cellX >= grid.length) {
-            cellX = cellX - grid.length;
-        }
-
-        if(cellX > grid.length || cellX < 0) {
-            System.out.println("cellx for boid grid find new cell is out");
-        }
-        if ( inCellY < 0) {
-            cellY = cellY  + grid[cellX].length;
-        } else if ( cellY >= grid[cellX].length) {
-            cellY = cellY - grid[cellX].length;
-        }
-
-
-        try {
-            for (int i = 0; i < grid[cellX][cellY].size; i++) {
-                //            if(!bnearby.contains(grid[cellX][cellY].get(i),true)) {
-                bnearby.add(grid[cellX][cellY].get(i));
-                //            }
-            }
-        }catch (ArrayIndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
-
-        return bnearby;
     }
 
     public Array<Boid> findBoidsInCell(Array<Boid> bnearby, int cellX, int cellY) {
@@ -259,7 +195,7 @@ public class BoidGrid {
 
         for (int i = 0; i < grid[cellX][cellY].size; i++) {
 //            if(!bnearby.contains(grid[cellX][cellY].get(i),true)) {
-                bnearby.add(grid[cellX][cellY].get(i));
+            bnearby.add(grid[cellX][cellY].get(i));
 //            }
         }
 //        if(bnearby.size > 0) {

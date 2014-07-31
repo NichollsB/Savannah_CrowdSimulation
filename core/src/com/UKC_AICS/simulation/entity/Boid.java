@@ -45,6 +45,7 @@ public class Boid extends Entity {
     //Added to check if boid info is being displayed or not - for highlighting in graphics
 	public boolean tracked = false;
 
+    public byte group = 0; //family group of boid.
     public float cohesion = 0;
     public float separation = 0;
     public float alignment = 0;
@@ -54,29 +55,19 @@ public class Boid extends Entity {
     public Float[] gene= new Float[geneSize];
 
 
-    public Boid( Vector3 pos, Vector3 vel) {
-        this.type = 1; // this is for categorising it as a "boid" object.
-        subType = 1;
-        position = pos.cpy();
-        velocity = vel.cpy();
-//        orientation = new Vector3();
-    }
-    public Boid(byte spec) {
-        this.type = 1; // this is for categorising it as a "boid" object.
-        subType = spec;
-        position = new Vector3();
-        velocity = new Vector3();
-//        orientation = new Vector3();
-    }
 
     public Boid(byte spec, Vector3 pos, Vector3 vel) {
         this.type = 1; // this is for categorising it as a "boid" object.
         subType = spec;
         position = pos.cpy();
         velocity = vel.cpy();
-//        orientation = new Vector3();
     }
-
+    public Boid( Vector3 pos, Vector3 vel) {
+        this((byte)1, pos, vel);
+    }
+    public Boid(byte spec) {
+        this(spec, new Vector3(), new Vector3());
+    }
 
     public Boid(Species species) {
         type = 1;
@@ -90,6 +81,8 @@ public class Boid extends Entity {
 
         position = new Vector3(500f,500f,0f);
         velocity = new Vector3();
+        orientation = Math.toDegrees(Math.atan2( - velocity.x, velocity.y));
+
         bounds.set(position.x, position.y, 16, 16);
     }
 
@@ -102,6 +95,7 @@ public class Boid extends Entity {
     public Boid(Boid boid) {
         type = 1;
         subType =  boid.getSubType();
+        group = boid.group;
         nearRadius = boid.nearRadius;
         sightRadius = boid.sightRadius;
         flockRadius = boid.flockRadius;
@@ -110,6 +104,10 @@ public class Boid extends Entity {
         maxForce = boid.maxForce;
 
         position = new Vector3(boid.getPosition());
+        velocity = new Vector3(boid.getVelocity());
+
+        orientation = Math.toDegrees(Math.atan2( - velocity.x, velocity.y));
+
         velocity = new Vector3(); //boid.getVelocity());
 
         hunger = boid.hunger;
@@ -130,16 +128,19 @@ public class Boid extends Entity {
         //move
 //        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
         velocity.add(acceleration).limit(maxSpeed);
-        bounds.setPosition(position.x, position.y);
         velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
         position.add(velocity);
         //check for out of bounds
         checkInBounds();
 
+        bounds.setPosition(position.x, position.y);
+
 
         //TODO: potentially have different species "degrade" at different rates
-        hunger -= (float) 0.5 /60;
-        thirst -= (float) 2 /60;
+        hunger += (float) 0.25 /60;
+        thirst += (float) 1 /60;
+
+        bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
     }
 
     public void setNewVelocity(Vector3 newVel){
@@ -147,25 +148,15 @@ public class Boid extends Entity {
     }
 
     private void checkInBounds() {
-        //TODO make this access the simulation map size, as this will be different from screen size eventually.
-        if(position.x > Constants.screenWidth - bounds.width/2) {
-//            System.out.print("out X " + position.x);
-            position.x = position.x - Constants.screenWidth + bounds.height;
-//            System.out.println(" adjusted to " + position.x);
-        } else if(position.x <  bounds.width/2) {
-//            System.out.print("out X " + position.x);
-            position.x = position.x + Constants.screenWidth - bounds.height;
-//            System.out.println(" adjusted to " + position.x);
+        if(position.x > Constants.mapWidth - bounds.height/2) {
+            position.x = position.x - Constants.mapWidth+ bounds.height;
+        } else if(position.x < + bounds.width/2) {
+            position.x = position.x + Constants.mapWidth- bounds.height;
         }
-
-        if(position.y > Constants.screenHeight - bounds.height/2) {
-//            System.out.print("out Y " + position.y);
-            position.y = position.y - Constants.screenHeight + bounds.width;
-//            System.out.println(" adjusted to " + position.y);
-        } else if(position.y < bounds.height/2) {
-//            System.out.print("out Y " + position.y);
-            position.y = position.y + Constants.screenHeight - bounds.width;
-//            System.out.println(" adjusted to " + position.y);
+        if(position.y > Constants.mapHeight - bounds.width/2) {
+            position.y = position.y - Constants.mapHeight + bounds.width;
+        } else if(position.y < bounds.width/2) {
+            position.y = position.y + Constants.mapHeight - bounds.width;
         }
     }
 
@@ -177,6 +168,7 @@ public class Boid extends Entity {
 
     public void setPosition(Vector3 position) {
         this.position = position;
+        this.bounds.setPosition(position.x, position.y);
     }
     public void setPosition( float x, float y, float z) {
         setPosition(new Vector3(x, y, z));
@@ -220,9 +212,29 @@ public class Boid extends Entity {
     }
 
 
-//    public Vector3 getOrientation() {
-//        return orientation;
-//    }
+    public double getOrientation() {
+        if(velocity.len2() > 0) {
+            double newOrt = Math.toDegrees(Math.atan2(-velocity.x, velocity.y));
+            orientation = newOrt;
+            if (newOrt != orientation) {
+                double change = orientation - newOrt;
+                orientation = orientation + change / 2;
+                //            orientation /= 2;
+            }
+
+            while (orientation > 360) {
+                orientation -= 360;
+            }
+            while (orientation < 0) {
+                orientation += 360;
+
+            }
+            return newOrt; //made x negative.
+        }
+        else {
+            return orientation;
+        }
+    }
 //
 //    public void setOrientation(Vector3 orientation) {
 //        this.orientation = orientation;
@@ -241,11 +253,13 @@ public class Boid extends Entity {
     public String toString() {
         String string = "";
 
-        string += "BOID: " + "\t" + "\t position: \n \t" + position.toString() ;
-        string += "\n\t hunger:" + hunger;
-        string += "\n\t thirst:" + thirst;
+        string += "BOID: " + "\t" + "\t position: \n \t" + (int)position.x + "/" + (int)position.y;
+        string += "\n\t group:" + group;
+        string += "\n\t hunger:" + (int)hunger;
+        string += "\n\t thirst:" + (int)thirst;
         string += "\n\t age:" + age ;
         string += "\n\t state:" + state;
+        string += "\n\t orientation:" + (int)orientation;
 
         return string;
     }
@@ -261,6 +275,16 @@ public class Boid extends Entity {
     	gene[3] = wander;
     	
     }      
+    
+    public void setGene(Float[] newGene ) {
+    	for(int i = 0 ; i<geneSize; i++){
+    		gene[i] = newGene[i];
+    	}
+    	setCohesion(newGene[0]); 
+    	setSpearation(newGene[1]);
+    	setAlignment(newGene[2]);
+    	setWander(newGene[3]);
+    }  
     
     public Float[] getGene() {
     	return gene;
