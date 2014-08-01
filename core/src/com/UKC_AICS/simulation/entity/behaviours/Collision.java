@@ -26,6 +26,7 @@ public class Collision extends Behaviour {
      static float LOOK_AHEAD = 20f;
      static float HALF_LOOK_AHEAD = LOOK_AHEAD/2f;
     static int tileSize = Constants.TILE_SIZE;
+    static int stepsAhead = 5;
 
     public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
         throw new Error("Collision is not to be used in this manner. Try static access Collision.act(Array<Entity> targets, Boid boid)");
@@ -39,13 +40,12 @@ public class Collision extends Behaviour {
     public static Vector3 act(Boid boid) {
         tmpVec.set(boid.getPosition());
         tmpVec2.set(boid.getVelocity());
-        tmpVec.add(tmpVec2.scl(3f));  //end position
+        tmpVec.add(tmpVec2.scl(stepsAhead));  //end position
         int mapX = (int)boid.position.x/tileSize;
         int mapY = (int)boid.position.y/tileSize;
         Array<int[]> cellList = cellsInPath(boid.getPosition().x, boid.getPosition().y, tmpVec.x, tmpVec.y);
-        HashMap<String, Byte> layers = new HashMap<String, Byte>();
-        boolean collision = false;
         for(int[] cell : cellList) {
+            tmpVec.set(0f,0f,0f);
             //get tile info, check if grass
             if (WorldManager.getTileInfoAt(cell[0], cell[1]).get("terrain") == 0) {
                 //terrain is grass -- passable, no need to do anything
@@ -55,14 +55,67 @@ public class Collision extends Behaviour {
                 // the tile is impassable,
                 // need to do collision avoidance with  the intersect of closest edge and velocity intersect
                 Vector2 intersect = new Vector2();
-                if (Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y, tmpVec.x, tmpVec.y,
-                        cell[0] * tileSize, cell[1] * tileSize, cell[0] * tileSize + tileSize, cell[1] * tileSize + tileSize,
-                        intersect)) {
-                    tmpVec.set(boid.getPosition());
-                    tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
-                    tmpVec.nor();
-                    tmpVec.scl(MAX_AVOID_FORCE);
-                    break;
+                //TODO is this getting the correct line for nearest edge of cell?
+                if(mapX < cell[0]) {
+                    if(mapY == cell[1] && Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
+                            tmpVec.x, tmpVec.y, cell[0] * tileSize + tileSize, cell[1] * tileSize, cell[0] * tileSize + tileSize,
+                            cell[1] * tileSize + tileSize, intersect)) {
+                        tmpVec.set(boid.getPosition());
+                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
+                        tmpVec.nor();
+                        tmpVec.scl(MAX_AVOID_FORCE);
+                    }
+                    else if (mapY < cell[1]) {
+                        tmpVec.set(boid.getPosition());
+                        tmpVec.sub(new Vector3(cell[0]*tileSize + tileSize, cell[1]*tileSize + tileSize, 0f));
+                        tmpVec.nor();
+                        tmpVec.scl(MAX_AVOID_FORCE);
+                    }
+                    else if(mapY > cell[1]) {
+                        tmpVec.set(boid.getPosition());
+                        tmpVec.sub(new Vector3(cell[0]*tileSize + tileSize, cell[1]*tileSize, 0f));
+                        tmpVec.nor();
+                        tmpVec.scl(MAX_AVOID_FORCE);
+                    }
+                }
+                else if(mapX > cell[0]) {
+                    if(mapY == cell[1] && Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
+                            tmpVec.x, tmpVec.y, cell[0] * tileSize, cell[1] * tileSize, cell[0] * tileSize,
+                            cell[1] * tileSize + tileSize, intersect)) {
+                        tmpVec.set(boid.getPosition());
+                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
+                        tmpVec.nor();
+                        tmpVec.scl(MAX_AVOID_FORCE);
+                    }
+                    else if (mapY < cell[1]) {
+                        tmpVec.set(boid.getPosition());
+                        tmpVec.sub(new Vector3(cell[0]*tileSize, cell[1]*tileSize + tileSize, 0f));
+                        tmpVec.nor();
+                        tmpVec.scl(MAX_AVOID_FORCE);
+                    }
+                    else if(mapY > cell[1]) {
+                        tmpVec.set(boid.getPosition());
+                        tmpVec.sub(new Vector3(cell[0]*tileSize, cell[1]*tileSize, 0f));
+                        tmpVec.nor();
+                        tmpVec.scl(MAX_AVOID_FORCE);
+                    }
+                } else if (mapX == cell[0]) {
+                    if (mapY < cell[1]&& Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
+                            tmpVec.x, tmpVec.y, cell[0] * tileSize + tileSize, cell[1] * tileSize, cell[0] * tileSize + tileSize,
+                            cell[1] * tileSize + tileSize, intersect)) {
+                        tmpVec.set(boid.getPosition());
+                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
+                        tmpVec.nor();
+                        tmpVec.scl(MAX_AVOID_FORCE);
+                    }
+                    else if(mapY > cell[1]&& Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
+                            tmpVec.x, tmpVec.y, cell[0] * tileSize, cell[1] * tileSize, cell[0] * tileSize,
+                            cell[1] * tileSize + tileSize, intersect)) {
+                        tmpVec.set(boid.getPosition());
+                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
+                        tmpVec.nor();
+                        tmpVec.scl(MAX_AVOID_FORCE);
+                    }
                 }
             }
         }
@@ -90,16 +143,16 @@ public class Collision extends Behaviour {
         float dx = Math.abs(x1 - x0);
         float dy = Math.abs(y1 - y0);
 
-        int x = (int)(Math.floor(x0));
-        int y = (int)(Math.floor(y0));
+        int x = (int)x0/tileSize;
+        int y = (int)y0/tileSize;
 
         //position local to current cell
         float xLocal = x0 % tileSize;
         float yLocal = y0 % tileSize;
 
         //change in x and y per unit time
-        float dx_dt = dx/3f;
-        float dy_dt = dy/3f;
+        float dx_dt = dx/stepsAhead;
+        float dy_dt = dy/stepsAhead;
 
 
 //        //change in time per unit x and y axis
@@ -112,43 +165,41 @@ public class Collision extends Behaviour {
 
         //each i will be a step in time, slowly increment the x and y and check if they cross cell boundaries
         //if so, add new cell to cellList
-        for(int i = 1; i < 4; i++) {
+        for(int i = 1; i < stepsAhead+1; i++) {
             //increment x and y
             xLocal += dx_dt;
             yLocal += dy_dt;
-            //check location of x and y
-            float changeX = xLocal - tileSize;
-            float changeY = yLocal - tileSize;
             boolean stepped = false;
-            if(changeX == 0) {
-                //
+
+            if(xLocal < tileSize && xLocal > 0 ) {
+                //no cell change
             }
-            else if(changeX > 0) {
+            else if(xLocal > tileSize) {
                 // has stepped right one cell
                 x++;
-                xLocal = changeX;
+                xLocal -= tileSize;
                 stepped = true;
             }
-            else if(changeX < 0) {
+            else if(xLocal < 0) {
                 //  has stepped left one cell
                 x--;
-                xLocal = tileSize + changeX;
+                xLocal = tileSize + xLocal;
                 stepped = true;
             }
 
-            if(changeY == 0) {
-                //
+            if(yLocal < 16 && yLocal > 0) {
+                //no y axis cell change
             }
-            else if(changeY > 0) {
+            else if(yLocal > tileSize) {
                 // has stepped up one cell
                 y++;
-                yLocal = changeY;  //set new local position to location in new cell
+                yLocal -= tileSize;  //set new local position to location in new cell
                 stepped = true;
             }
-            else if(changeY < 0) {
+            else if(yLocal < 0) {
                 //  has stepped down one cell
                 y--;
-                yLocal = tileSize + changeY;
+                yLocal = tileSize + yLocal;
                 stepped = true;
             }
             if(stepped) {
