@@ -39,68 +39,96 @@ grass#40
   index: -1
 grass#50
   rotate: false
-  xy: 2, 20
+  xy: 92, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 grass#60
   rotate: false
-  xy: 20, 20
+  xy: 110, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 grass#80
   rotate: false
-  xy: 38, 20
+  xy: 2, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 grass#90
   rotate: false
-  xy: 56, 20
+  xy: 20, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 water#10
   rotate: false
-  xy: 74, 20
+  xy: 38, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 water#100
   rotate: false
-  xy: 2, 38
+  xy: 56, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 water#20
   rotate: false
-  xy: 20, 38
+  xy: 74, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 water#30
   rotate: false
-  xy: 38, 38
+  xy: 92, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 water#40
   rotate: false
-  xy: 56, 38
+  xy: 110, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 water#50
+  rotate: false
+  xy: 2, 38
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+water#60
+  rotate: false
+  xy: 20, 38
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+water#70
+  rotate: false
+  xy: 38, 38
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+water#80
+  rotate: false
+  xy: 56, 38
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+water#90
   rotate: false
   xy: 74, 38
   size: 16, 16

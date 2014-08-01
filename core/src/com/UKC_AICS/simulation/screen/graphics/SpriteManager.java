@@ -20,6 +20,7 @@ public class SpriteManager {
 	private static String environmentTiles_path = environmentTiles_defaultPath;
 	private static TextureAtlas environmentTiles_Atlas;
 	private final static ObjectMap<String, ObjectMap<Float, AtlasSprite>> environmentTiles_sprites = new ObjectMap<String, ObjectMap<Float, AtlasSprite>>();
+	private final static ObjectMap<String, ObjectMap<Float, AtlasRegion>> environmentTiles_regions = new ObjectMap<String, ObjectMap<Float, AtlasRegion>>();
 	
 	private static Sprite defaultBoid;
 	private final static String defaultBoid_path = "data/newTriangle.png";
@@ -132,7 +133,9 @@ public class SpriteManager {
 		
 		//Environment sprites
 		if(assetManager.isLoaded(environmentTiles_path)){
-			TextureAtlas atlas = assetManager.get(environmentTiles_path, TextureAtlas.class);
+			environmentTiles_Atlas = assetManager.get(environmentTiles_path, TextureAtlas.class);
+			TextureAtlas atlas = environmentTiles_Atlas;
+			
 			String[] parts;
 			AtlasSprite atSprite;
 			for(AtlasRegion region : atlas.getRegions()){
@@ -221,26 +224,39 @@ public class SpriteManager {
 		assetManager.load(environmentTiles_path, TextureAtlas.class);
 	}
 
+	public AtlasRegion getTileRegion(String layer, int amount){
+//		String regionName = layer + "#" + amount;
+//		System.out.println(environmentTiles_Atlas.findRegion(regionName));
+		return environmentTiles_Atlas.findRegion(layer + "#" + amount);
+	}
 		
 	public AtlasSprite getTileSprite(String layer, float amount){
 //		String name = (layer + "_" + amount);
-//		System.out.println(layer + environmentTiles_sprites.get(layer));
-		if(environmentTiles_sprites.containsKey(layer)){
+//		if(layer == "water"){
+//			System.out.println(layer + amount);
+//			System.out.print(environmentTiles_sprites.containsKey(layer));
+//			for(Float s : environmentTiles_sprites.get(layer).keys()){
+//				System.out.println("sprite " + s);
+//			}
+//		}
+		if(!environmentTiles_sprites.containsKey(layer)) return null;
+		if(!environmentTiles_sprites.get(layer).containsKey(amount)) return null;
+			
 //			System.out.println("layer exists " + environmentTiles_sprites.get(name).keys());
-			Array<Float> keys = environmentTiles_sprites.get(layer).keys().toArray();
-			float threshold;
-//			if(amount < keys.get(0))
-//				return null;
-			int nullcount=0;
-			for(int i = 0; i < keys.size; i ++){
-				threshold = keys.get(i);
-				if(amount >= keys.get(i) && amount < keys.get(i+1)){
-					if(environmentTiles_sprites.get(layer).get(keys.get(i)) == null) nullcount++;
-					return environmentTiles_sprites.get(layer).get(keys.get(i));
-				}
-			}
-		}
-		return null;
+//			Array<Float> keys = environmentTiles_sprites.get(layer).keys().toArray();
+//			float threshold;
+////			if(amount < keys.get(0))
+////				return null;
+//			int nullcount=0;
+//			for(int i = 0; i < keys.size; i ++){
+//				threshold = keys.get(i);
+//				if(amount >= keys.get(i) && amount < keys.get(i+1)){
+//					if(environmentTiles_sprites.get(layer).get(keys.get(i)) == null) nullcount++;
+//					return environmentTiles_sprites.get(layer).get(keys.get(i));
+//				}
+//			
+			return environmentTiles_sprites.get(layer).get(amount);
+		
 	}
 	public Sprite getBoid_HighlightSprite(){
 		return defaultBoid_selected;
