@@ -280,7 +280,10 @@ public class Boid extends Entity {
     	for(int i = 0 ; i<geneSize; i++){
     		gene[i] = newGene[i];
     	}
-    	
+    	setCohesion(newGene[0]); 
+    	setSpearation(newGene[1]);
+    	setAlignment(newGene[2]);
+    	setWander(newGene[3]);
     }  
     
     public Float[] getGene() {

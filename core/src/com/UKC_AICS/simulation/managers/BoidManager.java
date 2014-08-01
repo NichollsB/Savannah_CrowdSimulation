@@ -32,6 +32,13 @@ public class BoidManager extends Manager {
     private Random rand = new Random();
     private static StateMachine stateMachine;
 
+   
+//    private HashMap<String, Behaviour> behaviours = new HashMap<String, Behaviour>();
+
+//    CollisionManager collisionManager = new CollisionManager();
+
+
+
     public BoidManager(SimulationManager parent) {
 
         this.parent = parent;
@@ -290,5 +297,15 @@ public class BoidManager extends Manager {
 
     public Boid getBoidAt(int screenX, int screenY) {
         return boidGrid.findBoidAt(screenX, screenY);
+    }
+    //TODO - Work in progress - Matt
+    public int trackPop(byte current) {
+    	int population = 0;
+    	for(Boid b : boids){
+    		if(b.getSpecies()==current){
+    			population++;
+    		}
+    	}
+		return population;
     }
 }
