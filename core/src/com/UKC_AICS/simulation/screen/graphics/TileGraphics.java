@@ -22,14 +22,17 @@ public class TileGraphics {
 	private byte mapElementsX = 0, mapElementsY = 0;
 	
 	//SpriteCache attempt
-	static final SpriteCache tileCache = new SpriteCache(10000, false);
-	int spriteCacheCount = 0;
+	static SpriteCache tileCache = new SpriteCache(20000, false);
+	int cacheCount = 0;
 	private Array<Byte> cacheRows;
-	private ObjectMap<Byte, Integer> cacheRow_Map = new ObjectMap<Byte, Integer>();
+	private ObjectMap<Integer, Integer> cacheRow_Map = new ObjectMap<Integer, Integer>();
 //	private int[][] 
 	
-	public TileGraphics(HashMap<String, byte[][]> infoLayers, SpriteManager manager){
+	public TileGraphics(HashMap<String, byte[][]> infoLayers, SpriteManager manager, SpriteCache cache){
 //		this.infoLayers = infoLayers;
+		
+		tileCache = cache;
+		
 		this.manager = manager;
 		this.infoLayers = infoLayers;
 
@@ -55,7 +58,7 @@ public class TileGraphics {
 		AtlasRegion region = null;
 		AtlasRegion nextRegion = region;
 		int xPos = 0;
-		if(cacheRow_Map.containsKey((byte)y)){
+		if(cacheRow_Map.containsKey(y)){
 			tileCache.beginCache(y);
 		}
 		else
@@ -81,31 +84,43 @@ public class TileGraphics {
 				nextRegion = manager.getTileRegion(layer, amount);
 				if(nextRegion != null){
 					region = nextRegion;
-					System.out.println(x);
+//					System.out.println(x);
+//					System.out.println(cacheCount);
 					tileCache.add(region, xPos, y*region.originalHeight, region.originalWidth, region.originalHeight);
+					cacheCount += 1;
 				}
 			}
 			if(region!= null)
 				xPos += region.originalWidth;
 		}
-		cacheRow_Map.put((byte)y, tileCache.endCache());
+		cacheRow_Map.put(y, tileCache.endCache());
 	}
 	
 	
-	public void updateTiles(Batch batch){
+	public void updateTiles(Batch batch, boolean update){
+		tileCache.setProjectionMatrix(batch.getProjectionMatrix());
+//		System.out.println(mapElementsX);
+		
+		
 		if(manager.update()){
+			
+			
+			//CACHE METHOD
+		
 			for(int y = 0; y<mapElementsY; y++){
-				if(!cacheRow_Map.containsKey((byte) y))
+				if(!cacheRow_Map.containsKey(y) || update){
 					createCache(y);
+				}
 				
 			}
 			tileCache.begin();
 			for(int i : cacheRow_Map.values()){
 				tileCache.draw(i);
+				System.out.println("Drawing cache");
 			}
 			tileCache.end();
 			
-			
+			//BATCH METHOD
 ////			batch.begin();
 //			float amount;
 //			float alpha;

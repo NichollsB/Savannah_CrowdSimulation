@@ -7,6 +7,7 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -55,13 +56,17 @@ public class Graphics {
 	
 	private OrthographicCamera camera = new OrthographicCamera();
 	
-	private TileGraphics dynamicTiles;
+
 	private Texture simBase;
 	
 	ShapeRenderer back = new ShapeRenderer();
 	private HashMap<Byte, float[]> boidColours = new HashMap<Byte, float[]>();
 	
 	private AtlasSprite background;
+	
+	
+	SpriteCache backgroundCache = new SpriteCache(20000, false);
+	private TileGraphics dynamicTiles;
 	
 	public Graphics(int width, int height){
 		renderWidth = width;
@@ -72,11 +77,15 @@ public class Graphics {
 	/**
 	 * Update and render the sprites representing the boids. Renders via the SpriteBatch passed in.
 	 * @param batch is the SpriteBatch to render the boid sprites in
+	 * @param viewRect 
 	 */
-	public void update(SpriteBatch batch){
+	public void update(SpriteBatch batch, Rectangle viewRect){
 			
 			
 			if(spriteManager.update()){
+				
+				ScissorStack.pushScissors(viewRect);
+				batch.begin();
 //				ScissorStack.pushScissors(scissor);
 //				spriteManager.drawTileCache();
 //				back.begin(ShapeType.Filled);
@@ -90,9 +99,10 @@ public class Graphics {
 				catch(NullPointerException e){
 					System.out.println("Missing GROUND environment layer");
 				}
-//		
+				batch.end();
 				if(dynamicTiles != null)
-					dynamicTiles.updateTiles(batch);
+					Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
+					dynamicTiles.updateTiles(batch, false);
 //				
 				//drawGrass
 				//int x=0, y=0;
@@ -112,6 +122,7 @@ public class Graphics {
 	//				}
 	//			}
 				
+		    	batch.begin();
 				byte b = 0;
 				if(entityArray.size>0){
 					for(Entity entity : entityArray){
@@ -160,8 +171,8 @@ public class Graphics {
 
 					}
 				}
-//				batch.end();
-//				ScissorStack.popScissors();
+				batch.end();
+				ScissorStack.popScissors();
 			}
 			
 		}
@@ -210,7 +221,7 @@ public class Graphics {
 	}
 	
 	public void initTileSprites(HashMap<String, byte[][]> tileLayers){
-		dynamicTiles = new TileGraphics(tileLayers, spriteManager);
+		dynamicTiles = new TileGraphics(tileLayers, spriteManager, backgroundCache);
 	}
 	public void initBackground(){
 		background = EnvironmentLoader.getLayer_sprite(EnvironmentLayer.GROUND);

@@ -6,6 +6,7 @@ import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.screen.graphics.Graphics;
+import com.UKC_AICS.simulation.screen.graphics.TileGraphics;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.UKC_AICS.simulation.screen.gui.SimViewport;
 import com.UKC_AICS.simulation.utils.EnvironmentLoader;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.SpriteCache;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -72,6 +74,9 @@ public class SimulationScreen implements Screen {
 
     private InputMultiplexer input;
     private InputManager inputManager;
+    
+    TileGraphics tiling;
+    
 
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
@@ -135,6 +140,8 @@ public class SimulationScreen implements Screen {
         gui.update(simBatch, render);
         simBatch.end();
     }
+    
+   
     /**
      * Calls the update method to trigger the rendering calls in the gui and simulation view
      */
@@ -144,11 +151,11 @@ public class SimulationScreen implements Screen {
     	if(render){
 	    	simViewport.update();
 	    	simBatch.setProjectionMatrix(simViewcamera.combined);
-	        ScissorStack.pushScissors(viewRect);
-	    	simBatch.begin();
-	    	boidGraphics.update(simBatch);
-	    	simBatch.end();
-	    	ScissorStack.popScissors();
+//	        ScissorStack.pushScissors(viewRect);
+//	    	simBatch.begin();
+	    	boidGraphics.update(simBatch, viewRect);
+//	    	simBatch.end();
+//	    	ScissorStack.popScissors();
     	}
     }
 
