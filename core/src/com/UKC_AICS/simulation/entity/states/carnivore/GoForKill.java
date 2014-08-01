@@ -58,8 +58,8 @@ public class GoForKill extends State {
                     steering.add(Pursuit.act(boid, target));
 
                     //Add collision avoidance
-//                    steering.add(Collision.act(collisionObjects, boid));
-                    steering.add(behaviours.get("collision").act(collisionObjects, boid));
+                    steering.add(Collision.act(collisionObjects, boid));
+//                    steering.add(behaviours.get("collision").act(collisionObjects, boid));
 
                     boid.setAcceleration(steering);
 

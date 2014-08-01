@@ -67,7 +67,8 @@ public class CarnDefault extends State{
             Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
 
-            tempVec = behaviours.get("collision").act(collisionObjects, boid);
+            tempVec = Collision.act(collisionObjects, boid);
+//            tempVec = behaviours.get("collision").act(collisionObjects, boid);
 
             steering.set(0f, 0f, 0f);
             boid.setAcceleration(steering);
@@ -98,6 +99,8 @@ public class CarnDefault extends State{
                 steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
                 steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
+
+                steering.add(Collision.act(boid));
 
 //                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
 //                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));

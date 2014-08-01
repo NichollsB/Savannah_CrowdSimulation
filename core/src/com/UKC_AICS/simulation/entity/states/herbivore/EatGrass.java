@@ -37,8 +37,8 @@ public class EatGrass extends State{
             steering.set(0f, 0f, 0f);
 
             //just add collision avoidance
-//            steering.add(Collision.act(collisionObjects, boid));  //.scl(avoid)   //Maybe have some scaling for avoidance?
-            steering.add(behaviours.get("collision").act(collisionObjects, boid));
+            steering.add(Collision.act(collisionObjects, boid));  //.scl(avoid)   //Maybe have some scaling for avoidance?
+//            steering.add(behaviours.get("collision").act(collisionObjects, boid));
             steering.nor().scl(boid.maxSpeed / 2);
             steering.sub(boid.getVelocity());
             steering.limit(boid.maxForce);

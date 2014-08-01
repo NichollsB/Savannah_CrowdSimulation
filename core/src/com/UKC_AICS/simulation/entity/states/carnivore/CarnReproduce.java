@@ -30,7 +30,7 @@ public class CarnReproduce extends State {
 
             boid.setState(this.toString());
 
-            Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
+            Array<Boid> nearBoids = BoidManager.getBoidGrid().findInSight(boid);
             Array<Boid> potentialMates = new Array<Boid>();
             Array<Boid> closeBoids = new Array<Boid>();
 
