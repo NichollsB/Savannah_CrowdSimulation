@@ -42,10 +42,10 @@ public class TileGraphics {
 					for(int x = 0; x < layermap.length; x++){
 						for(int y = 0; y<layermap[x].length; y++){
 							amount = (float)layermap[x][y]/100;
-							if(layer == "grass"){
+							if(layer.equals("grass")){
 								sprite.setAlpha(amount);
 							}
-							else if(layer == "water" ){
+							else if(layer.equals("water" )){
 								if(amount > 0.6){
 									sprite.setAlpha(0.9f);
 								}

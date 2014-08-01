@@ -1,7 +1,6 @@
 package com.UKC_AICS.simulation.entity;
 
 import com.UKC_AICS.simulation.Constants;
-import com.UKC_AICS.simulation.entity.states.herbivore.Reproduce;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -10,17 +9,17 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class Boid extends Entity {
 
-    public enum State {
-        DEFAULT,
-        HUNGRY,
-        THIRSTY,
-        EVADE;
-
-
-        public int getStateID() {
-            return ordinal();
-        }
-    }
+//    public enum State {
+//        DEFAULT,
+//        HUNGRY,
+//        THIRSTY,
+//        EVADE;
+//
+//
+//        public int getStateID() {
+//            return ordinal();
+//        }
+//    }
     //boids own specific variants on the species.
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //
@@ -39,7 +38,8 @@ public class Boid extends Entity {
     public String state = "default";
 
     public int age = 0;
-    public int birthDay = 0;
+    public float size;
+//    public int birthDay = 0;
     
 
     //Added to check if boid info is being displayed or not - for highlighting in graphics
@@ -178,13 +178,13 @@ public class Boid extends Entity {
         return velocity;
     }
 
-    public void setBirthDay(int birthDay) {
-       this.birthDay = birthDay;     
-    }   
-    
-    public int getBirthDay() {
-    	return birthDay;    	
-    }
+//    public void setBirthDay(int birthDay) {
+//       this.birthDay = birthDay;
+//    }
+//
+//    public int getBirthDay() {
+//    	return birthDay;
+//    }
 
     public void setAge(int newAge) {
         age = newAge;
