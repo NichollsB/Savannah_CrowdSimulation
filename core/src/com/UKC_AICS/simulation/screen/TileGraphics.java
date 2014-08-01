@@ -46,7 +46,7 @@ public class TileGraphics {
 								sprite.setAlpha(amount);
 							}
 							else if(layer.equals("water")){
-								if(amount > 0.6){
+								if(amount > 0.9){
 									sprite.setAlpha(0.9f);
 								}
 								else
