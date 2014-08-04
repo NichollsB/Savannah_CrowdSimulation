@@ -33,30 +33,33 @@ public class LandMap {
         }
 
 
-        byte[][] mapInfo = new byte[width / TILE_SIZE][height / TILE_SIZE];
+        byte[][] grassInfo = new byte[width / TILE_SIZE][height / TILE_SIZE];
 
         // randomly assigns grass to tiles
         Random rand = new Random();
-        for (int i = 0; i < mapInfo.length; i++) {
-            for (int j = 0; j < mapInfo[i].length; j++) {
-                mapInfo[i][j] = (byte) rand.nextInt(100);
+
+        for (int i = 0; i < grassInfo.length; i++) {
+            for (int j = 0; j < grassInfo[i].length; j++) {
+                grassInfo[i][j] = (byte) rand.nextInt(100);
             }
         }
-        information_layers.put("grass", mapInfo);
 
         // randomly assigns water to tiles
-        mapInfo = new byte[width / TILE_SIZE][height / TILE_SIZE];
-        for (int i = 0; i < mapInfo.length; i++) {
-            for (int j = 0; j < mapInfo[i].length; j++) {
-                mapInfo[i][j] = (byte) rand.nextInt(100);
-                if (mapInfo[i][j] > 100) {
+        byte[][] waterInfo = new byte[width / TILE_SIZE][height / TILE_SIZE];
+        for (int i = 0; i < waterInfo.length; i++) {
+            for (int j = 0; j < waterInfo[i].length; j++) {
+                waterInfo[i][j] = (byte) rand.nextInt(100);
+                if (waterInfo[i][j] > 70) {
                     terrain[i][j] = 1; //change terrain type to water.
+                    grassInfo[i][j] = 0; // no grass/vegetation on a water tile.
                 }
             }
         }
 
+        information_layers.put("grass", grassInfo);
 
-        information_layers.put("water", mapInfo);
+        information_layers.put("water", waterInfo);
+
         information_layers.put("terrain", terrain);
     }
 
