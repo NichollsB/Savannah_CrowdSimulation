@@ -1,8 +1,8 @@
 package com.UKC_AICS.simulation.entity.behaviours;
 
 import com.UKC_AICS.simulation.Constants;
-import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.managers.WorldManager;
 import com.UKC_AICS.simulation.world.LandMap;
 import com.badlogic.gdx.math.Intersector;
@@ -30,6 +30,17 @@ public class Collision extends Behaviour {
 
     public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
         throw new Error("Collision is not to be used in this manner. Try static access Collision.act(Array<Entity> targets, Boid boid)");
+    }
+
+    private static Entity terrainCollision(Boid boid) {
+        tmpVec.set(boid.getPosition());
+        tmpVec2.set(boid.getVelocity());
+        Array<Integer> cell = cellsInPath(tmpVec.x, tmpVec.y, tmpVec2.x, tmpVec2.y);
+        Object cellObject = null;
+        if (cell.size > 1) {
+            cellObject = new Object((byte) 9, (byte) 9, new Vector3(cell.get(0)*tileSize+tileSize/2, cell.get(1)*tileSize+tileSize/2, 0f));
+        }
+        return cellObject;
     }
 
     /**
@@ -248,6 +259,10 @@ public class Collision extends Behaviour {
      */
     public static Vector3 act(Array<Entity> targets, Boid boid) {
         Array<Entity> entities = targets;  //
+        Object cell = (Object) terrainCollision(boid);
+        if(cell != null) {
+            entities.add(cell);
+        }
         // targets that are within a check range check, to be checked further
         Array<Entity> collisionThreats = new Array<Entity>();
         Vector3 adjustment = new Vector3(0f, 0f, 0f);
