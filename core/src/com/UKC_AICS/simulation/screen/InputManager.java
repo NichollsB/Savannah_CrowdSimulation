@@ -67,11 +67,9 @@ public class InputManager implements InputProcessor{
 		if(!inBounds) return false;
 		if(button == Input.Buttons.LEFT){
 			lClick = true;
-			dragging = true;
+			
 			dragX = screenX; dragY= screenY;
-			Vector3 screenToMouse = new Vector3(screenX, screenY, 0);
-			screenToMouse = camera.unproject(screenToMouse);
-			screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
+
 			//screen.pickPoint(screenX, flipY(screenY));
 			
 		}
@@ -82,7 +80,12 @@ public class InputManager implements InputProcessor{
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		if(lClick){
 			lClick = false;
-			dragging = false;
+			if(!dragging){
+				Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
+				screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
+			}
+				dragging = false;
+			
 		}
 		return false;
 	}
@@ -91,8 +94,10 @@ public class InputManager implements InputProcessor{
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		if(!inBounds) return false;
 		if(lClick){
-			Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
-			screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
+//			Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
+//			screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
+			if(!dragging)
+				dragging = true;
 			if(dragging){
 				camera.translate(dragX-screenX, screenY-dragY);
 //				camera.update();
@@ -109,7 +114,11 @@ public class InputManager implements InputProcessor{
 		inBounds = inBounds(screenX, screenY);
 //		Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
 //		screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
-		return true;
+		screen.setMousePosition(screenX, height-screenY);
+		if(inBounds)
+			return true;
+		else
+			return false;
 	}
 
 	@Override

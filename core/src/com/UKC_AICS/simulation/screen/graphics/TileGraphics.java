@@ -31,7 +31,7 @@ public class TileGraphics extends SpriteCache {
 	
 	public TileGraphics(HashMap<String, byte[][]> infoLayers, SpriteManager manager, SpriteCache cache){
 //		this.infoLayers = infoLayers;
-		
+		super(20000, false);
 		tileCache = cache;
 		
 		this.manager = manager;
@@ -54,13 +54,14 @@ public class TileGraphics extends SpriteCache {
 	}
 	
 	public void createCache(int y, HashMap<String, byte[][]> infoLayers){
+//		System.out.println(y);
 		byte[][] layermap;
 		byte amount;
 		AtlasRegion region = null;
 		AtlasRegion nextRegion = region;
 		int xPos = 0;
 		if(cacheRow_Map.containsKey(y)){
-			this.beginCache(y);
+			this.beginCache(cacheRow_Map.get(y));
 		}
 		else
 			this.beginCache();
@@ -87,7 +88,7 @@ public class TileGraphics extends SpriteCache {
 					region = nextRegion;
 //					System.out.println(x);
 //					System.out.println(cacheCount);
-					tileCache.add(region, xPos, y*region.originalHeight, region.originalWidth, region.originalHeight);
+					this.add(region, xPos, y*region.originalHeight, region.originalWidth, region.originalHeight);
 					cacheCount += 1;
 				}
 			}
@@ -100,7 +101,7 @@ public class TileGraphics extends SpriteCache {
 	
 	public void updateTiles(Batch batch, boolean update, HashMap<String, byte[][]> infoLayers){
 		this.setProjectionMatrix(batch.getProjectionMatrix());
-//		System.out.println(mapElementsX);
+//		System.out.println(infoLayers.get("grass").length);
 		
 		
 		if(manager.update()){
@@ -108,29 +109,38 @@ public class TileGraphics extends SpriteCache {
 			
 			//CACHE METHOD
 			
-			if(infoLayers.equals(this.infoLayers)) return;
-			else{
-				
+//			if(infoLayers.equals(this.infoLayers)) return;
+//			else{
+			if(update){
 				for(int y = 0; y<mapElementsY; y++){
 					if(!cacheRow_Map.containsKey(y)){
 						createCache(y, infoLayers);
 						continue;
 					}
 					for(String layer : infoLayers.keySet()){
-						if(Arrays.equals(this.infoLayers.get(layer), infoLayers.get(layer))){
+						if(!Arrays.equals(this.infoLayers.get(layer), infoLayers.get(layer))){
 							createCache(y, infoLayers);
-							continue;
+							break;
 						}
 					}
 				}
 				this.infoLayers = (HashMap<String, byte[][]>) infoLayers.clone();
 			}
-			for(int y = 0; y<mapElementsY; y++){
-				if(!cacheRow_Map.containsKey(y) || update){
-//					createCache(y);
+			else{
+				for(int y = 0; y<mapElementsY; y++){
+					if(!cacheRow_Map.containsKey(y)){
+						createCache(y, infoLayers);
+						continue;
+					}
 				}
-				
 			}
+//			for(int y = 0; y<mapElementsY; y++){
+//				if(!cacheRow_Map.containsKey(y) || update){
+////					createCache(y);
+//				}
+//				
+//			}
+//			System.out.println(cacheRow_Map.size);
 			this.begin();
 			for(int i : cacheRow_Map.values()){
 				this.draw(i);

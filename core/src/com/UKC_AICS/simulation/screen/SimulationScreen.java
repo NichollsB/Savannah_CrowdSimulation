@@ -77,6 +77,8 @@ public class SimulationScreen implements Screen {
     
     TileGraphics tiling;
     
+    public final Vector2 mousePosition = new Vector2();
+    
 
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
@@ -310,12 +312,17 @@ public class SimulationScreen implements Screen {
     public void pickPoint(int screenX, int screenY) {
         //What should happen when clicking on the screen
         Boid boid = simulationManager.getBoidAt(screenX,screenY);
+//        System.out.println(simulationManager.getBoidAt(screenX,screenY));
         gui.selectBoid(boid);
 //        if (boid == null) {
             HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
             gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
 
 
+    }
+    public void setMousePosition(int x, int y){
+    	mousePosition.x = x;
+    	mousePosition.y = y;
     }
 
 }

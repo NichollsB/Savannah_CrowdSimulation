@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.gui.controlutils.DialogueWindowHandler;
+import com.UKC_AICS.simulation.gui.controlutils.HoverListener;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -26,7 +28,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * Created by James on 02/07/2014.
  * Class for the creation of gui for simulationScreen
  */
-public class SimScreenGUI extends Stage implements DialogueWindowHandler {
+public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverListener {
 	final private ScreenViewport uiViewport = new ScreenViewport();
 	private SimulationScreen simScreen;
 	public Stage stage;
@@ -66,7 +68,10 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler {
     private final HashMap<Byte, Tree.Node> speciesNodeMap = new HashMap<Byte, Tree.Node>();
     private final HashMap<Boid, Tree.Node> boidNodeMap = new HashMap<Boid, Tree.Node>();
     
-
+	//Hovering popup
+	private final Window hoverWindow = new Window("", skin);
+	private final Label hoverLabel = new Label("", skin);
+	private Actor hoverTip;
     
     /**
      *
@@ -75,6 +80,9 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler {
     public SimScreenGUI (SimulationScreen ss, int width, int height) {
         simScreen = ss;
         setStage(width, height);
+        
+        hoverLabel.setTouchable(Touchable.disabled);
+//        hoverWindow.add(hoverLabel).expand().fill();
     }
 
 
@@ -369,5 +377,30 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler {
 	public void onCancelled(Window window) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	
+	@Override
+	public void hover(InputEvent event, float x, float y, String helper) {
+		hoverLabel.setText(helper);
+//		stage.addActor(hoverLabel);
+//		Actor act = (Actor)hoverLabel;
+//		hoverLabel.layout();
+		hoverLabel.pack();
+		
+		stage.addActor(hoverLabel);
+//		act.setPosition(x, y);
+		hoverLabel.setPosition(simScreen.mousePosition.x, simScreen.mousePosition.y);
+//		Table.drawDebug(stage);
+		System.out.println("x " + simScreen.mousePosition.x + " y " + simScreen.mousePosition.y + " labelx " + hoverLabel.getX() + " y " + hoverLabel.getY());
+	}
+
+
+	@Override
+	public void unhover(InputEvent event) {
+//		System.out.println("exit hover");
+		hoverLabel.remove();
+//		hoverWindow.remove();
 	}
 }

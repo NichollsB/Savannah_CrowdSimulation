@@ -49,7 +49,7 @@ public class Graphics {
 	
 	private SpriteManager spriteManager = new SpriteManager();
 	
-	private byte[][] tileMap;
+	private HashMap<String, byte[][]> tileMap;
 	
 	private int renderWidth;
 	private int renderHeight;
@@ -102,7 +102,7 @@ public class Graphics {
 				batch.end();
 				if(dynamicTiles != null)
 					Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
-					dynamicTiles.updateTiles(batch, false, null);
+					dynamicTiles.updateTiles(batch, false, tileMap);
 //				
 				//drawGrass
 				//int x=0, y=0;
@@ -221,6 +221,7 @@ public class Graphics {
 	}
 	
 	public void initTileSprites(HashMap<String, byte[][]> tileLayers){
+		this.tileMap = tileLayers;
 		dynamicTiles = new TileGraphics(tileLayers, spriteManager, backgroundCache);
 	}
 	public void initBackground(){
