@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.screen.graphics;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -10,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
-public class TileGraphics {
+public class TileGraphics extends SpriteCache {
 
 	private HashMap<String, byte[][]> infoLayers = new HashMap<String, byte[][]>();
 	
@@ -34,11 +35,11 @@ public class TileGraphics {
 		tileCache = cache;
 		
 		this.manager = manager;
-		this.infoLayers = infoLayers;
+		this.infoLayers = (HashMap<String, byte[][]>) infoLayers.clone();
 
 		this.manager.loadAssets_Tiles(null);
 		
-		for(byte[][] f : infoLayers.values()){
+		for(byte[][] f : this.infoLayers.values()){
 //			layermap = f;
 			if(mapElementsX < f.length)
 				mapElementsX = (byte) f.length;
@@ -52,17 +53,17 @@ public class TileGraphics {
 		}
 	}
 	
-	public void createCache(int y){
+	public void createCache(int y, HashMap<String, byte[][]> infoLayers){
 		byte[][] layermap;
 		byte amount;
 		AtlasRegion region = null;
 		AtlasRegion nextRegion = region;
 		int xPos = 0;
 		if(cacheRow_Map.containsKey(y)){
-			tileCache.beginCache(y);
+			this.beginCache(y);
 		}
 		else
-			tileCache.beginCache();
+			this.beginCache();
 		for(int x = 0; x<mapElementsX; x++)
 		{
 			for(String layer : infoLayers.keySet())
@@ -93,12 +94,12 @@ public class TileGraphics {
 			if(region!= null)
 				xPos += region.originalWidth;
 		}
-		cacheRow_Map.put(y, tileCache.endCache());
+		cacheRow_Map.put(y, this.endCache());
 	}
 	
 	
-	public void updateTiles(Batch batch, boolean update){
-		tileCache.setProjectionMatrix(batch.getProjectionMatrix());
+	public void updateTiles(Batch batch, boolean update, HashMap<String, byte[][]> infoLayers){
+		this.setProjectionMatrix(batch.getProjectionMatrix());
 //		System.out.println(mapElementsX);
 		
 		
@@ -106,19 +107,36 @@ public class TileGraphics {
 			
 			
 			//CACHE METHOD
-		
+			
+			if(infoLayers.equals(this.infoLayers)) return;
+			else{
+				
+				for(int y = 0; y<mapElementsY; y++){
+					if(!cacheRow_Map.containsKey(y)){
+						createCache(y, infoLayers);
+						continue;
+					}
+					for(String layer : infoLayers.keySet()){
+						if(Arrays.equals(this.infoLayers.get(layer), infoLayers.get(layer))){
+							createCache(y, infoLayers);
+							continue;
+						}
+					}
+				}
+				this.infoLayers = (HashMap<String, byte[][]>) infoLayers.clone();
+			}
 			for(int y = 0; y<mapElementsY; y++){
 				if(!cacheRow_Map.containsKey(y) || update){
-					createCache(y);
+//					createCache(y);
 				}
 				
 			}
-			tileCache.begin();
+			this.begin();
 			for(int i : cacheRow_Map.values()){
-				tileCache.draw(i);
-				System.out.println("Drawing cache");
+				this.draw(i);
+//				System.out.println("Drawing cache");
 			}
-			tileCache.end();
+			this.end();
 			
 			//BATCH METHOD
 ////			batch.begin();

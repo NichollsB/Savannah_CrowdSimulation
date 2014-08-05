@@ -35,6 +35,8 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	
 	private Tree tree;
 	private BoidTree_Node root;
+	private BoidTree_Node selectedNode;
+	private boolean rootSelected = true;
 	
 	private Skin skin;
 	private SimScreenGUI gui;
@@ -42,9 +44,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	private String selectedInfo = "";
 	private Boid selectedBoid;
 	private boolean boidSelected = false;
-	private BoidTree_Node selectedNode;
 	private boolean groupSelected;
-	private final ObjectMap<Byte, String> speciesInfo = new ObjectMap<Byte, String>();
 
 	
 	private byte selectedType = 0;
@@ -52,19 +52,25 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	
 	private static final Array<TreeOptionsHandler> listeners = new Array<TreeOptionsHandler>();
 	
+	private Array<Boid> nodeComparison = new Array<Boid>();
+	
+	private int boidNodes_num = 0;
+	
 	public BoidListWindow(String title, Skin skin, SimScreenGUI gui) {
 		super(skin);
 		this.skin = skin;
 		this.gui = gui;
 		this.tree = new Tree(skin);
 		
-		root = new BoidTree_Node(new Label(title, skin));
+		
+		root = new BoidTree_Node(new Label(title, skin), title);
+		
 		tree.add(root);
 		root.setExpanded(true);
 		this.addListener(new SelectNodeListener(tree));
 //		root.setSelectable(false);
 		tree.getSelection().choose(root);
-		
+		selectedNode = root;
 		//Add components to the table
 		this.add(new Label("title", skin));
 		this.row();
@@ -116,6 +122,13 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 //		System.out.println("node" + rootGroups.get(spByte).get(boid.group));
 		try{
 			rootGroups.get(spByte).get(boid.group).add(node);
+			rootGroups.get(spByte).get(boid.group).incrementNumChildren(1);
+			rootGroups.get(spByte).get(boid.group).setText();
+			node = boidRoots.get(spByte);
+			node.incrementNumChildren(1);
+			node.setText();
+			boidNodes_num++;
+			root.setNumChildren(boidNodes_num);
 		}
 		catch(NullPointerException e){
 			boidRoots.get(spByte).add(node);
@@ -175,12 +188,28 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 * the boid type (species) exists then a node will not be created for that boid.
 	 * @param boids Array of Boids to create nodes for.
 	 */
-	public void compareAndAddNodes(Array<Boid> boids){
+	public void compareAndUpdateNodes(Array<Boid> boids){
+		
 		for(Boid b : boids){
 			if(!boidNodes.containsKey(b) && boidRoots.containsKey(b.getSpecies())){
 				boidNodes.put(b, addBoidNode(b.getSpecies(), "", b.toString(), b));
 			}
+			else if(boidNodes.containsKey(b)){
+				nodeComparison.removeValue(b, false);
+				
+			}
 		}
+		for(Boid b : nodeComparison){
+			if(boidNodes.containsKey(b)){
+				tree.remove(boidNodes.get(b));
+				boidNodes.remove(b);
+				rootGroups.get(b.getSpecies()).get(b.group).findNumChildren();
+				boidRoots.get(b.getSpecies()).findNumChildren();
+				boidNodes_num--;
+			}
+		}
+		root.setNumChildren(boidNodes_num);
+		nodeComparison = boidNodes.keys().toArray();
 	}
 	
 	/**
@@ -208,6 +237,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	public void selectNodeByBoid(Boid boid, boolean select){
 		if(!select || boid == null){ 
 			deselectNodes(); 
+			tree.getSelection().choose(root);
 			return;
 		}
 			
@@ -229,8 +259,20 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 * @param node BoidTree_Node to be selected
 	 */
 	private void nodeSelected(BoidTree_Node node){
+		System.out.println("node" + node);
 		deselectNodes();
-		if(node.equals(root)) return;
+		if(node == null){ 
+			
+			root.expandTo();
+			root.setExpanded(true);
+			return;
+		} else if (node.equals(root)){
+			root.expandTo();
+			root.setExpanded(true);
+			selectedNode = node;
+			return;
+		} else if(node.equals(selectedNode)) return;
+		
 		node.expandTo();
 		node.setExpanded(true);
 		if(node.hasBoid()) {
@@ -240,6 +282,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 			boid.setTracked(true);
 			boidSelected = true;
 			selectedBoid = boid;
+			selectedInfo = selectedBoid.toString();
 		}
 		else {
 			BoidTree_Node childNode;
@@ -259,13 +302,18 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 				
 			selectedInfo = node.getInfo();
 		}
+		if(!node.equals(root)) rootSelected = false;
+		else rootSelected = true;
+		selectedNode = node;
 	}
 	
 	/**
 	 * Unselects all nodes in the tree. Removing associated boid tracked status
 	 */
 	private void deselectNodes(){
-//		tree.collapseAll();
+		tree.collapseAll();
+//		root.setExpanded(true);
+//		tree.getSelection().choose(root);
 		BoidTree_Node node;
 		for(Boid b : boidNodes.keys()){
 			b.setTracked(false);
@@ -279,6 +327,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		boidSelected = false;
 		selectedBoid = null;
 		groupSelected = false;
+		
 	}
 	
 	/**
@@ -303,16 +352,20 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 */
 	public String update(Array<Boid> boids, boolean updateNodes){
 		if(updateNodes){
-			compareAndRemoveNodes(boids);
-			compareAndAddNodes(boids);
-			if(boidSelected)
-				selectedInfo = selectedBoid.toString();
+//			compareAndRemoveNodes(boids);
+			compareAndUpdateNodes(boids);
+//			System.out.println(boidSelected);
 			if(groupSelected){
 				selectedNode.setInfo(selectedNode.getName() + "/n" + "/t" + "Population: " + selectedNode.getChildren().size);
 				selectedInfo = selectedNode.getInfo();
 			}
 		}
-
+		if(boidSelected){
+			selectedInfo = selectedBoid.toString();
+//			System.out.println(selectedBoid.toString());
+			
+		}
+		
 //		System.out.println(selectedInfo);
 //		System.out.println("selected " + selectedInfo);
 		return selectedInfo;
@@ -359,7 +412,12 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 				nodeSelected(selected);
 			}
 			catch(IllegalStateException e){
-				System.out.println("Same boid was probably selected twice via viewport. For some reason this causes an exception in tree Selection");
+//				System.out.println("changed listener failed");
+				if(!selectedNode.equals(root))
+					nodeSelected(root);
+				else
+					nodeSelected(null);
+//				System.out.println("Same boid was probably selected twice via viewport. For some reason this causes an exception in tree Selection");
 			}
 //			
 		}

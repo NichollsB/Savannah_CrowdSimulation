@@ -250,7 +250,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler {
 //    		boidTree.addBoidNode(b, species.get(b).getName(), species.get(b).toString(), null);
     		boidTree.addRootNode(b, species.get(b).getName(), species.get(b).toString());
     	}
-    	boidTree.compareAndAddNodes(boids);
+    	boidTree.compareAndUpdateNodes(boids);
     }
     
     public void setConsole(String log){
@@ -298,8 +298,10 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler {
 //        	}
 //        	else 
 //        		boidInfo.setText("");
-        	if(boids != null)
-        		boidInfo.setText(boidTree.update(boids, false));
+        	if(boids != null){
+//        		System.out.println("update tree");s
+        		boidInfo.setText(boidTree.update(boids, true));
+        	}
 	        stage.act();
 	    
 	    	stage.draw();  //GUI stuff
