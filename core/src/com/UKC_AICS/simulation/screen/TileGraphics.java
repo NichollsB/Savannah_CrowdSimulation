@@ -24,6 +24,7 @@ public class TileGraphics {
 				this.infoLayers.put(key, infoLayers.get(key));
 			}
 //			this.manager.loadAssets_Tile(key);
+//			System.out.println(infoLayers.);
 		}
 	}
 	
@@ -41,12 +42,13 @@ public class TileGraphics {
 					byte[][] layermap = infoLayers.get(layer);
 					for(int x = 0; x < layermap.length; x++){
 						for(int y = 0; y<layermap[x].length; y++){
-							amount = (float)layermap[x][y]/100;
+							amount = (float)layermap[x][y];
 							if(layer.equals("grass")){
-								sprite.setAlpha(amount);
+								sprite.setAlpha(amount/100);
 							}
-							else if(layer.equals("water" )){
-								if(amount > 0.6){
+							else if(layer.equals("terrain" )){
+								
+								if(amount >=1 ){
 									sprite.setAlpha(0.9f);
 								}
 								else
