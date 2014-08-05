@@ -24,6 +24,9 @@ public class Species {
     private String diet;
 
     private float rgb[];
+    private int maturity;
+    private float maxSize;
+    private float newbornSize;
 
     public String getName() {
         return name;
@@ -156,5 +159,28 @@ public class Species {
     	}
     	return false;
     }
-    
+
+    public int getMaturity() {
+        return maturity;
+    }
+
+    public void setMaturity(int maturity) {
+        this.maturity = maturity;
+    }
+
+    public float getMaxSize() {
+        return maxSize;
+    }
+
+    public void setMaxSize(float maxSize) {
+        this.maxSize = maxSize;
+    }
+
+    public void setNewbornSize(float newbornSize) {
+        this.newbornSize = newbornSize;
+    }
+
+    public float getNewbornSize() {
+        return newbornSize;
+    }
 }

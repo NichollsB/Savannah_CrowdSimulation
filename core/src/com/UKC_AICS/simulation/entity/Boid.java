@@ -1,6 +1,8 @@
 package com.UKC_AICS.simulation.entity;
 
 import com.UKC_AICS.simulation.Constants;
+import com.UKC_AICS.simulation.Simulation;
+import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -38,7 +40,7 @@ public class Boid extends Entity {
     public String state = "default";
 
     public int age = 0;
-    public float size;
+    public float size = 16;
 //    public int birthDay = 0;
     
 
@@ -61,6 +63,12 @@ public class Boid extends Entity {
         subType = spec;
         position = pos.cpy();
         velocity = vel.cpy();
+
+        //sets weights to default number
+        cohesion = 0.5f;
+        alignment = 0.5f;
+        cohesion = 0.5f;
+        wander = 0.5f;
     }
 //    public Boid( Vector3 pos, Vector3 vel) {
 //        this((byte)1, pos, vel);
@@ -206,6 +214,10 @@ public class Boid extends Entity {
         age = newAge;
     }
     public void age() {
+        float maturity = SimulationManager.speciesData.get(getSpecies()).getMaturity();
+        if (age < maturity && size < SimulationManager.speciesData.get(getSpecies()).getMaxSize()){
+            size += ((100 - hunger)/100) * 1;
+        }
         age++;
     }
 
