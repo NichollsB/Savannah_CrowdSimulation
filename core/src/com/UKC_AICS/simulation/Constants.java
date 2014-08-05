@@ -19,8 +19,8 @@ public class Constants {
     public static int screenWidth = 1280;
     public static int screenHeight = 720;
 
-    public static int mapWidth = 1920;
-    public static int mapHeight= 1920;
+    public static int mapWidth = 1280;
+    public static int mapHeight= 720;
 
     public static final int TILE_SIZE = 16;
 

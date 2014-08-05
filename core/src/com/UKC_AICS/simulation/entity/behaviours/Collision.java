@@ -22,11 +22,11 @@ public class Collision extends Behaviour {
     private static Vector3 tmpVec = new Vector3(0f,0f,0f);
     private static Vector3 tmpVec2 = new Vector3(0f,0f,0f);
 
-     static float MAX_AVOID_FORCE = 0.15f;
-     static float LOOK_AHEAD = 20f;
-     static float HALF_LOOK_AHEAD = LOOK_AHEAD/2f;
+    static float MAX_AVOID_FORCE = 0.2f;
+    static float LOOK_AHEAD = 20f;
+    static float HALF_LOOK_AHEAD = LOOK_AHEAD/2f;
     static int tileSize = Constants.TILE_SIZE;
-    static int stepsAhead = 5;
+    static int stepsAhead = 40;
 
     public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
         throw new Error("Collision is not to be used in this manner. Try static access Collision.act(Array<Entity> targets, Boid boid)");
@@ -40,85 +40,105 @@ public class Collision extends Behaviour {
     public static Vector3 act(Boid boid) {
         tmpVec.set(boid.getPosition());
         tmpVec2.set(boid.getVelocity());
-        tmpVec.add(tmpVec2.scl(stepsAhead));  //end position
-        int mapX = (int)boid.position.x/tileSize;
-        int mapY = (int)boid.position.y/tileSize;
-        Array<int[]> cellList = cellsInPath(boid.getPosition().x, boid.getPosition().y, tmpVec.x, tmpVec.y);
-        for(int[] cell : cellList) {
-            tmpVec.set(0f,0f,0f);
-            //get tile info, check if grass
-            if (WorldManager.getTileInfoAt(cell[0], cell[1]).get("terrain") == 0) {
-                //terrain is grass -- passable, no need to do anything
-            }
-            //else if water - impassable
-            else {
-                // the tile is impassable,
-                // need to do collision avoidance with  the intersect of closest edge and velocity intersect
-                Vector2 intersect = new Vector2();
-                //TODO is this getting the correct line for nearest edge of cell?
-                if(mapX < cell[0]) {
-                    if(mapY == cell[1] && Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
-                            tmpVec.x, tmpVec.y, cell[0] * tileSize + tileSize, cell[1] * tileSize, cell[0] * tileSize + tileSize,
-                            cell[1] * tileSize + tileSize, intersect)) {
-                        tmpVec.set(boid.getPosition());
-                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
-                        tmpVec.nor();
-                        tmpVec.scl(MAX_AVOID_FORCE);
-                    }
-                    else if (mapY < cell[1]) {
-                        tmpVec.set(boid.getPosition());
-                        tmpVec.sub(new Vector3(cell[0]*tileSize + tileSize, cell[1]*tileSize + tileSize, 0f));
-                        tmpVec.nor();
-                        tmpVec.scl(MAX_AVOID_FORCE);
-                    }
-                    else if(mapY > cell[1]) {
-                        tmpVec.set(boid.getPosition());
-                        tmpVec.sub(new Vector3(cell[0]*tileSize + tileSize, cell[1]*tileSize, 0f));
-                        tmpVec.nor();
-                        tmpVec.scl(MAX_AVOID_FORCE);
-                    }
-                }
-                else if(mapX > cell[0]) {
-                    if(mapY == cell[1] && Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
-                            tmpVec.x, tmpVec.y, cell[0] * tileSize, cell[1] * tileSize, cell[0] * tileSize,
-                            cell[1] * tileSize + tileSize, intersect)) {
-                        tmpVec.set(boid.getPosition());
-                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
-                        tmpVec.nor();
-                        tmpVec.scl(MAX_AVOID_FORCE);
-                    }
-                    else if (mapY < cell[1]) {
-                        tmpVec.set(boid.getPosition());
-                        tmpVec.sub(new Vector3(cell[0]*tileSize, cell[1]*tileSize + tileSize, 0f));
-                        tmpVec.nor();
-                        tmpVec.scl(MAX_AVOID_FORCE);
-                    }
-                    else if(mapY > cell[1]) {
-                        tmpVec.set(boid.getPosition());
-                        tmpVec.sub(new Vector3(cell[0]*tileSize, cell[1]*tileSize, 0f));
-                        tmpVec.nor();
-                        tmpVec.scl(MAX_AVOID_FORCE);
-                    }
-                } else if (mapX == cell[0]) {
-                    if (mapY < cell[1]&& Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
-                            tmpVec.x, tmpVec.y, cell[0] * tileSize + tileSize, cell[1] * tileSize, cell[0] * tileSize + tileSize,
-                            cell[1] * tileSize + tileSize, intersect)) {
-                        tmpVec.set(boid.getPosition());
-                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
-                        tmpVec.nor();
-                        tmpVec.scl(MAX_AVOID_FORCE);
-                    }
-                    else if(mapY > cell[1]&& Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
-                            tmpVec.x, tmpVec.y, cell[0] * tileSize, cell[1] * tileSize, cell[0] * tileSize,
-                            cell[1] * tileSize + tileSize, intersect)) {
-                        tmpVec.set(boid.getPosition());
-                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
-                        tmpVec.nor();
-                        tmpVec.scl(MAX_AVOID_FORCE);
-                    }
-                }
-            }
+//        tmpVec.add(tmpVec2.scl(stepsAhead));  //end position
+        int mapX = (int)tmpVec.x/tileSize;
+        int mapY = (int)tmpVec.y/tileSize;
+        Array<Integer> cell = cellsInPath(tmpVec.x, tmpVec.y, tmpVec2.x, tmpVec2.y);
+        tmpVec.set(0f,0f,0f);
+        if(cell.size>0) {
+            tmpVec.set(boid.getPosition());
+            tmpVec.sub(new Vector3(cell.get(0) * tileSize + tileSize / 2, cell.get(1) * tileSize + tileSize / 2, 0f));
+            tmpVec.nor();
+            tmpVec.scl(MAX_AVOID_FORCE);
         }
+//        for(int[] cell : cellList) {
+//            tmpVec.set(0f,0f,0f);
+//            //get tile info, check if grass
+//            if (WorldManager.getTileInfoAt(cell[0], cell[1]).get("terrain") == 0) {
+//                //terrain is grass -- passable, no need to do anything
+//            }
+//            //else if water - impassable
+//            else {
+//
+//                tmpVec.set(boid.getPosition());
+//                tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                tmpVec.nor();
+//                tmpVec.scl(MAX_AVOID_FORCE);
+//                // the tile is impassable,
+//                // need to do collision avoidance with  the intersect of closest edge and velocity intersect
+//                Vector2 intersect = new Vector2();
+//                //TODO is this getting the correct line for nearest edge of cell?
+//                if(mapX < cell[0]) {
+//                    if(mapY == cell[1]  && Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
+//                            tmpVec.x, tmpVec.y, cell[0] * tileSize + tileSize, cell[1] * tileSize, cell[0] * tileSize + tileSize,
+//                            cell[1] * tileSize + tileSize, intersect)) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                    else if (mapY < cell[1]) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(cell[0]*tileSize + tileSize, cell[1]*tileSize + tileSize, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                    else if(mapY > cell[1]) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(cell[0]*tileSize + tileSize, cell[1]*tileSize, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                }
+//                else if(mapX > cell[0]) {
+//                    if(mapY == cell[1] && Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
+//                            tmpVec.x, tmpVec.y, cell[0] * tileSize, cell[1] * tileSize, cell[0] * tileSize,
+//                            cell[1] * tileSize + tileSize, intersect)) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                    else if (mapY < cell[1]) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(cell[0]*tileSize, cell[1]*tileSize + tileSize, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                    else if(mapY > cell[1]) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(cell[0]*tileSize, cell[1]*tileSize, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                } else if (mapX == cell[0]) {
+//                    if (mapY < cell[1]&& Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
+//                            tmpVec.x, tmpVec.y, cell[0] * tileSize + tileSize, cell[1] * tileSize, cell[0] * tileSize + tileSize,
+//                            cell[1] * tileSize + tileSize, intersect)) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                    else if(mapY > cell[1]&& Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
+//                            tmpVec.x, tmpVec.y, cell[0] * tileSize, cell[1] * tileSize, cell[0] * tileSize,
+//                            cell[1] * tileSize + tileSize, intersect)) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                }
+//            }
+//        }
 
 
         //get tile info at position tile
@@ -132,16 +152,16 @@ public class Collision extends Behaviour {
      *
      * @param x0  x coord of boid starting position
      * @param y0  y coord of boid starting position
-     * @param x1  x coord of boid end position
-     * @param y1  y coord of boid end position
+     * @param dx_dt  x part of boid velocity
+     * @param dy_dt  y part of boid velocity
      * @return  array of array of int coords of cells intersected by trajectory line
      */
-    private static Array<int[]> cellsInPath(float x0, float y0, float x1, float y1) {
+    private static Array<Integer> cellsInPath(float x0, float y0, float dx_dt, float dy_dt) {
         Array<int[]> cellList = new Array<int[]>();
-
+        Array<Integer> cell = new Array<Integer>();
         //calc change in x and y from boid start position to end position
-        float dx = Math.abs(x1 - x0);
-        float dy = Math.abs(y1 - y0);
+        float dx = dx_dt * stepsAhead;
+        float dy = dy_dt * stepsAhead;
 
         int x = (int)x0/tileSize;
         int y = (int)y0/tileSize;
@@ -150,9 +170,9 @@ public class Collision extends Behaviour {
         float xLocal = x0 % tileSize;
         float yLocal = y0 % tileSize;
 
-        //change in x and y per unit time
-        float dx_dt = dx/stepsAhead;
-        float dy_dt = dy/stepsAhead;
+//        //change in x and y per unit time
+//        float dx_dt = dx/stepsAhead;
+//        float dy_dt = dy/stepsAhead;
 
 
 //        //change in time per unit x and y axis
@@ -165,7 +185,7 @@ public class Collision extends Behaviour {
 
         //each i will be a step in time, slowly increment the x and y and check if they cross cell boundaries
         //if so, add new cell to cellList
-        for(int i = 1; i < stepsAhead+1; i++) {
+        for(int i = 0; i < stepsAhead; i++) {
             //increment x and y
             xLocal += dx_dt;
             yLocal += dy_dt;
@@ -187,7 +207,7 @@ public class Collision extends Behaviour {
                 stepped = true;
             }
 
-            if(yLocal < 16 && yLocal > 0) {
+            if(yLocal < tileSize && yLocal > 0) {
                 //no y axis cell change
             }
             else if(yLocal > tileSize) {
@@ -202,13 +222,21 @@ public class Collision extends Behaviour {
                 yLocal = tileSize + yLocal;
                 stepped = true;
             }
+//            if(stepped) {
+//                if(WorldManager.getTileInfoAt(x, y).get("terrain") == 1) {
+//                    int[] cell = {x, y};
+//                    cellList.add(cell);
+//                }
+//            }
             if(stepped) {
-                int[] cell = {x, y};
-                cellList.add(cell);
+                if(WorldManager.getTileInfoAt(x, y).get("terrain") == 1) {
+                    cell.add(x);
+                    cell.add(y);
+                }
             }
         }
-
-        return cellList;
+        return cell;
+//        return cellList;
     }
 
 
@@ -252,8 +280,8 @@ public class Collision extends Behaviour {
                     adjustmentSet = true;
 
 
-                } else
-                if(turn == -1) {
+                }
+                else if(turn == -1) {
                     if (checkLeft(boid, target)) {
                         //calculate adjustment vector here
                         //should be able to use the tmpVec and tmpVec2 used to calc true.

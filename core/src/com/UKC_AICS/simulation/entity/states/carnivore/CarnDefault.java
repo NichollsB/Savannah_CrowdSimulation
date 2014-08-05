@@ -61,6 +61,7 @@ public class CarnDefault extends State{
             }
 
             //store the steering movement
+            steering.set(0f,0f,0f);
             boid.setAcceleration(steering);   //Resets acceleration to 0f,0f,0f
             Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
