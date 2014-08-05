@@ -27,6 +27,7 @@ public class Species {
     private int maturity;
     private float maxSize;
     private float newbornSize;
+    private float growthPerDay;
 
     public String getName() {
         return name;
@@ -182,5 +183,13 @@ public class Species {
 
     public float getNewbornSize() {
         return newbornSize;
+    }
+
+    public float getGrowthPerDay() {
+        return growthPerDay;
+    }
+
+    public void setGrowthPerDay(float growthPerDay) {
+        this.growthPerDay = growthPerDay;
     }
 }

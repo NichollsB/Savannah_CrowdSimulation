@@ -216,7 +216,7 @@ public class Boid extends Entity {
     public void age() {
         float maturity = SimulationManager.speciesData.get(getSpecies()).getMaturity();
         if (age < maturity && size < SimulationManager.speciesData.get(getSpecies()).getMaxSize()){
-            size += ((100 - hunger)/100) * 1;
+            size += ((100 - hunger)/100) * SimulationManager.speciesData.get(getSpecies()).getGrowthPerDay();
         }
         age++;
     }
@@ -286,6 +286,7 @@ public class Boid extends Entity {
         string += "\n\t hunger:" + (int)hunger;
         string += "\n\t thirst:" + (int)thirst;
         string += "\n\t age:" + age ;
+        string += "\n\t size:" + size ;
         string += "\n\t state:" + state;
         string += "\n\t orientation:" + (int)orientation;
 

@@ -63,6 +63,9 @@ public class SimulationManager extends Manager {
         this.parent = parent;
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
 
+        for (Species species : speciesData.values()) {
+            species.setGrowthPerDay((species.getMaxSize() - species.getNewbornSize()) / species.getMaturity());
+        }
         generateBoids();
 
         Array<Byte> objTypes = new Array<Byte>();
