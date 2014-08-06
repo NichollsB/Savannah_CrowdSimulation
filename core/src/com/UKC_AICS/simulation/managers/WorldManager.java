@@ -105,7 +105,6 @@ public class WorldManager extends Manager {
         if (mapX >= 0 && mapX < tileSize.x &&
                 mapY >= 0 && mapY < tileSize.y) {
 
-
             for (String layer : map.information_layers.keySet()) {
                 layers.put(layer, map.information_layers.get(layer)[mapX][mapY]);
             }

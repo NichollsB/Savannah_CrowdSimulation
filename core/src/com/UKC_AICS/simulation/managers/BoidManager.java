@@ -32,12 +32,6 @@ public class BoidManager extends Manager {
     private Random rand = new Random();
     private static StateMachine stateMachine;
 
-   
-//    private HashMap<String, Behaviour> behaviours = new HashMap<String, Behaviour>();
-
-//    CollisionManager collisionManager = new CollisionManager();
-
-
 
     public BoidManager(SimulationManager parent) {
 
@@ -69,7 +63,6 @@ public class BoidManager extends Manager {
         Boid boid = new Boid(species);
 
         boid.setAge(age);
-        boid.setBirthDay(bDay);
         boid.setPosition(500, 500, 0);
         boid.setVelocity(vX, vY, vZ);
         boid.setCohesion(cohesion);
@@ -94,10 +87,6 @@ public class BoidManager extends Manager {
 
         int maxYPos = 620;
         int minYPos = 100;
-//
-//        int maxXOrient = 10;
-//        int maxYOrient = 10;
-
 
         int maxXVel = 1;
         int maxYVel = 1;
@@ -110,8 +99,6 @@ public class BoidManager extends Manager {
 
         int yVel = (rand.nextInt(2 * maxYVel) - maxYVel);
 
-//        boid.setOrientation(xOrient, yOrient, 0);
-
         boid.setPosition(xPos, yPos, 0);
         boid.setVelocity(xVel, yVel, 0);
 
@@ -119,15 +106,16 @@ public class BoidManager extends Manager {
         boid.thirst = rand.nextInt(80);
 
         //random start age
-        boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the population to be too old.
+        boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.
 
         boid.group = (byte)rand.nextInt(10);
 
-        boid.setCohesion(species.getCohesion());
-        boid.setAlignment(species.getAlignment());
-        boid.setSpearation(species.getSeparation());
-        boid.setWander(species.getWander());
-        boid.setGene(species.getCohesion(), species.getAlignment(), species.getSeparation(), species.getWander());
+        //moved this to boid constructor.
+//        boid.setCohesion(species.getCohesion());
+//        boid.setAlignment(species.getAlignment());
+//        boid.setSpearation(species.getSeparation());
+//        boid.setWander(species.getWander());
+//        boid.setGene(species.getCohesion(), species.getAlignment(), species.getSeparation(), species.getWander());
         addToLists(boid);
     }
 
@@ -146,7 +134,6 @@ public class BoidManager extends Manager {
 
     private static void addToLists(Boid boid) {
         boids.add(boid);
-//        quadtree.insert(boid);
         getBoidGrid().addBoid(boid);
         stateMachine.addBoid(boid);
     }
@@ -181,8 +168,10 @@ public class BoidManager extends Manager {
     public void update(boolean dayIncrement) {
 //        rebuildTree(boids);
 
+        //do all of the boids updates.
         stateMachine.update();
 
+        //then actually move the boids.
         Boid boid;
         for (int i = 0; i < boids.size; i++) {
             boid = boids.get(i);
@@ -194,18 +183,15 @@ public class BoidManager extends Manager {
             } else {
                 getBoidGrid().update(boid);
             }
-            // NaN check
-//            if (steering.x != steering.x) {
-//                System.out.println("blerpy");
-//            }
         }
 
         //do aging here, purely on a day increment basis, so we'll see swathes of death everytime the day increments.
+        //boids born an hour before midnight will still age a day.
         if (dayIncrement) {
             updateAges();
         }
 
-        //handle the addition and removal of boids here, this does mean that the boid will potentially be interacted
+        //handle the addition and removal of boids here, this does mean that the boid will have potentially been interacted
         // with in the current update tick.
         while (removalBoids.size > 0) {
             removeBoid(removalBoids.pop());
@@ -245,11 +231,7 @@ public class BoidManager extends Manager {
 
     public void updateAges() {
         for (Boid b : boids) {
-            b.age++;
-//            int bday = b.getBirthDay();
-//            int day = SimulationManager.getDay();
-//            int newAge = bday + (day - bday);
-//            b.setAge(newAge);
+            b.age();
         }
     }
     public void storeBoidForRemoval(Boid boid) {
@@ -275,12 +257,6 @@ public class BoidManager extends Manager {
         boids.removeValue(boid, false);
         getBoidGrid().removeBoid(boid);
         stateMachine.removeBoid(boid);
-    }
-
-    public void rebuildTree(Array<Boid> boids) {
-        quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.mapWidth, Constants.mapHeight));
-        for (Boid boid : boids)
-            quadtree.insert(boid);
     }
 
     public Array<Boid> getBoids() {
