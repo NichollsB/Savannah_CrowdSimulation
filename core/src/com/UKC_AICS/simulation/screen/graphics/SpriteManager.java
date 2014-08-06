@@ -33,7 +33,7 @@ public class SpriteManager {
 	//World Tiling:
 	private ObjectMap<String, String> tileFiles = new ObjectMap<String, String>(){{
 		put("grass", "data/grass_tile_x16.png");
-		put("water", "data/water_tile_x16.png");
+		put("terrain", "data/water_tile_x16.png");
 	}}
 	;
 	

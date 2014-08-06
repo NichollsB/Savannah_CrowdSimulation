@@ -1,7 +1,6 @@
 package com.UKC_AICS.simulation.entity;
 
 import com.UKC_AICS.simulation.Constants;
-import com.UKC_AICS.simulation.entity.states.herbivore.Reproduce;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -10,17 +9,17 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class Boid extends Entity {
 
-    public enum State {
-        DEFAULT,
-        HUNGRY,
-        THIRSTY,
-        EVADE;
-
-
-        public int getStateID() {
-            return ordinal();
-        }
-    }
+//    public enum State {
+//        DEFAULT,
+//        HUNGRY,
+//        THIRSTY,
+//        EVADE;
+//
+//
+//        public int getStateID() {
+//            return ordinal();
+//        }
+//    }
     //boids own specific variants on the species.
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //
@@ -39,7 +38,8 @@ public class Boid extends Entity {
     public String state = "default";
 
     public int age = 0;
-    public int birthDay = 0;
+    public float size;
+//    public int birthDay = 0;
     
 
     //Added to check if boid info is being displayed or not - for highlighting in graphics
@@ -55,19 +55,21 @@ public class Boid extends Entity {
     public Float[] gene= new Float[geneSize];
 
 
-
+// no longer used or relevant
     public Boid(byte spec, Vector3 pos, Vector3 vel) {
         this.type = 1; // this is for categorising it as a "boid" object.
         subType = spec;
         position = pos.cpy();
         velocity = vel.cpy();
     }
-    public Boid( Vector3 pos, Vector3 vel) {
-        this((byte)1, pos, vel);
-    }
+//    public Boid( Vector3 pos, Vector3 vel) {
+//        this((byte)1, pos, vel);
+//    }
+
     public Boid(byte spec) {
         this(spec, new Vector3(), new Vector3());
     }
+
 
     public Boid(Species species) {
         type = 1;
@@ -82,6 +84,13 @@ public class Boid extends Entity {
         position = new Vector3(500f,500f,0f);
         velocity = new Vector3();
         orientation = Math.toDegrees(Math.atan2( - velocity.x, velocity.y));
+
+        cohesion = species.getCohesion();
+        alignment = species.getAlignment();
+        cohesion = species.getSeparation();
+        wander = species.getWander();
+
+        setGene(cohesion,separation,alignment,wander);
 
         bounds.set(position.x, position.y, 16, 16);
     }
@@ -115,6 +124,13 @@ public class Boid extends Entity {
         age = boid.age;
 
         bounds = new Rectangle(boid.bounds);
+
+        cohesion = boid.cohesion;
+        alignment = boid.alignment;
+        cohesion = boid.cohesion;
+        wander = boid.wander;
+
+        setGene(cohesion,separation,alignment,wander);
     }
 
 
@@ -149,9 +165,9 @@ public class Boid extends Entity {
 
     private void checkInBounds() {
         if(position.x > Constants.mapWidth - bounds.height/2) {
-            position.x = position.x - Constants.mapWidth+ bounds.height;
+            position.x = position.x - Constants.mapWidth + bounds.height;
         } else if(position.x < + bounds.width/2) {
-            position.x = position.x + Constants.mapWidth- bounds.height;
+            position.x = position.x + Constants.mapWidth - bounds.height;
         }
         if(position.y > Constants.mapHeight - bounds.width/2) {
             position.y = position.y - Constants.mapHeight + bounds.width;
@@ -178,13 +194,13 @@ public class Boid extends Entity {
         return velocity;
     }
 
-    public void setBirthDay(int birthDay) {
-       this.birthDay = birthDay;     
-    }   
-    
-    public int getBirthDay() {
-    	return birthDay;    	
-    }
+//    public void setBirthDay(int birthDay) {
+//       this.birthDay = birthDay;
+//    }
+//
+//    public int getBirthDay() {
+//    	return birthDay;
+//    }
 
     public void setAge(int newAge) {
         age = newAge;
