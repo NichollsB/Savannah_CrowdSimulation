@@ -87,7 +87,7 @@ public class Boid extends Entity {
 
         cohesion = species.getCohesion();
         alignment = species.getAlignment();
-        cohesion = species.getSeparation();
+        separation = species.getSeparation();
         wander = species.getWander();
 
         setGene(cohesion,separation,alignment,wander);
@@ -127,7 +127,7 @@ public class Boid extends Entity {
 
         cohesion = boid.cohesion;
         alignment = boid.alignment;
-        cohesion = boid.cohesion;
+        separation = boid.separation;
         wander = boid.wander;
 
         setGene(cohesion,separation,alignment,wander);

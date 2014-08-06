@@ -121,10 +121,15 @@ public class HerbDefault extends State {
 
                 steering.set(0f, 0f, 0f);
 
-                float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
-                float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
-                float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
-                float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander();
+                float coh = boid.cohesion; //SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
+                float sep = boid.separation; //SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
+                float ali = boid.alignment; //SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
+                float wan = boid.wander; //SimulationManager.speciesData.get(boid.getSpecies()).getWander();
+
+//                float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
+//                float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
+//                float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
+//                float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander();
 
                 steering.add(behaviours.get("cohesion").act(nearBoids, dummyObjects, boid).scl(coh));
                 steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
