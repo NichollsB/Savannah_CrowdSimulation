@@ -169,6 +169,14 @@ public class Collision extends Behaviour {
         for(int i = 0; 1 < stepsAhead; i++) {
             posX = (int) (x0 + i * dx_dt);
             posY = (int) (y0 + i * dy_dt);
+            
+            if(posX > 0 && posX < Constants.mapWidth) {}
+            else if(posX > Constants.mapWidth) posX -= Constants.mapWidth;
+            else if(posX < Constants.mapWidth) posX = Constants.mapWidth + posX;
+            if(posY > 0 && posY < Constants.mapHeight) {}
+            else if(posY > Constants.mapHeight) posY -= Constants.mapHeight;
+            else if(posY < Constants.mapHeight) posY = Constants.mapHeight + posY;
+
             if(WorldManager.getTileInfoAt(posX,posY).get("terrain")==1){
                 //this is a water tile --> blocked
                 cell.add(calcTileCell(posX));
