@@ -102,7 +102,7 @@ public class Graphics {
 				batch.end();
 				if(dynamicTiles != null)
 					Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
-					dynamicTiles.updateTiles(batch, false, tileMap);
+					dynamicTiles.updateTiles(batch, true, tileMap);
 //				
 				//drawGrass
 				//int x=0, y=0;
