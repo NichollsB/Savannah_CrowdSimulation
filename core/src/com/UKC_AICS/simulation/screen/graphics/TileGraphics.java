@@ -79,8 +79,12 @@ public class TileGraphics extends SpriteCache {
 			{
 				layermap = infoLayers.get(layer);
 				amount = layermap[x][y];
-				if(layer.equals("water")){
-					amount = (byte) ((amount >= 50) ? 90f : 0);
+				
+				if(layer.equals("terrain")){
+					amount = (byte) ((amount==1) ? 90f : 0);
+//					System.out.println(amount);
+//				if(layer.equals("water")){
+//					amount = (byte) ((amount >= 50) ? 90f : 0);
 //					System.out.println(amount);
 //					amount = 0;
 				}
