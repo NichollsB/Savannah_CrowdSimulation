@@ -20,9 +20,11 @@ public class EA2 {
 	private double crossRate = 0.5;
 	//Mutation rate
 	private double muteRate =0.5;
-	private int geneLength = 4;
-	private int someconstant = 0;
+	public static int geneLength = 4;
+
 	public boolean rtmode = false;
+	
+
 	
 	 public HashMap<Byte, Float[]> heldValues = new HashMap<Byte,Float[]>();
 	 private ArrayList<Boid> population = new ArrayList<Boid>();
@@ -34,39 +36,41 @@ public class EA2 {
 	 private Float[] gene2 = new Float[geneLength];
 	 private ArrayList<Float[]> geneList = new ArrayList<Float[]>();
 	 private ArrayList<Float[]> newGeneList = new ArrayList<Float[]>();
-	 private byte currentSpecies = 0;
-	 public byte totalSpecies = 4;
+	 //TODO THESE HAVE CHANGED FROM byte
+	 private Byte currentSpecies = 0;
+	 public static Byte totalSpecies = 4;
 	 private Byte species = 0;
 	 
+
 	 
-	 private void setup(){
+	 public void setup() {
 		 species = 0;
 		 
 		 Float[] held0 = new Float[geneLength];
-		 held0[0] = null;
-		 held0[1] = null;
-		 held0[2] = null;
-		 held0[3] = null;
+		 held0[0] = 1f;
+		 held0[1] = 2f;
+		 held0[2] = 3f;
+		 held0[3] = 4f;
 		 
 		 heldValues.put(species,held0);
 		 
 		 species = 1;
 		 
 		 Float[] held1 = new Float[geneLength];
-		 held1[0] = 0.5f;
-		 held1[1] = 1f;
-		 held1[2] = 1f;
-		 held1[3] = null; 
+		 held1[0] = 4f;
+		 held1[1] = 3f;
+		 held1[2] = 2f;
+		 held1[3] = 1f; 
 		 
 		 heldValues.put(species,held1);
 		 
 		 species = 2;
 		 
 		 Float[] held2 = new Float[geneLength];
-		 held2[0] = 2f;
-		 held2[1] = 1f;
-		 held2[2] = 1f;
-		 held2[3] = 2f;
+		 held2[0] = 0f;
+		 held2[1] = 0f;
+		 held2[2] = 0f;
+		 held2[3] = 0f;
 		 
 		 heldValues.put(species,held2);
 		 
@@ -74,15 +78,18 @@ public class EA2 {
 		 
 		 Float[] held3 = new Float[geneLength];
 		 held3[0] = null;
-		 held3[1] = 1f;
-		 held3[2] = 1f;
+		 held3[1] = null;
+		 held3[2] = null;
 		 held3[3] = null;
 	 
 		 heldValues.put(species,held3);
 	 }
 	 
+	
+	 
+	 
 	public void Evolve() {	
-		setup();
+		
 		
 		for(byte i =0 ; i<totalSpecies; i++){
 			currentSpecies = i ;
@@ -120,6 +127,7 @@ public class EA2 {
 	}
 		
 	private void reset(){
+		System.out.println("Resetting EA parameters");
 		population.clear();
 		newGeneList.clear();
 		fitnessList.clear();
@@ -192,6 +200,9 @@ public class EA2 {
 			for(int i = 0; i<popNum ; i++){	
 				if(probabilityList.get(i) <=randomValue && randomValue<probabilityList.get(i+1)){	
 					geneList.add(population.get(i).getGene());
+					
+					System.out.println("Selected =" + i);
+					
 				}			
 			}	
 		}
@@ -226,14 +237,14 @@ public class EA2 {
 	             newGene[i] = gene1[i];
 	            }
 	            else {
-	             System.out.println("Cross at pos "+i);
+	          //   System.out.println("Cross at pos "+i);
 	             newGene[i] = gene2[i];
 	            }
 	        }
 	        
-	        System.out.println("BEFORE " +Arrays.toString( newGene));
+	      //  System.out.println("BEFORE " +Arrays.toString( newGene));
 	        mutation(newGene);
-	        System.out.println("AFTER " +Arrays.toString( newGene));
+	      //  System.out.println("AFTER " +Arrays.toString( newGene));
 	        return newGene;
         
 	}
@@ -271,4 +282,11 @@ public class EA2 {
 		return newGene;
 	}
 
+	
+	public static int getGeneLength() {
+		return geneLength; 
+	}
+	public static byte getTotalSpecies() {
+		return totalSpecies; 
+	}
 }

@@ -34,7 +34,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 	public Stage stage;
 	private Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));;
 	Table table;
-	//Sizing perameters
+	//Sizing parameters
 	private final int 
 			NORTH_HEIGHT = 50,
 			EAST_WIDTH = 200,
@@ -124,10 +124,8 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
         table.pack();
         setViewRect(north, south, east, west);
 //        screenRect.set(0, 0, width, height);
+    }    
         
-
-    }
-    
 	private Table createNorth(Table t){
     	Table menuTable = new Table(skin);
     	t.add(menuTable).top().height(NORTH_HEIGHT).expandX().fillX().colspan(3);
@@ -205,6 +203,17 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 
             }
         });
+        // EA settings button.
+        final TextButton EAButton = new TextButton("EA Settings", skin,"default");
+        EAButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //EA Settings menu appears
+            	simScreen.flipEARender();               
+          
+            }
+        });
+        
 
         fps = new Label("0", skin);
       
@@ -217,9 +226,11 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
         southTable.row();
         southTable.add(playButton).size(100f, 30f).bottom().left().padLeft(20f).padBottom(10f);
         southTable.add(resetButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
+        southTable.add(EAButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
         southTable.add(switchButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
         southTable.add(saveButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
         southTable.add(loadButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
+       
         //table.add(graphicsWindow).size(500f,500f);
         southTable.add(console).size(500f,30f).bottom();
 		return southTable;

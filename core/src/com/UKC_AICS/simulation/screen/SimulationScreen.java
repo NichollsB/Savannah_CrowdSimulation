@@ -1,6 +1,7 @@
 package com.UKC_AICS.simulation.screen;
 
 import static com.UKC_AICS.simulation.Constants.TILE_SIZE;
+import EvolutionaryAlgorithm.EvolutionaryAlgorithmGUI;
 
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
@@ -47,6 +48,7 @@ public class SimulationScreen implements Screen {
 
     private boolean render = true;   // for render pausing
     private boolean update = false;
+    private boolean eaRender = true;
     boolean running = false;  //for play pausing.
 
     private final Simulation simulation;
@@ -71,7 +73,7 @@ public class SimulationScreen implements Screen {
     private Graphics boidGraphics;
 
     public SimScreenGUI gui; //= new SimScreenGUI(this); // Creates gui instance for this screen
-
+    public EvolutionaryAlgorithmGUI eagui;
     private InputMultiplexer input;
     private InputManager inputManager;
     
@@ -83,6 +85,7 @@ public class SimulationScreen implements Screen {
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
         gui = new SimScreenGUI(this, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        eagui = new EvolutionaryAlgorithmGUI(this,simulationManager.ea);
         setup();
         
         
@@ -109,7 +112,10 @@ public class SimulationScreen implements Screen {
         }
         simBatch.enableBlending();
 //    	simBatch.begin();
-    	if (render) {
+        
+        
+        
+        if (render) {
     		 try {
                  long number = (long) (1000 / 60 - Gdx.graphics.getDeltaTime());
                  if(number < 0) number = 0;//fixed?
@@ -140,6 +146,7 @@ public class SimulationScreen implements Screen {
     	uiViewport.update();
         simBatch.setProjectionMatrix(uiCamera.combined);
         gui.update(simBatch, render);
+        eagui.update(eaRender);
         simBatch.end();
     }
     
@@ -205,8 +212,14 @@ public class SimulationScreen implements Screen {
 
     	inputManager = new InputManager(this, (int)width, (int)height, simViewcamera);
     	input = new InputMultiplexer();
+
     	input.addProcessor(inputManager);
-        input.addProcessor(gui);  //sets up GUI
+
+    	input.addProcessor(eagui);
+
+        input.addProcessor(gui); 
+
+        //sets up GUI
         
 
         Gdx.input.setInputProcessor(input);
@@ -270,7 +283,13 @@ public class SimulationScreen implements Screen {
         else
             render = true;
     }
-
+    
+    public void flipEARender() {
+        if (eaRender)
+        	eaRender = false;
+        else
+        	eaRender = true;
+    }
 
     private void setupCameraController() {
         //blah blah create the controller
@@ -299,6 +318,7 @@ public class SimulationScreen implements Screen {
     @Override
     public void dispose() {
         gui.stage.dispose();
+        eagui.stage.dispose();
     }
 
     private void tickPhysics(float delta) {
