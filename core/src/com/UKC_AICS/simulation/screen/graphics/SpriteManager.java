@@ -229,6 +229,10 @@ public class SpriteManager {
 //		System.out.println(environmentTiles_Atlas.findRegion(regionName));
 		return environmentTiles_Atlas.findRegion(layer + "#" + amount);
 	}
+	public int getNumTileRegions(){
+		
+		return environmentTiles_Atlas.getRegions().size;
+	}
 		
 	public AtlasSprite getTileSprite(String layer, float amount){
 //		String name = (layer + "_" + amount);
