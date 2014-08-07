@@ -70,7 +70,7 @@ public class CarnDefault extends State{
 
             tempVec = Collision.act(collisionObjects, boid);
 //            tempVec = behaviours.get("collision").act(collisionObjects, boid);
-//            tempVec.add(Collision.act(boid));
+            tempVec.add(Collision.act(boid));
             steering.set(0f, 0f, 0f);
             boid.setAcceleration(steering);
 

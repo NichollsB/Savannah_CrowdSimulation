@@ -50,9 +50,6 @@ import java.io.FileOutputStream;
 	    		int ageInt = b.getAge();
 	    		String age = "" + ageInt;
 	    	
-	    		int bDayInt = b.getBirthDay();
-	    		String bDay = "" + bDayInt;
-	    	
 	    		Vector3 positionVec = b.getPosition();
 	    		String position = "" + positionVec;
 	    	
@@ -80,7 +77,6 @@ import java.io.FileOutputStream;
 	    		eventWriter.add(end);
 	    		   
 	    		createNode(eventWriter, "age", age);
-	    		createNode(eventWriter, "birthday", bDay);
 	    		createNode(eventWriter, "position", position);
 	    		createNode(eventWriter, "velocity", velocity);
 	    		createNode(eventWriter, "species", species);

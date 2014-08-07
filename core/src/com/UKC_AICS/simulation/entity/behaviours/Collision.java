@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -32,27 +33,58 @@ public class Collision extends Behaviour {
         throw new Error("Collision is not to be used in this manner. Try static access Collision.act(Array<Entity> targets, Boid boid)");
     }
 
-
+    private static ArrayList<Integer> cellInPath(float x0, float y0, float dx_dt, float dy_dt) {
+        ArrayList<Integer> cell = null;
+        for(int i = 0; i < stepsAhead; i++){
+            int posX = (int)(x0 + i * dx_dt);
+            int posY = (int)(y0 + i * dy_dt);
+            int posToCheckX = posX;
+            int posToCheckY = posY;
+            //TODO export to a static map wrapping function for X and Y?
+            if(posX >= Constants.mapWidth) {
+                posToCheckX = posX - Constants.mapWidth;
+            }
+            else if(posX < 0) {
+                posToCheckX = Constants.mapWidth + posX;
+            }
+            if(posY >= Constants.mapHeight) {
+                posToCheckY = posY - Constants.mapHeight;
+            }
+            else if(posY < 0) {
+                posToCheckY = Constants.mapHeight + posY;
+            }
+            //TODO need a check for outofbounds, wrap check for blocked, but steer from extended map coords
+            if(WorldManager.getTileInfoAt(posToCheckX, posToCheckY).get("terrain") == 1) {
+                cell = new ArrayList<Integer>();
+                cell.add(posX);
+                cell.add(posY);
+            }
+        }
+        return cell;
+    }
 
     /**
      * For collision avoidance with terrain along boid trajectory
      * @param boid that is doing the collision checking
      * @return Vector3 that is a velocity correctional change in acceleration
      */
-//    public static Vector3 act(Boid boid) {
-//        tmpVec.set(boid.getPosition());
-//        tmpVec2.set(boid.getVelocity());
-////        tmpVec.add(tmpVec2.scl(stepsAhead));  //end position
+    public static Vector3 act(Boid boid) {
+        tmpVec.set(boid.getPosition());
+        tmpVec2.set(boid.getVelocity());
+
 //        int mapX = (int)tmpVec.x/tileSize;
 //        int mapY = (int)tmpVec.y/tileSize;
-//        Array<Integer> cell = cellsInPath(tmpVec.x, tmpVec.y, tmpVec2.x, tmpVec2.y);
-//        tmpVec.set(0f,0f,0f);
-//        if(cell.size>0) {
-//            tmpVec.set(boid.getPosition());
-//            tmpVec.sub(new Vector3(cell.get(0) * tileSize + tileSize / 2, cell.get(1) * tileSize + tileSize / 2, 0f));
-//            tmpVec.nor();
-//            tmpVec.scl(MAX_AVOID_FORCE);
-//        }
+
+        ArrayList<Integer> cell = cellInPath(tmpVec.x, tmpVec.y, tmpVec2.x, tmpVec2.y);
+
+        tmpVec.set(0f,0f,0f);
+        if(cell != null) {
+            tmpVec.set(boid.getPosition());
+            tmpVec.sub(new Vector3(cell.get(0) * tileSize + tileSize / 2, cell.get(1) * tileSize + tileSize / 2, 0f));
+            tmpVec.nor();
+            tmpVec.scl(MAX_AVOID_FORCE);
+        }
+
 //        for(int[] cell : cellList) {
 //            tmpVec.set(0f,0f,0f);
 //            //get tile info, check if grass
@@ -141,153 +173,30 @@ public class Collision extends Behaviour {
 //                }
 //            }
 //        }
-//
-//
-//        //get tile info at position tile
-//        //ray cast to check when tile changes along velocity and retrieve tile info of new tiles
-//
-//
-//        return tmpVec;
-//    }
 
+        //get tile info at position tile
+        //ray cast to check when tile changes along velocity and retrieve tile info of new tiles
 
-    private static Entity terrainCollision(Boid boid) {
-        tmpVec = new Vector3().set(boid.getPosition());
-        tmpVec2 = new Vector3().set(boid.getVelocity());
-        Array<Integer> cell = cellInPath(tmpVec.x, tmpVec.y, tmpVec2.x, tmpVec2.y);
-        Object cellObject = null;
-        if (cell.size > 1) {
-            cellObject = new Object((byte) 9, (byte) 9, new Vector3(cell.get(0)*tileSize+tileSize/2, cell.get(1)*tileSize+tileSize/2, 0f));
-        }
-        return cellObject;
+        return tmpVec;
     }
 
-    private static Array<Integer> cellInPath(float x0, float y0, float dx_dt, float dy_dt) {
-        Array<Integer> cell = new Array<Integer>();
-        int posX;
-        int posY;
-        for(int i = 0; 1 < stepsAhead; i++) {
-            posX = (int) (x0 + i * dx_dt);
-            posY = (int) (y0 + i * dy_dt);
-            
-            if(posX > 0 && posX < Constants.mapWidth) {}
-            else if(posX > Constants.mapWidth) posX -= Constants.mapWidth;
-            else if(posX < Constants.mapWidth) posX = Constants.mapWidth + posX;
-            if(posY > 0 && posY < Constants.mapHeight) {}
-            else if(posY > Constants.mapHeight) posY -= Constants.mapHeight;
-            else if(posY < Constants.mapHeight) posY = Constants.mapHeight + posY;
 
-            if(WorldManager.getTileInfoAt(posX,posY).get("terrain")==1){
-                //this is a water tile --> blocked
-                cell.add(calcTileCell(posX));
-                cell.add(calcTileCell(posY));
-                break;
-            }
-        }
-
-        return cell;
-    }
-
-    private static int calcTileCell(float location) {
-        return (int)location/tileSize;
-    }
 
 
     /**
-     *
-     * @param x0  x coord of boid starting position
-     * @param y0  y coord of boid starting position
-     * @param dx_dt  x part of boid velocity
-     * @param dy_dt  y part of boid velocity
-     * @return  array of array of int coords of cells intersected by trajectory line
-     */
-    private static Array<Integer> cellsInPath(float x0, float y0, float dx_dt, float dy_dt) {
-        Array<int[]> cellList = new Array<int[]>();
-        Array<Integer> cell = new Array<Integer>();
-        //calc change in x and y from boid start position to end position
-        float dx = dx_dt * stepsAhead;
-        float dy = dy_dt * stepsAhead;
-
-        int x = (int)x0/tileSize;
-        int y = (int)y0/tileSize;
-
-        //position local to current cell
-        float xLocal = x0 % tileSize;
-        float yLocal = y0 % tileSize;
-
-        //each i will be a step in time, slowly increment the x and y and check if they cross cell boundaries
-        //if so, add new cell to cellList
-        for(int i = 0; i < stepsAhead; i++) {
-            //increment x and y
-
-            boolean stepped = false;
-
-            if(xLocal < tileSize && xLocal > 0 ) {
-                //no cell change
-            }
-            else if(xLocal > tileSize) {
-                // has stepped right one cell
-                x++;
-                xLocal -= tileSize;
-                stepped = true;
-            }
-            else if(xLocal < 0) {
-                //  has stepped left one cell
-                x--;
-                xLocal = tileSize + xLocal;
-                stepped = true;
-            }
-
-            if(yLocal < tileSize && yLocal > 0) {
-                //no y axis cell change
-            }
-            else if(yLocal > tileSize) {
-                // has stepped up one cell
-                y++;
-                yLocal -= tileSize;  //set new local position to location in new cell
-                stepped = true;
-            }
-            else if(yLocal < 0) {
-                //  has stepped down one cell
-                y--;
-                yLocal = tileSize + yLocal;
-                stepped = true;
-            }
-//            if(stepped) {
-//                if(WorldManager.getTileInfoAt(x, y).get("terrain") == 1) {
-//                    int[] cell = {x, y};
-//                    cellList.add(cell);
-//                }
-//            }
-            xLocal += dx_dt;
-            yLocal += dy_dt;
-            if(stepped) {
-                if(WorldManager.getTileInfoAt(x, y).get("terrain") == 1) {
-                    cell.add(x);
-                    cell.add(y);
-                    break;
-                }
-            }
-        }
-        return cell;
-//        return cellList;
-    }
-
-
-    /**
-     * Checks the Array of targets for mostTreatening collision with boid
+     * Checks the Array of targets for most Threatening collision with boid
      * @param boid  which is checking for collisions
      * @param targets   possible collision targets (just Entity's within sight range or all?)
      * @return  a correction Vector3 to avoid collision with most threatening
      */
     public static Vector3 act(Array<Entity> targets, Boid boid) {
         Array<Entity> entities = targets;  //
-        Object cell = (Object) terrainCollision(boid);
-        if(cell != null) {
-            entities.add(cell);
-            int cellX = (int) cell.getPosition().x/tileSize;
-            int cellY = (int) cell.getPosition().y/tileSize;
-        }
+//        Object cell = (Object) terrainCollision(boid);
+//        if(cell != null) {
+//            entities.add(cell);
+//            int cellX = (int) cell.getPosition().x/tileSize;
+//            int cellY = (int) cell.getPosition().y/tileSize;
+//        }
         // targets that are within a check range check, to be checked further
         Array<Entity> collisionThreats = new Array<Entity>();
         Vector3 adjustment = new Vector3(0f, 0f, 0f);
