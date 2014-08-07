@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.managers;
 
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.ObjectData;
 import com.UKC_AICS.simulation.utils.ObjectGrid;
 import com.UKC_AICS.simulation.utils.QuadTree;
 import com.UKC_AICS.simulation.world.LandMap;
@@ -122,5 +123,11 @@ public class WorldManager extends Manager {
   //Added by Ben Nicholls for graphics purposes - very probably temporary
     public HashMap<String, byte[][]> getMapInfo(){
     	return map.information_layers;
+    }
+    
+    public void createObject(ObjectData objData, byte subtype, int x, int y){
+    	com.UKC_AICS.simulation.entity.Object obj = new com.UKC_AICS.simulation.entity.Object(objData, x, y);
+    	obj.setSubType(subtype);
+    	putObject(obj);
     }
 }

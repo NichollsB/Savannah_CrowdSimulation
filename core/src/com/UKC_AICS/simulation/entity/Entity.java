@@ -87,4 +87,8 @@ public class Entity {
     	this.tracked = tracked;
     }
 
+	public byte getTertiaryType() {
+		return tertiaryType;
+	}
+
 }

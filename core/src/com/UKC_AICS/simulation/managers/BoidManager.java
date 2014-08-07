@@ -93,7 +93,7 @@ public class BoidManager extends Manager {
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.
 
-        boid.group = group;
+        boid.tertiaryType = group;
         boid.setTracked(true);
         
         addToLists(boid);
@@ -133,7 +133,7 @@ public class BoidManager extends Manager {
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.
 
-        boid.group = (byte)rand.nextInt(10);
+        boid.tertiaryType = (byte)rand.nextInt(10);
 
         //moved this to boid constructor.
 //        boid.setCohesion(species.getCohesion());

@@ -25,7 +25,7 @@ public class Cohesion extends Behaviour {
             for (int i = 0; i < boids.size; i++) {
                 otherBoid = boids.get(i);
                 if (boid != otherBoid && otherBoid.getSpecies() == boid.getSpecies()) {
-                    if (otherBoid.group == boid.group) {
+                    if (otherBoid.tertiaryType == boid.tertiaryType) {
                         //add it twice
                         tmpVec2.add(otherBoid.getPosition());
                         tmpVec2.add(otherBoid.getPosition());

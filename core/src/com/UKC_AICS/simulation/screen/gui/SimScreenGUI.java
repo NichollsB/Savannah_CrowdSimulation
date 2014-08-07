@@ -2,8 +2,7 @@ package com.UKC_AICS.simulation.screen.gui;
 
 import java.util.HashMap;
 
-import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.Species;
+import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.gui.controlutils.DialogueWindowHandler;
 import com.UKC_AICS.simulation.gui.controlutils.HoverListener;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
@@ -62,9 +61,10 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
     private Table viewArea;
     
     //West
-    private Array<Boid> boids;
+    private Array<Entity> boids;
     private ObjectMap<Byte, String> species;
-    private final BoidListWindow boidTree = new BoidListWindow("Boids", skin, this);
+    private final BoidListWindow boidTree = new BoidListWindow("Boids", skin, this, true, (byte)1);
+    private final BoidListWindow objectTree = new BoidListWindow("Objects", skin, this, false, (byte)1);
     private final HashMap<Byte, Tree.Node> speciesNodeMap = new HashMap<Byte, Tree.Node>();
     private final HashMap<Boid, Tree.Node> boidNodeMap = new HashMap<Boid, Tree.Node>();
     
@@ -244,21 +244,39 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
     private Table createWest(Table t){
     	Table westTable = new Table(skin);
     	t.add(westTable).left().width(WEST_WIDTH).fillY().expandY();
-    	westTable.add(new Label("Boids", skin));
+//    	westTable.add(new Label("Boids", skin));
     	westTable.row();
    	 	westTable.add(boidTree).top().fill().expand();
+   	 	westTable.row();
+   	 	westTable.add(objectTree).top().fill().expand();
    	 	westTable.pack();
     	return westTable;
     }
 
 
-    public void createBoidTree(HashMap<Byte, Species> species, Array<Boid> boids){
-    	this.boids = boids;
-    	for(Byte b : species.keySet()){
-//    		boidTree.addBoidNode(b, species.get(b).getName(), species.get(b).toString(), null);
-    		boidTree.addRootNode(b, species.get(b).getName(), species.get(b).toString());
+    public void createBoidTree(HashMap<Byte, Species> species, Array boids){
+    	try{
+	    	this.boids = boids;
+	    	for(Byte b : species.keySet()){
+	//    		boidTree.addBoidNode(b, species.get(b).getName(), species.get(b).toString(), null);
+	    		boidTree.addRootNode(b, species.get(b).getName(), species.get(b).toString());
+	    	}
+	    	boidTree.compareAndUpdateNodes(boids);
+    	}catch(NullPointerException e){
+    		System.out.println(this.getClass() + " failed to create EntityListWindow - ");
     	}
-    	boidTree.compareAndUpdateNodes(boids);
+    }
+    public void createObjectTree(HashMap<Byte, ObjectData> objData, Array objects){
+//    	System.out.println("creating objectree datamap = " + objData + " objects = " + objects);
+    	try{
+    		this.boids = boids;
+	    	for(Byte b : objData.keySet()){
+	    		objectTree.addRootNode(b, objData.get(b).getName(), objData.get(b).toString());
+	    	}
+	    	objectTree.compareAndUpdateNodes(objects);
+	    }catch(NullPointerException e){
+			System.out.println(this.getClass() + "failed to create EntityListWindow - ");
+		}
     }
     
     public void setConsole(String log){
@@ -271,6 +289,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
     public void resize(int width, int height){
     	setViewRect(width, height);
     	boidTree.resize();
+    	objectTree.resize();
     }
     
     private void setViewRect(int width, int height){
@@ -362,14 +381,13 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 		return scroll;
 	}
 	
-	public void selectBoid(Boid boid){
-		if(boid == null) boidTree.selectNodeByBoid(boid, false);
-		else boidTree.selectNodeByBoid(boid, true);
+	public void selectEntity(Entity entity){
+		boolean select = false; 
+		select = (entity == null) ? false : true;
+		boidTree.selectNodeByBoid(entity, select);
+		objectTree.selectNodeByBoid(entity, select);
 	}
 	
-	public void entitySelected(byte type, byte subtype, byte group){
-		
-	}
 
 	//SETTINGS WINDOWS METHODS
 	@Override

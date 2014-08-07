@@ -15,6 +15,7 @@ public abstract class SelectedEntity{
 	private static byte SUBTYPE;
 	private static byte GROUP;
 	private static boolean SELECTED;
+	private static boolean BOID = false;
 	private static Entity entity;
 	
 	public static void set(boolean select){
@@ -27,15 +28,26 @@ public abstract class SelectedEntity{
 //		SUBTYPE.valueOf(subtype);
 //		GROUP.valueOf(group);
 //		selected.valueOf(true);
+		if(type == 1){
+			BOID = true;
+		}
+		else
+			BOID = false;
 		TYPE = type;
 		SUBTYPE = subtype;
 		GROUP = group;
 		SELECTED = true;
+		
 		System.out.println("selected entity " + SELECTED);
 		
 	}
 	
 	public static void set(Entity selectedEntity){
+		if(selectedEntity.getType() == 1){
+			BOID = true;
+		}
+		else BOID = false;
+		
 		entity = selectedEntity;
 		TYPE = entity.getType();
 		SUBTYPE = entity.getSubType();
@@ -50,6 +62,7 @@ public abstract class SelectedEntity{
 	public static byte subType(){ byte b = SUBTYPE; return b;}
 	public static byte group(){ byte b = GROUP; return b;}
 	public static boolean selected(){boolean b = SELECTED; return b;}
+	public static boolean boid(){boolean b = BOID; return b;}
 //	public byte getType(){
 //		final byte b = entityType;
 //		return b;

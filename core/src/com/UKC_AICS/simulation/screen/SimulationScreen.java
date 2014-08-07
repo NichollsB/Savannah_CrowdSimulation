@@ -5,6 +5,7 @@ import static com.UKC_AICS.simulation.Constants.TILE_SIZE;
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.gui.controlutils.ControlState;
 import com.UKC_AICS.simulation.gui.controlutils.ControlState.State;
 import com.UKC_AICS.simulation.gui.controlutils.SelectedEntity;
@@ -231,6 +232,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         
         //UI
         gui.createBoidTree(simulationManager.getSpeciesInfo(), simulationManager.getBoids());
+        gui.createObjectTree(simulationManager.getObjectDataInfo(), simulationManager.getObjects());
     }
 
     /**
@@ -313,12 +315,15 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     	if(ControlState.STATE == ControlState.State.NAVIGATE){
 	        Boid boid = simulationManager.getBoidAt(screenX,screenY);
 	//        System.out.println(simulationManager.getBoidAt(screenX,screenY));
-	        if(viewRect.contains(screenX, screenY)) gui.selectBoid(boid);
+	        if(viewRect.contains(screenX, screenY)) gui.selectEntity(boid);
 	        return;
     	}
     	if(ControlState.STATE == ControlState.State.PLACEMENT){
     		if(SelectedEntity.selected()){
-    			simulationManager.generateBoid(SelectedEntity.subType(), SelectedEntity.group(), screenX, screenY);
+    			if(SelectedEntity.boid())
+    				simulationManager.generateBoid(SelectedEntity.subType(), SelectedEntity.group(), screenX, screenY);
+    			else
+    				simulationManager.generateBoid(SelectedEntity.type(), SelectedEntity.subType(), screenY, screenY);
     		}
 			return;
     	}

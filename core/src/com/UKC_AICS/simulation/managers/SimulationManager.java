@@ -7,6 +7,7 @@ import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.entity.ObjectData;
 import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.UKC_AICS.simulation.utils.StaXParser;
@@ -52,6 +53,11 @@ public class SimulationManager extends Manager {
     HashMap<Byte, String> fileLocations;
     HashMap<Byte, float[]> speciesRGB = new HashMap<Byte, float[]>(); 
     
+    /**
+     * Added by ben nicholls - for the creation of objects from ObjectData type/ creation of ObjectData types...
+     */
+    public static final HashMap<Byte, ObjectData> objectData = new HashMap<Byte, ObjectData>();
+    
 
     /**
      * Sends appropriate calls to the world and boid manager to update for this frame.
@@ -64,34 +70,43 @@ public class SimulationManager extends Manager {
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
 
         generateBoids();
-
+        
+        objectData.put((byte)0, new ObjectData((byte)0, (byte)1, "Corpse"));
+        objectData.put((byte)1, new ObjectData((byte)1, (byte)1, "Corpse"));
+        objectData.put((byte)2, new ObjectData((byte)2, (byte)1, "Attractor"));
+        objectData.put((byte)3, new ObjectData((byte)3, (byte)1, "Repeller"));
+        
+        
         Array<Byte> objTypes = new Array<Byte>();
-        Object obj = new Object((byte)2,(byte)1,355,450);
+        Object obj = new Object(objectData.get((byte)2),355,450);
         objTypes.add(obj.getType());
         WorldManager.putObject(obj);
 
-        obj = new Object((byte)2,(byte)1,500,200);
+        
+        
+        
+        obj = new Object(objectData.get((byte)2),500,200);
 ////        obj = new Object((byte)2,(byte)1,900,300);
         WorldManager.putObject(obj);
 
-        obj = new Object((byte)3,(byte)1,755,450);
+        obj = new Object(objectData.get((byte)3),755,450);
         objTypes.add(obj.getType());
         WorldManager.putObject(obj);
         objTypes.add((byte)0);
 
-        obj = new Object((byte)2,(byte)1,400,600);
+        obj = new Object(objectData.get((byte)1),400,600);
         WorldManager.putObject(obj);
-        obj = new Object((byte)2,(byte)1,160,200);
+        obj = new Object(objectData.get((byte)1),160,200);
         WorldManager.putObject(obj);
-        obj = new Object((byte)2,(byte)1,160,400);
+        obj = new Object(objectData.get((byte)1),160,400);
         WorldManager.putObject(obj);
-        obj = new Object((byte)2,(byte)1,180,600);
+        obj = new Object(objectData.get((byte)1),180,600);
         WorldManager.putObject(obj);
-        obj = new Object((byte)2,(byte)1,1100,200);
+        obj = new Object(objectData.get((byte)1),1100,200);
         WorldManager.putObject(obj);
-        obj = new Object((byte)2,(byte)1,1100,400);
+        obj = new Object(objectData.get((byte)1),1100,400);
         WorldManager.putObject(obj);
-        obj = new Object((byte)2,(byte)1,1100,600);
+        obj = new Object(objectData.get((byte)1),1100,600);
         WorldManager.putObject(obj);
 
     }
@@ -267,5 +282,18 @@ public class SimulationManager extends Manager {
 //    		species.add(speciesData.get(s));
 //    	}
     	return speciesData;
+    }
+    public void generateObject(byte type, byte subType, int x, int y){
+    	System.out.println("Trying to generate object");
+    	ObjectData obj;
+    	if(objectData.containsKey(type)){
+    		obj = objectData.get(type);
+    		worldManager.createObject(obj, subType, x, y);
+    		return;
+    	}
+    	System.out.println("Failed to resolve ObjectData");
+    }
+    public HashMap<Byte, ObjectData> getObjectDataInfo(){
+    	return objectData;
     }
 }

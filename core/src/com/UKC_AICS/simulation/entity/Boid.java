@@ -44,7 +44,7 @@ public class Boid extends Entity {
 
   
 
-    public byte group = 0; //family group of boid.
+//    public byte tertiaryType = 0; //family group of boid.
     public float cohesion = 0;
     public float separation = 0;
     public float alignment = 0;
@@ -103,7 +103,7 @@ public class Boid extends Entity {
     public Boid(Boid boid) {
         type = 1;
         subType =  boid.getSubType();
-        group = boid.group;
+        tertiaryType = boid.tertiaryType;
         nearRadius = boid.nearRadius;
         sightRadius = boid.sightRadius;
         flockRadius = boid.flockRadius;
@@ -269,7 +269,7 @@ public class Boid extends Entity {
         String string = "";
 
         string += "BOID: " + "\t" + "\t position: \n \t" + (int)position.x + "/" + (int)position.y;
-        string += "\n\t group:" + group;
+        string += "\n\t group:" + tertiaryType;
         string += "\n\t hunger:" + (int)hunger;
         string += "\n\t thirst:" + (int)thirst;
         string += "\n\t age:" + age ;
@@ -326,5 +326,7 @@ public class Boid extends Entity {
     public float getWander() {
         return wander;
     }
-
+    /**
+     * Added by ben Nicholls as replacement for getSpecies(), etc - rather pull from entity
+     */
 }
