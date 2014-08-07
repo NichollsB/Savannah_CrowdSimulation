@@ -25,6 +25,8 @@ public class Boid extends Entity {
     public float maxForce = 0.03f; //
     private Vector3 acceleration = new Vector3();
 
+    public float stamina;
+
     public float sightRadius = 200f;
     public float flockRadius = 100f;
     public float nearRadius = 20f;
