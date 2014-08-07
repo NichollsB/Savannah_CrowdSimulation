@@ -38,6 +38,7 @@ public class StaXParser {
     static final String MAXSPEED = "maxSpeed";
     static final String LIFESPAN = "lifespan";
     static final String DIET = "diet";
+    static final String STAMINA = "stamina";
     
     static final String SPRITERGB = "spritergb";
 
@@ -197,6 +198,16 @@ public class StaXParser {
                             continue;
                         }
                     }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(STAMINA)) {
+                            event = eventReader.nextEvent();
+                            species.setStamina(Float.parseFloat(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
                     /////////////////////////////////////////////////////
                     //Added by Ben Nicholls for graphics purposes
                     if (event.isStartElement()) {

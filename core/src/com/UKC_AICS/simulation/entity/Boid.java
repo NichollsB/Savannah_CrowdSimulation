@@ -25,7 +25,7 @@ public class Boid extends Entity {
     public float maxForce = 0.03f; //
     private Vector3 acceleration = new Vector3();
 
-    public float stamina;
+    public float stamina = 100;
 
     public float sightRadius = 200f;
     public float flockRadius = 100f;
@@ -82,6 +82,8 @@ public class Boid extends Entity {
 
         maxSpeed = species.getMaxSpeed();
         maxForce = species.getMaxForce();
+
+        stamina = species.getStamina();
 
         position = new Vector3(500f,500f,0f);
         velocity = new Vector3();
