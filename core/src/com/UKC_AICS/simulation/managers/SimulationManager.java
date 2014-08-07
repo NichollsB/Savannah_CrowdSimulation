@@ -34,7 +34,7 @@ public class SimulationManager extends Manager {
 
     BoidManager boidManager = new BoidManager(this);
     WorldManager worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
-    EA2 ea = new EA2();
+    public EA2 ea = new EA2();
 
     static public int minutes = 0;
     static public int hours = 0;
@@ -64,7 +64,7 @@ public class SimulationManager extends Manager {
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
 
         generateBoids();
-
+        ea.setup();
         Array<Byte> objTypes = new Array<Byte>();
         Object obj = new Object((byte)2,(byte)1,355,450);
         objTypes.add(obj.getType());
