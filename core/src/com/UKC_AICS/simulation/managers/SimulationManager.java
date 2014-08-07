@@ -140,6 +140,14 @@ public class SimulationManager extends Manager {
             
         }
     }
+    
+    /**
+     * Created by Ben Nicholls - explicit placement of new boids based on species
+     */
+    public void generateBoid(byte spByte, byte group, int x, int y){
+    	Species species = speciesData.get(spByte);
+    	boidManager.createBoid(species, group, x, y);
+    }
 
     public void clear(){
     	boidManager.clearBoidList();

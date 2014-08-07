@@ -42,8 +42,7 @@ public class Boid extends Entity {
 //    public int birthDay = 0;
     
 
-    //Added to check if boid info is being displayed or not - for highlighting in graphics
-	public boolean tracked = false;
+  
 
     public byte group = 0; //family group of boid.
     public float cohesion = 0;
@@ -280,10 +279,7 @@ public class Boid extends Entity {
         return string;
     }
 
-    public void setTracked(boolean tracked){
-    	this.tracked = tracked;
-    }
-
+   
     public void setGene(float cohesion, float separation, float alignment, float wander ) {
     	gene[0] = cohesion;
     	gene[1] = separation;

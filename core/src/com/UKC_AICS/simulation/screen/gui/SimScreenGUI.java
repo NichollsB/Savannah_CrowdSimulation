@@ -270,6 +270,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
     
     public void resize(int width, int height){
     	setViewRect(width, height);
+    	boidTree.resize();
     }
     
     private void setViewRect(int width, int height){
@@ -365,6 +366,10 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 		if(boid == null) boidTree.selectNodeByBoid(boid, false);
 		else boidTree.selectNodeByBoid(boid, true);
 	}
+	
+	public void entitySelected(byte type, byte subtype, byte group){
+		
+	}
 
 	//SETTINGS WINDOWS METHODS
 	@Override
@@ -393,7 +398,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 //		act.setPosition(x, y);
 		hoverLabel.setPosition(simScreen.mousePosition.x, simScreen.mousePosition.y);
 //		Table.drawDebug(stage);
-		System.out.println("x " + simScreen.mousePosition.x + " y " + simScreen.mousePosition.y + " labelx " + hoverLabel.getX() + " y " + hoverLabel.getY());
+//		System.out.println("x " + simScreen.mousePosition.x + " y " + simScreen.mousePosition.y + " labelx " + hoverLabel.getX() + " y " + hoverLabel.getY());
 	}
 
 

@@ -5,6 +5,10 @@ import static com.UKC_AICS.simulation.Constants.TILE_SIZE;
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.gui.controlutils.ControlState;
+import com.UKC_AICS.simulation.gui.controlutils.ControlState.State;
+import com.UKC_AICS.simulation.gui.controlutils.SelectedEntity;
+import com.UKC_AICS.simulation.gui.controlutils.TreeOptionsListener;
 import com.UKC_AICS.simulation.screen.graphics.Graphics;
 import com.UKC_AICS.simulation.screen.graphics.TileGraphics;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
@@ -43,7 +47,7 @@ import java.util.HashMap;
 /**
  * @author Emily
  */
-public class SimulationScreen implements Screen {
+public class SimulationScreen implements Screen, TreeOptionsListener {
 
     private boolean render = true;   // for render pausing
     private boolean update = false;
@@ -189,16 +193,9 @@ public class SimulationScreen implements Screen {
      */
     private void initialiseCameras(int width, int height) {
         //create a camera. perspective? orthographic? etc etc.
-//<<<<<<< .merge_file_a11712
-//        camera = new OrthographicCamera();
-//        camera.setToOrtho(false);
-//    	inputManager = new InputManager(this, Constants.screenWidth, Constants.screenHeight, camera);
-//    	input = new InputMultiplexer();
-//=======
     	viewRect =  gui.getViewArea();
     	uiCamera = gui.getCamera();
     	uiViewport = gui.getViewport();
-//>>>>>>> .merge_file_a11656
 
         simViewcamera = (OrthographicCamera) boidGraphics.getCamera();
         simViewport = new SimViewport(Scaling.none, width, height, simViewcamera);
@@ -310,19 +307,47 @@ public class SimulationScreen implements Screen {
      * Reacts to clicking on the simulations viewport - called by InputManagers touchDown method
      */
     public void pickPoint(int screenX, int screenY) {
+    	HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
+        gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
         //What should happen when clicking on the screen
-        Boid boid = simulationManager.getBoidAt(screenX,screenY);
-//        System.out.println(simulationManager.getBoidAt(screenX,screenY));
-        gui.selectBoid(boid);
+    	if(ControlState.STATE == ControlState.State.NAVIGATE){
+	        Boid boid = simulationManager.getBoidAt(screenX,screenY);
+	//        System.out.println(simulationManager.getBoidAt(screenX,screenY));
+	        if(viewRect.contains(screenX, screenY)) gui.selectBoid(boid);
+	        return;
+    	}
+    	if(ControlState.STATE == ControlState.State.PLACEMENT){
+    		if(SelectedEntity.selected()){
+    			simulationManager.generateBoid(SelectedEntity.subType(), SelectedEntity.group(), screenX, screenY);
+    		}
+			return;
+    	}
 //        if (boid == null) {
-            HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
-            gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
-
 
     }
     public void setMousePosition(int x, int y){
     	mousePosition.x = x;
     	mousePosition.y = y;
     }
+
+	@Override
+	public void onAdd(byte type, byte subtype, Object object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onRemove(byte type, byte subtype, Object object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCheck(byte type, byte subtype, Object object,
+			boolean isChecked, State stateChanged) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

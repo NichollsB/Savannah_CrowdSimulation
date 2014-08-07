@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.gui.controlutils;
 
 import java.util.HashMap;
 
+import com.UKC_AICS.simulation.gui.controlutils.ControlState.State;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -11,7 +12,7 @@ import com.badlogic.gdx.utils.ObjectMap;
  * @author temp
  *
  */
-public class SettingsEditor implements DialogueWindowHandler, TreeOptionsHandler{
+public class SettingsEditor implements DialogueWindowHandler, TreeOptionsListener{
 	
 	enum SettingType{
 		SPECIES("Species"),
@@ -58,6 +59,16 @@ public class SettingsEditor implements DialogueWindowHandler, TreeOptionsHandler
 
 	@Override
 	public void onRemove(byte type, byte subtype, Object object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	
+
+	@Override
+	public void onCheck(byte type, byte subtype, Object object,
+			boolean isChecked, State stateChanged) {
 		// TODO Auto-generated method stub
 		
 	}

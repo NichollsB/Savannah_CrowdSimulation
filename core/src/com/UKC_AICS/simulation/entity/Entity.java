@@ -15,7 +15,8 @@ public class Entity {
     
     //Added by Ben Nicholls
     public byte tertiaryType = 0;//Any additional sub-classification of boid or object
-
+    //Added to check if boid info is being displayed or not - for highlighting in graphics
+  	public boolean tracked = false;
     /**
      *
      * @return the position of the object as a Vector3 for its map location.
@@ -77,4 +78,13 @@ public class Entity {
     public double getOrientation() {
         return orientation;
     }
+    
+    /**
+     * Added by ben nicholls
+     * @param tracked
+     */
+    public void setTracked(boolean tracked){
+    	this.tracked = tracked;
+    }
+
 }

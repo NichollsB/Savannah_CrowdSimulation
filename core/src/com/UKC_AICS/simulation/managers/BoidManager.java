@@ -63,7 +63,8 @@ public class BoidManager extends Manager {
         Boid boid = new Boid(species);
 
         boid.setAge(age);
-        boid.setPosition(500, 500, 0);
+//        boid.setPosition(500, 500, 0);
+        boid.setPosition(pX, pY, 0);
         boid.setVelocity(vX, vY, vZ);
         boid.setCohesion(cohesion);
         boid.setAlignment(alignment);
@@ -72,7 +73,31 @@ public class BoidManager extends Manager {
         boid.setGene(cohesion, separation, alignment, wander);
         addToLists(boid);
     }
+    
+    /**
+     * Created by Ben Nicholls
+     * custom constructor for the creation of a new boid from a Species type, but with custom position and group
+     * @param species
+     */
+    public void createBoid(Species species, byte group, int x, int y){
+    	Boid boid = new Boid(species);
+    	boid.setPosition(new Vector3(x, y, 0));
+    	
+        int maxXVel = 1;
+        int maxYVel = 1;
+    	
+        int xVel = (rand.nextInt(2 * maxXVel) - maxXVel);
 
+        int yVel = (rand.nextInt(2 * maxYVel) - maxYVel);
+        boid.setVelocity(xVel, yVel, 0);
+        //random start age
+        boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.
+
+        boid.group = group;
+        boid.setTracked(true);
+        
+        addToLists(boid);
+    }
 
     /**
      * create boid from the species file and add straight into the lists
