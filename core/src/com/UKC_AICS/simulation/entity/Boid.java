@@ -149,18 +149,22 @@ public class Boid extends Entity {
 //        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
         velocity.add(acceleration).limit(maxSpeed);
         velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
+        //TODO add method to calc stamina usage -> based on velocity.len % of maxspeed - 0-1
+        //TODO make it so stamina must be above xx amount to move
         position.add(velocity);
         //check for out of bounds
         checkInBounds();
 
         bounds.setPosition(position.x, position.y);
-
-
         //TODO: potentially have different species "degrade" at different rates
         hunger += (float) 0.25 /60;
         thirst += (float) 1 /60;
 
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
+    }
+
+    private void useStamina() {
+
     }
 
     public void setNewVelocity(Vector3 newVel){

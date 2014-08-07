@@ -42,7 +42,8 @@ public class WorldManager extends Manager {
 
     @Override
     public void update(boolean dayIncrement) {
-        decayCorpses(dayIncrement);
+        if(dayIncrement)
+        decayCorpses();
     }
 
     public static void putObject(Entity entity, int x, int y) {
@@ -124,14 +125,12 @@ public class WorldManager extends Manager {
     	return map.information_layers;
     }
 
-    private void decayCorpses(boolean dayIncrement) {
-        if(dayIncrement) {
-            for(Entity corpse : objects) {
-                if( corpse.getType()==0) {
-                    ((Object)corpse).corpseDecay(1f);
-                    if(((Object)corpse).getMass()<0.5f) {
-                        removeObject(corpse);
-                    }
+    private void decayCorpses() {
+        for(Entity corpse : objects) {
+            if( corpse.getType()==0) {
+                ((Object)corpse).corpseDecay(1f);
+                if(((Object)corpse).getMass()<0.5f) {
+                    removeObject(corpse);
                 }
             }
         }

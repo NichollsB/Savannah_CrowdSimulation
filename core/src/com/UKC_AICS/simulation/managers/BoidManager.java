@@ -63,7 +63,7 @@ public class BoidManager extends Manager {
         Boid boid = new Boid(species);
 
         boid.setAge(age);
-        boid.setPosition(500, 500, 0);
+        boid.setPosition(pX, pY, pZ);
         boid.setVelocity(vX, vY, vZ);
         boid.setCohesion(cohesion);
         boid.setAlignment(alignment);
