@@ -86,8 +86,11 @@ public class LandMap {
      * @param newValue
      */
     public void changeTileOnLayer(int x, int y, String layer, byte newValue) {
+    	
         x /= TILE_SIZE;
         y /= TILE_SIZE;
+//        System.out.println("TileChanging. Old val " + information_layers.get(layer)[x][y] +
+//    			" new val " + newValue);
         information_layers.get(layer)[x][y] = newValue;
     }
 

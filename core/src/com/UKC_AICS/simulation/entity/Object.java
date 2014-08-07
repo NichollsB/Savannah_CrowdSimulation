@@ -50,5 +50,14 @@ public class Object extends Entity {
     public void reduceMass(float amount) {
         mass -= amount;
     }
+    
+    @Override
+    public String toString() {
+    	String string = "";
+        string += "OBJECT: " + "\t" + "\t position: \n \t" + position.toString() ;
+
+
+    	return string;
+    }
 
 }

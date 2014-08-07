@@ -33,7 +33,14 @@ public abstract class EnvironmentLoader {
 	private static final HashMap<String, Pixmap> environmentLayers_pixmap = new HashMap<String, Pixmap>();
 	private static final HashMap<String, AtlasRegion> environmentLayers_atlasRegion = new HashMap<String, AtlasRegion>();
 	
+	/**
+	 * Enum for specifying the various environment layers to load, the associated String region names that the loader should look for
+	 * in the packfile containing the various layers, and the layer String name
+	 * @author Benjamin Nicholls
+	 *
+	 */
 	public enum EnvironmentLayer{
+		
 		GROUND("ground", "Ground_Map"),
 		TERRAIN("terrain", "Movable_Map"),
 		WATER("water", "Water_Map"),
@@ -54,9 +61,19 @@ public abstract class EnvironmentLoader {
 		}
 	}
 	
+	/**
+	 * Load the default maps texture sheet file and pack file
+	 */
 	public static void loadMaps(){
 		loadMaps(atlasPath, mapPath);
 	}
+	
+	/**
+	 * Load maps into a TextureAtlas via the pack file and the packed map sheet as a Pixmap. Retrieve regions from the 
+	 * pack file that match the EnvironmentLayer layerMap Strings and store Pixmaps for each region.
+	 * @param packfile_path String path for the pack file of the texture sheet to load
+	 * @param packsheet_path String path for the texture sheet to load
+	 */
 	public static void loadMaps(String packfile_path, String packsheet_path){
 //		environments.put(name, 
 //				new TextureAtlas(defaultEnvAtlas_path));
@@ -94,7 +111,7 @@ public abstract class EnvironmentLoader {
 	}
 	
 	/**
-	 * Return the specified environment layer as a Texture
+	 * Return the specified environment layer as an AtlasSprite
 	 * @param name String name of the layer to be retrieved (set by the name of the original image packed into the environment pack file
 	 * @return Texture form of the image layer
 	 */
@@ -106,10 +123,20 @@ public abstract class EnvironmentLoader {
 		}
 	}
 	
+	/**
+	 * Return the specified environment layer as an AtlasSprite
+	 * @param name The EnvironmentLayer enum associated with the map layer (region) to load
+	 * @return AtlasSprite of the map layer region retrieved
+	 */
 	public static AtlasSprite getLayer_sprite(EnvironmentLayer name){
 		return getLayer_sprite(name.toString());
 	}
 	
+	/**
+	 * Retrieve the specified environment layer as a Pixmap
+	 * @param name String name of the layer to be retrieved (set by the name of the original image packed into the environment pack file
+	 * @return Pixmap of the map layer region retrieved
+	 */
 	public static Pixmap getLayer_pixmap(String name){
 		if(environmentLayers_pixmap.containsKey(name))
 			return environmentLayers_pixmap.get(name);
@@ -133,8 +160,6 @@ public abstract class EnvironmentLoader {
 				for( int yGrid = 0; yGrid < layer.getHeight(); yGrid+=TILE_SIZE, i++){
 					for(int pixX = xGrid; pixX<(xGrid+TILE_SIZE); pixX++){
 						for(int pixY = yGrid; pixY<(yGrid+TILE_SIZE); pixY++){
-//							color += new Color(layer.getPixel(pixX, pixY)).a;
-//							System.out.println(color);
 							color += (layer.getPixel(pixX, pixY) & 0x000000ff) / 255f;
 							
 						}

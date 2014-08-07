@@ -256,11 +256,11 @@ public class SimulationManager extends Manager {
     	return worldManager.getMapInfo();
     }
     
-    public Array<String> getSpeciesInfo(){
-    	Array<String> speciesInfo = new Array<String>();
-    	for(Byte species : speciesData.keySet()){
-    		speciesInfo.add(species.toString());
-    	}
-    	return speciesInfo;
+    public HashMap<Byte, Species> getSpeciesInfo(){
+//    	Array<Species> species = new Array<Species>();
+//    	for(Byte s : speciesData.keySet()){
+//    		species.add(speciesData.get(s));
+//    	}
+    	return speciesData;
     }
 }

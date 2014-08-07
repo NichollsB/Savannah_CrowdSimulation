@@ -24,10 +24,16 @@ public class Species {
     private String diet;
 
     private float rgb[];
+    
     private int maturity;
     private float maxSize;
     private float newbornSize;
     private float growthPerDay;
+    
+    //Added by Ben Nicholls for information output/graphics/ui
+	public boolean tracked;
+	
+	private int population;
 
     public String getName() {
         return name;
@@ -192,4 +198,19 @@ public class Species {
     public void setGrowthPerDay(float growthPerDay) {
         this.growthPerDay = growthPerDay;
     }
+    //For tracking/gui/graphics
+    public void setTracked(boolean tracked){
+    	this.tracked = tracked;
+    }
+    
+    public int getPopulation(){
+    	return population;
+    }
+    public void addPopulation(){
+    	population++;
+    }
+    public void removePopulation(){
+    	population--;
+    }
+
 }
