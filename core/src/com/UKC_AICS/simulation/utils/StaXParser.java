@@ -44,6 +44,7 @@ public class StaXParser {
     private static final String SPRITERGB = "spritergb";
     private static final String MAXSIZE = "maxSize";
     private static final String NEWBORNSIZE = "newbornSize";
+    private static final String PANICLEVEL = "panicLevel";
 
     @SuppressWarnings({ "unchecked", "null" })
     public HashMap<Byte, Species> readConfig(String configFile) {
@@ -82,6 +83,15 @@ public class StaXParser {
                                 .equals(NUMBER)) {
                             event = eventReader.nextEvent();
                             species.setNumber(Float.parseFloat(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(PANICLEVEL)) {
+                            event = eventReader.nextEvent();
+                            species.setPanicLevel(Integer.parseInt(event.asCharacters().getData()));
                             continue;
                         }
                     }

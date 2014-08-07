@@ -55,20 +55,14 @@ public class Boid extends Entity {
     
     public int geneSize=4;		
     public Float[] gene= new Float[geneSize];
+    public int panicLevel=30;
 
 
-// no longer used or relevant
+    // no longer used or relevant
     public Boid(byte spec, Vector3 pos, Vector3 vel) {
-        this.type = 1; // this is for categorising it as a "boid" object.
-        subType = spec;
+        this(SimulationManager.speciesData.get(spec));
         position = pos.cpy();
         velocity = vel.cpy();
-
-        //sets weights to default number
-        cohesion = 0.5f;
-        alignment = 0.5f;
-        cohesion = 0.5f;
-        wander = 0.5f;
     }
 //    public Boid( Vector3 pos, Vector3 vel) {
 //        this((byte)1, pos, vel);
@@ -98,6 +92,7 @@ public class Boid extends Entity {
         separation = species.getSeparation();
         wander = species.getWander();
 
+        panicLevel = species.getPanicLevel();
         setGene(cohesion,separation,alignment,wander);
 
         bounds.set(position.x, position.y, 16, 16);
@@ -137,6 +132,8 @@ public class Boid extends Entity {
         alignment = boid.alignment;
         separation = boid.separation;
         wander = boid.wander;
+
+        panicLevel = boid.panicLevel;
 
         setGene(cohesion,separation,alignment,wander);
     }

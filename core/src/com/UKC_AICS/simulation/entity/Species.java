@@ -34,6 +34,7 @@ public class Species {
 	public boolean tracked;
 	
 	private int population;
+    private int panicLevel;
 
     public String getName() {
         return name;
@@ -213,4 +214,11 @@ public class Species {
     	population--;
     }
 
+    public void setPanicLevel(int panicLevel) {
+        this.panicLevel = panicLevel;
+    }
+
+    public int getPanicLevel() {
+        return panicLevel;
+    }
 }

@@ -83,10 +83,10 @@ public class HerbDefault extends State {
             }
 
             if(predators.size > 0) {
-                for(Boid predator : predators) {
+                for(int i = 0; i < predators.size; i++) {
                     boid.panic += 10;
                 }
-                if (boid.panic > 30) {
+                if (boid.panic > boid.panicLevel) {
                     parent.pushState(boid, new Panic(parent, bm));
                 }
             } else if (boid.panic > 0 && predators.size == 0) {

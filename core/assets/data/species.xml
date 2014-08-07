@@ -27,6 +27,8 @@
         <separation>0.5f</separation>
         <alignment>0.5f</alignment>
         <wander>0.1f</wander>
+
+        <panicLevel>40</panicLevel>
     </species>
 
     <species name="wildebeest">
@@ -53,6 +55,8 @@
         <separation>0.5f</separation>
         <alignment>0.5f</alignment>
         <wander>0.1f</wander>
+
+        <panicLevel>50</panicLevel>
     </species>
 
     <species name="gazelle">
@@ -77,6 +81,8 @@
         <separation>0.5f</separation>
         <alignment>0.5f</alignment>
         <wander>0.1f</wander>
+
+        <panicLevel>30</panicLevel>
     </species>
 
 
@@ -101,6 +107,8 @@
         <separation>0.2f</separation>
         <alignment>0.1f</alignment>
         <wander>0.1f</wander>
+
+        <panicLevel>100</panicLevel>
     </species>
 </settings>
 
