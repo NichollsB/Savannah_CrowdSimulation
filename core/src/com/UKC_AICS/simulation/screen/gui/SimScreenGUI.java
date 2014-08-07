@@ -1,33 +1,44 @@
 package com.UKC_AICS.simulation.screen.gui;
 
+import java.util.HashMap;
+
 import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.Species;
+import com.UKC_AICS.simulation.gui.controlutils.DialogueWindowHandler;
+import com.UKC_AICS.simulation.gui.controlutils.HoverListener;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
  * Created by James on 02/07/2014.
  * Class for the creation of gui for simulationScreen
  */
-public class SimScreenGUI extends Stage {
+public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverListener {
 	final private ScreenViewport uiViewport = new ScreenViewport();
 	private SimulationScreen simScreen;
 	public Stage stage;
-	private Skin skin;
+	private Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));;
 	Table table;
 	//Sizing perameters
 	private final int 
 			NORTH_HEIGHT = 50,
 			EAST_WIDTH = 200,
-			WEST_WIDTH = 50,
+			WEST_WIDTH = 200,
 			SOUTH_HEIGHT = 80;
 	private final Rectangle screenRect = new Rectangle(1,1,1,1);
 	//Changing components:
@@ -38,7 +49,9 @@ public class SimScreenGUI extends Stage {
     //east
 	 private Label boidInfo;
 	 private boolean showBoidInfo = false;
+	 private boolean showSpeciesInfo = false;
 	 private Boid boidDisplaying;
+	 private byte speciesDisplaying;
     
     
     //South
@@ -47,7 +60,18 @@ public class SimScreenGUI extends Stage {
 
     //Centre
     private Table viewArea;
-
+    
+    //West
+    private Array<Boid> boids;
+    private ObjectMap<Byte, String> species;
+    private final BoidListWindow boidTree = new BoidListWindow("Boids", skin, this);
+    private final HashMap<Byte, Tree.Node> speciesNodeMap = new HashMap<Byte, Tree.Node>();
+    private final HashMap<Boid, Tree.Node> boidNodeMap = new HashMap<Boid, Tree.Node>();
+    
+	//Hovering popup
+	private final Window hoverWindow = new Window("", skin);
+	private final Label hoverLabel = new Label("", skin);
+	private Actor hoverTip;
     
     /**
      *
@@ -56,6 +80,9 @@ public class SimScreenGUI extends Stage {
     public SimScreenGUI (SimulationScreen ss, int width, int height) {
         simScreen = ss;
         setStage(width, height);
+        
+        hoverLabel.setTouchable(Touchable.disabled);
+//        hoverWindow.add(hoverLabel).expand().fill();
     }
 
 
@@ -76,7 +103,7 @@ public class SimScreenGUI extends Stage {
        
 //        table.pack();
 //        table.debug();
-        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+   
         
         stage.addActor(table);
 
@@ -92,11 +119,8 @@ public class SimScreenGUI extends Stage {
         Table west = createWest(table);
         viewArea = createCentre(table);
         Table east = createEast(table);
-        
         table.row();
         Table south = createSouth(table);
-        
-
         table.pack();
         setViewRect(north, south, east, west);
 //        screenRect.set(0, 0, width, height);
@@ -104,8 +128,6 @@ public class SimScreenGUI extends Stage {
 
     }
     
-  
-
 	private Table createNorth(Table t){
     	Table menuTable = new Table(skin);
     	t.add(menuTable).top().height(NORTH_HEIGHT).expandX().fillX().colspan(3);
@@ -113,6 +135,16 @@ public class SimScreenGUI extends Stage {
 //    	menuGroup.fill(Gdx.graphics.getWidth());
     	return menuTable;
     }
+	
+	private Table createMenuBar(){
+		return table;
+
+	}
+	private Table createOptionsMenu(){
+		return table;
+		
+	}
+	
     private Table createSouth(Table t){
     	Table southTable = new Table(skin);
     	t.add(southTable).bottom().height(SOUTH_HEIGHT).expandX().fillX().colspan(3);
@@ -201,31 +233,10 @@ public class SimScreenGUI extends Stage {
     private Table createEast(Table t){
     	Table eastTable = new Table(skin);
     	t.add(eastTable).left().width(EAST_WIDTH).fillY().expandY();
-//    	eastTable.add("east");
-    	
-    	Table scrollTable = new Table(skin);
-//    	scrollTable.add("east");
-
     	boidInfo = new Label("some stuff ", skin);
-    	
-    	
-		scrollTable.add(boidInfo).left();
-		boidInfo.setAlignment(Align.left);
-//		boidInfo.setWrap(true);
-//		Slider slider = new Slider(0, 100, 1, false, skin);
-//		slider.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
-//		scrollTable.add(slider);
-		ScrollPane scroll = new ScrollPane(scrollTable, skin);
-    	InputListener stopTouchDown = new InputListener() {
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				event.stop();
-				return false;
-			}
-		};
+    	boidInfo.setAlignment(Align.left);
 
-		scroll.setSmoothScrolling(true);
-		scroll.setScrollBarPositions(false, false);
-		eastTable.add(scroll).top().fill().expand();
+    	eastTable.add(createScrollPane(boidInfo)).top().fill().expand();
 		eastTable.pack();
 		
     	return eastTable;
@@ -233,11 +244,21 @@ public class SimScreenGUI extends Stage {
     private Table createWest(Table t){
     	Table westTable = new Table(skin);
     	t.add(westTable).left().width(WEST_WIDTH).fillY().expandY();
-   	 	
-    	westTable.add("west");
+    	westTable.add(new Label("Boids", skin));
+    	westTable.row();
+   	 	westTable.add(boidTree).top().fill().expand();
+   	 	westTable.pack();
     	return westTable;
+    }
 
 
+    public void createBoidTree(HashMap<Byte, Species> species, Array<Boid> boids){
+    	this.boids = boids;
+    	for(Byte b : species.keySet()){
+//    		boidTree.addBoidNode(b, species.get(b).getName(), species.get(b).toString(), null);
+    		boidTree.addRootNode(b, species.get(b).getName(), species.get(b).toString());
+    	}
+    	boidTree.compareAndUpdateNodes(boids);
     }
     
     public void setConsole(String log){
@@ -280,11 +301,15 @@ public class SimScreenGUI extends Stage {
 
 //		batch.begin();
         if(render){
-        	if(showBoidInfo){
-        		boidInfo.setText(boidDisplaying.toString());
+//        	if(showBoidInfo){
+//        		boidInfo.setText(boidDisplaying.toString());
+//        	}
+//        	else 
+//        		boidInfo.setText("");
+        	if(boids != null){
+//        		System.out.println("update tree");s
+        		boidInfo.setText(boidTree.update(boids, true));
         	}
-        	else 
-        		boidInfo.setText("");
 	        stage.act();
 	    
 	    	stage.draw();  //GUI stuff
@@ -296,6 +321,9 @@ public class SimScreenGUI extends Stage {
     	
 	}
 	
+
+
+	
 	public void showBoidInfo(Boid boid, boolean show){
 		if(boidDisplaying!= null)boidDisplaying.setTracked(false);
 		if(!show){
@@ -305,5 +333,74 @@ public class SimScreenGUI extends Stage {
 		showBoidInfo = true;
 		boidDisplaying = boid;
 		boidDisplaying.setTracked(true);
+	}
+	
+
+	
+	public void toggleButton(boolean toggled, Button btn){
+		btn.setChecked(toggled);
+	}
+	
+	private Actor createScrollPane(Actor content){
+    	Table scrollTable = new Table(skin);
+//    	scrollTable.add("east");
+
+		scrollTable.add(content).left();
+
+		ScrollPane scroll = new ScrollPane(scrollTable, skin);
+    	InputListener stopTouchDown = new InputListener() {
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				event.stop();
+				return false;
+			}
+		};
+
+		scroll.setSmoothScrolling(true);
+		scroll.setScrollBarPositions(false, false);
+		
+		return scroll;
+	}
+	
+	public void selectBoid(Boid boid){
+		if(boid == null) boidTree.selectNodeByBoid(boid, false);
+		else boidTree.selectNodeByBoid(boid, true);
+	}
+
+	//SETTINGS WINDOWS METHODS
+	@Override
+	public void onConfirmed(ObjectMap<String, String> value, Window window) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCancelled(Window window) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	
+	@Override
+	public void hover(InputEvent event, float x, float y, String helper) {
+		hoverLabel.setText(helper);
+//		stage.addActor(hoverLabel);
+//		Actor act = (Actor)hoverLabel;
+//		hoverLabel.layout();
+		hoverLabel.pack();
+		
+		stage.addActor(hoverLabel);
+//		act.setPosition(x, y);
+		hoverLabel.setPosition(simScreen.mousePosition.x, simScreen.mousePosition.y);
+//		Table.drawDebug(stage);
+		System.out.println("x " + simScreen.mousePosition.x + " y " + simScreen.mousePosition.y + " labelx " + hoverLabel.getX() + " y " + hoverLabel.getY());
+	}
+
+
+	@Override
+	public void unhover(InputEvent event) {
+//		System.out.println("exit hover");
+		hoverLabel.remove();
+//		hoverWindow.remove();
 	}
 }

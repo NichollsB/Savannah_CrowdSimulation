@@ -49,7 +49,7 @@ public class LandMap {
         for (int i = 0; i < waterInfo.length; i++) {
             for (int j = 0; j < waterInfo[i].length; j++) {
                 waterInfo[i][j] = (byte) rand.nextInt(100);
-                if (waterInfo[i][j] > 70) {
+                if (waterInfo[i][j] > 90) {
                     terrain[i][j] = 1; //change terrain type to water.
                     grassInfo[i][j] = 0; // no grass/vegetation on a water tile.
                 }
@@ -86,8 +86,11 @@ public class LandMap {
      * @param newValue
      */
     public void changeTileOnLayer(int x, int y, String layer, byte newValue) {
+    	
         x /= TILE_SIZE;
         y /= TILE_SIZE;
+//        System.out.println("TileChanging. Old val " + information_layers.get(layer)[x][y] +
+//    			" new val " + newValue);
         information_layers.get(layer)[x][y] = newValue;
     }
 

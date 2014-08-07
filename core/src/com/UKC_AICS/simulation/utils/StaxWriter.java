@@ -49,6 +49,7 @@ import java.io.FileOutputStream;
 	 
 	    		int ageInt = b.getAge();
 	    		String age = "" + ageInt;
+
 	    	
 	    		Vector3 positionVec = b.getPosition();
 	    		String position = "" + positionVec;

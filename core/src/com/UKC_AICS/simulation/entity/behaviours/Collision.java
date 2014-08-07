@@ -79,8 +79,10 @@ public class Collision extends Behaviour {
 
         tmpVec.set(0f,0f,0f);
         if(cell != null) {
+            int cellX = cell.get(0)/tileSize;
+            int cellY = cell.get(1)/tileSize;
             tmpVec.set(boid.getPosition());
-            tmpVec.sub(new Vector3(cell.get(0) * tileSize + tileSize / 2, cell.get(1) * tileSize + tileSize / 2, 0f));
+            tmpVec.sub(new Vector3(cellX * tileSize + tileSize / 2, cellY * tileSize + tileSize / 2, 0f));
             tmpVec.nor();
             tmpVec.scl(MAX_AVOID_FORCE);
         }

@@ -1,9 +1,12 @@
 package com.UKC_AICS.simulation.screen;
 
+import static com.UKC_AICS.simulation.Constants.TILE_SIZE;
+
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.managers.SimulationManager;
+import com.UKC_AICS.simulation.screen.graphics.Graphics;
+import com.UKC_AICS.simulation.screen.graphics.TileGraphics;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.UKC_AICS.simulation.screen.gui.SimViewport;
 import com.UKC_AICS.simulation.utils.EnvironmentLoader;
@@ -11,15 +14,28 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.SpriteCache;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.UKC_AICS.simulation.managers.SimulationManager;
 
 import java.util.HashMap;
 
@@ -58,6 +74,11 @@ public class SimulationScreen implements Screen {
 
     private InputMultiplexer input;
     private InputManager inputManager;
+    
+    TileGraphics tiling;
+    
+    public final Vector2 mousePosition = new Vector2();
+    
 
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
@@ -121,6 +142,8 @@ public class SimulationScreen implements Screen {
         gui.update(simBatch, render);
         simBatch.end();
     }
+    
+   
     /**
      * Calls the update method to trigger the rendering calls in the gui and simulation view
      */
@@ -130,11 +153,11 @@ public class SimulationScreen implements Screen {
     	if(render){
 	    	simViewport.update();
 	    	simBatch.setProjectionMatrix(simViewcamera.combined);
-	        ScissorStack.pushScissors(viewRect);
-	    	simBatch.begin();
+//	        ScissorStack.pushScissors(viewRect);
+//	    	simBatch.begin();
 	    	boidGraphics.update(simBatch, viewRect);
-	    	simBatch.end();
-	    	ScissorStack.popScissors();
+//	    	simBatch.end();
+//	    	ScissorStack.popScissors();
     	}
     }
 
@@ -153,6 +176,7 @@ public class SimulationScreen implements Screen {
     	//simulation will be viewed - also update and center the viewports with the resize dimensions
     	gui.resize(width, height);
         viewRect = gui.getViewArea();
+        inputManager.resize(viewRect);
         simViewport.update(width, height, true);
         uiViewport.update(width, height, true);
     }
@@ -181,8 +205,9 @@ public class SimulationScreen implements Screen {
 
     	inputManager = new InputManager(this, (int)width, (int)height, simViewcamera);
     	input = new InputMultiplexer();
+    	input.addProcessor(inputManager);
         input.addProcessor(gui);  //sets up GUI
-        input.addProcessor(inputManager);
+        
 
         Gdx.input.setInputProcessor(input);
         resize(width, height);
@@ -198,6 +223,7 @@ public class SimulationScreen implements Screen {
     	boidGraphics = new Graphics(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         setupCameraController();
         initialiseCameras(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //Graphics components
         boidGraphics.initBackground();
         boidGraphics.setBoids(simulationManager.getBoids());
         boidGraphics.initBoidSprites(simulationManager.getTextureLocations());
@@ -205,6 +231,9 @@ public class SimulationScreen implements Screen {
         boidGraphics.initObjSprites(simulationManager.getObjects());
         boidGraphics.initTileSprites(simulationManager.getFullInfo());
         //boidGraphics.initTileSprites(simulationManager.getMapTiles());
+        
+        //UI
+        gui.createBoidTree(simulationManager.getSpeciesInfo(), simulationManager.getBoids());
     }
 
     /**
@@ -276,22 +305,24 @@ public class SimulationScreen implements Screen {
         //send delta to camera controller using its update.
         //send delta to camera using its update
     }
-
+    
     /**
      * Reacts to clicking on the simulations viewport - called by InputManagers touchDown method
      */
     public void pickPoint(int screenX, int screenY) {
         //What should happen when clicking on the screen
         Boid boid = simulationManager.getBoidAt(screenX,screenY);
-        if (boid == null) {
+//        System.out.println(simulationManager.getBoidAt(screenX,screenY));
+        gui.selectBoid(boid);
+//        if (boid == null) {
             HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
-            gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass") + " tile x:" + screenX/ Constants.TILE_SIZE + " , y:" + screenY/ Constants.TILE_SIZE);
-//            gui.showBoidInfo(null, false);
-        } else {
-//            System.out.println(boid);
-        	gui.showBoidInfo(boid, true);
-        }
+            gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
 
+
+    }
+    public void setMousePosition(int x, int y){
+    	mousePosition.x = x;
+    	mousePosition.y = y;
     }
 
 }
