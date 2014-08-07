@@ -34,13 +34,13 @@ public class SimulationManager extends Manager {
 
     BoidManager boidManager = new BoidManager(this);
     WorldManager worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
+
     EA2 ea = new EA2();
 
     static public int minutes = 0;
     static public int hours = 0;
     static public int days = 0;
     static public int weeks = 0;
-     public static int currentDay = 0;
     
     //monstrous things.
     static final HashMap<String, HashMap<String, Float>> tempSpeciesData = new HashMap<String, HashMap<String, Float>>();
@@ -177,15 +177,13 @@ public class SimulationManager extends Manager {
             minutes = 0;
             hours = 0;
             days += 1;
-//            setDay();
-            ea.Evolve();
+//            ea.Evolve(); //causes behaviour to go crazy so turned off for now.
             increment = true;
         } else {
             minutes = 0;
             hours = 0;
             days = 0;
             weeks += 1;
-//            setDay();
             increment = true;
         }
         return increment;
@@ -197,15 +195,11 @@ public class SimulationManager extends Manager {
                 + days + " days; " + weeks + " wks.";
     }
 
-    public void setDay() {
-    	currentDay++;
-//    	boidManager.updateAge(); //moved this to boidmanager
+
+    public static int getDays() {
+           return weeks * 7 + days;
     }
-    
-   public static int getDay() {
-	   return currentDay;
-   }
-   
+
 
     public void resetTime() {
         minutes = 0;
