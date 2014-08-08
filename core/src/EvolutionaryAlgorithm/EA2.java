@@ -47,30 +47,30 @@ public class EA2 {
 		 species = 0;
 		 
 		 Float[] held0 = new Float[geneLength];
-		 held0[0] = 1f;
-		 held0[1] = 2f;
-		 held0[2] = 3f;
-		 held0[3] = 4f;
+		 held0[0] = null;
+		 held0[1] = null;
+		 held0[2] = null;
+		 held0[3] = null;
 		 
 		 heldValues.put(species,held0);
 		 
 		 species = 1;
 		 
 		 Float[] held1 = new Float[geneLength];
-		 held1[0] = 4f;
-		 held1[1] = 3f;
-		 held1[2] = 2f;
-		 held1[3] = 1f; 
+		 held1[0] = null;
+		 held1[1] = null;
+		 held1[2] = null;
+		 held1[3] = null; 
 		 
 		 heldValues.put(species,held1);
 		 
 		 species = 2;
 		 
 		 Float[] held2 = new Float[geneLength];
-		 held2[0] = 0f;
-		 held2[1] = 0f;
-		 held2[2] = 0f;
-		 held2[3] = 0f;
+		 held2[0] = null;
+		 held2[1] = null;
+		 held2[2] = null;
+		 held2[3] = null;
 		 
 		 heldValues.put(species,held2);
 		 
