@@ -110,6 +110,32 @@
 
         <panicLevel>100</panicLevel>
     </species>
+
+    <species name="hyena">
+        <number>4</number>
+        <byte>4</byte>  <!-- this is the sub-type -->
+        <spritergb r = "0" g="0.6" b="0.6"/>
+        <diet>carnivore</diet>
+        <sightRadius>200f</sightRadius>
+        <flockRadius>150f</flockRadius>
+        <nearRadius>100f</nearRadius>
+        <maxSpeed>3.5f</maxSpeed>
+        <maxForce>0.2f</maxForce>
+
+        <stamina>30f</stamina>
+        <lifespan>200f</lifespan>
+        <maturity>25</maturity>
+
+        <newbornSize>4</newbornSize>
+        <maxSize>15</maxSize>
+
+        <cohesion>0.25f</cohesion>
+        <separation>0.2f</separation>
+        <alignment>0.1f</alignment>
+        <wander>0.1f</wander>
+
+        <panicLevel>100</panicLevel>
+    </species>
 </settings>
 
 
