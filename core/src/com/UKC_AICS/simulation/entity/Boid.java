@@ -359,5 +359,22 @@ public class Boid extends Entity {
     public float getWander() {
         return wander;
     }
-
+    public void setHunger( float hunger) {
+        this.hunger = hunger;
+    }
+    public float getHunger() {
+    	return hunger;
+    }
+    public void setThirst( float thirst) {
+        this.thirst = thirst;
+    }
+    public float getThirst() {
+    	return thirst;
+    }
+    public void setPanic( float panic) {
+        this.panic = panic;
+    }
+    public float getPanic() {
+    	return panic;
+    }
 }
