@@ -116,6 +116,13 @@ public class BoidManager extends Manager {
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.
 
+        if(boid.age> species.getMaturity()) {
+            boid.size = species.getMaxSize() + rand.nextInt(10) - 5;
+        } else {
+            //TODO: add in the size for an age 3 boid over age 0, as right now the size is set to newborn size even if they're only a day away from maturity
+            float growthPerDay = (species.getMaxSize() - species.getNewbornSize()) / species.getMaturity();
+            boid.size = species.getNewbornSize() + boid.age * growthPerDay;
+        }
         boid.group = (byte)rand.nextInt(10);
 
         //moved this to boid constructor.
