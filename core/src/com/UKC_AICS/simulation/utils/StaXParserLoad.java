@@ -23,17 +23,25 @@ public class StaXParserLoad {
     private String POSITION = "position";
     private String VELOCITY  = "velocity";
     private String SPECIES = "species";
+    private String GROUP = "group";
+    private String SIGHTRADIUS = "sightRadius";
+    private String NEARRADIUS = "nearRadius";
+    private String FLOCKRADIUS = "flockRadius";
+    private String HUNGER = "hunger";
+    private String THIRST = "thirst";
+    private String PANIC = "panic";
     private String COHESION = "cohesion";
     private String ALIGNMENT = "alignment";
     private String SEPARATION = "separation";
     private String WANDER = "wander";
     private int age = 0;
     private int bDay = 0;
-    private float cohesion, separation,  alignment, wander;
+    private float cohesion, separation,  alignment, wander ,hunger ,thirst, panic, sightRadius, nearRadius, flockRadius;
     private byte spec = 0; 
+    private byte group = 0;
     public Float[] fltArray = new Float[3] ;
     public Float[] fltArray2 = new Float[3];
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings({ })
     public void readConfig(String configFile) {
     
         try {
@@ -110,6 +118,69 @@ public class StaXParserLoad {
                     
                     if (event.isStartElement()) {
                         if (event.asStartElement().getName().getLocalPart()
+                                .equals(GROUP)) {
+                            event = eventReader.nextEvent();
+                            group = Byte.valueOf(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(SIGHTRADIUS)) {
+                            event = eventReader.nextEvent();
+                            sightRadius = Float.valueOf(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(NEARRADIUS)) {
+                            event = eventReader.nextEvent();
+                            nearRadius = Float.valueOf(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(FLOCKRADIUS)) {
+                            event = eventReader.nextEvent();
+                            flockRadius = Float.valueOf(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(HUNGER)) {
+                            event = eventReader.nextEvent();
+                            hunger = Float.valueOf(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(THIRST)) {
+                            event = eventReader.nextEvent();
+                            thirst = Float.valueOf(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(PANIC)) {
+                            event = eventReader.nextEvent();
+                            panic = Float.valueOf(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
                                 .equals(COHESION)) {
                             event = eventReader.nextEvent();
                             cohesion = Float.parseFloat(event.asCharacters().getData());
@@ -150,7 +221,8 @@ public class StaXParserLoad {
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
                     if (endElement.getName().getLocalPart() == (BOID)) {
-                        BoidManager.createBoid(spec, age, bDay, fltArray[0], fltArray[1], fltArray[2], fltArray2[0], fltArray2[1], fltArray2[2], cohesion, separation, alignment, wander);
+                        BoidManager.createBoid(spec, group, age, bDay, fltArray[0], fltArray[1], fltArray[2], fltArray2[0], fltArray2[1], fltArray2[2], cohesion, separation, alignment, wander,
+                        		sightRadius, nearRadius, flockRadius, hunger, thirst, panic );
                     }
                 }
 

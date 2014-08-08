@@ -59,7 +59,8 @@ public class BoidManager extends Manager {
      * @param separation 
      * @param cohesion 
      */
-    public static void createBoid(byte species, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ, float cohesion, float separation, float alignment, float wander) {
+    public static void createBoid(byte species, byte group, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ,
+    		float cohesion, float separation, float alignment, float wander, float flockRadius, float sightRadius, float nearRadius, float hunger, float thirst, float panic) {
         Boid boid = new Boid(species);
 
         boid.setAge(age);
@@ -70,6 +71,13 @@ public class BoidManager extends Manager {
         boid.setSpearation(separation);
         boid.setWander(wander);
         boid.setGene(cohesion, separation, alignment, wander);
+        boid.setGroup(group);
+        boid.setFlockRadius(flockRadius);
+        boid.setSightRadius(sightRadius);
+        boid.setNearRadius(nearRadius);
+        boid.setHunger(hunger);
+        boid.setPanic(panic);
+        boid.setThirst(thirst);
         addToLists(boid);
     }
 

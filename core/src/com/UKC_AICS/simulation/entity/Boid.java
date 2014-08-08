@@ -350,4 +350,28 @@ public class Boid extends Entity {
     public float getPanic() {
     	return panic;
     }
+    public void setNearRadius( float nearRadius) {
+        this.nearRadius = nearRadius;
+    }
+    public float getNearRadius() {
+    	return nearRadius;
+    }
+    public void setSightRadius( float sightRadius) {
+        this.sightRadius = sightRadius;
+    }
+    public float getSightRadius() {
+    	return sightRadius;
+    }
+    public void setFlockRadius( float flockRadius) {
+        this.flockRadius = flockRadius;
+    }
+    public float getFlockRadius() {
+    	return flockRadius;
+    }
+    public void setGroup( byte group) {
+        this.group = group;
+    }
+    public byte getGroup() {
+    	return group;
+    }
 }

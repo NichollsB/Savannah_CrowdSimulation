@@ -289,4 +289,7 @@ public class EA2 {
 	public static byte getTotalSpecies() {
 		return totalSpecies; 
 	}
+	public void flipRTMode() {
+		
+	}
 }
