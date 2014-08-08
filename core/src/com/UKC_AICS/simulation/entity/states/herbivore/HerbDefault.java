@@ -83,14 +83,24 @@ public class HerbDefault extends State {
             }
 
             if(predators.size > 0) {
-                for(int i = 0; i < predators.size; i++) {
-                    boid.panic += 10;
+                Array<Boid> smallerPredators = new Array<Boid>();
+                Array<Boid> biggerPredators = new Array<Boid>();
+                for(Boid predator : predators) {
+                    if(predator.size > boid.size) {
+                        biggerPredators.add(predator);
+                    } else {
+                        smallerPredators.add(predator);
+                    }
                 }
+                boid.panic +=  smallerPredators.size * 5; //smaller predators add less threat
+
+                boid.panic += biggerPredators.size * 10; //larger predators add more threat.
+
                 if (boid.panic > boid.panicLevel) {
                     parent.pushState(boid, new Panic(parent, bm));
                 }
             } else if (boid.panic > 0 && predators.size == 0) {
-                boid.panic -= 10;
+                boid.panic -= 0.5f;
             }
 
             //store the steering movement

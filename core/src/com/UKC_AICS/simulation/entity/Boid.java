@@ -284,6 +284,7 @@ public class Boid extends Entity {
         string += "\n\t group:" + group;
         string += "\n\t hunger:" + (int)hunger;
         string += "\n\t thirst:" + (int)thirst;
+        string += "\n\t panic:" + (int)panic + "/" + panicLevel;
         string += "\n\t age:" + age ;
         string += "\n\t size:" + size ;
         string += "\n\t state:" + state;

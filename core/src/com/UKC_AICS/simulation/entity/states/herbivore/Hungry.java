@@ -27,46 +27,73 @@ public class Hungry extends State {
     public boolean update(Boid boid) {
         //search for food.
 
-        if (boid.hunger < 40) {
+        if (boid.panic > boid.panicLevel) {
+            parent.pushState(boid, new Panic(parent, bm));
+            return false;
+        }
+        else if (boid.hunger < 40) {
             // pop
             return true; //stop looking for food.
         } else {
             boid.setState(this.toString());
 
+            Array<Boid> nearBoids = BoidManager.getBoidGrid().findInSight(boid);
+
+            Array<Boid> closeBoids = new Array<Boid>();
+            Array<Boid> predators = new Array<Boid>();
+
+            for (Boid b : nearBoids) {
+                if (SimulationManager.speciesData.get(b.getSpecies()).getDiet().equals("carnivore")) {
+                    predators.add(b);
+                } else {
+                    steering.set(boid.getPosition());
+                    steering.sub(b.getPosition());
+                    if (steering.len() > boid.flockRadius) {
+                        nearBoids.removeValue(b, true);
+                    }
+                    //if the boid is outside the flock radius it CANT also be in the "too close" range
+                    else if (steering.len() < boid.nearRadius * boid.nearRadius) {
+                        closeBoids.add(b);
+                    }
+                }
+            }
+
+            if(predators.size > 0) {
+                Array<Boid> smallerPredators = new Array<Boid>();
+                Array<Boid> biggerPredators = new Array<Boid>();
+                for(Boid predator : predators) {
+                    if(predator.size > boid.size) {
+                        biggerPredators.add(predator);
+                    } else {
+                        smallerPredators.add(predator);
+                    }
+                }
+                boid.panic +=  smallerPredators.size * 5; //smaller predators add less threat
+
+                boid.panic += biggerPredators.size * 10; //larger predators add more threat.
+
+                if (boid.panic > boid.panicLevel) {
+                    parent.pushState(boid, new Panic(parent, bm));
+                }
+            } else if (boid.panic > 0 && predators.size == 0) {
+                boid.panic -= 10;
+            }
+
             if (WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("grass") >= 20) {
 //                System.out.println(boid + "\n Just posted EATGRASS state "  );
                 parent.pushState(boid, new EatGrass(parent, bm));
                 boid.setAcceleration(new Vector3(boid.velocity).scl(0.01f));
+                return false;
             }
-            //TODO add some steering to find food if there is none on tile
-            Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
-            Array<Boid> closeBoids = new Array<Boid>();
 
-            /*
-            * CELL  ATTEMPTS.
-            *
-            *
-            */
+
+            //TODO add some steering to find food if there is none on tile
+
             //find objects nearby
             Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
             Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
-
-
-            for (Boid b : nearBoids) {
-                steering.set(boid.getPosition());
-                steering.sub(b.getPosition());
-                if (steering.len() > boid.flockRadius) {
-                    nearBoids.removeValue(b, true);
-                }
-                //if the boid is outside the flock radius it CANT also be in the "too close" range
-                else if (steering.len() < boid.nearRadius) {
-                    closeBoids.add(b);
-                }
-            }
-
-
 
 //            float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander() / 2;
             float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
@@ -91,6 +118,4 @@ public class Hungry extends State {
             return false; //keep in this state.
         }
     }
-
-
 }
