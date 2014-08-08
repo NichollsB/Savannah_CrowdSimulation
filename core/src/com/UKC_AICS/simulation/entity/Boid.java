@@ -306,9 +306,12 @@ public class Boid extends Entity {
         string += "\n\t stamina:" + stamina;
         string += "\n\t state:" + state;
         string += "\n\t orientation:" + (int)orientation;
+        string += "\n";
+//        string += "\n\t Weightings";
         string += "\n\t cohesion:" + cohesion;
         string += "\n\t separation:" + separation;
         string += "\n\t alignment:" + alignment;
+        string += "\n\t wander:" + wander;
 
         return string;
     }
