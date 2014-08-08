@@ -212,13 +212,11 @@ public class SimulationScreen implements Screen {
 
     	inputManager = new InputManager(this, (int)width, (int)height, simViewcamera);
     	input = new InputMultiplexer();
-
-    	input.addProcessor(inputManager);
-
+    	
     	input.addProcessor(eagui);
-
+    	input.addProcessor(inputManager);	
         input.addProcessor(gui); 
-
+        
         //sets up GUI
         
 
@@ -233,9 +231,9 @@ public class SimulationScreen implements Screen {
     public void setup() {
     	EnvironmentLoader.loadMaps();
     	
-    	boidGraphics = new Graphics(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    	boidGraphics = new Graphics(Constants.mapWidth, Constants.mapHeight); //changed these from gdx.graphics.getWidth to this. -Em
         setupCameraController();
-        initialiseCameras(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        initialiseCameras(Constants.mapWidth, Constants.mapHeight); //changed these from gdx.graphics.getWidth to this. -Em
         //Graphics components
         boidGraphics.initBackground();
         boidGraphics.setBoids(simulationManager.getBoids());
@@ -282,6 +280,11 @@ public class SimulationScreen implements Screen {
             render = false;
         else
             render = true;
+        
+    }
+    
+    public boolean getRender(){
+    	return render;
     }
     
     public void flipEARender() {

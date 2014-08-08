@@ -14,7 +14,12 @@
         <nearRadius>40f</nearRadius>
         <maxSpeed>1.5f</maxSpeed>
         <maxForce>0.04f</maxForce>
+
         <lifespan>80f</lifespan>
+        <maturity>10</maturity>
+
+        <newbornSize>8</newbornSize>
+        <maxSize>28</maxSize>
         <!--<cohesion>0.1f</cohesion>-->
         <!--<separation>0.9f</separation>-->
         <!--<alignment>0.5f</alignment>-->
@@ -22,6 +27,8 @@
         <separation>0.5f</separation>
         <alignment>0.5f</alignment>
         <wander>0.1f</wander>
+
+        <panicLevel>40</panicLevel>
     </species>
 
     <species name="wildebeest">
@@ -35,7 +42,12 @@
         <nearRadius>40f</nearRadius>
         <maxSpeed>2f</maxSpeed>
         <maxForce>0.04f</maxForce>
-        <lifespan>80f</lifespan>
+        <lifespan>90f</lifespan>
+        <maturity>15</maturity>
+
+        <newbornSize>10</newbornSize>
+        <maxSize>35</maxSize>
+
         <!--<cohesion>0.1f</cohesion>-->
         <!--<separation>0.9f</separation>-->
         <!--<alignment>0.5f</alignment>-->
@@ -43,6 +55,8 @@
         <separation>0.5f</separation>
         <alignment>0.5f</alignment>
         <wander>0.1f</wander>
+
+        <panicLevel>50</panicLevel>
     </species>
 
     <species name="gazelle">
@@ -53,14 +67,22 @@
         <diet>herbivore</diet>
         <sightRadius>250f</sightRadius>
         <flockRadius>80f</flockRadius>
-        <nearRadius>20</nearRadius>
+        <nearRadius>10</nearRadius>
         <maxSpeed>3.4f</maxSpeed>
         <maxForce>0.15f</maxForce>
+
         <lifespan>50</lifespan>
+        <maturity>5</maturity>
+
+        <newbornSize>5</newbornSize>
+        <maxSize>10</maxSize>
+
         <cohesion>0.5f</cohesion>
         <separation>0.5f</separation>
         <alignment>0.5f</alignment>
         <wander>0.1f</wander>
+
+        <panicLevel>30</panicLevel>
     </species>
 
 
@@ -74,11 +96,19 @@
         <nearRadius>100f</nearRadius>
         <maxSpeed>3.5f</maxSpeed>
         <maxForce>0.2f</maxForce>
-        <lifespan>200f</lifespan>
+
+        <lifespan>200</lifespan>
+        <maturity>25</maturity>
+
+        <newbornSize>5</newbornSize>
+        <maxSize>25</maxSize>
+
         <cohesion>0.1f</cohesion>
         <separation>0.2f</separation>
         <alignment>0.1f</alignment>
         <wander>0.1f</wander>
+
+        <panicLevel>100</panicLevel>
     </species>
 </settings>
 

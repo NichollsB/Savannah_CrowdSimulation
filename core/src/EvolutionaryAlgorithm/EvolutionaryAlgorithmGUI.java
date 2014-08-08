@@ -5,22 +5,14 @@ import java.util.HashMap;
 
 import EvolutionaryAlgorithm.EA2;
 
-import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Selection;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.Screen;
 
 public class EvolutionaryAlgorithmGUI extends Stage {
 	private SimulationScreen simScreen;
@@ -63,62 +55,44 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 	
 	public EvolutionaryAlgorithmGUI(SimulationScreen ss, EA2 ea){
 			simScreen = ss; //In case needed later.
-			setup(ea);		
+			//setup(ea);
+			setStage(ea);
 		}
 		
-		public void setup(EA2 ea) {	
-			for(Byte i = 0 ; i< 4; i++){
-				Float[] temp = new Float[geneLength];
-				System.arraycopy(ea.heldValues.get(i),0,temp,0,geneLength);
-				tempHeldValues.put(i,temp);
-			}
-			for(Byte i = 0 ; i< 4; i++){	
-			}
-			setStage(tempHeldValues,ea);
-		}
-	
-		public void setStage(HashMap<Byte,Float[]> tempHeldValues, EA2 ea) {
+		//Creates the window and its contents
+		public void setStage(EA2 ea) {
 			
 			for(Byte i = 0 ; i< 4; i++){
-				System.out.println("EA stage" + Arrays.toString(tempHeldValues.get(i)));
+				System.out.println("EA stage" + Arrays.toString(ea.heldValues.get(i)));
 			}
 			
 			stage = this;
 			Table t2 = new Table();
 			t2.setSize(100, 200);
 			
-	        
 			stage.addActor(t2);
 			
-			createSettingsTable(t2, tempHeldValues,ea);
-			
+			//creates the settings table to add to the window
+			createSettingsTable(t2,ea);
 			
 			window.setPosition(200, 200);
 			window.defaults().spaceBottom(10);
 			window.row().fill().expandX();
-	     
 			window.add(t2).expandX().fillX();
 			window.setResizable(true);
 			window.pack();
-			stage.addActor(window);
-			
-		
-			
+			stage.addActor(window);		
 		}
 			
 		
-		private Table createSettingsTable(Table t2, HashMap<Byte,Float[]> tempHeldValues,final EA2 ea) {
-			
-	    
-	
-	    	
+		private Table createSettingsTable(Table t2, final EA2 ea) {
 			final String[] options = {"Species 1", "Species 2", "Species 3", "Species 4"};
-		
 	    	final SelectBox<String> dropdown = new SelectBox<String>(skin);
 			dropdown.setItems(options);
 			
+			//Add dropdown and buttons
 			final String selection= dropdown.getSelected();
-			setSpeciesInfo(dropdown,selection, options);
+			setSpeciesInfo(dropdown,selection, options, ea);
 			System.out.println("Selection " + selection);
 			
 			dropdown.addListener(new ChangeListener(){
@@ -128,11 +102,11 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 					String newSelection= dropdown.getSelected();
 					
 					System.out.println("Selection new " + newSelection);
-					setSpeciesInfo(dropdown,newSelection,options);
+					checkBoxHoldAll.setChecked(false);
+					setSpeciesInfo(dropdown,newSelection,options, ea);
 					
 				}
 			});
-		
 		
 			checkBoxHoldAll.addListener(new ChangeListener(){
 
@@ -154,7 +128,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				}
 				
 			});
-			
+			// sets the values that will be added to the table
 			setTableInfo();
 			
 			t2.add(dropdown).top().expandX().fillX();
@@ -205,7 +179,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			return t2;
 		}
 		
-		//TODO NEED TO PUT NEW VALUES INTO NEWHELD
+		
 		public void applyChanges(EA2 ea) {
 			Float[] newheldvalues = new Float[EA2.getGeneLength()];
 			Float temp1 = null;
@@ -273,8 +247,8 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 		}
 	
 		
-		public void setSpeciesInfo(SelectBox<String> dropdown,String newSelection,String[] options) {
-			System.out.println("setspeciesinforcalled");
+		public void setSpeciesInfo(SelectBox<String> dropdown,String newSelection,String[] options, EA2 ea) {
+			System.out.println("SET SPECIES INFO CALLED");
 			int j =0;
 			
 			for(byte i=0;i<totalSpecies;i++){
@@ -282,15 +256,14 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				System.out.println("option "+options[j]);
 				b = i;
 				System.out.println("Before");
-				System.out.println(Arrays.toString(tempHeldValues.get(b)));
-				System.out.println(Arrays.toString(currentVals));
+				System.out.println("TempHeldValues " + Arrays.toString(ea.heldValues.get(b)));
+				System.out.println("Current " + Arrays.toString(currentVals));
 				
-				
-				System.arraycopy(tempHeldValues.get(b), 0, currentVals ,0 , geneLength);
+				System.arraycopy(ea.heldValues.get(b), 0, currentVals ,0 , geneLength);
 				
 				System.out.println("After");
-				System.out.println(Arrays.toString(tempHeldValues.get(b)));
-				System.out.println(Arrays.toString(currentVals));
+				System.out.println("TempHeldValues " + Arrays.toString(tempHeldValues.get(b)));
+				System.out.println("Current " + Arrays.toString(currentVals));
 				}
 			j++;
 			}
@@ -334,7 +307,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				wan = "null";
 			}
 			 
-			//TODO THIS SHOULD CHANGE
+		
 			
 			System.out.println("After get");
 			System.out.println("Currentvals"+Arrays.toString(currentVals));

@@ -3,12 +3,12 @@ package EvolutionaryAlgorithm;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import java.util.Random;
 import java.util.HashMap;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.managers.BoidManager;
+import com.UKC_AICS.simulation.screen.SimulationScreen;
 
 
 public class EA2 {
@@ -40,37 +40,38 @@ public class EA2 {
 	 private Byte currentSpecies = 0;
 	 public static Byte totalSpecies = 4;
 	 private Byte species = 0;
+	 private SimulationScreen ss ;
 	 
 
 	 
-	 public void setup() {
+	 public void setup(SimulationScreen ss) {
 		 species = 0;
-		 
+		 this.ss = ss; 
 		 Float[] held0 = new Float[geneLength];
-		 held0[0] = 1f;
-		 held0[1] = 2f;
-		 held0[2] = 3f;
-		 held0[3] = 4f;
+		 held0[0] = null;
+		 held0[1] = null;
+		 held0[2] = null;
+		 held0[3] = null;
 		 
 		 heldValues.put(species,held0);
 		 
 		 species = 1;
 		 
 		 Float[] held1 = new Float[geneLength];
-		 held1[0] = 4f;
-		 held1[1] = 3f;
-		 held1[2] = 2f;
-		 held1[3] = 1f; 
+		 held1[0] = null;
+		 held1[1] = null;
+		 held1[2] = null;
+		 held1[3] = null; 
 		 
 		 heldValues.put(species,held1);
 		 
 		 species = 2;
 		 
 		 Float[] held2 = new Float[geneLength];
-		 held2[0] = 0f;
-		 held2[1] = 0f;
-		 held2[2] = 0f;
-		 held2[3] = 0f;
+		 held2[0] = null;
+		 held2[1] = null;
+		 held2[2] = null;
+		 held2[3] = null;
 		 
 		 heldValues.put(species,held2);
 		 
@@ -89,11 +90,12 @@ public class EA2 {
 	 
 	 
 	public void Evolve() {	
-		
+		setMode();
 		
 		for(byte i =0 ; i<totalSpecies; i++){
 			currentSpecies = i ;
 			System.out.println("Species "+ currentSpecies);
+			
 			validCheck();
 			calculateFitness();
 			calculateProbabilty();
@@ -122,9 +124,6 @@ public class EA2 {
 		}
 	}
 	
-	public void setMode() {
-		//TODO
-	}
 		
 	private void reset(){
 		System.out.println("Resetting EA parameters");
@@ -288,5 +287,9 @@ public class EA2 {
 	}
 	public static byte getTotalSpecies() {
 		return totalSpecies; 
+	}
+	public void setMode() {
+		
+		rtmode = ss.getRender();
 	}
 }
