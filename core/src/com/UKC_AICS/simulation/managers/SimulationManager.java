@@ -64,7 +64,7 @@ public class SimulationManager extends Manager {
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
 
         generateBoids();
-        ea.setup();
+        ea.setup(parent);
         Array<Byte> objTypes = new Array<Byte>();
         Object obj = new Object((byte)2,(byte)1,355,450);
         objTypes.add(obj.getType());

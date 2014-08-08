@@ -280,6 +280,11 @@ public class SimulationScreen implements Screen {
             render = false;
         else
             render = true;
+        
+    }
+    
+    public boolean getRender(){
+    	return render;
     }
     
     public void flipEARender() {

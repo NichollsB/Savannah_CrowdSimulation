@@ -1,169 +1,67 @@
 <?xml version="1.0"?><boidlist>
 <boid>
-	<age>33</age>
-	<position>260.6321,601.3751,0.0</position>
-	<velocity>0.0,0.0,0.0</velocity>
-	<species>0</species>
-	<group>3</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>20.0</panic>
-	<hunger>58.22078</hunger>
-	<thirst>57.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>5</age>
-	<position>899.50525,397.2746,0.0</position>
-	<velocity>-0.4845003,-0.27338612,0.0</velocity>
-	<species>0</species>
-	<group>2</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>27.22088</hunger>
-	<thirst>64.88352</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>13</age>
-	<position>730.2482,129.17091,0.0</position>
-	<velocity>-0.25523186,-0.07137597,0.0</velocity>
-	<species>0</species>
-	<group>3</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>34.22078</hunger>
-	<thirst>60.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
 	<age>39</age>
-	<position>548.8076,444.79135,0.0</position>
-	<velocity>-0.042856876,0.37846035,0.0</velocity>
-	<species>0</species>
-	<group>2</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>11.22083</hunger>
-	<thirst>43.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>33</age>
-	<position>450.86026,284.70258,0.0</position>
-	<velocity>0.40865415,0.46511185,0.0</velocity>
-	<species>0</species>
-	<group>0</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>61.22078</hunger>
-	<thirst>46.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>37</age>
-	<position>831.9197,471.126,0.0</position>
-	<velocity>0.1368282,-0.24336256,0.0</velocity>
-	<species>0</species>
-	<group>0</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>57.22078</hunger>
-	<thirst>37.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>36</age>
-	<position>795.25446,108.889114,0.0</position>
-	<velocity>-0.5031846,-0.38817626,0.0</velocity>
+	<position>379.0,163.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
 	<species>0</species>
 	<group>7</group>
 	<nearRadius>40.0</nearRadius>
 	<flockRadius>120.0</flockRadius>
 	<signtRadius>180.0</signtRadius>
 	<panic>0.0</panic>
-	<hunger>9.22083</hunger>
-	<thirst>70.88352</thirst>
+	<hunger>52.0</hunger>
+	<thirst>73.0</thirst>
 	<cohesion>0.5</cohesion>
 	<alignment>0.5</alignment>
 	<separation>0.5</separation>
 	<wander>0.1</wander>
 </boid>
 <boid>
-	<age>5</age>
-	<position>448.4175,371.4576,0.0</position>
-	<velocity>-0.08701952,0.4353817,0.0</velocity>
+	<age>31</age>
+	<position>703.0,232.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
 	<species>0</species>
-	<group>6</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>65.22078</hunger>
-	<thirst>71.88352</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>28</age>
-	<position>946.23615,386.45624,0.0</position>
-	<velocity>-0.75967795,-0.17212678,0.0</velocity>
-	<species>0</species>
-	<group>8</group>
+	<group>2</group>
 	<nearRadius>40.0</nearRadius>
 	<flockRadius>120.0</flockRadius>
 	<signtRadius>180.0</signtRadius>
 	<panic>0.0</panic>
-	<hunger>32.22078</hunger>
-	<thirst>63.88332</thirst>
+	<hunger>38.0</hunger>
+	<thirst>38.0</thirst>
 	<cohesion>0.5</cohesion>
 	<alignment>0.5</alignment>
 	<separation>0.5</separation>
 	<wander>0.1</wander>
 </boid>
 <boid>
-	<age>29</age>
-	<position>506.42245,521.29254,0.0</position>
-	<velocity>0.3116674,-0.48479787,0.0</velocity>
+	<age>24</age>
+	<position>584.0,463.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
 	<species>0</species>
-	<group>4</group>
+	<group>7</group>
 	<nearRadius>40.0</nearRadius>
 	<flockRadius>120.0</flockRadius>
 	<signtRadius>180.0</signtRadius>
 	<panic>0.0</panic>
-	<hunger>13.22083</hunger>
-	<thirst>8.88332</thirst>
+	<hunger>13.0</hunger>
+	<thirst>35.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>38</age>
+	<position>303.0,104.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>0</species>
+	<group>5</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>60.0</hunger>
+	<thirst>38.0</thirst>
 	<cohesion>0.5</cohesion>
 	<alignment>0.5</alignment>
 	<separation>0.5</separation>
@@ -171,458 +69,50 @@
 </boid>
 <boid>
 	<age>32</age>
-	<position>780.80585,175.0271,0.0</position>
-	<velocity>-0.4074225,-0.43861294,0.0</velocity>
-	<species>0</species>
-	<group>1</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>43.22078</hunger>
-	<thirst>63.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>20</age>
-	<position>453.75974,215.65358,0.0</position>
-	<velocity>0.6365171,0.1561701,0.0</velocity>
-	<species>0</species>
-	<group>4</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>55.22078</hunger>
-	<thirst>50.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>38</age>
-	<position>743.0635,144.92369,0.0</position>
-	<velocity>-0.42282915,-0.075126015,0.0</velocity>
+	<position>140.0,233.0,0.0</position>
+	<velocity>0.0,-1.0,0.0</velocity>
 	<species>0</species>
 	<group>4</group>
 	<nearRadius>40.0</nearRadius>
 	<flockRadius>120.0</flockRadius>
 	<signtRadius>180.0</signtRadius>
 	<panic>0.0</panic>
-	<hunger>38.22078</hunger>
-	<thirst>32.88332</thirst>
+	<hunger>50.0</hunger>
+	<thirst>71.0</thirst>
 	<cohesion>0.5</cohesion>
 	<alignment>0.5</alignment>
 	<separation>0.5</separation>
 	<wander>0.1</wander>
 </boid>
 <boid>
-	<age>8</age>
-	<position>314.06622,285.58173,0.0</position>
-	<velocity>0.104436606,1.0975056,0.0</velocity>
+	<age>7</age>
+	<position>177.0,428.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
 	<species>0</species>
-	<group>9</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>26.22088</hunger>
-	<thirst>44.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>37</age>
-	<position>537.53436,506.28854,0.0</position>
-	<velocity>0.37779167,0.21484672,0.0</velocity>
-	<species>0</species>
-	<group>2</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>44.22078</hunger>
-	<thirst>58.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>8</age>
-	<position>752.25195,105.0312,0.0</position>
-	<velocity>-0.63031733,-0.31910762,0.0</velocity>
-	<species>0</species>
-	<group>4</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>0.22083329</hunger>
-	<thirst>16.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>26</age>
-	<position>166.44685,69.505424,0.0</position>
-	<velocity>-0.08757883,-0.9373682,0.0</velocity>
-	<species>0</species>
-	<group>0</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>38.22078</hunger>
-	<thirst>22.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>3</age>
-	<position>646.83295,159.71727,0.0</position>
-	<velocity>-0.031292483,0.1451314,0.0</velocity>
-	<species>0</species>
-	<group>9</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>36.22078</hunger>
-	<thirst>38.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>38</age>
-	<position>1025.7705,560.27905,0.0</position>
-	<velocity>-0.90510994,-0.23417945,0.0</velocity>
-	<species>0</species>
-	<group>1</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>63.22078</hunger>
-	<thirst>12.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>23</age>
-	<position>817.21796,390.5871,0.0</position>
-	<velocity>-0.16919191,-0.37240607,0.0</velocity>
-	<species>0</species>
-	<group>2</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>17.22088</hunger>
-	<thirst>22.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>21</age>
-	<position>418.89893,73.89195,0.0</position>
-	<velocity>1.0294565,-1.1555514,0.0</velocity>
-	<species>1</species>
-	<group>7</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>65.22078</hunger>
-	<thirst>36.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>18</age>
-	<position>191.79672,421.24908,0.0</position>
-	<velocity>0.13131684,-0.20121533,0.0</velocity>
-	<species>1</species>
-	<group>3</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>16.22088</hunger>
-	<thirst>40.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>8</age>
-	<position>365.03113,281.63992,0.0</position>
-	<velocity>0.3052258,1.0307596,0.0</velocity>
-	<species>1</species>
-	<group>9</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>60.0</panic>
-	<hunger>56.22078</hunger>
-	<thirst>39.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>27</age>
-	<position>568.22174,146.24524,0.0</position>
-	<velocity>0.04062276,0.05243179,0.0</velocity>
-	<species>1</species>
-	<group>9</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>37.22078</hunger>
-	<thirst>23.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>3</age>
-	<position>605.7632,160.62979,0.0</position>
-	<velocity>0.38665152,-0.3265661,0.0</velocity>
-	<species>1</species>
 	<group>8</group>
 	<nearRadius>40.0</nearRadius>
 	<flockRadius>120.0</flockRadius>
 	<signtRadius>180.0</signtRadius>
 	<panic>0.0</panic>
-	<hunger>13.22083</hunger>
-	<thirst>62.88332</thirst>
+	<hunger>71.0</hunger>
+	<thirst>0.0</thirst>
 	<cohesion>0.5</cohesion>
 	<alignment>0.5</alignment>
 	<separation>0.5</separation>
 	<wander>0.1</wander>
 </boid>
 <boid>
-	<age>24</age>
-	<position>172.11998,335.12003,0.0</position>
-	<velocity>0.0,0.0,0.0</velocity>
-	<species>1</species>
-	<group>0</group>
+	<age>14</age>
+	<position>845.0,153.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>0</species>
+	<group>9</group>
 	<nearRadius>40.0</nearRadius>
 	<flockRadius>120.0</flockRadius>
 	<signtRadius>180.0</signtRadius>
 	<panic>0.0</panic>
-	<hunger>100.21661</hunger>
-	<thirst>91.067</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>38</age>
-	<position>108.12796,542.0902,0.0</position>
-	<velocity>0.03618606,0.7045428,0.0</velocity>
-	<species>1</species>
-	<group>0</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>12.22083</hunger>
-	<thirst>49.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>1</age>
-	<position>1033.2587,462.1757,0.0</position>
-	<velocity>-0.59731364,-0.63892084,0.0</velocity>
-	<species>1</species>
-	<group>8</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>56.22078</hunger>
-	<thirst>55.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>23</age>
-	<position>839.68365,114.81769,0.0</position>
-	<velocity>0.5943304,-0.2679491,0.0</velocity>
-	<species>1</species>
-	<group>6</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>30.22088</hunger>
-	<thirst>41.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>2</age>
-	<position>430.07996,335.28714,0.0</position>
-	<velocity>-0.071321346,-0.02337546,0.0</velocity>
-	<species>1</species>
-	<group>1</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>40.22078</hunger>
-	<thirst>74.88352</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>29</age>
-	<position>249.79182,166.0,0.0</position>
-	<velocity>0.0,0.0,0.0</velocity>
-	<species>1</species>
-	<group>8</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>49.22078</hunger>
-	<thirst>29.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>4</age>
-	<position>360.13104,565.0578,0.0</position>
-	<velocity>0.024362104,-0.6229631,0.0</velocity>
-	<species>1</species>
-	<group>0</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>7.22083</hunger>
-	<thirst>74.88352</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>22</age>
-	<position>741.246,416.84293,0.0</position>
-	<velocity>-0.1813851,-0.0917265,0.0</velocity>
-	<species>1</species>
-	<group>1</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>54.22078</hunger>
-	<thirst>8.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>12</age>
-	<position>859.62646,131.21312,0.0</position>
-	<velocity>-0.45711294,-0.5522689,0.0</velocity>
-	<species>1</species>
-	<group>5</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>36.22078</hunger>
-	<thirst>48.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>25</age>
-	<position>558.548,360.50397,0.0</position>
-	<velocity>-0.36930782,-0.34443006,0.0</velocity>
-	<species>1</species>
-	<group>6</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>2.22083</hunger>
-	<thirst>16.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>33</age>
-	<position>269.51385,384.01135,0.0</position>
-	<velocity>-0.099898584,-0.035292234,0.0</velocity>
-	<species>1</species>
-	<group>7</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>54.22078</hunger>
-	<thirst>37.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>28</age>
-	<position>173.11998,273.12003,0.0</position>
-	<velocity>0.0,0.0,0.0</velocity>
-	<species>1</species>
-	<group>1</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>100.21661</hunger>
-	<thirst>91.067</thirst>
+	<hunger>46.0</hunger>
+	<thirst>76.0</thirst>
 	<cohesion>0.5</cohesion>
 	<alignment>0.5</alignment>
 	<separation>0.5</separation>
@@ -630,101 +120,16 @@
 </boid>
 <boid>
 	<age>9</age>
-	<position>141.1065,414.58875,0.0</position>
-	<velocity>0.27283832,-0.0142849395,0.0</velocity>
-	<species>1</species>
-	<group>3</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>45.22078</hunger>
-	<thirst>48.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>13</age>
-	<position>322.19577,529.45593,0.0</position>
-	<velocity>-0.42160994,-0.7576084,0.0</velocity>
-	<species>1</species>
-	<group>6</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>61.22078</hunger>
-	<thirst>13.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>36</age>
-	<position>478.86368,264.1931,0.0</position>
-	<velocity>-0.5355912,0.38902536,0.0</velocity>
-	<species>1</species>
-	<group>6</group>
+	<position>644.0,517.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>0</species>
+	<group>2</group>
 	<nearRadius>40.0</nearRadius>
 	<flockRadius>120.0</flockRadius>
 	<signtRadius>180.0</signtRadius>
 	<panic>0.0</panic>
-	<hunger>15.22083</hunger>
-	<thirst>11.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>11</age>
-	<position>846.8715,403.4498,0.0</position>
-	<velocity>0.87010217,-0.82669574,0.0</velocity>
-	<species>2</species>
-	<group>3</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>49.22078</hunger>
-	<thirst>50.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>4</age>
-	<position>605.39435,308.8746,0.0</position>
-	<velocity>2.5927162,0.8745032,0.0</velocity>
-	<species>2</species>
-	<group>8</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>60.22078</hunger>
-	<thirst>29.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>22</age>
-	<position>814.4835,212.568,0.0</position>
-	<velocity>1.1512784,-0.29812947,0.0</velocity>
-	<species>2</species>
-	<group>9</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>18.22088</hunger>
-	<thirst>56.88332</thirst>
+	<hunger>35.0</hunger>
+	<thirst>43.0</thirst>
 	<cohesion>0.5</cohesion>
 	<alignment>0.5</alignment>
 	<separation>0.5</separation>
@@ -732,84 +137,16 @@
 </boid>
 <boid>
 	<age>24</age>
-	<position>170.50406,229.33829,0.0</position>
-	<velocity>-1.1411756,0.79646575,0.0</velocity>
-	<species>2</species>
-	<group>5</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
+	<position>942.0,358.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>0</species>
+	<group>9</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
 	<panic>0.0</panic>
-	<hunger>32.22078</hunger>
-	<thirst>32.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>23</age>
-	<position>1265.0084,189.20882,0.0</position>
-	<velocity>-2.723769,0.10899863,0.0</velocity>
-	<species>2</species>
-	<group>6</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>11.22083</hunger>
-	<thirst>54.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>8</age>
-	<position>1239.0474,197.71031,0.0</position>
-	<velocity>-2.291941,0.3018928,0.0</velocity>
-	<species>2</species>
-	<group>7</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>20.22088</hunger>
-	<thirst>44.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>9</age>
-	<position>360.45233,561.9504,0.0</position>
-	<velocity>0.026010618,-0.58186257,0.0</velocity>
-	<species>2</species>
-	<group>5</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>22.22088</hunger>
-	<thirst>69.88352</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>10</age>
-	<position>148.50609,380.54126,0.0</position>
-	<velocity>-0.90110415,0.59943354,0.0</velocity>
-	<species>2</species>
-	<group>1</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>60.0</panic>
-	<hunger>68.22078</hunger>
-	<thirst>9.88332</thirst>
+	<hunger>60.0</hunger>
+	<thirst>77.0</thirst>
 	<cohesion>0.5</cohesion>
 	<alignment>0.5</alignment>
 	<separation>0.5</separation>
@@ -817,118 +154,16 @@
 </boid>
 <boid>
 	<age>19</age>
-	<position>998.2958,292.2669,0.0</position>
-	<velocity>-0.768858,-1.8571372,0.0</velocity>
-	<species>2</species>
-	<group>8</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>46.22078</hunger>
-	<thirst>30.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>3</age>
-	<position>438.3645,25.545849,0.0</position>
-	<velocity>1.8460681,-2.6917894,0.0</velocity>
-	<species>2</species>
-	<group>7</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>26.22088</hunger>
-	<thirst>31.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>7</age>
-	<position>1107.0317,314.28372,0.0</position>
-	<velocity>-0.67315257,-1.2750733,0.0</velocity>
-	<species>2</species>
-	<group>9</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>60.22078</hunger>
-	<thirst>25.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>1</age>
-	<position>633.4781,168.58209,0.0</position>
-	<velocity>2.186592,-0.547162,0.0</velocity>
-	<species>2</species>
+	<position>1126.0,146.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>0</species>
 	<group>0</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>48.22078</hunger>
-	<thirst>8.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>23</age>
-	<position>565.2691,480.8611,0.0</position>
-	<velocity>1.3741726,0.29540423,0.0</velocity>
-	<species>2</species>
-	<group>7</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
 	<panic>0.0</panic>
-	<hunger>12.22083</hunger>
-	<thirst>14.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>7</age>
-	<position>613.7649,322.09192,0.0</position>
-	<velocity>2.485032,0.8441136,0.0</velocity>
-	<species>2</species>
-	<group>3</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>49.22078</hunger>
-	<thirst>60.88332</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>22</age>
-	<position>920.1864,93.069984,0.0</position>
-	<velocity>-0.018769694,-1.6024561,0.0</velocity>
-	<species>2</species>
-	<group>5</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>25.22088</hunger>
-	<thirst>7.883345</thirst>
+	<hunger>74.0</hunger>
+	<thirst>18.0</thirst>
 	<cohesion>0.5</cohesion>
 	<alignment>0.5</alignment>
 	<separation>0.5</separation>
@@ -936,33 +171,135 @@
 </boid>
 <boid>
 	<age>5</age>
-	<position>719.98444,383.60706,0.0</position>
-	<velocity>3.0916238,0.64128095,0.0</velocity>
-	<species>2</species>
-	<group>7</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>50.0</panic>
-	<hunger>39.22078</hunger>
-	<thirst>20.88332</thirst>
+	<position>390.0,196.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>0</species>
+	<group>8</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>54.0</hunger>
+	<thirst>0.0</thirst>
 	<cohesion>0.5</cohesion>
 	<alignment>0.5</alignment>
 	<separation>0.5</separation>
 	<wander>0.1</wander>
 </boid>
 <boid>
-	<age>17</age>
-	<position>888.29297,412.06296,0.0</position>
-	<velocity>1.3888304,-2.5894773,0.0</velocity>
-	<species>2</species>
-	<group>0</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>10.0</panic>
-	<hunger>44.22078</hunger>
-	<thirst>11.88332</thirst>
+	<age>2</age>
+	<position>503.0,332.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>0</species>
+	<group>8</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>54.0</hunger>
+	<thirst>76.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>2</age>
+	<position>453.0,201.0,0.0</position>
+	<velocity>0.0,-1.0,0.0</velocity>
+	<species>0</species>
+	<group>7</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>7.0</hunger>
+	<thirst>31.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>6</age>
+	<position>202.0,325.0,0.0</position>
+	<velocity>0.0,-1.0,0.0</velocity>
+	<species>0</species>
+	<group>8</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>50.0</hunger>
+	<thirst>2.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>0</age>
+	<position>1091.0,215.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>0</species>
+	<group>4</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>57.0</hunger>
+	<thirst>50.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>29</age>
+	<position>1146.0,289.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>0</species>
+	<group>9</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>8.0</hunger>
+	<thirst>44.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>19</age>
+	<position>416.0,352.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>0</species>
+	<group>5</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>6.0</hunger>
+	<thirst>17.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>13</age>
+	<position>791.0,192.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>0</species>
+	<group>5</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>3.0</hunger>
+	<thirst>51.0</thirst>
 	<cohesion>0.5</cohesion>
 	<alignment>0.5</alignment>
 	<separation>0.5</separation>
@@ -970,135 +307,730 @@
 </boid>
 <boid>
 	<age>20</age>
-	<position>783.91486,49.426365,0.0</position>
-	<velocity>0.01905851,-2.8967307,0.0</velocity>
-	<species>2</species>
-	<group>6</group>
-	<nearRadius>20.0</nearRadius>
-	<flockRadius>80.0</flockRadius>
-	<signtRadius>250.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>46.22078</hunger>
-	<thirst>39.88332</thirst>
+	<position>120.0,380.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>0</species>
+	<group>3</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>42.0</hunger>
+	<thirst>5.0</thirst>
 	<cohesion>0.5</cohesion>
 	<alignment>0.5</alignment>
 	<separation>0.5</separation>
 	<wander>0.1</wander>
 </boid>
 <boid>
-	<age>14</age>
-	<position>821.9362,183.66371,0.0</position>
-	<velocity>0.9269521,0.10433816,0.0</velocity>
+	<age>13</age>
+	<position>475.0,420.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>0</species>
+	<group>9</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>62.0</hunger>
+	<thirst>47.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>15</age>
+	<position>366.0,278.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>1</species>
+	<group>7</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>46.0</hunger>
+	<thirst>24.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>3</age>
+	<position>1169.0,169.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>1</species>
+	<group>6</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>34.0</hunger>
+	<thirst>57.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>28</age>
+	<position>1121.0,450.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>1</species>
+	<group>2</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>61.0</hunger>
+	<thirst>32.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>15</age>
+	<position>468.0,553.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>1</species>
+	<group>1</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>75.0</hunger>
+	<thirst>58.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>25</age>
+	<position>834.0,286.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>1</species>
+	<group>0</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>34.0</hunger>
+	<thirst>22.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>29</age>
+	<position>646.0,583.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>1</species>
+	<group>6</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>2.0</hunger>
+	<thirst>9.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>37</age>
+	<position>895.0,560.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>1</species>
+	<group>4</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>22.0</hunger>
+	<thirst>68.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>6</age>
+	<position>671.0,165.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>1</species>
+	<group>8</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>19.0</hunger>
+	<thirst>63.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>38</age>
+	<position>928.0,267.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>1</species>
+	<group>4</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>6.0</hunger>
+	<thirst>50.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>39</age>
+	<position>747.0,464.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>1</species>
+	<group>7</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>72.0</hunger>
+	<thirst>22.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>27</age>
+	<position>454.0,249.0,0.0</position>
+	<velocity>0.0,-1.0,0.0</velocity>
+	<species>1</species>
+	<group>6</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>75.0</hunger>
+	<thirst>7.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>23</age>
+	<position>341.0,213.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>1</species>
+	<group>9</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>11.0</hunger>
+	<thirst>36.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>34</age>
+	<position>1077.0,613.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>1</species>
+	<group>4</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>47.0</hunger>
+	<thirst>29.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>36</age>
+	<position>1064.0,522.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>1</species>
+	<group>6</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>55.0</hunger>
+	<thirst>68.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>34</age>
+	<position>235.0,365.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>1</species>
+	<group>1</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>13.0</hunger>
+	<thirst>28.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>22</age>
+	<position>804.0,340.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>1</species>
+	<group>1</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>38.0</hunger>
+	<thirst>29.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>32</age>
+	<position>444.0,438.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>1</species>
+	<group>4</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>32.0</hunger>
+	<thirst>77.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>10</age>
+	<position>533.0,369.0,0.0</position>
+	<velocity>0.0,-1.0,0.0</velocity>
+	<species>1</species>
+	<group>6</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>19.0</hunger>
+	<thirst>55.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>21</age>
+	<position>236.0,601.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>1</species>
+	<group>3</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>2.0</hunger>
+	<thirst>24.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>30</age>
+	<position>211.0,588.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>1</species>
+	<group>0</group>
+	<nearRadius>40.0</nearRadius>
+	<flockRadius>120.0</flockRadius>
+	<signtRadius>180.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>25.0</hunger>
+	<thirst>44.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>18</age>
+	<position>683.0,181.0,0.0</position>
+	<velocity>0.0,-1.0,0.0</velocity>
+	<species>2</species>
+	<group>9</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>45.0</hunger>
+	<thirst>37.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>2</age>
+	<position>691.0,507.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
 	<species>2</species>
 	<group>2</group>
 	<nearRadius>20.0</nearRadius>
 	<flockRadius>80.0</flockRadius>
 	<signtRadius>250.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>48.22078</hunger>
-	<thirst>3.8833325</thirst>
+	<panic>0.0</panic>
+	<hunger>49.0</hunger>
+	<thirst>52.0</thirst>
 	<cohesion>0.5</cohesion>
 	<alignment>0.5</alignment>
 	<separation>0.5</separation>
 	<wander>0.1</wander>
 </boid>
 <boid>
-	<age>14</age>
-	<position>687.58685,570.5919,0.0</position>
-	<velocity>-0.6128674,0.41461852,0.0</velocity>
+	<age>11</age>
+	<position>508.0,434.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>2</species>
+	<group>4</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>61.0</hunger>
+	<thirst>61.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>5</age>
+	<position>830.0,453.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>2</species>
+	<group>8</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>55.0</hunger>
+	<thirst>23.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>12</age>
+	<position>735.0,348.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>2</species>
+	<group>4</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>11.0</hunger>
+	<thirst>25.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>22</age>
+	<position>515.0,345.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>2</species>
+	<group>6</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>68.0</hunger>
+	<thirst>14.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>10</age>
+	<position>892.0,613.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>2</species>
+	<group>7</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>67.0</hunger>
+	<thirst>49.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>11</age>
+	<position>959.0,471.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>2</species>
+	<group>6</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>20.0</hunger>
+	<thirst>1.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>21</age>
+	<position>808.0,290.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>2</species>
+	<group>0</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>14.0</hunger>
+	<thirst>62.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>19</age>
+	<position>641.0,605.0,0.0</position>
+	<velocity>0.0,-1.0,0.0</velocity>
+	<species>2</species>
+	<group>1</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>33.0</hunger>
+	<thirst>73.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>24</age>
+	<position>1106.0,405.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>2</species>
+	<group>5</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>71.0</hunger>
+	<thirst>7.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>18</age>
+	<position>958.0,399.0,0.0</position>
+	<velocity>0.0,-1.0,0.0</velocity>
+	<species>2</species>
+	<group>4</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>53.0</hunger>
+	<thirst>79.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>20</age>
+	<position>755.0,454.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>2</species>
+	<group>2</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>41.0</hunger>
+	<thirst>39.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>12</age>
+	<position>705.0,388.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>2</species>
+	<group>9</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>27.0</hunger>
+	<thirst>74.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>19</age>
+	<position>938.0,520.0,0.0</position>
+	<velocity>0.0,-1.0,0.0</velocity>
 	<species>2</species>
 	<group>3</group>
 	<nearRadius>20.0</nearRadius>
 	<flockRadius>80.0</flockRadius>
 	<signtRadius>250.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>62.22078</hunger>
-	<thirst>14.88332</thirst>
+	<panic>0.0</panic>
+	<hunger>45.0</hunger>
+	<thirst>36.0</thirst>
 	<cohesion>0.5</cohesion>
 	<alignment>0.5</alignment>
 	<separation>0.5</separation>
 	<wander>0.1</wander>
 </boid>
 <boid>
-	<age>93</age>
-	<position>357.158,592.0941,0.0</position>
-	<velocity>0.0,0.0,0.0</velocity>
+	<age>21</age>
+	<position>742.0,368.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>2</species>
+	<group>2</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>61.0</hunger>
+	<thirst>19.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>1</age>
+	<position>127.0,497.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>2</species>
+	<group>9</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>32.0</hunger>
+	<thirst>24.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>24</age>
+	<position>372.0,137.0,0.0</position>
+	<velocity>0.0,-1.0,0.0</velocity>
+	<species>2</species>
+	<group>3</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>22.0</hunger>
+	<thirst>20.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>18</age>
+	<position>507.0,343.0,0.0</position>
+	<velocity>0.0,-1.0,0.0</velocity>
+	<species>2</species>
+	<group>1</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>10.0</hunger>
+	<thirst>11.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>2</age>
+	<position>1028.0,207.0,0.0</position>
+	<velocity>0.0,-1.0,0.0</velocity>
+	<species>2</species>
+	<group>9</group>
+	<nearRadius>20.0</nearRadius>
+	<flockRadius>80.0</flockRadius>
+	<signtRadius>250.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>1.0</hunger>
+	<thirst>67.0</thirst>
+	<cohesion>0.5</cohesion>
+	<alignment>0.5</alignment>
+	<separation>0.5</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>70</age>
+	<position>238.0,142.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
 	<species>3</species>
 	<group>4</group>
 	<nearRadius>100.0</nearRadius>
 	<flockRadius>150.0</flockRadius>
 	<signtRadius>300.0</signtRadius>
 	<panic>0.0</panic>
-	<hunger>15.22083</hunger>
-	<thirst>66.48362</thirst>
-	<cohesion>0.1</cohesion>
-	<alignment>0.1</alignment>
-	<separation>0.2</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>98</age>
-	<position>780.0603,601.3418,0.0</position>
-	<velocity>0.074279144,-0.30692944,0.0</velocity>
-	<species>3</species>
-	<group>9</group>
-	<nearRadius>100.0</nearRadius>
-	<flockRadius>150.0</flockRadius>
-	<signtRadius>300.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>68.22078</hunger>
-	<thirst>2.8833325</thirst>
-	<cohesion>0.1</cohesion>
-	<alignment>0.1</alignment>
-	<separation>0.2</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>61</age>
-	<position>1145.0383,587.97156,0.0</position>
-	<velocity>0.0,0.0,0.0</velocity>
-	<species>3</species>
-	<group>1</group>
-	<nearRadius>100.0</nearRadius>
-	<flockRadius>150.0</flockRadius>
-	<signtRadius>300.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>5.22083</hunger>
-	<thirst>55.88333</thirst>
-	<cohesion>0.1</cohesion>
-	<alignment>0.1</alignment>
-	<separation>0.2</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>15</age>
-	<position>173.53561,178.72841,0.0</position>
-	<velocity>-0.060046,-1.317076,0.0</velocity>
-	<species>3</species>
-	<group>5</group>
-	<nearRadius>100.0</nearRadius>
-	<flockRadius>150.0</flockRadius>
-	<signtRadius>300.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>56.22078</hunger>
-	<thirst>28.88332</thirst>
-	<cohesion>0.1</cohesion>
-	<alignment>0.1</alignment>
-	<separation>0.2</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>37</age>
-	<position>362.51114,126.90237,0.0</position>
-	<velocity>-0.7760475,0.05466496,0.0</velocity>
-	<species>3</species>
-	<group>0</group>
-	<nearRadius>100.0</nearRadius>
-	<flockRadius>150.0</flockRadius>
-	<signtRadius>300.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>59.22078</hunger>
-	<thirst>57.88332</thirst>
+	<hunger>7.0</hunger>
+	<thirst>5.0</thirst>
 	<cohesion>0.1</cohesion>
 	<alignment>0.1</alignment>
 	<separation>0.2</separation>
@@ -1106,33 +1038,16 @@
 </boid>
 <boid>
 	<age>25</age>
-	<position>540.32043,345.94647,0.0</position>
-	<velocity>-0.6057289,-0.28658265,0.0</velocity>
+	<position>662.0,568.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
 	<species>3</species>
-	<group>9</group>
+	<group>0</group>
 	<nearRadius>100.0</nearRadius>
 	<flockRadius>150.0</flockRadius>
 	<signtRadius>300.0</signtRadius>
 	<panic>0.0</panic>
-	<hunger>55.22078</hunger>
-	<thirst>35.88332</thirst>
-	<cohesion>0.1</cohesion>
-	<alignment>0.1</alignment>
-	<separation>0.2</separation>
-	<wander>0.1</wander>
-</boid>
-<boid>
-	<age>74</age>
-	<position>100.99225,450.70944,0.0</position>
-	<velocity>-0.25121748,-0.65325004,0.0</velocity>
-	<species>3</species>
-	<group>7</group>
-	<nearRadius>100.0</nearRadius>
-	<flockRadius>150.0</flockRadius>
-	<signtRadius>300.0</signtRadius>
-	<panic>0.0</panic>
-	<hunger>29.22088</hunger>
-	<thirst>6.883345</thirst>
+	<hunger>23.0</hunger>
+	<thirst>27.0</thirst>
 	<cohesion>0.1</cohesion>
 	<alignment>0.1</alignment>
 	<separation>0.2</separation>
@@ -1140,36 +1055,104 @@
 </boid>
 <boid>
 	<age>41</age>
-	<position>312.25116,203.41985,0.0</position>
-	<velocity>0.26054084,-0.8718437,0.0</velocity>
+	<position>663.0,499.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
 	<species>3</species>
-	<group>8</group>
+	<group>2</group>
 	<nearRadius>100.0</nearRadius>
 	<flockRadius>150.0</flockRadius>
 	<signtRadius>300.0</signtRadius>
 	<panic>0.0</panic>
-	<hunger>74.22078</hunger>
-	<thirst>33.88332</thirst>
+	<hunger>50.0</hunger>
+	<thirst>48.0</thirst>
 	<cohesion>0.1</cohesion>
 	<alignment>0.1</alignment>
 	<separation>0.2</separation>
 	<wander>0.1</wander>
 </boid>
 <boid>
-	<age>0</age>
-	<position>143.85452,352.5574,0.0</position>
-	<velocity>-0.054603968,0.20607017,0.0</velocity>
-	<species>1</species>
-	<group>0</group>
-	<nearRadius>40.0</nearRadius>
-	<flockRadius>120.0</flockRadius>
-	<signtRadius>180.0</signtRadius>
-	<panic>40.0</panic>
-	<hunger>1.2166696</hunger>
-	<thirst>24.866653</thirst>
-	<cohesion>0.5</cohesion>
-	<alignment>0.5</alignment>
-	<separation>0.5</separation>
+	<age>32</age>
+	<position>534.0,620.0,0.0</position>
+	<velocity>0.0,0.0,0.0</velocity>
+	<species>3</species>
+	<group>1</group>
+	<nearRadius>100.0</nearRadius>
+	<flockRadius>150.0</flockRadius>
+	<signtRadius>300.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>4.0</hunger>
+	<thirst>67.0</thirst>
+	<cohesion>0.1</cohesion>
+	<alignment>0.1</alignment>
+	<separation>0.2</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>71</age>
+	<position>634.0,223.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>3</species>
+	<group>6</group>
+	<nearRadius>100.0</nearRadius>
+	<flockRadius>150.0</flockRadius>
+	<signtRadius>300.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>51.0</hunger>
+	<thirst>35.0</thirst>
+	<cohesion>0.1</cohesion>
+	<alignment>0.1</alignment>
+	<separation>0.2</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>84</age>
+	<position>923.0,429.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>3</species>
+	<group>4</group>
+	<nearRadius>100.0</nearRadius>
+	<flockRadius>150.0</flockRadius>
+	<signtRadius>300.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>33.0</hunger>
+	<thirst>51.0</thirst>
+	<cohesion>0.1</cohesion>
+	<alignment>0.1</alignment>
+	<separation>0.2</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>89</age>
+	<position>1150.0,188.0,0.0</position>
+	<velocity>-1.0,0.0,0.0</velocity>
+	<species>3</species>
+	<group>4</group>
+	<nearRadius>100.0</nearRadius>
+	<flockRadius>150.0</flockRadius>
+	<signtRadius>300.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>39.0</hunger>
+	<thirst>7.0</thirst>
+	<cohesion>0.1</cohesion>
+	<alignment>0.1</alignment>
+	<separation>0.2</separation>
+	<wander>0.1</wander>
+</boid>
+<boid>
+	<age>40</age>
+	<position>759.0,339.0,0.0</position>
+	<velocity>-1.0,-1.0,0.0</velocity>
+	<species>3</species>
+	<group>9</group>
+	<nearRadius>100.0</nearRadius>
+	<flockRadius>150.0</flockRadius>
+	<signtRadius>300.0</signtRadius>
+	<panic>0.0</panic>
+	<hunger>42.0</hunger>
+	<thirst>53.0</thirst>
+	<cohesion>0.1</cohesion>
+	<alignment>0.1</alignment>
+	<separation>0.2</separation>
 	<wander>0.1</wander>
 </boid>
 </boidlist>

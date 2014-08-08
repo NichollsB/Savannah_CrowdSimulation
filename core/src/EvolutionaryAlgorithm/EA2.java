@@ -3,12 +3,12 @@ package EvolutionaryAlgorithm;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import java.util.Random;
 import java.util.HashMap;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.managers.BoidManager;
+import com.UKC_AICS.simulation.screen.SimulationScreen;
 
 
 public class EA2 {
@@ -40,12 +40,13 @@ public class EA2 {
 	 private Byte currentSpecies = 0;
 	 public static Byte totalSpecies = 4;
 	 private Byte species = 0;
+	 private SimulationScreen ss ;
 	 
 
 	 
-	 public void setup() {
+	 public void setup(SimulationScreen ss) {
 		 species = 0;
-		 
+		 this.ss = ss; 
 		 Float[] held0 = new Float[geneLength];
 		 held0[0] = null;
 		 held0[1] = null;
@@ -89,11 +90,12 @@ public class EA2 {
 	 
 	 
 	public void Evolve() {	
-		
+		setMode();
 		
 		for(byte i =0 ; i<totalSpecies; i++){
 			currentSpecies = i ;
 			System.out.println("Species "+ currentSpecies);
+			
 			validCheck();
 			calculateFitness();
 			calculateProbabilty();
@@ -122,9 +124,6 @@ public class EA2 {
 		}
 	}
 	
-	public void setMode() {
-		//TODO
-	}
 		
 	private void reset(){
 		System.out.println("Resetting EA parameters");
@@ -289,7 +288,8 @@ public class EA2 {
 	public static byte getTotalSpecies() {
 		return totalSpecies; 
 	}
-	public void flipRTMode() {
+	public void setMode() {
 		
+		rtmode = ss.getRender();
 	}
 }
