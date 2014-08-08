@@ -212,13 +212,11 @@ public class SimulationScreen implements Screen {
 
     	inputManager = new InputManager(this, (int)width, (int)height, simViewcamera);
     	input = new InputMultiplexer();
-
-    	input.addProcessor(inputManager);
-
+    	
     	input.addProcessor(eagui);
-
+    	input.addProcessor(inputManager);	
         input.addProcessor(gui); 
-
+        
         //sets up GUI
         
 
