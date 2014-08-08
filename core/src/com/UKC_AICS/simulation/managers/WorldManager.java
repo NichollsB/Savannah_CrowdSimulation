@@ -1,8 +1,8 @@
 package com.UKC_AICS.simulation.managers;
 
 import com.UKC_AICS.simulation.Constants;
-import com.UKC_AICS.simulation.entity.Entity;
-import com.UKC_AICS.simulation.entity.ObjectData;
+import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.utils.ObjectGrid;
 import com.UKC_AICS.simulation.utils.QuadTree;
 import com.UKC_AICS.simulation.world.LandMap;
@@ -42,7 +42,7 @@ public class WorldManager extends Manager {
 
     @Override
     public void update(boolean dayIncrement) {
-
+        decayCorpses(dayIncrement);
     }
 
     public static void putObject(Entity entity, int x, int y) {
@@ -105,19 +105,30 @@ public class WorldManager extends Manager {
         if (mapX >= 0 && mapX < tileSize.x &&
                 mapY >= 0 && mapY < tileSize.y) {
 
-
             for (String layer : map.information_layers.keySet()) {
                 layers.put(layer, map.information_layers.get(layer)[mapX][mapY]);
             }
         }
         else {
-            System.out.println("Im a bellend boid because I'm mysteriously out of bounds");
+            System.out.println("I'm mysteriously out of bounds");
         }
         return layers;
     }
 
     public static void changeTileOnLayer(float x, float y, String layer, byte newValue) {
         map.changeTileOnLayer((int)x,(int)y,layer, newValue);
+    }
+    private void decayCorpses(boolean dayIncrement) {
+        if(dayIncrement) {
+            for(Entity corpse : objects) {
+                if( corpse.getType()==0) {
+                    ((Object)corpse).corpseDecay(1f);
+                    if(((Object)corpse).getMass()<0.5f) {
+                        removeObject(corpse);
+                    }
+                }
+            }
+        }
     }
     
   //Added by Ben Nicholls for graphics purposes - very probably temporary
@@ -130,4 +141,5 @@ public class WorldManager extends Manager {
     	obj.setSubType(subtype);
     	putObject(obj);
     }
+  
 }

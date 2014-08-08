@@ -49,9 +49,7 @@ import java.io.FileOutputStream;
 	 
 	    		int ageInt = b.getAge();
 	    		String age = "" + ageInt;
-	    	
-//	    		int bDayInt = b.getBirthDay();
-//	    		String bDay = "" + bDayInt;
+
 	    	
 	    		Vector3 positionVec = b.getPosition();
 	    		String position = "" + positionVec;
@@ -74,16 +72,50 @@ import java.io.FileOutputStream;
 	    		float wanderVal = b.getWander();
 	    		String wander = "" + wanderVal;
 	    		
+	    		byte groupVal = b.getGroup();
+	    		String group = "" + groupVal;
+	    		
+	    		float nearRadiusVal = b.getNearRadius();
+	    		String nearRadius = "" + nearRadiusVal;
+	    		
+	    		float flockRadiusVal = b.getFlockRadius();
+	    		String flockRadius = "" + flockRadiusVal;
+	    		
+	    		float sightRadiusVal = b.getSightRadius();
+	    		String sightRadius = "" + sightRadiusVal;
+	    		
+	    		//TODO size and stamina
+	    		
+	    		float hungerVal = b.getHunger();
+	    		String hunger = "" + hungerVal;
+	    		
+	    		float thirstVal = b.getThirst();
+	    		String thirst = "" + thirstVal;
+	    		
+	    		float panicVal = b.getPanic();
+	    		String panic = "" + panicVal;
+	    				
+	    				
+	    				
+	    	
 	    		StartElement configElement = eventFactory.createStartElement("",
 	    				"", "boid");
 	    		eventWriter.add(configElement);
 	    		eventWriter.add(end);
 	    		   
 	    		createNode(eventWriter, "age", age);
-//	    		createNode(eventWriter, "birthday", bDay);
 	    		createNode(eventWriter, "position", position);
 	    		createNode(eventWriter, "velocity", velocity);
 	    		createNode(eventWriter, "species", species);
+	    		createNode(eventWriter, "group", group);
+	    		createNode(eventWriter, "nearRadius", nearRadius);
+	    		createNode(eventWriter, "flockRadius", flockRadius);
+	    		createNode(eventWriter, "signtRadius", sightRadius);
+	    		//createNode(eventWriter, "size", size);
+	    		//createNode(eventWriter, "stamina", stamina);
+	    		createNode(eventWriter, "panic", panic);
+	    		createNode(eventWriter,"hunger", hunger);
+	    		createNode(eventWriter,"thirst", thirst);
 	    		createNode(eventWriter, "cohesion", cohesion);
 	    		createNode(eventWriter, "alignment", alignment);
 	    		createNode(eventWriter, "separation", separation);

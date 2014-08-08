@@ -59,18 +59,26 @@ public class BoidManager extends Manager {
      * @param separation 
      * @param cohesion 
      */
-    public static void createBoid(byte species, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ, float cohesion, float separation, float alignment, float wander) {
+    public static void createBoid(byte species, byte group, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ,
+    		float cohesion, float separation, float alignment, float wander, float flockRadius, float sightRadius, float nearRadius, float hunger, float thirst, float panic) {
         Boid boid = new Boid(species);
 
         boid.setAge(age);
-//        boid.setPosition(500, 500, 0);
-        boid.setPosition(pX, pY, 0);
+
+        boid.setPosition(pX, pY, pZ);
         boid.setVelocity(vX, vY, vZ);
         boid.setCohesion(cohesion);
         boid.setAlignment(alignment);
         boid.setSpearation(separation);
         boid.setWander(wander);
         boid.setGene(cohesion, separation, alignment, wander);
+        boid.setGroup(group);
+        boid.setFlockRadius(flockRadius);
+        boid.setSightRadius(sightRadius);
+        boid.setNearRadius(nearRadius);
+        boid.setHunger(hunger);
+        boid.setPanic(panic);
+        boid.setThirst(thirst);
         addToLists(boid);
     }
     
@@ -133,7 +141,17 @@ public class BoidManager extends Manager {
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.
 
-        boid.tertiaryType = (byte)rand.nextInt(10);
+
+        boid.setGroup((byte)rand.nextInt(10));
+
+        if(boid.age> species.getMaturity()) {
+            boid.size = species.getMaxSize() + rand.nextInt(10) - 5;
+        } else {
+            //TODO: add in the size for an age 3 boid over age 0, as right now the size is set to newborn size even if they're only a day away from maturity
+            float growthPerDay = (species.getMaxSize() - species.getNewbornSize()) / species.getMaturity();
+            boid.size = species.getNewbornSize() + boid.age * growthPerDay;
+        }
+
 
         //moved this to boid constructor.
 //        boid.setCohesion(species.getCohesion());

@@ -24,9 +24,9 @@ public abstract class Behaviour {
         throw new Error("The Behaviour is calling the default - make sure to check you've got the right act() call");
 //        return null;
     }
-    public Vector3 act(Array<Entity> objects, Boid boid) {
-        return null;
-    }
+//    public Vector3 act(Array<Entity> objects, Boid boid) {
+//        return null;
+//    }
 
 
 }

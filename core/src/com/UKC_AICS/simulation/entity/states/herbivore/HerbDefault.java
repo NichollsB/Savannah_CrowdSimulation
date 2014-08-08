@@ -49,7 +49,7 @@ public class HerbDefault extends State {
         } else if (boid.hunger > 75) {
 //            System.out.println(boid + "\nJust posted Hungry state ");
             parent.pushState(boid, new Hungry(parent, bm));
-        } else if (boid.age > 10 && boid.hunger < 35 && boid.thirst < 35) {
+        } else if (boid.age > SimulationManager.speciesData.get(boid.getSpecies()).getMaturity() && boid.hunger < 35 && boid.thirst < 35) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
             parent.pushState(boid, new Reproduce(parent, bm));
 //        } else if (boid.age > 10 && boid.hunger > 70 && boid.thirst > 70) {
@@ -83,10 +83,10 @@ public class HerbDefault extends State {
             }
 
             if(predators.size > 0) {
-                for(Boid predator : predators) {
+                for(int i = 0; i < predators.size; i++) {
                     boid.panic += 10;
                 }
-                if (boid.panic > 30) {
+                if (boid.panic > boid.panicLevel) {
                     parent.pushState(boid, new Panic(parent, bm));
                 }
             } else if (boid.panic > 0 && predators.size == 0) {
@@ -100,8 +100,9 @@ public class HerbDefault extends State {
             //Collision avoidance arrays
             Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
-//            tempVec = Collision.act(collisionObjects, boid);
-            tempVec = behaviours.get("collision").act(collisionObjects, boid);
+            tempVec = Collision.act(collisionObjects, boid);
+//            tempVec = behaviours.get("collision").act(collisionObjects, boid);
+            tempVec.add(Collision.act(boid));
 
             steering.set(0f, 0f, 0f);
             boid.setAcceleration(steering);
@@ -121,10 +122,15 @@ public class HerbDefault extends State {
 
                 steering.set(0f, 0f, 0f);
 
-                float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
-                float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
-                float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
-                float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander();
+                float coh = boid.cohesion; //SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
+                float sep = boid.separation; //SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
+                float ali = boid.alignment; //SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
+                float wan = boid.wander; //SimulationManager.speciesData.get(boid.getSpecies()).getWander();
+
+//                float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
+//                float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
+//                float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
+//                float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander();
 
                 steering.add(behaviours.get("cohesion").act(nearBoids, dummyObjects, boid).scl(coh));
                 steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));

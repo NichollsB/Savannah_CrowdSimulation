@@ -35,13 +35,13 @@ public class SimulationManager extends Manager {
 
     BoidManager boidManager = new BoidManager(this);
     WorldManager worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
-    EA2 ea = new EA2();
+
+    public EA2 ea = new EA2();
 
     static public int minutes = 0;
     static public int hours = 0;
     static public int days = 0;
     static public int weeks = 0;
-     public static int currentDay = 0;
     
     //monstrous things.
     static final HashMap<String, HashMap<String, Float>> tempSpeciesData = new HashMap<String, HashMap<String, Float>>();
@@ -69,14 +69,18 @@ public class SimulationManager extends Manager {
         this.parent = parent;
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
 
+        for (Species species : speciesData.values()) {
+            species.setGrowthPerDay((species.getMaxSize() - species.getNewbornSize()) / species.getMaturity());
+        }
         generateBoids();
         
         objectData.put((byte)0, new ObjectData((byte)0, (byte)1, "Corpse"));
         objectData.put((byte)1, new ObjectData((byte)1, (byte)1, "Corpse"));
         objectData.put((byte)2, new ObjectData((byte)2, (byte)1, "Attractor"));
         objectData.put((byte)3, new ObjectData((byte)3, (byte)1, "Repeller"));
-        
-        
+
+        ea.setup(parent);
+
         Array<Byte> objTypes = new Array<Byte>();
         Object obj = new Object(objectData.get((byte)2),355,450);
         objTypes.add(obj.getType());
@@ -197,15 +201,13 @@ public class SimulationManager extends Manager {
             minutes = 0;
             hours = 0;
             days += 1;
-//            setDay();
-            ea.Evolve();
+//            ea.Evolve(); //causes behaviour to go crazy so turned off for now.
             increment = true;
         } else {
             minutes = 0;
             hours = 0;
             days = 0;
             weeks += 1;
-//            setDay();
             increment = true;
         }
         return increment;
@@ -217,15 +219,11 @@ public class SimulationManager extends Manager {
                 + days + " days; " + weeks + " wks.";
     }
 
-    public void setDay() {
-    	currentDay++;
-//    	boidManager.updateAge(); //moved this to boidmanager
+
+    public static int getDays() {
+           return weeks * 7 + days;
     }
-    
-   public static int getDay() {
-	   return currentDay;
-   }
-   
+
 
     public void resetTime() {
         minutes = 0;

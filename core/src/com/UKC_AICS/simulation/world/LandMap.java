@@ -11,6 +11,8 @@ import static com.UKC_AICS.simulation.Constants.TILE_SIZE;
  * @author Emily
  */
 public class LandMap {
+	
+	
 
     private Vector3 size;
     public HashMap<String, byte[][]> information_layers = new HashMap<String, byte[][]>();
@@ -49,7 +51,7 @@ public class LandMap {
         for (int i = 0; i < waterInfo.length; i++) {
             for (int j = 0; j < waterInfo[i].length; j++) {
                 waterInfo[i][j] = (byte) rand.nextInt(100);
-                if (waterInfo[i][j] > 70) {
+                if (waterInfo[i][j] > 95) {
                     terrain[i][j] = 1; //change terrain type to water.
                     grassInfo[i][j] = 0; // no grass/vegetation on a water tile.
                 }

@@ -1,12 +1,18 @@
 package com.UKC_AICS.simulation.entity.behaviours;
 
 import com.UKC_AICS.simulation.Constants;
-import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.managers.WorldManager;
+import com.UKC_AICS.simulation.world.LandMap;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -14,39 +20,185 @@ import java.util.Random;
  */
 public class Collision extends Behaviour {
 
-    private float initialCheckRadius = 20f;
-    private  Vector3 tmpVec = new Vector3(0f,0f,0f);
-    private  Vector3 tmpVec2 = new Vector3(0f,0f,0f);
-    Random rand = new Random();
+    private static Vector3 tmpVec = new Vector3(0f,0f,0f);
+    private static Vector3 tmpVec2 = new Vector3(0f,0f,0f);
 
-     float MAX_AVOID_FORCE = 0.15f;
-     float LOOK_AHEAD = 20f;
-     float HALF_LOOK_AHEAD = LOOK_AHEAD/2f;
+    static float MAX_AVOID_FORCE = 0.2f;
+    static float LOOK_AHEAD = 20f;
+    static float HALF_LOOK_AHEAD = LOOK_AHEAD/2f;
+    static int tileSize = Constants.TILE_SIZE;
+    static int stepsAhead = 40;
 
     public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
         throw new Error("Collision is not to be used in this manner. Try static access Collision.act(Array<Entity> targets, Boid boid)");
     }
 
-//    public static Vector3 act(Boid boid) {
-//        tmpVec2.set(boid.getVelocity());
-//        int mapX = (int)boid.position.x/Constants.TILE_SIZE;
-//        int mapY = (int)boid.position.y/Constants.TILE_SIZE;
-//        //get tile info at position tile
-//
-//        //ray cast to check when tile changes along velocity and retrieve tile info of new tiles
-//
-//
-//        return tmpVec;
-//    }
+    private static ArrayList<Integer> cellInPath(float x0, float y0, float dx_dt, float dy_dt) {
+        ArrayList<Integer> cell = null;
+        for(int i = 0; i < stepsAhead; i++){
+            int posX = (int)(x0 + i * dx_dt);
+            int posY = (int)(y0 + i * dy_dt);
+            int posToCheckX = posX;
+            int posToCheckY = posY;
+            //TODO export to a static map wrapping function for X and Y?
+            if(posX >= Constants.mapWidth) {
+                posToCheckX = posX - Constants.mapWidth;
+            }
+            else if(posX < 0) {
+                posToCheckX = Constants.mapWidth + posX;
+            }
+            if(posY >= Constants.mapHeight) {
+                posToCheckY = posY - Constants.mapHeight;
+            }
+            else if(posY < 0) {
+                posToCheckY = Constants.mapHeight + posY;
+            }
+            //TODO need a check for outofbounds, wrap check for blocked, but steer from extended map coords
+            if(WorldManager.getTileInfoAt(posToCheckX, posToCheckY).get("terrain") == 1) {
+                cell = new ArrayList<Integer>();
+                cell.add(posX);
+                cell.add(posY);
+            }
+        }
+        return cell;
+    }
 
     /**
-     * Checks the Array of targets for mostTreatening collision with boid
+     * For collision avoidance with terrain along boid trajectory
+     * @param boid that is doing the collision checking
+     * @return Vector3 that is a velocity correctional change in acceleration
+     */
+    public static Vector3 act(Boid boid) {
+        tmpVec.set(boid.getPosition());
+        tmpVec2.set(boid.getVelocity());
+
+//        int mapX = (int)tmpVec.x/tileSize;
+//        int mapY = (int)tmpVec.y/tileSize;
+
+        ArrayList<Integer> cell = cellInPath(tmpVec.x, tmpVec.y, tmpVec2.x, tmpVec2.y);
+
+        tmpVec.set(0f,0f,0f);
+        if(cell != null) {
+            int cellX = cell.get(0)/tileSize;
+            int cellY = cell.get(1)/tileSize;
+            tmpVec.set(boid.getPosition());
+            tmpVec.sub(new Vector3(cellX * tileSize + tileSize / 2, cellY * tileSize + tileSize / 2, 0f));
+            tmpVec.nor();
+            tmpVec.scl(MAX_AVOID_FORCE);
+        }
+
+//        for(int[] cell : cellList) {
+//            tmpVec.set(0f,0f,0f);
+//            //get tile info, check if grass
+//            if (WorldManager.getTileInfoAt(cell[0], cell[1]).get("terrain") == 0) {
+//                //terrain is grass -- passable, no need to do anything
+//            }
+//            //else if water - impassable
+//            else {
+//
+//                tmpVec.set(boid.getPosition());
+//                tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                tmpVec.nor();
+//                tmpVec.scl(MAX_AVOID_FORCE);
+//                // the tile is impassable,
+//                // need to do collision avoidance with  the intersect of closest edge and velocity intersect
+//                Vector2 intersect = new Vector2();
+//                //TODO is this getting the correct line for nearest edge of cell?
+//                if(mapX < cell[0]) {
+//                    if(mapY == cell[1]  && Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
+//                            tmpVec.x, tmpVec.y, cell[0] * tileSize + tileSize, cell[1] * tileSize, cell[0] * tileSize + tileSize,
+//                            cell[1] * tileSize + tileSize, intersect)) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                    else if (mapY < cell[1]) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(cell[0]*tileSize + tileSize, cell[1]*tileSize + tileSize, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                    else if(mapY > cell[1]) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(cell[0]*tileSize + tileSize, cell[1]*tileSize, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                }
+//                else if(mapX > cell[0]) {
+//                    if(mapY == cell[1] && Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
+//                            tmpVec.x, tmpVec.y, cell[0] * tileSize, cell[1] * tileSize, cell[0] * tileSize,
+//                            cell[1] * tileSize + tileSize, intersect)) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                    else if (mapY < cell[1]) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(cell[0]*tileSize, cell[1]*tileSize + tileSize, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                    else if(mapY > cell[1]) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(cell[0]*tileSize, cell[1]*tileSize, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                } else if (mapX == cell[0]) {
+//                    if (mapY < cell[1]&& Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
+//                            tmpVec.x, tmpVec.y, cell[0] * tileSize + tileSize, cell[1] * tileSize, cell[0] * tileSize + tileSize,
+//                            cell[1] * tileSize + tileSize, intersect)) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                    else if(mapY > cell[1]&& Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
+//                            tmpVec.x, tmpVec.y, cell[0] * tileSize, cell[1] * tileSize, cell[0] * tileSize,
+//                            cell[1] * tileSize + tileSize, intersect)) {
+//                        tmpVec.set(boid.getPosition());
+////                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
+//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
+//                        tmpVec.nor();
+//                        tmpVec.scl(MAX_AVOID_FORCE);
+//                    }
+//                }
+//            }
+//        }
+
+        //get tile info at position tile
+        //ray cast to check when tile changes along velocity and retrieve tile info of new tiles
+
+        return tmpVec;
+    }
+
+
+
+
+    /**
+     * Checks the Array of targets for most Threatening collision with boid
      * @param boid  which is checking for collisions
      * @param targets   possible collision targets (just Entity's within sight range or all?)
      * @return  a correction Vector3 to avoid collision with most threatening
      */
-    public Vector3 act(Array<Entity> targets, Boid boid) {
+    public static Vector3 act(Array<Entity> targets, Boid boid) {
         Array<Entity> entities = targets;  //
+//        Object cell = (Object) terrainCollision(boid);
+//        if(cell != null) {
+//            entities.add(cell);
+//            int cellX = (int) cell.getPosition().x/tileSize;
+//            int cellY = (int) cell.getPosition().y/tileSize;
+//        }
         // targets that are within a check range check, to be checked further
         Array<Entity> collisionThreats = new Array<Entity>();
         Vector3 adjustment = new Vector3(0f, 0f, 0f);
@@ -79,8 +231,8 @@ public class Collision extends Behaviour {
                     adjustmentSet = true;
 
 
-                } else
-                if(turn == -1) {
+                }
+                else if(turn == -1) {
                     if (checkLeft(boid, target)) {
                         //calculate adjustment vector here
                         //should be able to use the tmpVec and tmpVec2 used to calc true.
@@ -128,7 +280,7 @@ public class Collision extends Behaviour {
      * @param target the target who the boid is checking collision with
      * @return true on a collision, false if no collision
      */
-    private  boolean collisionCheck(Boid boid, Entity target){
+    private static boolean collisionCheck(Boid boid, Entity target){
         //collision check here
         boolean collision = false;
         tmpVec.set(boid.getPosition());
@@ -150,7 +302,7 @@ public class Collision extends Behaviour {
      * @param target  the possible Entity that the boid may collide with
      * @return  a boolean as to whether a collision will occur on current Vector
      */
-    private  boolean lookAheadCheck(Boid boid, Entity target){
+    private static boolean lookAheadCheck(Boid boid, Entity target){
         //collision check here
         boolean collision = false;
         tmpVec.set(boid.getPosition());
@@ -176,7 +328,7 @@ public class Collision extends Behaviour {
      * @param target  the possible Entity that the boid may collide with
      * @return  a boolean as to whether a collision will occur on current Vector
      */
-    private  boolean lookHalfAheadCheck(Boid boid, Entity target) {
+    private static boolean lookHalfAheadCheck(Boid boid, Entity target) {
         //collision check here
         boolean collision = false;
         tmpVec.set(boid.getPosition());
@@ -202,7 +354,7 @@ public class Collision extends Behaviour {
      * @param target  the possible Entity that the boid may collide with
      * @return  a boolean as to whether a collision will occur on current Vector
      */
-    private  boolean checkRight(Boid boid, Entity target) {
+    private static boolean checkRight(Boid boid, Entity target) {
         //collision check here
         boolean collision = false;
         //need to add 0.5f velocity to current position,
@@ -220,7 +372,7 @@ public class Collision extends Behaviour {
         return collision;
     }
 
-    private  boolean checkLeft(Boid boid, Entity target) {
+    private static boolean checkLeft(Boid boid, Entity target) {
         //collision check here
         boolean collision = false;
         //need to add 0.5f velocity to current position,
