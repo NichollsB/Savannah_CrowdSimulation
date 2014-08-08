@@ -129,7 +129,7 @@
         <newbornSize>4</newbornSize>
         <maxSize>15</maxSize>
 
-        <cohesion>0.25f</cohesion>
+        <cohesion>0.21f</cohesion>
         <separation>0.2f</separation>
         <alignment>0.1f</alignment>
         <wander>0.1f</wander>
