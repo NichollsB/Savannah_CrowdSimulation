@@ -49,7 +49,7 @@ public class HerbDefault extends State {
         } else if (boid.hunger > 75) {
 //            System.out.println(boid + "\nJust posted Hungry state ");
             parent.pushState(boid, new Hungry(parent, bm));
-        } else if (boid.age > 10 && boid.hunger < 35 && boid.thirst < 35) {
+        } else if (boid.age > SimulationManager.speciesData.get(boid.getSpecies()).getMaturity() && boid.hunger < 35 && boid.thirst < 35) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
             parent.pushState(boid, new Reproduce(parent, bm));
 //        } else if (boid.age > 10 && boid.hunger > 70 && boid.thirst > 70) {
@@ -83,10 +83,10 @@ public class HerbDefault extends State {
             }
 
             if(predators.size > 0) {
-                for(Boid predator : predators) {
+                for(int i = 0; i < predators.size; i++) {
                     boid.panic += 10;
                 }
-                if (boid.panic > 30) {
+                if (boid.panic > boid.panicLevel) {
                     parent.pushState(boid, new Panic(parent, bm));
                 }
             } else if (boid.panic > 0 && predators.size == 0) {

@@ -1,6 +1,8 @@
 package com.UKC_AICS.simulation.entity;
 
 import com.UKC_AICS.simulation.Constants;
+import com.UKC_AICS.simulation.Simulation;
+import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -41,7 +43,7 @@ public class Boid extends Entity {
     public String state = "default";
 
     public int age = 0;
-    public float size;
+    public float size = 16;
 //    public int birthDay = 0;
     
 
@@ -56,12 +58,12 @@ public class Boid extends Entity {
     
     public int geneSize=4;		
     public Float[] gene= new Float[geneSize];
+    public int panicLevel=30;
 
 
-// no longer used or relevant
+    // no longer used or relevant
     public Boid(byte spec, Vector3 pos, Vector3 vel) {
-        this.type = 1; // this is for categorising it as a "boid" object.
-        subType = spec;
+        this(SimulationManager.speciesData.get(spec));
         position = pos.cpy();
         velocity = vel.cpy();
     }
@@ -96,6 +98,7 @@ public class Boid extends Entity {
         separation = species.getSeparation();
         wander = species.getWander();
 
+        panicLevel = species.getPanicLevel();
         setGene(cohesion,separation,alignment,wander);
 
         bounds.set(position.x, position.y, 16, 16);
@@ -135,6 +138,8 @@ public class Boid extends Entity {
         alignment = boid.alignment;
         separation = boid.separation;
         wander = boid.wander;
+
+        panicLevel = boid.panicLevel;
 
         setGene(cohesion,separation,alignment,wander);
     }
@@ -235,6 +240,10 @@ public class Boid extends Entity {
         age = newAge;
     }
     public void age() {
+        float maturity = SimulationManager.speciesData.get(getSpecies()).getMaturity();
+        if (age < maturity && size < SimulationManager.speciesData.get(getSpecies()).getMaxSize()){
+            size += ((100 - hunger)/100) * SimulationManager.speciesData.get(getSpecies()).getGrowthPerDay();
+        }
         age++;
     }
 
@@ -304,6 +313,7 @@ public class Boid extends Entity {
         string += "\n\t thirst:" + (int)thirst;
         string += "\n\t age:" + age ;
         string += "\n\t stamina:" + stamina;
+        string += "\n\t size:" + size ;
         string += "\n\t state:" + state;
         string += "\n\t orientation:" + (int)orientation;
         string += "\n";

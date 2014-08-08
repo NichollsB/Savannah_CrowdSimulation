@@ -111,7 +111,7 @@ public class WorldManager extends Manager {
             }
         }
         else {
-            System.out.println("Im a bellend boid because I'm mysteriously out of bounds");
+            System.out.println("I'm mysteriously out of bounds");
         }
         return layers;
     }

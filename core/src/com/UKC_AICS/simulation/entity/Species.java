@@ -29,10 +29,16 @@ public class Species {
 
     private float rgb[];
     
+    private int maturity;
+    private float maxSize;
+    private float newbornSize;
+    private float growthPerDay;
+    
     //Added by Ben Nicholls for information output/graphics/ui
 	public boolean tracked;
 	
 	private int population;
+    private int panicLevel;
 
     public String getName() {
         return name;
@@ -170,7 +176,38 @@ public class Species {
     	}
     	return false;
     }
-    
+
+    public int getMaturity() {
+        return maturity;
+    }
+
+    public void setMaturity(int maturity) {
+        this.maturity = maturity;
+    }
+
+    public float getMaxSize() {
+        return maxSize;
+    }
+
+    public void setMaxSize(float maxSize) {
+        this.maxSize = maxSize;
+    }
+
+    public void setNewbornSize(float newbornSize) {
+        this.newbornSize = newbornSize;
+    }
+
+    public float getNewbornSize() {
+        return newbornSize;
+    }
+
+    public float getGrowthPerDay() {
+        return growthPerDay;
+    }
+
+    public void setGrowthPerDay(float growthPerDay) {
+        this.growthPerDay = growthPerDay;
+    }
     //For tracking/gui/graphics
     public void setTracked(boolean tracked){
     	this.tracked = tracked;
@@ -185,5 +222,12 @@ public class Species {
     public void removePopulation(){
     	population--;
     }
-    
+
+    public void setPanicLevel(int panicLevel) {
+        this.panicLevel = panicLevel;
+    }
+
+    public int getPanicLevel() {
+        return panicLevel;
+    }
 }
