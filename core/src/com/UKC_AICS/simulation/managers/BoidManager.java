@@ -64,6 +64,7 @@ public class BoidManager extends Manager {
         Boid boid = new Boid(species);
 
         boid.setAge(age);
+
         boid.setPosition(pX, pY, pZ);
         boid.setVelocity(vX, vY, vZ);
         boid.setCohesion(cohesion);
@@ -80,7 +81,31 @@ public class BoidManager extends Manager {
         boid.setThirst(thirst);
         addToLists(boid);
     }
+    
+    /**
+     * Created by Ben Nicholls
+     * custom constructor for the creation of a new boid from a Species type, but with custom position and group
+     * @param species
+     */
+    public void createBoid(Species species, byte group, int x, int y){
+    	Boid boid = new Boid(species);
+    	boid.setPosition(new Vector3(x, y, 0));
+    	
+        int maxXVel = 1;
+        int maxYVel = 1;
+    	
+        int xVel = (rand.nextInt(2 * maxXVel) - maxXVel);
 
+        int yVel = (rand.nextInt(2 * maxYVel) - maxYVel);
+        boid.setVelocity(xVel, yVel, 0);
+        //random start age
+        boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.
+
+        boid.tertiaryType = group;
+        boid.setTracked(true);
+        
+        addToLists(boid);
+    }
 
     /**
      * create boid from the species file and add straight into the lists
@@ -116,6 +141,9 @@ public class BoidManager extends Manager {
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.
 
+
+        boid.setGroup((byte)rand.nextInt(10));
+
         if(boid.age> species.getMaturity()) {
             boid.size = species.getMaxSize() + rand.nextInt(10) - 5;
         } else {
@@ -123,7 +151,7 @@ public class BoidManager extends Manager {
             float growthPerDay = (species.getMaxSize() - species.getNewbornSize()) / species.getMaturity();
             boid.size = species.getNewbornSize() + boid.age * growthPerDay;
         }
-        boid.group = (byte)rand.nextInt(10);
+
 
         //moved this to boid constructor.
 //        boid.setCohesion(species.getCohesion());

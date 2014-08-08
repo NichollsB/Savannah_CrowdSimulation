@@ -1,13 +1,14 @@
 package com.UKC_AICS.simulation.screen.gui;
 
 import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Species;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 
 public class BoidTree_Node extends Node{
-	private Boid boid;
+	private Entity boid;
 	private boolean hasBoid = false;
 	
 	private String name = "";
@@ -28,7 +29,7 @@ public class BoidTree_Node extends Node{
 		this.name = name;
 		this.label = (Label)this.getActor();
 	}
-	public BoidTree_Node(Actor actor, String name, String info, byte id, Boid boid, boolean root) {
+	public BoidTree_Node(Actor actor, String name, String info, byte id, Entity entity, boolean root) {
 		super(actor);
 //		this.species = species;
 //		isSpecies = true;
@@ -37,8 +38,8 @@ public class BoidTree_Node extends Node{
 		this.info = info;
 		this.id = id;
 		this.root = root;
-		if(boid != null){
-			this.boid = boid;
+		if(entity != null){
+			this.boid = entity;
 			hasBoid = true;
 		}
 		this.label = (Label)this.getActor();
@@ -52,7 +53,7 @@ public class BoidTree_Node extends Node{
 		this.label.setText(text);
 	}
 	
-	public Boid getBoid(){
+	public Entity getBoid(){
 		return boid;
 	}
 	

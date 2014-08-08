@@ -43,7 +43,10 @@ public class HerbDefault extends State {
 //            }
 
 
-        if (boid.thirst > 85) {
+        if(boid.panic > boid.panicLevel) {
+            parent.pushState(boid, new Panic(parent, bm));
+        }
+        else if (boid.thirst > 85) {
 //            System.out.println(boid + "\nJust posted Thirsty state ");
             parent.pushState(boid, new Thirsty(parent, bm));
         } else if (boid.hunger > 75) {

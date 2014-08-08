@@ -26,7 +26,7 @@ public class Alignment extends Behaviour {
                     System.out.println("one of the boids is null! " + i);
                 }
                 if (b.getSpecies() == boid.getSpecies()) {
-                    if (b.group == boid.group) {
+                    if (b.tertiaryType == boid.tertiaryType) {
                         tmpVec.add(b.getVelocity());
                         tmpVec.add(b.getVelocity());
                         num++;

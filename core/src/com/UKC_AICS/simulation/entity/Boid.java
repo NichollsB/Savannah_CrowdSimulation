@@ -46,10 +46,9 @@ public class Boid extends Entity {
 //    public int birthDay = 0;
     
 
-    //Added to check if boid info is being displayed or not - for highlighting in graphics
-	public boolean tracked = false;
+  
 
-    public byte group = 0; //family group of boid.
+//    public byte tertiaryType = 0; //family group of boid.
     public float cohesion = 0;
     public float separation = 0;
     public float alignment = 0;
@@ -109,7 +108,7 @@ public class Boid extends Entity {
     public Boid(Boid boid) {
         type = 1;
         subType =  boid.getSubType();
-        group = boid.group;
+        tertiaryType = boid.tertiaryType;
         nearRadius = boid.nearRadius;
         sightRadius = boid.sightRadius;
         flockRadius = boid.flockRadius;
@@ -281,7 +280,7 @@ public class Boid extends Entity {
         String string = "";
 
         string += "BOID: " + "\t" + "\t position: \n \t" + (int)position.x + "/" + (int)position.y;
-        string += "\n\t group:" + group;
+        string += "\n\t group:" + tertiaryType;
         string += "\n\t hunger:" + (int)hunger;
         string += "\n\t thirst:" + (int)thirst;
         string += "\n\t panic:" + (int)panic + "/" + panicLevel;
@@ -293,10 +292,7 @@ public class Boid extends Entity {
         return string;
     }
 
-    public void setTracked(boolean tracked){
-    	this.tracked = tracked;
-    }
-
+   
     public void setGene(float cohesion, float separation, float alignment, float wander ) {
     	gene[0] = cohesion;
     	gene[1] = separation;
@@ -343,6 +339,7 @@ public class Boid extends Entity {
     public float getWander() {
         return wander;
     }
+
     public void setHunger( float hunger) {
         this.hunger = hunger;
     }
@@ -379,10 +376,14 @@ public class Boid extends Entity {
     public float getFlockRadius() {
     	return flockRadius;
     }
+    /**
+     * Added by ben Nicholls as replacement for getSpecies(), etc - rather pull from entity
+     */
     public void setGroup( byte group) {
-        this.group = group;
+        tertiaryType= group;
     }
     public byte getGroup() {
-    	return group;
+    	return tertiaryType;
     }
+
 }
