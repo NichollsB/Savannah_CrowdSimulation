@@ -14,7 +14,7 @@
         <nearRadius>40f</nearRadius>
         <maxSpeed>1.5f</maxSpeed>
         <maxForce>0.04f</maxForce>
-        <stamina>70f</stamina>
+        <stamina>50f</stamina>
         <lifespan>80f</lifespan>
         <!--<cohesion>0.1f</cohesion>-->
         <!--<separation>0.9f</separation>-->
@@ -36,7 +36,7 @@
         <nearRadius>40f</nearRadius>
         <maxSpeed>2f</maxSpeed>
         <maxForce>0.04f</maxForce>
-        <stamina>50f</stamina>
+        <stamina>20f</stamina>
         <lifespan>80f</lifespan>
         <!--<cohesion>0.1f</cohesion>-->
         <!--<separation>0.9f</separation>-->
@@ -58,7 +58,7 @@
         <nearRadius>20</nearRadius>
         <maxSpeed>3.4f</maxSpeed>
         <maxForce>0.15f</maxForce>
-        <stamina>80f</stamina>
+        <stamina>60f</stamina>
         <lifespan>50</lifespan>
         <cohesion>0.5f</cohesion>
         <separation>0.5f</separation>
@@ -68,7 +68,7 @@
 
 
     <species name="lion">
-        <number>8</number>
+        <number>4</number>
         <byte>3</byte>  <!-- this is the sub-type -->
         <spritergb r = "0.6" g="0" b="0.6"/>
         <diet>carnivore</diet>
@@ -77,7 +77,7 @@
         <nearRadius>100f</nearRadius>
         <maxSpeed>3.5f</maxSpeed>
         <maxForce>0.2f</maxForce>
-        <stamina>50f</stamina>
+        <stamina>20f</stamina>
         <lifespan>200f</lifespan>
         <cohesion>0.1f</cohesion>
         <separation>0.2f</separation>

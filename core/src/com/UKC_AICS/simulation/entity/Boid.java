@@ -25,7 +25,8 @@ public class Boid extends Entity {
     public float maxForce = 0.03f; //
     private Vector3 acceleration = new Vector3();
 
-    public float stamina = 100;
+    public float maxStamina = 60;
+    public float stamina = maxStamina;
 
     public float sightRadius = 200f;
     public float flockRadius = 100f;
@@ -83,7 +84,8 @@ public class Boid extends Entity {
         maxSpeed = species.getMaxSpeed();
         maxForce = species.getMaxForce();
 
-        stamina = species.getStamina();
+        maxStamina = species.getStamina();
+        stamina = maxStamina;
 
         position = new Vector3(500f,500f,0f);
         velocity = new Vector3();
@@ -151,7 +153,12 @@ public class Boid extends Entity {
         velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
         //TODO add method to calc stamina usage -> based on velocity.len % of maxspeed - 0-1
         //TODO make it so stamina must be above xx amount to move
+
+
+        float speed = velocity.len();
+        changeStamina(speed);
         position.add(velocity);
+
         //check for out of bounds
         checkInBounds();
 
@@ -163,10 +170,24 @@ public class Boid extends Entity {
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
     }
 
-    private void useStamina() {
+    private boolean changeStamina(float speed) {
+        boolean haveStamina = stamina > 0;
+        float sprintThreshold = maxSpeed*0.7f;
+        float staminaChange = speed-sprintThreshold;  //+ if using stamina / - if regaining stamina
+        //has stamina and
+        if(haveStamina && stamina - staminaChange > 0) {
+            stamina -= staminaChange;
+            if(stamina > maxStamina)
+                stamina = maxStamina;
+        }
+        else {
+            System.out.print("run out of stamina, old speed " + speed);
+            velocity.scl(sprintThreshold/speed*0.8f);
+            System.out.println(" ,new speed = " + velocity.len());
+        }
+        return stamina > 0;
 
     }
-
     public void setNewVelocity(Vector3 newVel){
         velocity.set(newVel);
     }
