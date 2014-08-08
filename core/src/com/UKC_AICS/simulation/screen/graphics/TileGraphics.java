@@ -91,7 +91,6 @@ public class TileGraphics extends SpriteCache {
 			recreate = true;
 			id = cacheRow_Map.get(y);
 			this.beginCache(id);
-//			System.out.println("Recreate cache " + y + " id "+ cacheRow_Map.get(y));
 		}
 		else
 			this.beginCache();
@@ -105,10 +104,13 @@ public class TileGraphics extends SpriteCache {
 				
 				layermap = infoLayers.get(layer);
 				amount = layermap[x][y];
-//				if(recreate && cacheRow_Count.containsKey(id)){
-//					if(numCachedLayers >= cacheRow_Count.get(id))
-//						break;
-//				}
+				if(recreate && cacheRow_Count.containsKey(id)){
+					if(numCachedLayers > cacheRow_Count.get(id)){
+						System.out.println("**Trying to add more to cache than previous. Adding cache " + numCachedLayers +
+								" limit " + cacheRow_Count.get(id));
+						break;
+					}
+				}
 //				if(recreate && Math.abs(amount-this.infoLayers.get(layer)[x][y]) < 10){
 //					copyMap = true;
 //				}
@@ -118,18 +120,10 @@ public class TileGraphics extends SpriteCache {
 				else if(layer.equals("terrain")){
 					
 					amount = (byte) ((amount==1) ? 90f : 0);
-//					System.out.println(layer + amount);
-//					System.out.println(layer + amount);
-//				if(layer.equals("water")){
-//					amount = (byte) ((amount >= 50) ? 90f : 0);
-//					System.out.println(amount);
-//					amount = 0;
 				}
 				else{
-//					amount = (byte) (Math.floor(amount/10)*10);
 					amount = (byte) (Math.round((amount+5)/10)*10);
 				}
-//				if(amount < 0 || firstUpdate)
 					nextRegion = manager.getTileRegion(layer, amount);
 				
 				if(nextRegion != null){
@@ -154,8 +148,6 @@ public class TileGraphics extends SpriteCache {
 		if(!cacheRow_Map.containsKey(y))
 			cacheRow_Map.put(y, id);
 		if(!cacheRow_Count.containsKey(id)){
-//			firstUpdate = false;
-//			System.out.println("Cache " + y + " contains " + numCachedLayers + " elements");
 			cacheRow_Count.put(id, numCachedLayers);
 			cacheableLayers = numCachedLayers;
 		}
@@ -166,7 +158,6 @@ public class TileGraphics extends SpriteCache {
 	Array<String> layersToCopy = new Array<String>();
 	public void updateTiles(Batch batch, boolean update, HashMap<String, byte[][]> infoLayers){
 		this.setProjectionMatrix(batch.getProjectionMatrix());
-//		System.out.println(infoLayers.get("grass").length);
 		
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		
@@ -186,9 +177,7 @@ public class TileGraphics extends SpriteCache {
 					}
 					else if (update){
 						for(String layer : infoLayers.keySet()){
-//							System.out.println("updating layer " + layer);
 							if(!Arrays.equals(this.infoLayers.get(layer)[y], infoLayers.get(layer)[y])){
-//								System.out.println("Value change, copy layer " + layer);
 //								if(createCache(y, infoLayers)){
 									createCache(y, infoLayers);
 									copyLayers = true;
@@ -209,23 +198,7 @@ public class TileGraphics extends SpriteCache {
 					copyLayers = false;
 					layersToCopy.clear();
 				}
-//				this.infoLayers = (HashMap<String, byte[][]>) infoLayers.clone();
-//			}
-//			else{
-//				for(int y = 0; y<mapElementsY; y++){
-//					if(!cacheRow_Map.containsKey(y)){
-//						createCache(y, infoLayers);
-//						continue;
-//					}
-//				}
-//			}
-//			for(int y = 0; y<mapElementsY; y++){
-//				if(!cacheRow_Map.containsKey(y) || update){
-////					createCache(y);
-//				}
-//				
-//			}
-//			System.out.println(cacheRow_Map.size);
+				
 			this.begin();
 			int id;
 			for(int i : cacheRow_Map.keys()){
@@ -236,7 +209,6 @@ public class TileGraphics extends SpriteCache {
 				catch(NullPointerException e){
 //					System.out.println("nul cache id........ row " + i + " id " + id);
 				}
-//				System.out.println("Drawing cache");
 			}
 			this.end();
 			
@@ -386,11 +358,9 @@ public class TileGraphics extends SpriteCache {
 	}
 	
 	private void copyInformationLayer(String sourceKey, byte[][] sourceValue, HashMap<String, byte[][]> targetMap){
-//		System.out.println("Copy layer " + sourceKey);
 		byte[][] targetValue = new byte[sourceValue.length][sourceValue[0].length];
 		for(int i = 0; i < sourceValue.length; i++){
 			for(int j = 0; j < sourceValue[i].length; j++){
-//				System.out.println(" i " + i + " j " + j + " targetlength i " + targetValue.length + " j " + targetValue[i].length);
 				targetValue[i][j] = sourceValue[i][j];
 			}
 		}

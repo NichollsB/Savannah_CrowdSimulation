@@ -135,4 +135,12 @@ public class WorldManager extends Manager {
             }
         }
     }
+    
+    
+    public void createObject(ObjectData objData, byte subtype, int x, int y){
+    	com.UKC_AICS.simulation.entity.Object obj = new com.UKC_AICS.simulation.entity.Object(objData, x, y);
+    	obj.setSubType(subtype);
+    	putObject(obj);
+    }
+  
 }

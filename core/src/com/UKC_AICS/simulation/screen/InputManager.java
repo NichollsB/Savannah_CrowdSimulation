@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.screen;
 
+import com.UKC_AICS.simulation.gui.controlutils.ControlState;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -9,7 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class InputManager implements InputProcessor{
 	
-	private Boolean lClick = false;
+	private Boolean lClick = false, rClick = false;
 	private SimulationScreen screen;
 	private int width;
 	private int height;
@@ -73,13 +74,19 @@ public class InputManager implements InputProcessor{
 			//screen.pickPoint(screenX, flipY(screenY));
 			
 		}
+		if(button == Input.Buttons.RIGHT){
+			rClick = true;
+			
+			dragX = screenX; dragY= screenY;
+		}
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		if(lClick){
+		if(lClick|| rClick){
 			lClick = false;
+			rClick = false;
 			if(!dragging){
 				Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
 				screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
@@ -93,18 +100,20 @@ public class InputManager implements InputProcessor{
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		if(!inBounds) return false;
-		if(lClick){
-//			Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
-//			screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
-			if(!dragging)
-				dragging = true;
-			if(dragging){
-				camera.translate(dragX-screenX, screenY-dragY);
-//				camera.update();
-				dragX = screenX;
-				dragY = screenY;
+		if(lClick || rClick){
+			if(ControlState.STATE == ControlState.State.NAVIGATE || rClick){
+	//			Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
+	//			screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
+				if(!dragging)
+					dragging = true;
+				if(dragging){
+					camera.translate(dragX-screenX, screenY-dragY);
+	//				camera.update();
+					dragX = screenX;
+					dragY = screenY;
+				}
+				//screen.pickPoint(screenX, flipY(screenY));
 			}
-			//screen.pickPoint(screenX, flipY(screenY));
 		}
 		return true;
 	}

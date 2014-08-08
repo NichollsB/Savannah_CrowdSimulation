@@ -150,7 +150,6 @@ public class SpriteManager {
 			for(AtlasRegion region : atlas.getRegions()){
 				atSprite = new AtlasSprite(region);
 				atSprite.setSize(region.originalWidth, region.originalHeight);
-//				System.out.println("region name " + region.name);
 				if(region.name == "0" || !region.name.contains("#")){
 					if(!environmentTiles_sprites.containsKey("0")){
 						ObjectMap atlasMap = new ObjectMap<Float, AtlasSprite>();
@@ -245,18 +244,11 @@ public class SpriteManager {
 	}
 
 	public AtlasRegion getTileRegion(String layer, int amount){
-//		String regionName = layer + "#" + amount;
-//		System.out.println(environmentTiles_Atlas.findRegion(regionName));
 		try{
-//			System.out.println(layer + amount);
 			if(layer == "terrain")
 				layer = "water";
 			if(layer != null && amount > 0)
 				return environmentTiles_Atlas.findRegion(layer + "#" + amount);
-//			else if(amount <= 0){
-//				return blankAtlas.findRegion("0");
-////				System.out.println("FINDING NULL" + layer + " " + amount);
-//			}
 			else
 				return null;
 			
@@ -275,15 +267,6 @@ public class SpriteManager {
 	}
 		
 	public AtlasSprite getTileSprite(String layer, float amount){
-//		String name = (layer + "_" + amount);
-//		if(layer == "water"){
-//			System.out.println(layer + amount);
-//			System.out.print(environmentTiles_sprites.containsKey(layer));
-//			for(Float s : environmentTiles_sprites.get(layer).keys()){
-//				System.out.println("sprite " + s);
-//			}
-//		}
-//		System.out.println(environmentTiles_sprites.containsKey(layer) + " " + amount);
 		String l = layer;
 		if(l == "water")return null;
 		if(l == "terrain")
@@ -292,18 +275,6 @@ public class SpriteManager {
 		if(!environmentTiles_sprites.containsKey(l)) return null;
 		if(!environmentTiles_sprites.get(l).containsKey(amount)) return null;
 			
-//			System.out.println("layer exists " + environmentTiles_sprites.get(name).keys());
-//			Array<Float> keys = environmentTiles_sprites.get(layer).keys().toArray();
-//			float threshold;
-////			if(amount < keys.get(0))
-////				return null;
-//			int nullcount=0;
-//			for(int i = 0; i < keys.size; i ++){
-//				threshold = keys.get(i);
-//				if(amount >= keys.get(i) && amount < keys.get(i+1)){
-//					if(environmentTiles_sprites.get(layer).get(keys.get(i)) == null) nullcount++;
-//					return environmentTiles_sprites.get(layer).get(keys.get(i));
-//				}
 //			
 			return environmentTiles_sprites.get(l).get(amount);
 		

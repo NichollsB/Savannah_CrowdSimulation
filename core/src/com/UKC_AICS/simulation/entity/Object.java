@@ -27,6 +27,7 @@ public class Object extends Entity {
         this.type = objData.getType();
         this.subType = objData.getSubType();
         this.position = new Vector3(x, y, 0);
+        initMass();
     }
 
     private void initMass(float mass) {
@@ -51,6 +52,11 @@ public class Object extends Entity {
 
 
     	return string;
+    }
+    
+    @Override
+    public byte getTertiaryType(){
+    	return subType;
     }
 
 }
