@@ -247,7 +247,6 @@ public class SpriteManager {
 	public AtlasRegion getTileRegion(String layer, int amount){
 //		String regionName = layer + "#" + amount;
 //		System.out.println(environmentTiles_Atlas.findRegion(regionName));
-		AtlasRegion region = null;
 		try{
 //			System.out.println(layer + amount);
 			if(layer == "terrain")
@@ -260,21 +259,11 @@ public class SpriteManager {
 //			}
 			else
 				return null;
-//			if(region != null)
-//				return region;
-//			else{
-//				region = blankAtlas.findRegion("0");
-//				System.out.println("finding region " + layer + amount + " FOUND " + region);
-//				return region;
-//			}
 			
 		} catch (NullPointerException e){
 			
-			region = null;
-			System.out.println("finding region failed " + layer + amount + " FOUND " + region);
+			return null;
 		}
-//		System.out.println("FOUND REGION " + layer + amount +  region);
-		return region;
 	}
 	
 	public AtlasRegion getEmptyRegion(){

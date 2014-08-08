@@ -110,7 +110,7 @@ public class TileGraphics extends SpriteCache {
 //						break;
 //				}
 //				if(recreate && Math.abs(amount-this.infoLayers.get(layer)[x][y]) < 10){
-//					break;
+//					copyMap = true;
 //				}
 				
 				if(layer.equals("water"))
@@ -137,14 +137,14 @@ public class TileGraphics extends SpriteCache {
 					this.add(lastRegion, xPos, y*lastRegion.originalHeight, lastRegion.originalWidth, lastRegion.originalHeight);
 					cacheCount ++;
 					numCachedLayers++;
-					copyMap = true;
+//					copyMap = true;
 				}
 				else if(!cacheRow_Count.containsKey(id)){
 					lastRegion = manager.getEmptyRegion();
 					this.add(lastRegion, xPos, y*lastRegion.originalHeight, lastRegion.originalWidth, lastRegion.originalHeight);
 					cacheCount ++;
 					numCachedLayers++;
-					copyMap = true;
+//					copyMap = true;
 				}
 			}
 			if(lastRegion!= null)
@@ -190,6 +190,7 @@ public class TileGraphics extends SpriteCache {
 							if(!Arrays.equals(this.infoLayers.get(layer)[y], infoLayers.get(layer)[y])){
 //								System.out.println("Value change, copy layer " + layer);
 //								if(createCache(y, infoLayers)){
+									createCache(y, infoLayers);
 									copyLayers = true;
 									layersToCopy.add(layer);
 									break;
