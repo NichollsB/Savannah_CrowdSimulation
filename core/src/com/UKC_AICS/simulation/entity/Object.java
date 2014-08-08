@@ -9,17 +9,18 @@ public class Object extends Entity {
 
     float mass;
 
-    public Object(byte type, byte subType, Vector3 position) {
+    public Object(byte type, byte subType, Vector3 position, float mass) {
         this.type = type;
+        this.subType = subType;
         this.position = position;
-        initMass();
+        initMass(mass);
     }
 
     public Object(byte type, byte subType, int x, int y) {
         this.type = type;
         this.subType = subType;
         this.position = new Vector3(x, y, 0);
-        initMass();
+        initMass(mass);
     }
     
     public Object(ObjectData objData, int x, int y) {
@@ -28,19 +29,11 @@ public class Object extends Entity {
         this.position = new Vector3(x, y, 0);
     }
 
-    private void initMass() {
+    private void initMass(float mass) {
         if(type == (byte) 0) {
-            mass = 100f;
+//            this.mass = mass;
+            this.mass = 50f;
         }
-    }
-
-    //TODO add corpse decay into world manager (every day?)
-    public void corpseDecay() {
-        mass -= 0.5;
-    }
-
-    public void corpseDecay(float decay) {
-        mass -= decay;
     }
 
     public float getMass() {

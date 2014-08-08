@@ -154,7 +154,7 @@ public class Boid extends Entity {
         //TODO add method to calc stamina usage -> based on velocity.len % of maxspeed - 0-1
         //TODO make it so stamina must be above xx amount to move
 
-
+        //Stamina related calcs
         float speed = velocity.len();
         changeStamina(speed);
         position.add(velocity);
@@ -303,6 +303,7 @@ public class Boid extends Entity {
         string += "\n\t hunger:" + (int)hunger;
         string += "\n\t thirst:" + (int)thirst;
         string += "\n\t age:" + age ;
+        string += "\n\t stamina:" + stamina;
         string += "\n\t state:" + state;
         string += "\n\t orientation:" + (int)orientation;
 

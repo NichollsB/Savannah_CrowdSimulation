@@ -128,7 +128,7 @@ public class WorldManager extends Manager {
     private void decayCorpses() {
         for(Entity corpse : objects) {
             if( corpse.getType()==0) {
-                ((Object)corpse).corpseDecay(1f);
+                ((Object)corpse).reduceMass(1f);
                 if(((Object)corpse).getMass()<0.5f) {
                     removeObject(corpse);
                 }

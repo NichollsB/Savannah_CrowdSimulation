@@ -66,7 +66,7 @@
         <wander>0.1f</wander>
     </species>
 
-
+<!-- Carnivores -->
     <species name="lion">
         <number>4</number>
         <byte>3</byte>  <!-- this is the sub-type -->
