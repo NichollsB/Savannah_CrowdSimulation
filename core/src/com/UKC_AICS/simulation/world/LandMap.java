@@ -11,6 +11,8 @@ import static com.UKC_AICS.simulation.Constants.TILE_SIZE;
  * @author Emily
  */
 public class LandMap {
+	
+	
 
     private Vector3 size;
     public HashMap<String, byte[][]> information_layers = new HashMap<String, byte[][]>();
