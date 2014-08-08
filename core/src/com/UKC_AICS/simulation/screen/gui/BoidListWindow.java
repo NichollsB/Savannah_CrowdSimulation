@@ -152,7 +152,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	public BoidTree_Node addBoidNode(byte spByte, String name, String info, Entity boid){
 		Label label;
 		BoidTree_Node node, boidNode;
-		
+		if(boid == null) return null;
 		if(!boidRoots.containsKey(spByte)){
 			System.out.println("Missing rootNode");
 			return null;
@@ -164,13 +164,10 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		label = new Label(boidName, skin);
 		node = new BoidTree_Node(label, boidName, info, spByte, boid, false);
 		boidNode = node;
-//		boidRoots.get(spByte).add(node);
-//		System.out.println("node" + rootGroups.get(spByte).get(boid.group));
 		try{
 			rootGroups.get(spByte).get(boid.getTertiaryType()).add(node);
 			rootGroups.get(spByte).get(boid.getTertiaryType()).incrementNumChildren(1);
 			rootGroups.get(spByte).get(boid.getTertiaryType()).setText();
-			
 			node = boidRoots.get(spByte);
 			node.incrementNumChildren(1);
 			node.setText();
@@ -178,6 +175,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 			root.setNumChildren(boidNodes_num);
 		}
 		catch(NullPointerException e){
+			System.out.println("Adding boid node to root.");
 			boidRoots.get(spByte).add(node);
 		}
 		return boidNode;
@@ -209,13 +207,13 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 * @return Null if no root node with identifier spByte exists, or BoidTree_Node if a new group node is created, or already exists
 	 */
 	public BoidTree_Node addNodeGroup(byte spByte, byte group, String info){
-		
+		System.out.println("Make group for species " + spByte + " group " + group);
 		if(!boidRoots.containsKey(spByte)) return null;
 		if(!rootGroups.containsKey(spByte)){
 //			addRootNode(spByte, Byte.toString(spByte), info);
 			rootGroups.put(spByte, new ObjectMap<Byte, BoidTree_Node>());
 		}
-		else if(rootGroups.get(spByte).containsKey(group)) 
+		if(rootGroups.get(spByte).containsKey(group)) 
 			return rootGroups.get(spByte).get(group);
 		BoidTree_Node rootNode = boidRoots.get(spByte);
 		String name = rootNode.getName() + " " + group;
@@ -226,7 +224,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		groups.put(group, newGroup);
 		rootGroups.put(spByte, groups);
 		rootNode.add(newGroup);
-//		System.out.println("new Group " + newGroup);
+		System.out.println("new group "+ newGroup);
 		return newGroup;
 	}
 	
@@ -272,23 +270,21 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 * @param select If Boolean is false will deselect all nodes, otherwise attempts the selection of associated node
 	 */
 	public void selectNodeByBoid(Entity boid, boolean select){
-
+		
+		
 		if(!select || boid == null){ 
 			deselectNodes(); 
 //			tree.getSelection().choose(root);
 			root.expandTo();
 			root.setExpanded(true);
-//			System.out.println("select root node");
 			return;
 		}
+		if(selectedBoid != null)
+			if(boid.equals(selectedBoid))
+				return;
 			
-//		if(selectedBoid != null){
-//			if(selectedBoid.equals(boid)) 
-//				return;
-//		}
-//			if(selectedBoid.equals(boid)) return;
 		if(boidNodes.containsKey(boid)){
-//			tree.collapseAll();
+//			System.out.println("Found entity in boidNodes " + boid.getType());
 			tree.getSelection().choose(boidNodes.get(boid));
 		}
 	}
@@ -300,24 +296,21 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 * @param node BoidTree_Node to be selected
 	 */
 	private void nodeSelected(BoidTree_Node node){
-//		System.out.println(node.getName());
-		deselectNodes();
-//		if(node == null){ 
-//			
-//			root.expandTo();
-//			root.setExpanded(true);
-//			return;
-//		} else 
+//		deselectNodes();
 		if (node.equals(root)){
+			deselectNodes();
 			root.expandTo();
 			root.setExpanded(true);
 			selectedNode = node;
 			return;
 		} else if(node.equals(selectedNode)){
+			deselectNodes();
 			node.expandTo();
 			node.setExpanded(true);
+			selectedNode = node;
 			return;
 		}
+		deselectNodes();
 		node.expandTo();
 		node.setExpanded(true);
 		if(node.hasBoid()) {
@@ -362,7 +355,6 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		selectedNode = node;
 		
 		SelectedEntity.set((byte)1, selectedType, selectedGroup);
-		System.out.println("Selected " + SelectedEntity.selected());
 	}
 	
 	/**
@@ -385,7 +377,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		boidSelected = false;
 		selectedBoid = null;
 		groupSelected = false;
-		
+		selectedNode = null;
 	}
 	
 	/**
@@ -410,9 +402,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 */
 	public String update(Array<Entity> boids, boolean updateNodes){
 		if(updateNodes){
-//			compareAndRemoveNodes(boids);
 			compareAndUpdateNodes(boids);
-//			System.out.println(boidSelected);
 			if(groupSelected){
 				selectedNode.setInfo(selectedNode.getName() + "/n" + "/t" + "Population: " + selectedNode.getChildren().size);
 				selectedInfo = selectedNode.getInfo();
@@ -420,12 +410,8 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		}
 		if(boidSelected){
 			selectedInfo = selectedBoid.toString();
-//			System.out.println(selectedBoid.toString());
 			
 		}
-		
-//		System.out.println(selectedInfo);
-//		System.out.println("selected " + selectedInfo);
 		return selectedInfo;
 	}
 	
@@ -445,12 +431,6 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 
 		scroll.setSmoothScrolling(true);
 		scroll.setScrollBarPositions(true, false);
-//		scroll.updateVisualScroll();
-//		scroll.setForceScroll(true, true);
-//		System.out.println(scroll.getScrollY());
-//		scroll.scrollTo(0,0,100,100);
-//		System.out.println(scroll.getScrollY());
-//		scroll.updateVisualScroll();
 		scroll.setFadeScrollBars(false);
 		return scroll;
 	}
@@ -468,16 +448,9 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 			
 				try{
 					BoidTree_Node selected  = (BoidTree_Node) tree.getSelection().getLastSelected();
-	//				System.out.println("selected node "+ selected);
 					nodeSelected(selected);
 				}
 				catch(IllegalStateException e){
-	//				System.out.println("selected node "+ selectedNode);
-	//				if(!selectedNode.equals(root))
-	//					nodeSelected(root);
-	//				else
-//					nodeSelected(null);
-	//				System.out.println("Same boid was probably selected twice via viewport. For some reason this causes an exception in tree Selection");
 				}
 		}
 		
@@ -492,18 +465,13 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	private boolean clicked = false;
 	@Override
 	public void buttonSelected(ButtonType button) {
-//		System.out.println("Selected" + boidSelected);
 		tree.getSelection().choose(selectedNode);
 		if(button == ButtonType.CHECKED){
-//			System.out.println("RSelected" + button.toString());
-//			buttons.get(button).toggle();
 			ControlState.changeState(buttons.get(button).isChecked(), ControlState.State.PLACEMENT);
 			if(selectedNode.equals(root))
 				SelectedEntity.set(false);
 			else
 				SelectedEntity.set((byte)1, selectedType, selectedGroup);
-//				System.out.println("Selected " + SelectedEntity.selected());
-//			listener.onCheck(selectedType, selectedGroup, selectedBoid, buttons.get(button).isChecked(), ControlState.State.PLACEMENT);
 		}
 		for(TreeOptionsListener listener : listeners){
 			if(button == ButtonType.ADD){
@@ -535,11 +503,9 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		}
 		public void clicked (InputEvent event, float x, float y) {
 			clicked = true;
-//			System.out.print("CLICKED");
 			buttonSelected(btn);
 		}
 		public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
-//			System.out.println("Hovering");
 			for(HoverListener listener : hoverListeners){
 				listener.hover(event, x, y, btnInfo);
 			}

@@ -21,7 +21,6 @@ public abstract class ControlState {
 		if(stateChanged.equals(State.PLACEMENT)) s = (isChecked) ? State.PLACEMENT : DEFAULT;
 		
 		STATE = s;
-//		System.out.println(STATE.stateName);
 	}
 
 	

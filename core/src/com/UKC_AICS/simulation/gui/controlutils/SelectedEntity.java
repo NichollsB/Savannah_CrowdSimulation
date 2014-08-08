@@ -38,7 +38,7 @@ public abstract class SelectedEntity{
 		GROUP = group;
 		SELECTED = true;
 		
-		System.out.println("selected entity " + SELECTED);
+//		System.out.println("selected entity " + SELECTED);
 		
 	}
 	

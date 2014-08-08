@@ -102,24 +102,6 @@ public class Graphics {
 				if(dynamicTiles != null)
 					Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
 					dynamicTiles.updateTiles(batch, true, tileMap);
-//				
-				//drawGrass
-				//int x=0, y=0;
-	//			Texture tex;
-	//			if(tileMap.length > 0){
-	//				for(int y = 0; y < renderHeight; y+=16){
-	//					for(int x = 0; x < renderWidth; x+=16){
-	//						//tex = spriteManager.getGrassTexture();
-	//						sprite = spriteManager.getGrassTexture();
-	//						sprite.setPosition(x, y);
-	//						sprite.draw(batch);
-	////						batch.draw(sprite, x, y);
-	//						//x+=16;
-	//						//System.out.println("x " + x + " y " + y);
-	//					}
-	//					//y+=16;
-	//				}
-	//			}
 				
 		    	batch.begin();
 				byte b = 0;
@@ -127,9 +109,6 @@ public class Graphics {
 					for(Entity entity : entityArray){
 						sprite = spriteManager.getObjectSprite(entity.getType());
                         if(sprite!=null){
-//							Vector3 pos = entity.getPosition();
-////							sprite.setPosition(pos.x, pos.y);
-//                            if(entity.getType() == 0 || entity.getType() == 1) System.out.println("corpse");
                             updateSpritePosition(entity, sprite);
                             sprite.draw(batch);
                         }
@@ -213,9 +192,6 @@ public class Graphics {
 		for(Entity entity : entityArray){
 			types.add(entity.getType());
 		}
-//		System.out.println(types.size);
-//		types.add((byte)1);
-//		types.add((byte)2);
 		spriteManager.loadAssets_Objects(types);
 	}
 	

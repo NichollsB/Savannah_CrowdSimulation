@@ -282,14 +282,12 @@ public class SimulationManager extends Manager {
     	return speciesData;
     }
     public void generateObject(byte type, byte subType, int x, int y){
-    	System.out.println("Trying to generate object");
     	ObjectData obj;
     	if(objectData.containsKey(type)){
     		obj = objectData.get(type);
     		worldManager.createObject(obj, subType, x, y);
     		return;
     	}
-    	System.out.println("Failed to resolve ObjectData");
     }
     public HashMap<Byte, ObjectData> getObjectDataInfo(){
     	return objectData;

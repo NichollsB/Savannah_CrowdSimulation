@@ -43,18 +43,18 @@ public class SettingsEditor implements DialogueWindowHandler, TreeOptionsListene
 		System.out.println("Settings Confirmed " + window.getName() + "\n"
 				+ "Field : Value");
 		for(String s : value.keys()){
-			System.out.println(s + " : " + value.get(s));
+//			System.out.println(s + " : " + value.get(s));
 		}
 	}
 
 	@Override
 	public void onCancelled(Window window) {
-		System.out.println("Settings cancelled" + window.getName());
+//		System.out.println("Settings cancelled" + window.getName());
 	}
 
 	@Override
 	public void onAdd(byte type, byte subtype, Object object) {
-		System.out.println("Add in tree window");
+//		System.out.println("Add in tree window");
 	}
 
 	@Override

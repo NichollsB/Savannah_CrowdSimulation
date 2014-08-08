@@ -62,11 +62,8 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
     
     //West
     private Array<Entity> boids;
-    private ObjectMap<Byte, String> species;
     private final BoidListWindow boidTree = new BoidListWindow("Boids", skin, this, true, (byte)1);
     private final BoidListWindow objectTree = new BoidListWindow("Objects", skin, this, false, (byte)1);
-    private final HashMap<Byte, Tree.Node> speciesNodeMap = new HashMap<Byte, Tree.Node>();
-    private final HashMap<Boid, Tree.Node> boidNodeMap = new HashMap<Boid, Tree.Node>();
     
 	//Hovering popup
 	private final Window hoverWindow = new Window("", skin);
@@ -258,8 +255,8 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 //    	westTable.add(new Label("Boids", skin));
     	westTable.row();
    	 	westTable.add(boidTree).top().fill().expand();
-   	 	westTable.row();
-   	 	westTable.add(objectTree).top().fill().expand();
+//   	 	westTable.row();
+//   	 	westTable.add(objectTree).top().fill().expand();
    	 	westTable.pack();
     	return westTable;
     }
@@ -300,7 +297,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
     public void resize(int width, int height){
     	setViewRect(width, height);
     	boidTree.resize();
-    	objectTree.resize();
+//    	objectTree.resize();
     }
     
     private void setViewRect(int width, int height){
@@ -396,7 +393,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 		boolean select = false; 
 		select = (entity == null) ? false : true;
 		boidTree.selectNodeByBoid(entity, select);
-		objectTree.selectNodeByBoid(entity, select);
+//		objectTree.selectNodeByBoid(entity, select);
 	}
 	
 

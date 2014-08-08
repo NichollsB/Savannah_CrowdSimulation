@@ -335,6 +335,8 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     	HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
         gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
         //What should happen when clicking on the screen
+        System.out.println("Mousex " + mousePosition.x + " y " + mousePosition.y +
+        		screenX + " " + screenY);
     	if(ControlState.STATE == ControlState.State.NAVIGATE){
 	        Boid boid = simulationManager.getBoidAt(screenX,screenY);
 	//        System.out.println(simulationManager.getBoidAt(screenX,screenY));
@@ -356,6 +358,8 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     public void setMousePosition(int x, int y){
     	mousePosition.x = x;
     	mousePosition.y = y;
+    	HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(x, y);
+    	gui.setConsole("x: " + x + " y: " + y + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
     }
 
 	@Override
