@@ -3,6 +3,8 @@ package com.UKC_AICS.simulation.screen.graphics;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteCache;
@@ -27,11 +29,15 @@ public class TileGraphics extends SpriteCache {
 	int cacheCount = 0;
 	private Array<Byte> cacheRows;
 	private ObjectMap<Integer, Integer> cacheRow_Map = new ObjectMap<Integer, Integer>();
+	private ObjectMap<Integer, Integer> cacheRow_Count = new ObjectMap<Integer, Integer>();
 //	private int[][] 
 	
 	private final static int MAXCACHE = 100000;
 	private static SpriteCache tileCache = new SpriteCache(MAXCACHE, false);
-	private int cacheableLayers;
+	private int cacheableLayers = 0;
+	
+	AtlasRegion lastRegion = null;
+	private boolean firstUpdate = true;
 	
 	public TileGraphics(HashMap<String, byte[][]> infoLayers, SpriteManager manager, SpriteCache cache){
 //		this.infoLayers = infoLayers;
@@ -53,81 +59,107 @@ public class TileGraphics extends SpriteCache {
 				if(mapElementsY < f[i].length){
 					mapElementsY = (byte) f[i].length;
 				}
+				if(lastRegion == null){
+					outerloop:
+					for(int j = 0 ; j < f[i].length; j++){
+						for(int n = 0; n <= 100; n+=10){
+							lastRegion = manager.getTileRegion(s, n);
+							if(lastRegion!=null)
+								break outerloop;
+						}
+					}
+				}
 					
 			}
 		}
 		
 	}
 	
-	public void createCache(int y, HashMap<String, byte[][]> infoLayers){
-//		System.out.println(y);
+	public boolean createCache(int y, HashMap<String, byte[][]> infoLayers){
+//		
 		byte[][] layermap;
 		byte amount;
-		AtlasRegion region = null;
-		AtlasRegion nextRegion = region;
+		
+		AtlasRegion nextRegion = lastRegion;
 		int xPos = 0;
 		int numCachedLayers=0;
+		boolean recreate = false;
+		boolean copyMap = false;
+		int id = 0;
 		if(cacheRow_Map.containsKey(y)){
-			this.beginCache(cacheRow_Map.get(y));
-//			System.out.println("Recreate cache " + y + " id "+ cacheRow_Map.get(y));
+			
+			recreate = true;
+			id = cacheRow_Map.get(y);
+			this.beginCache(id);
 		}
 		else
 			this.beginCache();
+		outer:
 		for(int x = 0; x<mapElementsX; x++)
 		{
+			
 			for(String layer : infoLayers.keySet())
 			{
+				
+				
 				layermap = infoLayers.get(layer);
 				amount = layermap[x][y];
-				
-				if(layer.equals("terrain")){
-					amount = (byte) ((amount==1) ? 90f : 0);
-//					System.out.println(amount);
-//				if(layer.equals("water")){
-//					amount = (byte) ((amount >= 50) ? 90f : 0);
-//					System.out.println(amount);
-//					amount = 0;
-				}
-				else{
-					for(int i = 0, nexti = 0; i <= 100; i+=10, nexti=i+10){
-						if(amount >= i &&amount < nexti){
-							amount = (byte) i;
-						}
+				if(recreate && cacheRow_Count.containsKey(id)){
+					if(numCachedLayers > cacheRow_Count.get(id)){
+						System.out.println("**Trying to add more to cache than previous. Adding cache " + numCachedLayers +
+								" limit " + cacheRow_Count.get(id));
+						break;
 					}
 				}
-				nextRegion = manager.getTileRegion(layer, amount);
-				if(nextRegion != null){
-					region = nextRegion;
-//					System.out.println(x);
-//					System.out.println("layer region " + nextRegion.name + " x " + x + " y " + y);
-					this.add(region, xPos, y*region.originalHeight, region.originalWidth, region.originalHeight);
-					cacheCount += 1;
-					numCachedLayers++;
+//				if(recreate && Math.abs(amount-this.infoLayers.get(layer)[x][y]) < 10){
+//					copyMap = true;
+//				}
+				
+				if(layer.equals("water"))
+					amount = -1;
+				else if(layer.equals("terrain")){
+					
+					amount = (byte) ((amount==1) ? 90f : 0);
 				}
-//				else{
-//					System.out.println("null region...");
-//				}
-//				else if (numCachedLayers <= cacheableLayers){
-//					cacheCount++;
-//					numCachedLayers++;
-////					System.out.println(layer + cacheCount);
-//					this.add(new Sprite());
-//					
-//				}
+				else{
+					amount = (byte) (Math.round((amount+5)/10)*10);
+				}
+					nextRegion = manager.getTileRegion(layer, amount);
+				
+				if(nextRegion != null){
+					lastRegion = nextRegion;
+					this.add(lastRegion, xPos, y*lastRegion.originalHeight, lastRegion.originalWidth, lastRegion.originalHeight);
+					cacheCount ++;
+					numCachedLayers++;
+//					copyMap = true;
+				}
+				else if(!cacheRow_Count.containsKey(id)){
+					lastRegion = manager.getEmptyRegion();
+					this.add(lastRegion, xPos, y*lastRegion.originalHeight, lastRegion.originalWidth, lastRegion.originalHeight);
+					cacheCount ++;
+					numCachedLayers++;
+//					copyMap = true;
+				}
 			}
-			if(region!= null)
-				xPos += region.originalWidth;
+			if(lastRegion!= null)
+				xPos += lastRegion.originalWidth;
 		}
-		int id = this.endCache();
-		cacheRow_Map.put(y, id);
+		id = this.endCache();
+		if(!cacheRow_Map.containsKey(y))
+			cacheRow_Map.put(y, id);
+		if(!cacheRow_Count.containsKey(id)){
+			cacheRow_Count.put(id, numCachedLayers);
+			cacheableLayers = numCachedLayers;
+		}
+		return copyMap;
 	}
 	
 	boolean copyLayers = false;
 	Array<String> layersToCopy = new Array<String>();
 	public void updateTiles(Batch batch, boolean update, HashMap<String, byte[][]> infoLayers){
 		this.setProjectionMatrix(batch.getProjectionMatrix());
-//		System.out.println(infoLayers.get("grass").length);
 		
+		Gdx.gl.glEnable(GL20.GL_BLEND);
 		
 		if(manager.update()){
 			if(cacheableLayers <= 0)
@@ -145,17 +177,20 @@ public class TileGraphics extends SpriteCache {
 					}
 					else if (update){
 						for(String layer : infoLayers.keySet()){
-//							System.out.println("updating layer " + layer);
 							if(!Arrays.equals(this.infoLayers.get(layer)[y], infoLayers.get(layer)[y])){
-//								System.out.println("Value change, copy layer " + layer);
-								createCache(y, infoLayers);
-								copyLayers = true;
-								layersToCopy.add(layer);
-								break;
+//								if(createCache(y, infoLayers)){
+									createCache(y, infoLayers);
+									copyLayers = true;
+									layersToCopy.add(layer);
+									break;
+//								}
 							}
 						}
 					}
 				}
+//				if(firstUpdate){
+//					firstUpdate = false;
+//				}
 				if(copyLayers){
 					for(String layer : layersToCopy){
 						copyInformationLayer(layer, infoLayers.get(layer), this.infoLayers);
@@ -163,23 +198,7 @@ public class TileGraphics extends SpriteCache {
 					copyLayers = false;
 					layersToCopy.clear();
 				}
-//				this.infoLayers = (HashMap<String, byte[][]>) infoLayers.clone();
-//			}
-//			else{
-//				for(int y = 0; y<mapElementsY; y++){
-//					if(!cacheRow_Map.containsKey(y)){
-//						createCache(y, infoLayers);
-//						continue;
-//					}
-//				}
-//			}
-//			for(int y = 0; y<mapElementsY; y++){
-//				if(!cacheRow_Map.containsKey(y) || update){
-////					createCache(y);
-//				}
-//				
-//			}
-//			System.out.println(cacheRow_Map.size);
+				
 			this.begin();
 			int id;
 			for(int i : cacheRow_Map.keys()){
@@ -188,9 +207,8 @@ public class TileGraphics extends SpriteCache {
 					this.draw(id);
 				}
 				catch(NullPointerException e){
-					System.out.println("nul cache id........ row " + i + " id " + id);
+//					System.out.println("nul cache id........ row " + i + " id " + id);
 				}
-//				System.out.println("Drawing cache");
 			}
 			this.end();
 			
@@ -340,11 +358,9 @@ public class TileGraphics extends SpriteCache {
 	}
 	
 	private void copyInformationLayer(String sourceKey, byte[][] sourceValue, HashMap<String, byte[][]> targetMap){
-//		System.out.println("Copy layer " + sourceKey);
 		byte[][] targetValue = new byte[sourceValue.length][sourceValue[0].length];
 		for(int i = 0; i < sourceValue.length; i++){
 			for(int j = 0; j < sourceValue[i].length; j++){
-//				System.out.println(" i " + i + " j " + j + " targetlength i " + targetValue.length + " j " + targetValue[i].length);
 				targetValue[i][j] = sourceValue[i][j];
 			}
 		}

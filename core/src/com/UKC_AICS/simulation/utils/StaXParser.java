@@ -22,24 +22,29 @@ import java.util.Iterator;
  */
 public class StaXParser {
 
-    static final String NAME = "name";
-    static final String SPECIES = "species";
-    static final String COHESION = "cohesion";
-    static final String ALIGNMENT = "alignment";
-    static final String SEPARATION  = "separation";
-    static final String WANDER = "wander";
-    static final String NUMBER = "number";
-    static final String BYTE = "byte";
-    static final String SPRITELOCATION = "spriteLocation";
-    static final String SIGHTRADIUS = "sightRadius";
-    static final String FLOCKRADIUS= "flockRadius";
-    static final String NEARRADIUS = "nearRadius";
-    static final String MAXFORCE = "maxForce";
-    static final String MAXSPEED = "maxSpeed";
-    static final String LIFESPAN = "lifespan";
-    static final String DIET = "diet";
-    
-    static final String SPRITERGB = "spritergb";
+
+    private static final String NAME = "name";
+    private static final String SPECIES = "species";
+    private static final String COHESION = "cohesion";
+    private static final String ALIGNMENT = "alignment";
+    private static final String SEPARATION  = "separation";
+    private static final String WANDER = "wander";
+    private static final String NUMBER = "number";
+    private static final String BYTE = "byte";
+    private static final String SPRITELOCATION = "spriteLocation";
+    private static final String SIGHTRADIUS = "sightRadius";
+    private static final String FLOCKRADIUS= "flockRadius";
+    private static final String NEARRADIUS = "nearRadius";
+    private static final String MAXFORCE = "maxForce";
+    private static final String MAXSPEED = "maxSpeed";
+    private static final String LIFESPAN = "lifespan";
+    private static final String MATURITY = "maturity";
+    private static final String DIET = "diet";
+
+    private static final String SPRITERGB = "spritergb";
+    private static final String MAXSIZE = "maxSize";
+    private static final String NEWBORNSIZE = "newbornSize";
+    private static final String PANICLEVEL = "panicLevel";
 
     @SuppressWarnings({ "unchecked", "null" })
     public HashMap<Byte, Species> readConfig(String configFile) {
@@ -84,6 +89,15 @@ public class StaXParser {
 
                     if (event.isStartElement()) {
                         if (event.asStartElement().getName().getLocalPart()
+                                .equals(PANICLEVEL)) {
+                            event = eventReader.nextEvent();
+                            species.setPanicLevel(Integer.parseInt(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
                                 .equals(BYTE)) {
                             event = eventReader.nextEvent();
                             species.setSpbyte(Byte.valueOf(event.asCharacters().getData()));
@@ -114,6 +128,31 @@ public class StaXParser {
                                 .equals(LIFESPAN)) {
                             event = eventReader.nextEvent();
                             species.setLifespan(Float.parseFloat(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(MATURITY)) {
+                            event = eventReader.nextEvent();
+                            species.setMaturity(Integer.parseInt(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(MAXSIZE)) {
+                            event = eventReader.nextEvent();
+                            species.setMaxSize(Float.parseFloat(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(NEWBORNSIZE)) {
+                            event = eventReader.nextEvent();
+                            species.setNewbornSize(Float.parseFloat(event.asCharacters().getData()));
                             continue;
                         }
                     }

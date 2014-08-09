@@ -23,7 +23,7 @@ public interface TreeOptionsInterface {
 	}
 	static ButtonType buttonTypes[] = new ButtonType[] {ButtonType.ADD, ButtonType.REMOVE};
 	
-	public void registerListener(TreeOptionsHandler listener);
+	public void registerListener(TreeOptionsListener listener);
 	public void buttonSelected(ButtonType button);
 //	public void showButtonHelper(boolean showHelper, String helper);
 

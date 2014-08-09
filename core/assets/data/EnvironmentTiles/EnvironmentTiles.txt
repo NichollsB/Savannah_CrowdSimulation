@@ -2,135 +2,142 @@ EnvironmentTiles.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-grass#10
+0
   rotate: false
   xy: 2, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-grass#100
+grass#10
   rotate: false
   xy: 20, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-grass#20
+grass#100
   rotate: false
   xy: 38, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-grass#30
+grass#20
   rotate: false
   xy: 56, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-grass#40
+grass#30
   rotate: false
   xy: 74, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-grass#50
+grass#40
   rotate: false
   xy: 92, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-grass#60
+grass#50
   rotate: false
   xy: 110, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-grass#80
+grass#60
   rotate: false
   xy: 2, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-grass#90
+grass#80
   rotate: false
   xy: 20, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-water#10
+grass#90
   rotate: false
   xy: 38, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-water#100
+water#10
   rotate: false
   xy: 56, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-water#20
+water#100
   rotate: false
   xy: 74, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-water#30
+water#20
   rotate: false
   xy: 92, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-water#40
+water#30
   rotate: false
   xy: 110, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-water#50
+water#40
   rotate: false
   xy: 2, 38
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-water#60
+water#50
   rotate: false
   xy: 20, 38
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-water#70
+water#60
   rotate: false
   xy: 38, 38
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-water#80
+water#70
   rotate: false
   xy: 56, 38
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-water#90
+water#80
   rotate: false
   xy: 74, 38
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+water#90
+  rotate: false
+  xy: 92, 38
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

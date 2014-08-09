@@ -43,13 +43,16 @@ public class HerbDefault extends State {
 //            }
 
 
-        if (boid.thirst > 85) {
+        if(boid.panic > boid.panicLevel) {
+            parent.pushState(boid, new Panic(parent, bm));
+        }
+        else if (boid.thirst > 85) {
 //            System.out.println(boid + "\nJust posted Thirsty state ");
             parent.pushState(boid, new Thirsty(parent, bm));
         } else if (boid.hunger > 75) {
 //            System.out.println(boid + "\nJust posted Hungry state ");
             parent.pushState(boid, new Hungry(parent, bm));
-        } else if (boid.age > 10 && boid.hunger < 35 && boid.thirst < 35) {
+        } else if (boid.age > SimulationManager.speciesData.get(boid.getSpecies()).getMaturity() && boid.hunger < 35 && boid.thirst < 35) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
             parent.pushState(boid, new Reproduce(parent, bm));
 //        } else if (boid.age > 10 && boid.hunger > 70 && boid.thirst > 70) {
@@ -83,14 +86,24 @@ public class HerbDefault extends State {
             }
 
             if(predators.size > 0) {
+                Array<Boid> smallerPredators = new Array<Boid>();
+                Array<Boid> biggerPredators = new Array<Boid>();
                 for(Boid predator : predators) {
-                    boid.panic += 10;
+                    if(predator.size > boid.size) {
+                        biggerPredators.add(predator);
+                    } else {
+                        smallerPredators.add(predator);
+                    }
                 }
-                if (boid.panic > 30) {
+                boid.panic +=  smallerPredators.size * 5; //smaller predators add less threat
+
+                boid.panic += biggerPredators.size * 10; //larger predators add more threat.
+
+                if (boid.panic > boid.panicLevel) {
                     parent.pushState(boid, new Panic(parent, bm));
                 }
             } else if (boid.panic > 0 && predators.size == 0) {
-                boid.panic -= 10;
+                boid.panic -= 0.5f;
             }
 
             //store the steering movement

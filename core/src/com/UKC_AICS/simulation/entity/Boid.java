@@ -1,6 +1,8 @@
 package com.UKC_AICS.simulation.entity;
 
 import com.UKC_AICS.simulation.Constants;
+import com.UKC_AICS.simulation.Simulation;
+import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -40,14 +42,13 @@ public class Boid extends Entity {
     public String state = "default";
 
     public int age = 0;
-    public float size;
+    public float size = 16;
 //    public int birthDay = 0;
     
 
-    //Added to check if boid info is being displayed or not - for highlighting in graphics
-	public boolean tracked = false;
+  
 
-    public byte group = 0; //family group of boid.
+//    public byte tertiaryType = 0; //family group of boid.
     public float cohesion = 0;
     public float separation = 0;
     public float alignment = 0;
@@ -55,12 +56,12 @@ public class Boid extends Entity {
     
     public int geneSize=7;		
     public Float[] gene= new Float[geneSize];
+    public int panicLevel=30;
 
 
-// no longer used or relevant
+    // no longer used or relevant
     public Boid(byte spec, Vector3 pos, Vector3 vel) {
-        this.type = 1; // this is for categorising it as a "boid" object.
-        subType = spec;
+        this(SimulationManager.speciesData.get(spec));
         position = pos.cpy();
         velocity = vel.cpy();
     }
@@ -94,6 +95,9 @@ public class Boid extends Entity {
 
         setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius);
 
+        panicLevel = species.getPanicLevel();
+
+
         bounds.set(position.x, position.y, 16, 16);
     }
 
@@ -106,7 +110,7 @@ public class Boid extends Entity {
     public Boid(Boid boid) {
         type = 1;
         subType =  boid.getSubType();
-        group = boid.group;
+        tertiaryType = boid.tertiaryType;
         nearRadius = boid.nearRadius;
         sightRadius = boid.sightRadius;
         flockRadius = boid.flockRadius;
@@ -132,7 +136,12 @@ public class Boid extends Entity {
         separation = boid.separation;
         wander = boid.wander;
 
+
         setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius);
+
+        panicLevel = boid.panicLevel;
+
+
     }
 
 
@@ -208,6 +217,10 @@ public class Boid extends Entity {
         age = newAge;
     }
     public void age() {
+        float maturity = SimulationManager.speciesData.get(getSpecies()).getMaturity();
+        if (age < maturity && size < SimulationManager.speciesData.get(getSpecies()).getMaxSize()){
+            size += ((100 - hunger)/100) * SimulationManager.speciesData.get(getSpecies()).getGrowthPerDay();
+        }
         age++;
     }
 
@@ -272,21 +285,25 @@ public class Boid extends Entity {
         String string = "";
 
         string += "BOID: " + "\t" + "\t position: \n \t" + (int)position.x + "/" + (int)position.y;
-        string += "\n\t group:" + group;
+        string += "\n\t group:" + tertiaryType;
         string += "\n\t hunger:" + (int)hunger;
         string += "\n\t thirst:" + (int)thirst;
+        string += "\n\t panic:" + (int)panic + "/" + panicLevel;
         string += "\n\t age:" + age ;
+        string += "\n\t size:" + size ;
         string += "\n\t state:" + state;
         string += "\n\t orientation:" + (int)orientation;
 
         return string;
     }
 
+
     public void setTracked(boolean tracked){
     	this.tracked = tracked;
     }
 
     public void setGene(float cohesion, float separation, float alignment, float wander, float flockRadius, float nearRadius, float sightRadius) {
+
     	gene[0] = cohesion;
     	gene[1] = separation;
     	gene[2] = alignment;
@@ -339,6 +356,7 @@ public class Boid extends Entity {
     public float getWander() {
         return wander;
     }
+
     public void setHunger( float hunger) {
         this.hunger = hunger;
     }
@@ -375,10 +393,14 @@ public class Boid extends Entity {
     public float getFlockRadius() {
     	return flockRadius;
     }
+    /**
+     * Added by ben Nicholls as replacement for getSpecies(), etc - rather pull from entity
+     */
     public void setGroup( byte group) {
-        this.group = group;
+        tertiaryType= group;
     }
     public byte getGroup() {
-    	return group;
+    	return tertiaryType;
     }
+
 }

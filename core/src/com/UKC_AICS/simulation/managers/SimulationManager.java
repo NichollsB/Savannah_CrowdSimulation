@@ -7,6 +7,7 @@ import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.entity.ObjectData;
 import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.UKC_AICS.simulation.utils.StaXParser;
@@ -34,13 +35,13 @@ public class SimulationManager extends Manager {
 
     BoidManager boidManager = new BoidManager(this);
     WorldManager worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
+
     public EA2 ea = new EA2();
 
     static public int minutes = 0;
     static public int hours = 0;
     static public int days = 0;
     static public int weeks = 0;
-     public static int currentDay = 0;
     
     //monstrous things.
     static final HashMap<String, HashMap<String, Float>> tempSpeciesData = new HashMap<String, HashMap<String, Float>>();
@@ -51,6 +52,11 @@ public class SimulationManager extends Manager {
     
     HashMap<Byte, String> fileLocations;
     HashMap<Byte, float[]> speciesRGB = new HashMap<Byte, float[]>(); 
+    
+    /**
+     * Added by ben nicholls - for the creation of objects from ObjectData type/ creation of ObjectData types...
+     */
+    public static final HashMap<Byte, ObjectData> objectData = new HashMap<Byte, ObjectData>();
     
 
     /**
@@ -63,35 +69,48 @@ public class SimulationManager extends Manager {
         this.parent = parent;
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
 
+        for (Species species : speciesData.values()) {
+            species.setGrowthPerDay((species.getMaxSize() - species.getNewbornSize()) / species.getMaturity());
+        }
         generateBoids();
+        
+        objectData.put((byte)0, new ObjectData((byte)0, (byte)1, "Corpse"));
+        objectData.put((byte)1, new ObjectData((byte)1, (byte)1, "Corpse"));
+        objectData.put((byte)2, new ObjectData((byte)2, (byte)1, "Attractor"));
+        objectData.put((byte)3, new ObjectData((byte)3, (byte)1, "Repeller"));
+
         ea.setup(parent);
+
         Array<Byte> objTypes = new Array<Byte>();
-        Object obj = new Object((byte)2,(byte)1,355,450);
+        Object obj = new Object(objectData.get((byte)2),355,450);
         objTypes.add(obj.getType());
         WorldManager.putObject(obj);
 
-        obj = new Object((byte)2,(byte)1,500,200);
+        
+        
+        
+        obj = new Object(objectData.get((byte)2),500,200);
 ////        obj = new Object((byte)2,(byte)1,900,300);
         WorldManager.putObject(obj);
 
-        obj = new Object((byte)3,(byte)1,755,450);
+        obj = new Object(objectData.get((byte)3),755,450);
         objTypes.add(obj.getType());
         WorldManager.putObject(obj);
         objTypes.add((byte)0);
 
-        obj = new Object((byte)2,(byte)1,400,600);
+        obj = new Object(objectData.get((byte)1),400,600);
         WorldManager.putObject(obj);
-        obj = new Object((byte)2,(byte)1,160,200);
+        obj = new Object(objectData.get((byte)1),160,200);
         WorldManager.putObject(obj);
-        obj = new Object((byte)2,(byte)1,160,400);
+        obj = new Object(objectData.get((byte)1),160,400);
         WorldManager.putObject(obj);
-        obj = new Object((byte)2,(byte)1,180,600);
+        obj = new Object(objectData.get((byte)1),180,600);
         WorldManager.putObject(obj);
-        obj = new Object((byte)2,(byte)1,1100,200);
+        obj = new Object(objectData.get((byte)1),1100,200);
         WorldManager.putObject(obj);
-        obj = new Object((byte)2,(byte)1,1100,400);
+        obj = new Object(objectData.get((byte)1),1100,400);
         WorldManager.putObject(obj);
-        obj = new Object((byte)2,(byte)1,1100,600);
+        obj = new Object(objectData.get((byte)1),1100,600);
         WorldManager.putObject(obj);
 
     }
@@ -139,6 +158,14 @@ public class SimulationManager extends Manager {
             
         }
     }
+    
+    /**
+     * Created by Ben Nicholls - explicit placement of new boids based on species
+     */
+    public void generateBoid(byte spByte, byte group, int x, int y){
+    	Species species = speciesData.get(spByte);
+    	boidManager.createBoid(species, group, x, y);
+    }
 
     public void clear(){
     	boidManager.clearBoidList();
@@ -173,15 +200,15 @@ public class SimulationManager extends Manager {
             minutes = 0;
             hours = 0;
             days += 1;
-//            setDay();
-          ea.Evolve();
+
+//            ea.Evolve(); //causes behaviour to go crazy so turned off for now.
+
             increment = true;
         } else {
             minutes = 0;
             hours = 0;
             days = 0;
             weeks += 1;
-//            setDay();
             increment = true;
         }
         return increment;
@@ -193,15 +220,11 @@ public class SimulationManager extends Manager {
                 + days + " days; " + weeks + " wks.";
     }
 
-    public void setDay() {
-    	currentDay++;
-//    	boidManager.updateAge(); //moved this to boidmanager
+
+    public static int getDays() {
+           return weeks * 7 + days;
     }
-    
-   public static int getDay() {
-	   return currentDay;
-   }
-   
+
 
     public void resetTime() {
         minutes = 0;
@@ -258,5 +281,16 @@ public class SimulationManager extends Manager {
 //    		species.add(speciesData.get(s));
 //    	}
     	return speciesData;
+    }
+    public void generateObject(byte type, byte subType, int x, int y){
+    	ObjectData obj;
+    	if(objectData.containsKey(type)){
+    		obj = objectData.get(type);
+    		worldManager.createObject(obj, subType, x, y);
+    		return;
+    	}
+    }
+    public HashMap<Byte, ObjectData> getObjectDataInfo(){
+    	return objectData;
     }
 }

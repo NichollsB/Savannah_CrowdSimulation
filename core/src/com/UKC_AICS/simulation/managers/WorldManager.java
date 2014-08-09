@@ -110,7 +110,7 @@ public class WorldManager extends Manager {
             }
         }
         else {
-            System.out.println("Im a bellend boid because I'm mysteriously out of bounds");
+            System.out.println("I'm mysteriously out of bounds");
         }
         return layers;
     }
@@ -118,12 +118,6 @@ public class WorldManager extends Manager {
     public static void changeTileOnLayer(float x, float y, String layer, byte newValue) {
         map.changeTileOnLayer((int)x,(int)y,layer, newValue);
     }
-    
-  //Added by Ben Nicholls for graphics purposes - very probably temporary
-    public HashMap<String, byte[][]> getMapInfo(){
-    	return map.information_layers;
-    }
-
     private void decayCorpses(boolean dayIncrement) {
         if(dayIncrement) {
             for(Entity corpse : objects) {
@@ -136,4 +130,16 @@ public class WorldManager extends Manager {
             }
         }
     }
+    
+  //Added by Ben Nicholls for graphics purposes - very probably temporary
+    public HashMap<String, byte[][]> getMapInfo(){
+    	return map.information_layers;
+    }
+    
+    public void createObject(ObjectData objData, byte subtype, int x, int y){
+    	com.UKC_AICS.simulation.entity.Object obj = new com.UKC_AICS.simulation.entity.Object(objData, x, y);
+    	obj.setSubType(subtype);
+    	putObject(obj);
+    }
+  
 }

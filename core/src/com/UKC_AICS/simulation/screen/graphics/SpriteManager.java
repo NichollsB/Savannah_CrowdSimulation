@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteCache;
@@ -64,10 +66,17 @@ public class SpriteManager {
 	
 	private boolean created = true;
 	
+	private static final TextureAtlas blankAtlas = new TextureAtlas();
+	
 	public SpriteManager(){
 		//loadAssets();
 		assetManager.load(defaultBoid_path, Texture.class);
 		assetManager.load(defaultBoid_selected_path, Texture.class);
+		
+		Pixmap blankImage = new Pixmap(16, 16, Format.Alpha);
+		blankImage.setColor(0, 0, 0, 0);
+		blankImage.fillRectangle(0, 0, 16, 16);
+		blankAtlas.addRegion("0", new Texture(blankImage), 0, 0, 0, 0);
 	}
 	
 	public boolean update(){
@@ -139,21 +148,31 @@ public class SpriteManager {
 			String[] parts;
 			AtlasSprite atSprite;
 			for(AtlasRegion region : atlas.getRegions()){
-				parts = region.name.split("#");
-//				System.out.println(parts[0] + " | " + parts[1]);
 				atSprite = new AtlasSprite(region);
 				atSprite.setSize(region.originalWidth, region.originalHeight);
-				if(!environmentTiles_sprites.containsKey(parts[0])){
-					ObjectMap atlasMap = new ObjectMap<Float, AtlasSprite>();
-					atlasMap.put(Float.parseFloat(parts[1]), atSprite);
-					environmentTiles_sprites.put(parts[0], atlasMap);
+				if(region.name == "0" || !region.name.contains("#")){
+					if(!environmentTiles_sprites.containsKey("0")){
+						ObjectMap atlasMap = new ObjectMap<Float, AtlasSprite>();
+						atlasMap.put(0, atSprite);
+						environmentTiles_sprites.put("0", atlasMap);
+					}
+					continue;
 				}
-				else {
-					environmentTiles_sprites.get(parts[0]).put(Float.parseFloat(parts[1]), 
-							atSprite);
-				}
+//				else if (region.name.contains("#")){
+					parts = region.name.split("#");
+					if(!environmentTiles_sprites.containsKey(parts[0])){
+						ObjectMap atlasMap = new ObjectMap<Float, AtlasSprite>();
+						atlasMap.put(Float.parseFloat(parts[1]), atSprite);
+						environmentTiles_sprites.put(parts[0], atlasMap);
+					}
+					else {
+						environmentTiles_sprites.get(parts[0]).put(Float.parseFloat(parts[1]), 
+								atSprite);
+					}
+//				}
 			}
 		}
+		
 		
 		created = true;
 	}
@@ -225,9 +244,22 @@ public class SpriteManager {
 	}
 
 	public AtlasRegion getTileRegion(String layer, int amount){
-//		String regionName = layer + "#" + amount;
-//		System.out.println(environmentTiles_Atlas.findRegion(regionName));
-		return environmentTiles_Atlas.findRegion(layer + "#" + amount);
+		try{
+			if(layer == "terrain")
+				layer = "water";
+			if(layer != null && amount > 0)
+				return environmentTiles_Atlas.findRegion(layer + "#" + amount);
+			else
+				return null;
+			
+		} catch (NullPointerException e){
+			
+			return null;
+		}
+	}
+	
+	public AtlasRegion getEmptyRegion(){
+		return blankAtlas.findRegion("0"); 
 	}
 	public int getNumTileRegions(){
 		
@@ -235,31 +267,16 @@ public class SpriteManager {
 	}
 		
 	public AtlasSprite getTileSprite(String layer, float amount){
-//		String name = (layer + "_" + amount);
-//		if(layer == "water"){
-//			System.out.println(layer + amount);
-//			System.out.print(environmentTiles_sprites.containsKey(layer));
-//			for(Float s : environmentTiles_sprites.get(layer).keys()){
-//				System.out.println("sprite " + s);
-//			}
-//		}
-		if(!environmentTiles_sprites.containsKey(layer)) return null;
-		if(!environmentTiles_sprites.get(layer).containsKey(amount)) return null;
+		String l = layer;
+		if(l == "water")return null;
+		if(l == "terrain")
+			l = "water";
+		
+		if(!environmentTiles_sprites.containsKey(l)) return null;
+		if(!environmentTiles_sprites.get(l).containsKey(amount)) return null;
 			
-//			System.out.println("layer exists " + environmentTiles_sprites.get(name).keys());
-//			Array<Float> keys = environmentTiles_sprites.get(layer).keys().toArray();
-//			float threshold;
-////			if(amount < keys.get(0))
-////				return null;
-//			int nullcount=0;
-//			for(int i = 0; i < keys.size; i ++){
-//				threshold = keys.get(i);
-//				if(amount >= keys.get(i) && amount < keys.get(i+1)){
-//					if(environmentTiles_sprites.get(layer).get(keys.get(i)) == null) nullcount++;
-//					return environmentTiles_sprites.get(layer).get(keys.get(i));
-//				}
 //			
-			return environmentTiles_sprites.get(layer).get(amount);
+			return environmentTiles_sprites.get(l).get(amount);
 		
 	}
 	public Sprite getBoid_HighlightSprite(){
