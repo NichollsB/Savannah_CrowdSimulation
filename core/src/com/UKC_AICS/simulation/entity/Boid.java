@@ -53,7 +53,7 @@ public class Boid extends Entity {
     public float alignment = 0;
     public float wander = 0;
     
-    public int geneSize=4;		
+    public int geneSize=7;		
     public Float[] gene= new Float[geneSize];
 
 
@@ -92,7 +92,7 @@ public class Boid extends Entity {
         separation = species.getSeparation();
         wander = species.getWander();
 
-        setGene(cohesion,separation,alignment,wander);
+        setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius);
 
         bounds.set(position.x, position.y, 16, 16);
     }
@@ -132,7 +132,7 @@ public class Boid extends Entity {
         separation = boid.separation;
         wander = boid.wander;
 
-        setGene(cohesion,separation,alignment,wander);
+        setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius);
     }
 
 
@@ -286,11 +286,15 @@ public class Boid extends Entity {
     	this.tracked = tracked;
     }
 
-    public void setGene(float cohesion, float separation, float alignment, float wander ) {
+    public void setGene(float cohesion, float separation, float alignment, float wander, float flockRadius, float nearRadius, float sightRadius) {
     	gene[0] = cohesion;
     	gene[1] = separation;
     	gene[2] = alignment;
     	gene[3] = wander;
+    	gene[4] = flockRadius; 
+    	gene[5]	= nearRadius; 
+    	gene[6]	= sightRadius;
+    				
     	
     }      
     
@@ -302,6 +306,9 @@ public class Boid extends Entity {
     	setSpearation(newGene[1]);
     	setAlignment(newGene[2]);
     	setWander(newGene[3]);
+    	setFlockRadius(newGene[4]);
+    	setNearRadius(newGene[5]);
+    	setSightRadius(newGene[6]);
     }  
     
     public Float[] getGene() {

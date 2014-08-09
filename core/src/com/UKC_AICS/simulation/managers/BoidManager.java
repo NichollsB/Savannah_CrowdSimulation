@@ -70,7 +70,7 @@ public class BoidManager extends Manager {
         boid.setAlignment(alignment);
         boid.setSpearation(separation);
         boid.setWander(wander);
-        boid.setGene(cohesion, separation, alignment, wander);
+        boid.setGene(cohesion, separation, alignment, wander,flockRadius, nearRadius, sightRadius);
         boid.setGroup(group);
         boid.setFlockRadius(flockRadius);
         boid.setSightRadius(sightRadius);

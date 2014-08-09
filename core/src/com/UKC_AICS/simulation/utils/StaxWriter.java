@@ -25,7 +25,6 @@ import java.io.FileOutputStream;
 	  }
 
 	  public void saveConfig() throws Exception {
-		  System.out.println("Executing");
 	
 	    // create an XMLOutputFactory
 	    XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();

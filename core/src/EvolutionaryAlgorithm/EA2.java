@@ -17,10 +17,10 @@ public class EA2 {
 	private  int popNum = 0;
 	private int breedingAge = 4;
 	//Crossover rate
-	private double crossRate = 0.5;
+	private double crossRate = 0.3;
 	//Mutation rate
-	private double muteRate =0.5;
-	public static int geneLength = 4;
+	private double muteRate =0.02;
+	public static int geneLength = 7;
 
 	public boolean rtmode = false;
 	
@@ -36,54 +36,23 @@ public class EA2 {
 	 private Float[] gene2 = new Float[geneLength];
 	 private ArrayList<Float[]> geneList = new ArrayList<Float[]>();
 	 private ArrayList<Float[]> newGeneList = new ArrayList<Float[]>();
-	 //TODO THESE HAVE CHANGED FROM byte
 	 private Byte currentSpecies = 0;
 	 public static Byte totalSpecies = 4;
-	 private Byte species = 0;
+	 
 	 private SimulationScreen ss ;
 	 
 
 	 
 	 public void setup(SimulationScreen ss) {
-		 species = 0;
+		
 		 this.ss = ss; 
-		 Float[] held0 = new Float[geneLength];
-		 held0[0] = null;
-		 held0[1] = null;
-		 held0[2] = null;
-		 held0[3] = null;
+		 Float[] held = new Float[geneLength];
+		
 		 
-		 heldValues.put(species,held0);
-		 
-		 species = 1;
-		 
-		 Float[] held1 = new Float[geneLength];
-		 held1[0] = null;
-		 held1[1] = null;
-		 held1[2] = null;
-		 held1[3] = null; 
-		 
-		 heldValues.put(species,held1);
-		 
-		 species = 2;
-		 
-		 Float[] held2 = new Float[geneLength];
-		 held2[0] = null;
-		 held2[1] = null;
-		 held2[2] = null;
-		 held2[3] = null;
-		 
-		 heldValues.put(species,held2);
-		 
-		 species = 3;
-		 
-		 Float[] held3 = new Float[geneLength];
-		 held3[0] = null;
-		 held3[1] = null;
-		 held3[2] = null;
-		 held3[3] = null;
-	 
-		 heldValues.put(species,held3);
+		 for(Byte species = 0; species<totalSpecies; species++){
+		 heldValues.put(species,held);
+		 }
+		
 	 }
 	 
 	
@@ -118,7 +87,7 @@ public class EA2 {
 				}
 			}
 			if(rtmode==true){
-				//TODO
+				//TODO CREATE BOID WITH NEW PARAMETERS
 			}
 			reset();
 		}

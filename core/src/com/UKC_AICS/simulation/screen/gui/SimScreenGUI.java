@@ -178,7 +178,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	simScreen.simulationManager.save();
-            	System.out.println("Saving");
+            	
             }
         });
         
@@ -189,7 +189,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
             public void clicked(InputEvent event, float x, float y) {
             	simScreen.simulationManager.clear();
             	simScreen.simulationManager.load();
-            	System.out.println("Loading");
+            	
             }
         });
 

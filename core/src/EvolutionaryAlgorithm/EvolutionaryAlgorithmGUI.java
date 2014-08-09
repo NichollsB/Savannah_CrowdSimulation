@@ -1,5 +1,6 @@
 package EvolutionaryAlgorithm;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -24,38 +25,51 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 	private Float[] currentVals= new Float[geneLength];
 	private HashMap<Byte,Float[]> tempHeldValues = new HashMap<Byte,Float[]>();
 	private Byte b = 0;
-
+	private ArrayList<Label> labels = new ArrayList<Label>();
+	private ArrayList<Label> labelVals = new ArrayList<Label>();
+	private ArrayList<TextField> textField = new ArrayList<TextField>();
+	private ArrayList<String> values = new ArrayList<String>();
+	private ArrayList<CheckBox> checkBoxes = new ArrayList<CheckBox>();
 	Window window = new Window("EA Settings", skin);
 	
 	CheckBox checkBoxCoh = new CheckBox("Hold", skin);
 	CheckBox checkBoxAlign = new CheckBox("Hold", skin);   	
 	CheckBox checkBoxSep = new CheckBox("Hold", skin);   	
-	CheckBox checkBoxWan = new CheckBox("Hold", skin); 	
+	CheckBox checkBoxWan = new CheckBox("Hold", skin);
+	CheckBox checkBoxFR = new CheckBox("Hold", skin); 	
+	CheckBox checkBoxNR = new CheckBox("Hold", skin); 	
+	CheckBox checkBoxSR = new CheckBox("Hold", skin); 	
 	CheckBox checkBoxHoldAll = new CheckBox("Hold All", skin);
 	
-	Label cohLabel = new Label("Cohesion", skin);
-	Label alignLabel = new Label("Alignment", skin);
-	Label sepLabel = new Label("Separation", skin);
-	Label wanLabel = new Label("Wander", skin);
+	
 	
 	Label cohVal = new Label("0", skin);
 	Label alignVal = new Label("0", skin);
 	Label sepVal = new Label("0", skin);
 	Label wanVal= new Label("0", skin);
+	Label FRVal = new Label("0", skin);
+	Label NRVal = new Label("0", skin);
+	Label SRVal = new Label("0", skin);
 	
 	TextField textfieldCoh = new TextField("", skin);		
 	TextField textfieldAlign = new TextField("", skin);	
 	TextField textfieldSep = new TextField("", skin);
 	TextField textfieldWan = new TextField("", skin);
+	TextField textfieldFR = new TextField("", skin);		
+	TextField textfieldNR = new TextField("", skin);	
+	TextField textfieldSR = new TextField("", skin);
 	
 	String coh = null;
 	String align =null;
 	String sep =null;
-	String wan =null;	
+	String wan =null;
+	String FR =null;
+	String NR = null;
+	String SR =null;
 	
 	public EvolutionaryAlgorithmGUI(SimulationScreen ss, EA2 ea){
 			simScreen = ss; //In case needed later.
-			//setup(ea);
+			setup();
 			setStage(ea);
 		}
 		
@@ -84,7 +98,36 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			stage.addActor(window);		
 		}
 			
-		
+		private void setup(){
+			Label cohLabel = new Label("Cohesion", skin);
+			Label alignLabel = new Label("Alignment", skin);
+			Label sepLabel = new Label("Separation", skin);
+			Label wanLabel = new Label("Wander", skin);
+			Label FRLabel = new Label("Flock Radius", skin);
+			Label NRLabel = new Label("Near Radius", skin);
+			Label SRLabel = new Label("Sight Radius", skin);
+			
+			labels.add(cohLabel);
+			labels.add(alignLabel);
+			labels.add(sepLabel);
+			labels.add(wanLabel);
+			labels.add(FRLabel);
+			labels.add(NRLabel);
+			labels.add(SRLabel);
+			
+			
+			for(int i = 0 ; i<labels.size() ;i++){
+				Label valuelabel = new Label("0", skin);
+				TextField textfield = new TextField("", skin);		
+				CheckBox checkBox = new CheckBox("Hold", skin);
+				String value = null;
+			
+				labelVals.add(i,valuelabel);
+				textField.add(i,textfield);
+				checkBoxes.add(i,checkBox);
+				values.add(i,value);
+			}
+		}
 		private Table createSettingsTable(Table t2, final EA2 ea) {
 			final String[] options = {"Species 1", "Species 2", "Species 3", "Species 4"};
 	    	final SelectBox<String> dropdown = new SelectBox<String>(skin);
@@ -113,16 +156,16 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
 					if(checkBoxHoldAll.isChecked()){
-						checkBoxCoh.setChecked(true);
-						checkBoxAlign.setChecked(true);
-						checkBoxSep.setChecked(true);
-						checkBoxWan.setChecked(true);
+						for(CheckBox cb : checkBoxes){
+							cb.setChecked(true);
+						}
+					
 					}
 					else{
-						checkBoxCoh.setChecked(false);
-						checkBoxAlign.setChecked(false);
-						checkBoxSep.setChecked(false);
-						checkBoxWan.setChecked(false);
+						for(CheckBox cb : checkBoxes){
+							cb.setChecked(false);
+						}
+						
 					}
 					
 				}
@@ -134,25 +177,16 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			t2.add(dropdown).top().expandX().fillX();
 			t2.add(checkBoxHoldAll).top().expandX().fillX();
 			t2.row();
-			t2.add(cohLabel).height(20).expandX().fillX();
-			t2.add(cohVal).height(20).expandX().fillX();
-			t2.add(textfieldCoh).expandX().fillX();
-			t2.add(checkBoxCoh).top().height(20).expandX().fillX();
-			t2.row();
-			t2.add(alignLabel).height(20).expandX().fillX();
-			t2.add(alignVal).height(20).expandX().fillX();
-			t2.add(textfieldAlign).expandX().fillX();
-			t2.add(checkBoxAlign).top().height(20).expandX().fillX();
-			t2.row();
-			t2.add(sepLabel).height(20).expandX().fillX();
-			t2.add(sepVal).height(20).expandX().fillX();
-			t2.add(textfieldSep).expandX().fillX();
-			t2.add(checkBoxSep).top().height(20).expandX().fillX();
-			t2.row();
-			t2.add(wanLabel).height(20).expandX().fillX();
-			t2.add(wanVal).height(20).expandX().fillX();
-			t2.add(textfieldWan).expandX().fillX();
-			t2.add(checkBoxWan).top().height(20).expandX().fillX();
+			
+			for(int i = 0 ; i< labels.size() ; i++){
+				t2.add(labels.get(i)).height(20).expandX().fillX();
+				t2.add(labelVals.get(i)).height(20).expandX().fillX();
+				t2.add(textField.get(i)).height(20).expandX().fillX();
+				t2.add(checkBoxes.get(i)).height(20).expandX().fillX();
+				t2.row();
+			}
+			
+		
 			
 			// EA settings button.
 			final TextButton closeButton = new TextButton("Close", skin,"default");
@@ -173,7 +207,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				}
 			});
 			
-			t2.row();
+			
 			t2.add(closeButton).top().height(20).expandX().fillX();
 			t2.add(applyButton).top().height(20).expandX().fillX();
 			return t2;
@@ -182,54 +216,24 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 		
 		public void applyChanges(EA2 ea) {
 			Float[] newheldvalues = new Float[EA2.getGeneLength()];
-			Float temp1 = null;
-			Float temp2 = null;
-			Float temp3 = null;
-			Float temp4 = null;
 			
-			 if(checkBoxCoh.isChecked()){
+			for(int i = 0 ; i < labels.size(); i++ ){
+			 if(checkBoxes.get(i).isChecked()){
 				 
-				 if(!textfieldCoh.getText().isEmpty()){
+				 if(!textField.get(i).getText().isEmpty()){
 					 System.out.println("I am not empty");
-					 temp1 =  Float.parseFloat(textfieldCoh.getText());
-					 System.out.println(temp1); 	 
+					newheldvalues[i] =  Float.parseFloat(textField.get(i).getText());
+					  	 
 				 } 
-			 }		        
-				                
-			 if(checkBoxAlign.isChecked()){	        
-				 
-				 if(!textfieldAlign.getText().isEmpty()){
-					 System.out.println("I am not empty");	 
-					 temp2 =  Float.parseFloat(textfieldAlign.getText());
-					 System.out.println(temp2);
-				 }	
-				 
-			 }
-					        
-			 if(checkBoxSep.isChecked()){	        
-				 
-				 if(!textfieldSep.getText().isEmpty()){
-					 System.out.println("I am not empty");
-					 temp3 = Float.parseFloat(textfieldSep.getText());
-					 System.out.println(temp3);
-				 }
-				
-			 }	        
-					  
-			 if(checkBoxCoh.isChecked()){	
-				 
-				 if(!textfieldWan.getText().isEmpty()){
-					 System.out.println("I am not empty");
-					 temp4 = Float.parseFloat(textfieldWan.getText());
-					 System.out.println(temp4);
+				 else{
+					 newheldvalues[i] = null;
 				 }
 			 }
-			 newheldvalues[0]=temp1;
-			 newheldvalues[1]=temp2;
-			 newheldvalues[2]=temp3;
-			 newheldvalues[3]=temp4;
+			 
+			}
 			 System.arraycopy(newheldvalues, 0, currentVals ,0 , geneLength);
 			 
+			 //ps
 			 	System.out.println("Before");
 			 	for(byte b = 0 ; b<totalSpecies; b++){
 			 		System.out.println(Arrays.toString(ea.heldValues.get(b))); 
@@ -238,6 +242,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			 	
 			 	ea.heldValues.put(b ,newheldvalues);
 			 	
+			 	//ps
 			 	 System.out.println("After");
 			 	for(byte b = 0 ; b<totalSpecies; b++){
 			 		System.out.println(Arrays.toString(ea.heldValues.get(b))); 
@@ -274,39 +279,24 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 		public void setTableInfo() {
 			System.out.println("Currentvals"+Arrays.toString(currentVals));
 			System.out.println("Before changes");	
-			System.out.println(coh);
-			System.out.println(align);
-			System.out.println(sep);
-			System.out.println(wan);
+			String val = null;
 			
-			if(currentVals[0]!=null){
-				coh = Float.toString(currentVals[0]);
-			}
-			else{
-				coh = "null";
-			}
-			
-			if(currentVals[1]!=null){
-				align = Float.toString(currentVals[1]);
-			}
-			else{
-				align = "null";
+			for(int i = 0 ; i < labels.size();i++){
+				if(currentVals[i]!=null){
+					
+					 val = Float.toString(currentVals[i]);
+				}
+				else{
+					 val = "null";
+				}
+				
+				
+				labelVals.get(i).setText(val);
 			}
 			
-			if(currentVals[2]!=null){
-				sep = Float.toString(currentVals[2]);
-			}
-			else{
-				sep = "null";
-			}
 			
-			if(currentVals[3]!=null){
-				wan = Float.toString(currentVals[3]);
-			}
-			else{
-				wan = "null";
-			}
-			 
+			
+			
 		
 			
 			System.out.println("After get");
@@ -316,7 +306,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			System.out.println(sep);
 			System.out.println(wan);
 			
-			cohVal.setText(coh);
+			
 			alignVal.setText(align);
 			sepVal.setText(sep);
 			wanVal.setText(wan);  

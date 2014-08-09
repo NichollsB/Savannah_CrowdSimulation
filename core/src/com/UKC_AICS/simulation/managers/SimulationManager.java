@@ -103,7 +103,7 @@ public class SimulationManager extends Manager {
     }
 
     public void save() {
-    	System.out.println("Called in SM");
+    	
     	StaxWriter configFile = new StaxWriter();
         configFile.setFile("config2.xml");
         try {
@@ -114,7 +114,6 @@ public class SimulationManager extends Manager {
       }
     //Change this see tutorial
     public void load() {
-    	System.out.println("Called in SM");
     	StaXParserLoad load = new StaXParserLoad();
         load.readConfig("config2.xml");
       }
@@ -175,7 +174,7 @@ public class SimulationManager extends Manager {
             hours = 0;
             days += 1;
 //            setDay();
-//            ea.Evolve();
+          ea.Evolve();
             increment = true;
         } else {
             minutes = 0;

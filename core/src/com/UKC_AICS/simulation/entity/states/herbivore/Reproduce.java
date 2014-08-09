@@ -69,6 +69,9 @@ public class Reproduce extends State {
 //                    bm.createBoid(boid); //create copy of self.
                     Boid baby = new Boid(boid);
                     baby.setAge(0);
+                    //TODO CALL EA HERE
+                    // POSSIBLE MATES = POPULATION
+                    
                     bm.storeBoidForAddition(baby);
                     boid.hunger = 100;
                     boid.thirst = 100;
