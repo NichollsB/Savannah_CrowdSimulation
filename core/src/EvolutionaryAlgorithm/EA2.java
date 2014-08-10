@@ -39,13 +39,13 @@ public class EA2 {
 	 private Byte currentSpecies = 0;
 	 public static Byte totalSpecies = 4;
 	 
-	 private SimulationScreen ss ;
+	// private SimulationScreen ss ;
 	 
-
-	 
-	 public void setup(SimulationScreen ss) {
+//SimulationScreen ss
+	// this.ss = ss;
+	 public void setup() {
 		
-		 this.ss = ss; 
+		  
 		 Float[] held = new Float[geneLength];
 		
 		 
@@ -239,12 +239,15 @@ public class EA2 {
 		System.out.println("MUTATION");
 		double rangeMax = 0;
 		double rangeMin = 1;
-		float muteMin = 0;
-		float muteMax = 1;
+		float muteValMin = 0;
+		float muteValMax = 1.5f;
 		
 		for(int j =0 ; j < geneLength ; j++) {
 			double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
-			float muteValue = muteMin + (muteMax - muteMin) * r.nextFloat();
+			float muteValue = muteValMin + ((muteValMax*newGene[j]) - muteValMin) * r.nextFloat();
+			System.out.println("Current "+newGene[j]);
+			System.out.println("operation "+muteValMax*newGene[j]);
+			System.out.println("after thing "+newGene[j]);
 				if (randomValue >= muteRate){ 
 					newGene[j]= muteValue;
 				}

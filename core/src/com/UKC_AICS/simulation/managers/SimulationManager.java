@@ -79,7 +79,7 @@ public class SimulationManager extends Manager {
         objectData.put((byte)2, new ObjectData((byte)2, (byte)1, "Attractor"));
         objectData.put((byte)3, new ObjectData((byte)3, (byte)1, "Repeller"));
 
-        ea.setup(parent);
+        ea.setup();
 
         Array<Byte> objTypes = new Array<Byte>();
         Object obj = new Object(objectData.get((byte)2),355,450);
@@ -201,7 +201,7 @@ public class SimulationManager extends Manager {
             hours = 0;
             days += 1;
 
-//            ea.Evolve(); //causes behaviour to go crazy so turned off for now.
+//           ea.Evolve(); //causes behaviour to go crazy so turned off for now.
 
             increment = true;
         } else {
