@@ -22,7 +22,7 @@ public class EA2 {
 	private double muteRate =0.02;
 	public static int geneLength = 7;
 
-	public boolean rtmode = false;
+
 	
 
 	
@@ -59,7 +59,7 @@ public class EA2 {
 	 
 	 
 	public void Evolve() {	
-		setMode();
+		
 		
 		for(byte i =0 ; i<totalSpecies; i++){
 			currentSpecies = i ;
@@ -80,18 +80,33 @@ public class EA2 {
 			for(Float[] gene : newGeneList) {
 			System.out.println("NEW GENE " + Arrays.toString(gene));
 			}
-			if(rtmode==false) {
+			
 				
 				for(int j = 0; j<popNum ; j++){
 					population.get(j).setGene(newGeneList.get(j));
 				}
 			}
-			if(rtmode==true){
-				//TODO CREATE BOID WITH NEW PARAMETERS
-			}
 			reset();
 		}
+	
+	
+
+	
+	
+	
+	public Float[] createBaby() {
+			calculateFitness();
+			calculateProbabilty();
+			Float[] tmp = new Float[geneLength];
+			System.arraycopy(selection(),0 ,tmp , 0, geneLength);	
+			return tmp;
 	}
+	
+	
+	
+	
+	
+	
 	
 		
 	private void reset(){
@@ -257,8 +272,17 @@ public class EA2 {
 	public static byte getTotalSpecies() {
 		return totalSpecies; 
 	}
-	public void setMode() {
-		
-		rtmode = ss.getRender();
+	
+	public void setCrossRate(double newCross){
+		crossRate= newCross;
+	}
+	public double getCrossRate(){
+		return crossRate;
+	}
+	public void setMuteRate(double newMute){
+		muteRate= newMute;
+	}
+	public double getMuteRate(){
+		return muteRate;
 	}
 }
