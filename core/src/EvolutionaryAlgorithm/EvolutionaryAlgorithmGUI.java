@@ -3,7 +3,7 @@ package EvolutionaryAlgorithm;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-
+import java.lang.Object;
 import EvolutionaryAlgorithm.EA2;
 
 import com.UKC_AICS.simulation.screen.SimulationScreen;
@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 
 public class EvolutionaryAlgorithmGUI extends Stage {
 	private SimulationScreen simScreen;
@@ -32,40 +33,21 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 	private ArrayList<CheckBox> checkBoxes = new ArrayList<CheckBox>();
 	Window window = new Window("EA Settings", skin);
 	
-	CheckBox checkBoxCoh = new CheckBox("Hold", skin);
-	CheckBox checkBoxAlign = new CheckBox("Hold", skin);   	
-	CheckBox checkBoxSep = new CheckBox("Hold", skin);   	
-	CheckBox checkBoxWan = new CheckBox("Hold", skin);
-	CheckBox checkBoxFR = new CheckBox("Hold", skin); 	
-	CheckBox checkBoxNR = new CheckBox("Hold", skin); 	
-	CheckBox checkBoxSR = new CheckBox("Hold", skin); 	
+	Label crossLabel = new Label("Crossover Rate", skin);
+	Label muteLabel = new Label("Mutation Rate", skin);
+	
+	Label crossValLabel = new Label("0", skin);
+	Label muteValLabel = new Label("0", skin);
+	
+	TextField crossTextfield = new TextField("", skin);	
+	TextField muteTextfield = new TextField("", skin);
+			
+	String crossValue = null;
+	String muteValue = null;
+	
 	CheckBox checkBoxHoldAll = new CheckBox("Hold All", skin);
 	
-	
-	
-	Label cohVal = new Label("0", skin);
-	Label alignVal = new Label("0", skin);
-	Label sepVal = new Label("0", skin);
-	Label wanVal= new Label("0", skin);
-	Label FRVal = new Label("0", skin);
-	Label NRVal = new Label("0", skin);
-	Label SRVal = new Label("0", skin);
-	
-	TextField textfieldCoh = new TextField("", skin);		
-	TextField textfieldAlign = new TextField("", skin);	
-	TextField textfieldSep = new TextField("", skin);
-	TextField textfieldWan = new TextField("", skin);
-	TextField textfieldFR = new TextField("", skin);		
-	TextField textfieldNR = new TextField("", skin);	
-	TextField textfieldSR = new TextField("", skin);
-	
-	String coh = null;
-	String align =null;
-	String sep =null;
-	String wan =null;
-	String FR =null;
-	String NR = null;
-	String SR =null;
+
 	
 	public EvolutionaryAlgorithmGUI(SimulationScreen ss, EA2 ea){
 			simScreen = ss; //In case needed later.
@@ -99,6 +81,9 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 		}
 			
 		private void setup(){
+			
+			
+			
 			Label cohLabel = new Label("Cohesion", skin);
 			Label alignLabel = new Label("Alignment", skin);
 			Label sepLabel = new Label("Separation", skin);
@@ -171,9 +156,64 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				}
 				
 			});
+			// EA close settings menu.
+			final TextButton closeButton = new TextButton("Close", skin,"default");
+			closeButton.addListener(new ClickListener(){
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					//EA Settings menu disappears
+					simScreen.flipEARender();               
+          
+				}
+			});
+			// Apply changes
+			final TextButton applyButton = new TextButton("Apply", skin,"default");
+			applyButton.addListener(new ClickListener(){
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					//Commits changes to held values hashMap
+					applyChanges(ea);
+				}
+			});
+			final TextButton setCrossButton = new TextButton("Set Crossover Rate", skin,"default");
+			setCrossButton.addListener(new ClickListener(){
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					if(!crossTextfield.getText().isEmpty()){
+						double newCross = Double.parseDouble(crossTextfield.getText());
+						
+							ea.setCrossRate(newCross);
+							setTableInfo(ea);
+						
+					}
+				}
+			});
+			final TextButton setMuteButton = new TextButton("Set Mutation Rate", skin,"default");
+			setMuteButton.addListener(new ClickListener(){
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					if(!muteTextfield.getText().isEmpty()){
+						double newMute = Double.parseDouble(muteTextfield.getText());
+						ea.setMuteRate(newMute);
+						setTableInfo(ea);
+					}
+				}
+			});
 			// sets the values that will be added to the table
-			setTableInfo();
+			setTableInfo(ea);
 			
+		
+			
+			t2.add(crossLabel).height(20).expandX().fillX();
+			t2.add(crossValLabel).height(20).expandX().fillX();
+			t2.add(crossTextfield).height(20).expandX().fillX();
+			t2.add(setCrossButton).height(20).expandX().fillX();
+			t2.row();
+			t2.add(muteLabel).height(20).expandX().fillX();
+			t2.add(muteValLabel).height(20).expandX().fillX();
+			t2.add(muteTextfield).height(20).expandX().fillX();
+			t2.add(setMuteButton).height(20).expandX().fillX();
+			t2.row();
 			t2.add(dropdown).top().expandX().fillX();
 			t2.add(checkBoxHoldAll).top().expandX().fillX();
 			t2.row();
@@ -188,24 +228,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			
 		
 			
-			// EA settings button.
-			final TextButton closeButton = new TextButton("Close", skin,"default");
-			closeButton.addListener(new ClickListener(){
-				@Override
-				public void clicked(InputEvent event, float x, float y) {
-					//EA Settings menu disappears
-					simScreen.flipEARender();               
-          
-				}
-			});
-			final TextButton applyButton = new TextButton("Apply", skin,"default");
-			applyButton.addListener(new ClickListener(){
-				@Override
-				public void clicked(InputEvent event, float x, float y) {
-					//Commits changes to held values hashMap
-					applyChanges(ea);
-				}
-			});
+			
 			
 			
 			t2.add(closeButton).top().height(20).expandX().fillX();
@@ -248,7 +271,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			 		System.out.println(Arrays.toString(ea.heldValues.get(b))); 
 			 	}
 			 	
-				setTableInfo();	       		        
+				setTableInfo(ea);	       		        
 		}
 	
 		
@@ -272,11 +295,11 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				}
 			j++;
 			}
-			setTableInfo();
+			setTableInfo(ea);
 			j=0;
 		}
 		
-		public void setTableInfo() {
+		public void setTableInfo(EA2 ea) {
 			System.out.println("Currentvals"+Arrays.toString(currentVals));
 			System.out.println("Before changes");	
 			String val = null;
@@ -295,35 +318,20 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			}
 			
 			
+			crossValue=""+ ea.getCrossRate();
+			muteValue=""+ ea.getMuteRate();
 			
-			
+			crossValLabel.setText(crossValue);
+			muteValLabel.setText(muteValue);
 		
-			
-			System.out.println("After get");
-			System.out.println("Currentvals"+Arrays.toString(currentVals));
-			System.out.println(coh);
-			System.out.println(align);
-			System.out.println(sep);
-			System.out.println(wan);
-			
-			
-			alignVal.setText(align);
-			sepVal.setText(sep);
-			wanVal.setText(wan);  
-			
-			System.out.println("After set");
-			System.out.println("Currentvals"+Arrays.toString(currentVals));
-			System.out.println(coh);
-			System.out.println(align);
-			System.out.println(sep);
-			System.out.println(wan);
+		
 		}
 		
 		
 		public void update(Boolean eaRender) {
 			if(eaRender){
-			stage.act();
-	        stage.draw();	
+				stage.act();
+				stage.draw();	
 			}
 		}
 		

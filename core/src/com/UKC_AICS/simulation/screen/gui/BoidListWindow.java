@@ -235,18 +235,20 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 * @param boids Array of Boids to create nodes for.
 	 */
 	public void compareAndUpdateNodes(Array<Entity> boids){
-		
+		boolean change = false;
 		for(Entity b : boids){
 			if(!boidNodes.containsKey(b) && boidRoots.containsKey(b.getSubType())){
 				boidNodes.put(b, addBoidNode(b.getSubType(), null, b.toString(), b));
 			}
 			else if(boidNodes.containsKey(b)){
 				if(nodeComparison != null)
-					if(nodeComparison.contains(b, false))
+					if(nodeComparison.contains(b, false)){
 						nodeComparison.removeValue(b, false);
-				
+						change = true;
+					}
 			}
 		}
+		if(!change) return;
 		if(nodeComparison != null){
 			for(Entity b : nodeComparison){
 				if(boidNodes.containsKey(b)){

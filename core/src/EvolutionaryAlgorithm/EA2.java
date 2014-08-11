@@ -22,7 +22,7 @@ public class EA2 {
 	private double muteRate =0.02;
 	public static int geneLength = 7;
 
-	public boolean rtmode = false;
+
 	
 
 	
@@ -39,13 +39,13 @@ public class EA2 {
 	 private Byte currentSpecies = 0;
 	 public static Byte totalSpecies = 4;
 	 
-	 private SimulationScreen ss ;
+	// private SimulationScreen ss ;
 	 
-
-	 
-	 public void setup(SimulationScreen ss) {
+//SimulationScreen ss
+	// this.ss = ss;
+	 public void setup() {
 		
-		 this.ss = ss; 
+		  
 		 Float[] held = new Float[geneLength];
 		
 		 
@@ -59,7 +59,7 @@ public class EA2 {
 	 
 	 
 	public void Evolve() {	
-		setMode();
+		
 		
 		for(byte i =0 ; i<totalSpecies; i++){
 			currentSpecies = i ;
@@ -80,18 +80,35 @@ public class EA2 {
 			for(Float[] gene : newGeneList) {
 			System.out.println("NEW GENE " + Arrays.toString(gene));
 			}
-			if(rtmode==false) {
+			
 				
 				for(int j = 0; j<popNum ; j++){
 					population.get(j).setGene(newGeneList.get(j));
 				}
+				
+				reset();
 			}
-			if(rtmode==true){
-				//TODO CREATE BOID WITH NEW PARAMETERS
-			}
-			reset();
+			
 		}
+	
+	
+
+	
+	
+	
+	public Float[] createBaby() {
+			calculateFitness();
+			calculateProbabilty();
+			Float[] tmp = new Float[geneLength];
+			System.arraycopy(selection(),0 ,tmp , 0, geneLength);	
+			return tmp;
 	}
+	
+	
+	
+	
+	
+	
 	
 		
 	private void reset(){
@@ -224,13 +241,20 @@ public class EA2 {
 		System.out.println("MUTATION");
 		double rangeMax = 0;
 		double rangeMin = 1;
-		float muteMin = 0;
-		float muteMax = 1;
+		float muteValMin = 0;
+		float muteValMax = 0;
 		
 		for(int j =0 ; j < geneLength ; j++) {
+			System.out.println("Current "+newGene[j]);
+			muteValMax = 1.5f*newGene[j];
+			System.out.println("Max Value "+muteValMax);
+			
 			double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
-			float muteValue = muteMin + (muteMax - muteMin) * r.nextFloat();
-				if (randomValue >= muteRate){ 
+			float muteValue = muteValMin + ((muteValMax) - muteValMin) * r.nextFloat();
+			
+			
+
+				if (randomValue <= muteRate){ 
 					newGene[j]= muteValue;
 				}
 			}
@@ -257,8 +281,17 @@ public class EA2 {
 	public static byte getTotalSpecies() {
 		return totalSpecies; 
 	}
-	public void setMode() {
-		
-		rtmode = ss.getRender();
+	
+	public void setCrossRate(double newCross){
+		crossRate= newCross;
+	}
+	public double getCrossRate(){
+		return crossRate;
+	}
+	public void setMuteRate(double newMute){
+		muteRate= newMute;
+	}
+	public double getMuteRate(){
+		return muteRate;
 	}
 }
