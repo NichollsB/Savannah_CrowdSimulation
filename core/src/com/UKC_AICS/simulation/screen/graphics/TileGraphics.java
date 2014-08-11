@@ -88,7 +88,7 @@ public class TileGraphics extends SpriteCache {
 		boolean copyMap = false;
 		int id = 0;
 		if(cacheRow_Map.containsKey(y)){
-			
+//			System.out.println("RECREATING CACHE LINE " + y);
 			recreate = true;
 			id = cacheRow_Map.get(y);
 			this.beginCache(id);
@@ -139,7 +139,10 @@ public class TileGraphics extends SpriteCache {
 //					copyMap = true;
 				}
 				else if(!cacheRow_Count.contains(id, true)){
-//				else if(!cacheRow_Map.containsKey(y)){
+					
+//				else if(!recreate){
+					System.out.println("cacheRow_Count contains id " + cacheRow_Count.contains(id, true) + 
+							" cacheRow_Map contains id(y) " + cacheRow_Map.containsKey(y) + " id " + cacheRow_Map.get(y));
 					lastRegion = manager.getEmptyRegion();
 					this.add(lastRegion, xPos, y*lastRegion.originalHeight, lastRegion.originalWidth, lastRegion.originalHeight);
 					cacheCount ++;
@@ -158,8 +161,8 @@ public class TileGraphics extends SpriteCache {
 //		if(!recreate) System.out.println("Row " + y + "Initial id " + id + " layers " + numCachedLayers);
 		if(!cacheRow_Map.containsKey(y))
 			cacheRow_Map.put(y, id);
-		if(!cacheRow_Count.contains(id, true)){
-			cacheRow_Count.add(id);
+		if(!cacheRow_Count.contains(y, true)){
+			cacheRow_Count.add(y);
 //			cacheRow_Count.put(id, numCachedLayers);
 //			cacheableLayers = numCachedLayers;
 		}
@@ -168,14 +171,14 @@ public class TileGraphics extends SpriteCache {
 	
 	boolean copyLayers = false;
 	Array<String> layersToCopy = new Array<String>();
+	
 	public void updateTiles(Batch batch, boolean update, HashMap<String, byte[][]> infoLayers){
 		this.setProjectionMatrix(batch.getProjectionMatrix());
 		
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		
 		if(manager.update()){
-			if(cacheableLayers <= 0)
-				cacheableLayers = manager.getNumTileRegions();
+		
 			//CACHE METHOD
 			
 //			if(infoLayers.equals(this.infoLayers)) return;
@@ -204,6 +207,7 @@ public class TileGraphics extends SpriteCache {
 //					firstUpdate = false;
 //				}
 				if(copyLayers){
+//					System.out.println("Copying)");
 					for(String layer : layersToCopy){
 						copyInformationLayer(layer, infoLayers.get(layer), this.infoLayers);
 					}
@@ -214,13 +218,15 @@ public class TileGraphics extends SpriteCache {
 			this.begin();
 			int id;
 			for(int i : cacheRow_Map.keys()){
-				id = cacheRow_Map.get(i);
-				try{
+//				System.out.println(i);
+//				try{
+					id = cacheRow_Map.get(i);
+				
 					this.draw(id);
-				}
-				catch(NullPointerException e){
-//					System.out.println("nul cache id........ row " + i + " id " + id);
-				}
+//				}
+//				catch(NullPointerException e){
+////					System.out.println("nul cache id........ row " + i + " id " + id);
+//				}
 			}
 			this.end();
 			
