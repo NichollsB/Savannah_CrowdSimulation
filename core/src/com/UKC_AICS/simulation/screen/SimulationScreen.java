@@ -118,8 +118,8 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         simBatch.enableBlending();
 //    	simBatch.begin();
         
-        
-        
+        viewRect = gui.getViewArea();
+        inputManager.setViewportRect(viewRect);
         if (render) {
     		 try {
                  long number = (long) (1000 / 60 - Gdx.graphics.getDeltaTime());
@@ -151,8 +151,11 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     	uiViewport.update();
         simBatch.setProjectionMatrix(uiCamera.combined);
         gui.update(simBatch, render);
-        eagui.update(eaRender);
+        
         simBatch.end();
+        eagui.getBatch().setProjectionMatrix(eagui.getCamera().combined);
+        eagui.getViewport().update();
+        eagui.update(eaRender);
     }
     
    
@@ -189,8 +192,10 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     	gui.resize(width, height);
         viewRect = gui.getViewArea();
         inputManager.resize(viewRect);
-        simViewport.update(width, height, true);
+        simViewport.update(width, height, false);
         uiViewport.update(width, height, true);
+        eagui.getViewport().update(width, height, true);
+//        uiViewport.
     }
 
     /**
@@ -208,12 +213,14 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         simViewcamera = (OrthographicCamera) boidGraphics.getCamera();
         simViewport = new SimViewport(Scaling.none, width, height, simViewcamera);
 
-    	inputManager = new InputManager(this, (int)width, (int)height, simViewcamera);
+    	inputManager = new InputManager(this, (int)width, (int)height, simViewcamera, simViewport);
     	input = new InputMultiplexer();
     	
     	input.addProcessor(eagui);
     	input.addProcessor(inputManager);	
-        input.addProcessor(gui); 
+    	input.addProcessor(gui); 
+    	
+    	
         
         //sets up GUI
         
@@ -242,6 +249,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         //boidGraphics.initTileSprites(simulationManager.getMapTiles());
         
         //UI
+        
         gui.createBoidTree(simulationManager.getSpeciesInfo(), simulationManager.getBoids());
         gui.createObjectTree(simulationManager.getObjectDataInfo(), simulationManager.getObjects());
     }
