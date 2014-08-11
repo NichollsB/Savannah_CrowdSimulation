@@ -33,6 +33,8 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 	private ArrayList<CheckBox> checkBoxes = new ArrayList<CheckBox>();
 	Window window = new Window("EA Settings", skin);
 	
+	Label onOffLabel = new Label("Switch EA on or off: ", skin);
+	
 	Label crossLabel = new Label("Crossover Rate", skin);
 	Label muteLabel = new Label("Mutation Rate", skin);
 	
@@ -46,7 +48,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 	String muteValue = null;
 	
 	CheckBox checkBoxHoldAll = new CheckBox("Hold All", skin);
-	
+	CheckBox checkBoxOnOff = new CheckBox("EA ON", skin);
 
 	
 	public EvolutionaryAlgorithmGUI(SimulationScreen ss, EA2 ea){
@@ -114,7 +116,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			}
 		}
 		private Table createSettingsTable(Table t2, final EA2 ea) {
-			final String[] options = {"Species 1", "Species 2", "Species 3", "Species 4"};
+			final String[] options = {"Species 1", "Species 2", "Species 3", "Species 4,", "Species 5" };
 	    	final SelectBox<String> dropdown = new SelectBox<String>(skin);
 			dropdown.setItems(options);
 			
@@ -135,6 +137,19 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 					
 				}
 			});
+			checkBoxOnOff.addListener(new ChangeListener(){
+				public void changed(ChangeEvent event, Actor actor) {
+					if(checkBoxOnOff.isChecked()){
+						ea.setEaOn(true);
+					
+					}
+					else{
+						ea.setEaOn(false);
+					}
+				}
+				
+			});
+			
 		
 			checkBoxHoldAll.addListener(new ChangeListener(){
 
@@ -202,8 +217,11 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			// sets the values that will be added to the table
 			setTableInfo(ea);
 			
-		
 			
+			
+			t2.add(onOffLabel).height(20).expandX().fillX();
+			t2.add(checkBoxOnOff).height(20).expandX().fillX();
+			t2.row();
 			t2.add(crossLabel).height(20).expandX().fillX();
 			t2.add(crossValLabel).height(20).expandX().fillX();
 			t2.add(crossTextfield).height(20).expandX().fillX();

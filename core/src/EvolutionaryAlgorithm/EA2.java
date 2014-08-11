@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.managers.BoidManager;
-import com.UKC_AICS.simulation.screen.SimulationScreen;
 
 
 public class EA2 {
@@ -21,28 +20,30 @@ public class EA2 {
 	//Mutation rate
 	private double muteRate =0.02;
 	public static int geneLength = 7;
-
-
-	
+	public boolean eaON = true;
 
 	
-	 public HashMap<Byte, Float[]> heldValues = new HashMap<Byte,Float[]>();
-	 private ArrayList<Boid> population = new ArrayList<Boid>();
-	 private ArrayList<Double> fitnessList = new ArrayList<Double>();
-	 private ArrayList<Double> probabilityList = new ArrayList<Double>();
-	 private Random r = new Random();
-	 private Float[] newGene = new Float[geneLength];
-	 private Float[] gene1 = new Float[geneLength];
-	 private Float[] gene2 = new Float[geneLength];
-	 private ArrayList<Float[]> geneList = new ArrayList<Float[]>();
-	 private ArrayList<Float[]> newGeneList = new ArrayList<Float[]>();
-	 private Byte currentSpecies = 0;
-	 public static Byte totalSpecies = 4;
+
+	
+	public HashMap<Byte, Float[]> heldValues = new HashMap<Byte,Float[]>();
+	private ArrayList<Boid> population = new ArrayList<Boid>();
+	private ArrayList<Double> fitnessList = new ArrayList<Double>();
+	private ArrayList<Double> probabilityList = new ArrayList<Double>();
+	private Random r = new Random();
+	private Float[] newGene = new Float[geneLength];
+	private Float[] gene1 = new Float[geneLength];
+	private Float[] gene2 = new Float[geneLength];
+	private ArrayList<Float[]> geneList = new ArrayList<Float[]>();
+	private ArrayList<Float[]> newGeneList = new ArrayList<Float[]>();
+	private Byte currentSpecies = 0;
+	public static Byte totalSpecies = 5;
 	 
 	// private SimulationScreen ss ;
 	 
 //SimulationScreen ss
 	// this.ss = ss;
+	 
+	 
 	 public void setup() {
 		
 		  
@@ -273,7 +274,14 @@ public class EA2 {
 		
 		return newGene;
 	}
-
+	
+	public void setEaOn(Boolean set) {
+		eaON = set;
+	}
+	public boolean getEaOn() {
+		return eaON;
+	}
+	 
 	
 	public static int getGeneLength() {
 		return geneLength; 
@@ -294,4 +302,5 @@ public class EA2 {
 	public double getMuteRate(){
 		return muteRate;
 	}
+	
 }
