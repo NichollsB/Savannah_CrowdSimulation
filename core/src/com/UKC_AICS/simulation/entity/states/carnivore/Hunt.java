@@ -131,18 +131,29 @@ public class Hunt extends State {
 
 
             Array<Boid> rmList = new Array<Boid>();
+            int sameSpecies = 0;
             for (Boid target : closeBoids) {
                 if (boid.getSpecies() == target.getSpecies()) {
+                    sameSpecies++;
                     rmList.add(target);
                 }
             }
             //remove all same species/byte boids from possible target array
             closeBoids.removeAll(rmList, false);
-            if (closeBoids.size > 0) {
+            while (closeBoids.size > 0) {
                 //TODO change this to pick closest none same species boid/ weak/ injured
-                target = closeBoids.first();
-                parent.pushState(boid, new Stalk(parent, bm, target));
-                 return false;//Pushs to stalk mode on prey target
+                target = closeBoids.pop();
+                if(target.size > boid.size) {
+                    if(boid.size + (sameSpecies * boid.size/3) > target.size) {
+                        parent.pushState(boid, new Stalk(parent, bm, target));
+                        return false;//Pushs to stalk mode on prey target
+                    }else {
+                        continue; //try another boid.
+                    }
+                } else {
+                    parent.pushState(boid, new Stalk(parent, bm, target));
+                    return false;//Pushs to stalk mode on prey target
+                }
             }
             return false;
         } else {
