@@ -220,6 +220,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     	input.addProcessor(inputManager);	
     	input.addProcessor(gui); 
     	
+    	simViewport.update(width, height, true);
     	
         
         //sets up GUI
@@ -252,6 +253,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         
         gui.createBoidTree(simulationManager.getSpeciesInfo(), simulationManager.getBoids());
         gui.createObjectTree(simulationManager.getObjectDataInfo(), simulationManager.getObjects());
+        
     }
 
     /**
