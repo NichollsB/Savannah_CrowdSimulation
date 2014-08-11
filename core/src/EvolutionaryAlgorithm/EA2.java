@@ -85,8 +85,10 @@ public class EA2 {
 				for(int j = 0; j<popNum ; j++){
 					population.get(j).setGene(newGeneList.get(j));
 				}
+				
+				reset();
 			}
-			reset();
+			
 		}
 	
 	
@@ -240,15 +242,19 @@ public class EA2 {
 		double rangeMax = 0;
 		double rangeMin = 1;
 		float muteValMin = 0;
-		float muteValMax = 1.5f;
+		float muteValMax = 0;
 		
 		for(int j =0 ; j < geneLength ; j++) {
-			double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
-			float muteValue = muteValMin + ((muteValMax*newGene[j]) - muteValMin) * r.nextFloat();
 			System.out.println("Current "+newGene[j]);
-			System.out.println("operation "+muteValMax*newGene[j]);
-			System.out.println("after thing "+newGene[j]);
-				if (randomValue >= muteRate){ 
+			muteValMax = 1.5f*newGene[j];
+			System.out.println("Max Value "+muteValMax);
+			
+			double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+			float muteValue = muteValMin + ((muteValMax) - muteValMin) * r.nextFloat();
+			
+			
+
+				if (randomValue <= muteRate){ 
 					newGene[j]= muteValue;
 				}
 			}

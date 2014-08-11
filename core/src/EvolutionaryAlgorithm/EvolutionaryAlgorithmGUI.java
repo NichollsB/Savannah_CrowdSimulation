@@ -3,7 +3,7 @@ package EvolutionaryAlgorithm;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-
+import java.lang.Object;
 import EvolutionaryAlgorithm.EA2;
 
 import com.UKC_AICS.simulation.screen.SimulationScreen;
@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 
 public class EvolutionaryAlgorithmGUI extends Stage {
 	private SimulationScreen simScreen;
@@ -178,18 +179,24 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			setCrossButton.addListener(new ClickListener(){
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					double newCross = Double.parseDouble(crossTextfield.getText());
-					ea.setCrossRate(newCross);
-					setTableInfo(ea);
+					if(!crossTextfield.getText().isEmpty()){
+						double newCross = Double.parseDouble(crossTextfield.getText());
+						
+							ea.setCrossRate(newCross);
+							setTableInfo(ea);
+						
+					}
 				}
 			});
 			final TextButton setMuteButton = new TextButton("Set Mutation Rate", skin,"default");
 			setMuteButton.addListener(new ClickListener(){
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					double newMute = Double.parseDouble(muteTextfield.getText());
-					ea.setMuteRate(newMute);
-					setTableInfo(ea);
+					if(!muteTextfield.getText().isEmpty()){
+						double newMute = Double.parseDouble(muteTextfield.getText());
+						ea.setMuteRate(newMute);
+						setTableInfo(ea);
+					}
 				}
 			});
 			// sets the values that will be added to the table
@@ -323,8 +330,8 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 		
 		public void update(Boolean eaRender) {
 			if(eaRender){
-			stage.act();
-	        stage.draw();	
+				stage.act();
+				stage.draw();	
 			}
 		}
 		

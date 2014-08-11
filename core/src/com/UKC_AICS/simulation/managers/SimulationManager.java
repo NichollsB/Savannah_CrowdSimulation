@@ -201,7 +201,7 @@ public class SimulationManager extends Manager {
             hours = 0;
             days += 1;
 
-//           ea.Evolve(); //causes behaviour to go crazy so turned off for now.
+          // ea.Evolve();  //causes behaviour to go crazy so turned off for now.
 
             increment = true;
         } else {
