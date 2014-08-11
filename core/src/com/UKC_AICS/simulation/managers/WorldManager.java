@@ -42,7 +42,8 @@ public class WorldManager extends Manager {
 
     @Override
     public void update(boolean dayIncrement) {
-        decayCorpses(dayIncrement);
+        if(dayIncrement)
+        decayCorpses();
     }
 
     public static void putObject(Entity entity, int x, int y) {
@@ -118,23 +119,23 @@ public class WorldManager extends Manager {
     public static void changeTileOnLayer(float x, float y, String layer, byte newValue) {
         map.changeTileOnLayer((int)x,(int)y,layer, newValue);
     }
-    private void decayCorpses(boolean dayIncrement) {
-        if(dayIncrement) {
-            for(Entity corpse : objects) {
-                if( corpse.getType()==0) {
-                    ((Object)corpse).corpseDecay(1f);
-                    if(((Object)corpse).getMass()<0.5f) {
-                        removeObject(corpse);
-                    }
-                }
-            }
-        }
-    }
     
   //Added by Ben Nicholls for graphics purposes - very probably temporary
     public HashMap<String, byte[][]> getMapInfo(){
     	return map.information_layers;
     }
+
+    private void decayCorpses() {
+        for(Entity corpse : objects) {
+            if( corpse.getType()==0) {
+                ((Object)corpse).reduceMass(1f);
+                if(((Object)corpse).getMass()<0.5f) {
+                    removeObject(corpse);
+                }
+            }
+        }
+    }
+    
     
     public void createObject(ObjectData objData, byte subtype, int x, int y){
     	com.UKC_AICS.simulation.entity.Object obj = new com.UKC_AICS.simulation.entity.Object(objData, x, y);

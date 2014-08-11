@@ -27,7 +27,8 @@ public class Boid extends Entity {
     public float maxForce = 0.03f; //
     private Vector3 acceleration = new Vector3();
 
-    public float stamina;
+    public float maxStamina = 60;
+    public float stamina = maxStamina;
 
     public float sightRadius = 200f;
     public float flockRadius = 100f;
@@ -83,6 +84,9 @@ public class Boid extends Entity {
 
         maxSpeed = species.getMaxSpeed();
         maxForce = species.getMaxForce();
+
+        maxStamina = species.getStamina();
+        stamina = maxStamina;
 
         position = new Vector3(500f,500f,0f);
         velocity = new Vector3();
@@ -156,13 +160,18 @@ public class Boid extends Entity {
 //        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
         velocity.add(acceleration).limit(maxSpeed);
         velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
+        //TODO add method to calc stamina usage -> based on velocity.len % of maxspeed - 0-1
+        //TODO make it so stamina must be above xx amount to move
+
+        //Stamina related calcs
+        float speed = velocity.len();
+        changeStamina(speed);
         position.add(velocity);
+
         //check for out of bounds
         checkInBounds();
 
         bounds.setPosition(position.x, position.y);
-
-
         //TODO: potentially have different species "degrade" at different rates
         hunger += (float) 0.25 /60;
         thirst += (float) 1 /60;
@@ -170,6 +179,24 @@ public class Boid extends Entity {
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
     }
 
+    private boolean changeStamina(float speed) {
+        boolean haveStamina = stamina > 0;
+        float sprintThreshold = maxSpeed*0.7f;
+        float staminaChange = speed-sprintThreshold;  //+ if using stamina / - if regaining stamina
+        //has stamina and
+        if(haveStamina && stamina - staminaChange > 0) {
+            stamina -= staminaChange;
+            if(stamina > maxStamina)
+                stamina = maxStamina;
+        }
+        else {
+            System.out.print("run out of stamina, old speed " + speed);
+            velocity.scl(sprintThreshold/speed*0.8f);
+            System.out.println(" ,new speed = " + velocity.len());
+        }
+        return stamina > 0;
+
+    }
     public void setNewVelocity(Vector3 newVel){
         velocity.set(newVel);
     }
@@ -290,9 +317,16 @@ public class Boid extends Entity {
         string += "\n\t thirst:" + (int)thirst;
         string += "\n\t panic:" + (int)panic + "/" + panicLevel;
         string += "\n\t age:" + age ;
+        string += "\n\t stamina:" + stamina;
         string += "\n\t size:" + size ;
         string += "\n\t state:" + state;
         string += "\n\t orientation:" + (int)orientation;
+        string += "\n";
+//        string += "\n\t Weightings";
+        string += "\n\t cohesion:" + cohesion;
+        string += "\n\t separation:" + separation;
+        string += "\n\t alignment:" + alignment;
+        string += "\n\t wander:" + wander;
 
         return string;
     }
