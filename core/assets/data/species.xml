@@ -15,14 +15,13 @@
         <maxSpeed>1.5f</maxSpeed>
         <maxForce>0.04f</maxForce>
 
+        <stamina>50f</stamina>
         <lifespan>80f</lifespan>
         <maturity>10</maturity>
 
         <newbornSize>8</newbornSize>
         <maxSize>28</maxSize>
-        <!--<cohesion>0.1f</cohesion>-->
-        <!--<separation>0.9f</separation>-->
-        <!--<alignment>0.5f</alignment>-->
+
         <cohesion>0.5f</cohesion>
         <separation>0.5f</separation>
         <alignment>0.5f</alignment>
@@ -42,15 +41,14 @@
         <nearRadius>40f</nearRadius>
         <maxSpeed>2f</maxSpeed>
         <maxForce>0.04f</maxForce>
+
+        <stamina>20f</stamina>
         <lifespan>90f</lifespan>
         <maturity>15</maturity>
 
         <newbornSize>10</newbornSize>
         <maxSize>35</maxSize>
 
-        <!--<cohesion>0.1f</cohesion>-->
-        <!--<separation>0.9f</separation>-->
-        <!--<alignment>0.5f</alignment>-->
         <cohesion>0.5f</cohesion>
         <separation>0.5f</separation>
         <alignment>0.5f</alignment>
@@ -71,6 +69,7 @@
         <maxSpeed>3.4f</maxSpeed>
         <maxForce>0.15f</maxForce>
 
+        <stamina>60f</stamina>
         <lifespan>50</lifespan>
         <maturity>5</maturity>
 
@@ -85,9 +84,9 @@
         <panicLevel>30</panicLevel>
     </species>
 
-
+<!-- Carnivores -->
     <species name="lion">
-        <number>8</number>
+        <number>4</number>
         <byte>3</byte>  <!-- this is the sub-type -->
         <spritergb r = "0.6" g="0" b="0.6"/>
         <diet>carnivore</diet>
@@ -97,13 +96,40 @@
         <maxSpeed>3.5f</maxSpeed>
         <maxForce>0.2f</maxForce>
 
-        <lifespan>200</lifespan>
+        <stamina>20f</stamina>
+        <lifespan>200f</lifespan>
         <maturity>25</maturity>
 
         <newbornSize>5</newbornSize>
         <maxSize>25</maxSize>
 
         <cohesion>0.1f</cohesion>
+        <separation>0.2f</separation>
+        <alignment>0.1f</alignment>
+        <wander>0.1f</wander>
+
+        <panicLevel>100</panicLevel>
+    </species>
+
+    <species name="hyena">
+        <number>4</number>
+        <byte>4</byte>  <!-- this is the sub-type -->
+        <spritergb r = "0" g="0.6" b="0.6"/>
+        <diet>carnivore</diet>
+        <sightRadius>200f</sightRadius>
+        <flockRadius>150f</flockRadius>
+        <nearRadius>100f</nearRadius>
+        <maxSpeed>3.5f</maxSpeed>
+        <maxForce>0.2f</maxForce>
+
+        <stamina>30f</stamina>
+        <lifespan>200f</lifespan>
+        <maturity>25</maturity>
+
+        <newbornSize>4</newbornSize>
+        <maxSize>15</maxSize>
+
+        <cohesion>0.21f</cohesion>
         <separation>0.2f</separation>
         <alignment>0.1f</alignment>
         <wander>0.1f</wander>

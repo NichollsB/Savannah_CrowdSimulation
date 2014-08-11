@@ -23,6 +23,10 @@ public class Species {
     private float lifespan;
     private String diet;
 
+
+
+    private float stamina;
+
     private float rgb[];
     
     private int maturity;
@@ -57,7 +61,12 @@ public class Species {
         this.spbyte = spbyte;
     }
 
-  
+    public float getStamina() {
+        return stamina;
+    }
+    public void setStamina(float stamina) {
+        this.stamina = stamina;
+    }
 
     public float getNearRadius() {
         return nearRadius;

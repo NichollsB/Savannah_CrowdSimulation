@@ -40,11 +40,12 @@ public class StaXParser {
     private static final String LIFESPAN = "lifespan";
     private static final String MATURITY = "maturity";
     private static final String DIET = "diet";
-
+    private static final String STAMINA = "stamina";
     private static final String SPRITERGB = "spritergb";
     private static final String MAXSIZE = "maxSize";
     private static final String NEWBORNSIZE = "newbornSize";
     private static final String PANICLEVEL = "panicLevel";
+
 
     @SuppressWarnings({ "unchecked", "null" })
     public HashMap<Byte, Species> readConfig(String configFile) {
@@ -236,6 +237,16 @@ public class StaXParser {
                             continue;
                         }
                     }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(STAMINA)) {
+                            event = eventReader.nextEvent();
+                            species.setStamina(Float.parseFloat(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
                     /////////////////////////////////////////////////////
                     //Added by Ben Nicholls for graphics purposes
                     if (event.isStartElement()) {
