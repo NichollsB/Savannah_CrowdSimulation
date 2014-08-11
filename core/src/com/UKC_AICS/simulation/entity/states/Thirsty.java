@@ -37,19 +37,14 @@ public class Thirsty extends State {
             //search for water
             byte waterAmount = WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("water");
             if(waterAmount >= 10) {
-//                System.out.println(boid + "\n Just posted DRINK state ");
                 parent.pushState(boid, new Drink(parent, bm));
                 boid.setVelocity(0f, 0f, 0f);
                 boid.setAcceleration(boid.getVelocity());
             }
             else {
 
-                Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
+                Array<Boid> nearBoids = BoidManager.getBoidGrid().findInSight(boid);
                 Array<Boid> closeBoids = new Array<Boid>();
-
-            /*
-            * CELL  ATTEMPTS.
-            */
 
                 for (Boid b : nearBoids) {
                     steering.set(boid.getPosition());
