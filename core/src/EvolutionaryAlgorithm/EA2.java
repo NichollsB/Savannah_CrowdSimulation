@@ -19,7 +19,7 @@ public class EA2 {
 	private double crossRate = 0.3;
 	//Mutation rate
 	private double muteRate =0.02;
-	public static int geneLength = 7;
+	public static int geneLength = 8;
 	public boolean eaON = true;
 
 	

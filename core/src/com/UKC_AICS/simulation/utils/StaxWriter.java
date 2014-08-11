@@ -83,7 +83,13 @@ import java.io.FileOutputStream;
 	    		float sightRadiusVal = b.getSightRadius();
 	    		String sightRadius = "" + sightRadiusVal;
 	    		
-	    		//TODO size and stamina
+	    		//TODO size
+	    		
+	    		float staminaVal = b.getStamina();
+	    		String stamina = "" + staminaVal;
+	    		
+	    		float maxStaminaVal = b.getMaxStamina();
+	    		String maxStamina = "" + maxStaminaVal;
 	    		
 	    		float hungerVal = b.getHunger();
 	    		String hunger = "" + hungerVal;
@@ -111,7 +117,8 @@ import java.io.FileOutputStream;
 	    		createNode(eventWriter, "flockRadius", flockRadius);
 	    		createNode(eventWriter, "signtRadius", sightRadius);
 	    		//createNode(eventWriter, "size", size);
-	    		//createNode(eventWriter, "stamina", stamina);
+	    		createNode(eventWriter, "stamina", stamina);
+	    		createNode(eventWriter, "maxStamina", maxStamina);
 	    		createNode(eventWriter, "panic", panic);
 	    		createNode(eventWriter,"hunger", hunger);
 	    		createNode(eventWriter,"thirst", thirst);

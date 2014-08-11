@@ -55,7 +55,7 @@ public class Boid extends Entity {
     public float alignment = 0;
     public float wander = 0;
     
-    public int geneSize=7;		
+    public int geneSize=8;		
     public Float[] gene= new Float[geneSize];
     public int panicLevel=30;
 
@@ -97,7 +97,7 @@ public class Boid extends Entity {
         separation = species.getSeparation();
         wander = species.getWander();
 
-        setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius);
+        setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius, maxStamina);
 
         panicLevel = species.getPanicLevel();
 
@@ -141,7 +141,7 @@ public class Boid extends Entity {
         wander = boid.wander;
 
 
-        setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius);
+        setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius,maxStamina);
 
         panicLevel = boid.panicLevel;
 
@@ -336,7 +336,7 @@ public class Boid extends Entity {
     	this.tracked = tracked;
     }
 
-    public void setGene(float cohesion, float separation, float alignment, float wander, float flockRadius, float nearRadius, float sightRadius) {
+    public void setGene(float cohesion, float separation, float alignment, float wander, float flockRadius, float nearRadius, float sightRadius, float maxStamina) {
 
     	gene[0] = cohesion;
     	gene[1] = separation;
@@ -345,6 +345,7 @@ public class Boid extends Entity {
     	gene[4] = flockRadius; 
     	gene[5]	= nearRadius; 
     	gene[6]	= sightRadius;
+    	gene[7] = maxStamina;
     				
     	
     }      
@@ -360,6 +361,7 @@ public class Boid extends Entity {
     	setFlockRadius(newGene[4]);
     	setNearRadius(newGene[5]);
     	setSightRadius(newGene[6]);
+    	setMaxStamina(newGene[7]);
     }  
     
     public Float[] getGene() {
@@ -390,7 +392,6 @@ public class Boid extends Entity {
     public float getWander() {
         return wander;
     }
-
     public void setHunger( float hunger) {
         this.hunger = hunger;
     }
@@ -435,6 +436,19 @@ public class Boid extends Entity {
     }
     public byte getGroup() {
     	return tertiaryType;
+    }
+    public void setStamina(Float newStamina){
+    	stamina = newStamina;
+    }
+    public float getStamina(){
+    	return stamina;
+    }
+
+    public void setMaxStamina(Float newMaxStamina){
+    	maxStamina = newMaxStamina;
+    }
+    public float getMaxStamina(){
+    	return maxStamina;
     }
 
 }
