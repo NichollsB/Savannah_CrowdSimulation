@@ -182,7 +182,7 @@ public class Boid extends Entity {
     private boolean changeStamina(float speed) {
         boolean haveStamina = stamina > 0;
         float sprintThreshold = maxSpeed*0.7f;
-        float staminaChange = speed-sprintThreshold;  //+ if using stamina / - if regaining stamina
+        float staminaChange = speed-sprintThreshold*0.3f;  //+ if using stamina / - if regaining stamina
         //has stamina and
         if(haveStamina && stamina - staminaChange > 0) {
             stamina -= staminaChange;
