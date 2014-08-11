@@ -76,11 +76,12 @@ public class TileGraphics extends SpriteCache {
 	}
 	
 	public boolean createCache(int y, HashMap<String, byte[][]> infoLayers){
-//		
+//		System.out.println("Starting CACHE" + y);
 		byte[][] layermap;
 		byte amount;
-		
+		int cacheLimit = mapElementsX * infoLayers.size();
 		AtlasRegion nextRegion = lastRegion;
+		int count=0;
 		int xPos = 0;
 		int numCachedLayers=0;
 		boolean recreate = false;
@@ -91,26 +92,30 @@ public class TileGraphics extends SpriteCache {
 			recreate = true;
 			id = cacheRow_Map.get(y);
 			this.beginCache(id);
+//			System.out.println("RECREATING" + id);
 		}
 		else
 			this.beginCache();
 		outer:
 		for(int x = 0; x<mapElementsX; x++)
 		{
-			
+			if(numCachedLayers+1 > cacheLimit){
+				System.out.println("Exceding Cache Limit!");
+				break;
+			}
 			for(String layer : infoLayers.keySet())
 			{
-				
+//				System.out.println("count " + count + " cache count? " + numCachedLayers);
 				
 				layermap = infoLayers.get(layer);
 				amount = layermap[x][y];
-				if(recreate && cacheRow_Count.containsKey(id)){
-					if(numCachedLayers > cacheRow_Count.get(id)){
-						System.out.println("**Trying to add more to cache than previous. Adding cache " + numCachedLayers +
-								" limit " + cacheRow_Count.get(id));
-						break;
-					}
-				}
+//				if(recreate && cacheRow_Count.containsKey(id)){
+//					if(numCachedLayers > cacheRow_Count.get(id)){
+//						System.out.println("**Trying to add more to cache than previous. Adding cache " + numCachedLayers +
+//								" limit " + cacheRow_Count.get(id));
+//						break;
+//					}
+//				}
 //				if(recreate && Math.abs(amount-this.infoLayers.get(layer)[x][y]) < 10){
 //					copyMap = true;
 //				}
@@ -140,11 +145,16 @@ public class TileGraphics extends SpriteCache {
 					numCachedLayers++;
 //					copyMap = true;
 				}
+				count++;
 			}
 			if(lastRegion!= null)
 				xPos += lastRegion.originalWidth;
 		}
+//		if(recreate){
+//			System.out.println("Row " + y + "Recreate id " + id + " layers " + numCachedLayers);
+//		}
 		id = this.endCache();
+//		if(!recreate) System.out.println("Row " + y + "Initial id " + id + " layers " + numCachedLayers);
 		if(!cacheRow_Map.containsKey(y))
 			cacheRow_Map.put(y, id);
 		if(!cacheRow_Count.containsKey(id)){
