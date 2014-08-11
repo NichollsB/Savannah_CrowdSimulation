@@ -530,7 +530,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		}
 	}
 
-
+	
 	
 
 	

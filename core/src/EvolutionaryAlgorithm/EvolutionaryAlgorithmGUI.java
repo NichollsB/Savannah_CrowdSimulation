@@ -322,8 +322,8 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 		
 		public void update(Boolean eaRender) {
 			if(eaRender){
-			stage.act();
-	        stage.draw();	
+				stage.act();
+		        stage.draw();	
 			}
 		}
 		

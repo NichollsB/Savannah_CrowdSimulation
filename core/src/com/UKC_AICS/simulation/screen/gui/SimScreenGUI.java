@@ -39,6 +39,8 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 			EAST_WIDTH = 200,
 			WEST_WIDTH = 200,
 			SOUTH_HEIGHT = 80;
+	
+	private final int screenOffset = 6;
 	private final Rectangle screenRect = new Rectangle(1,1,1,1);
 	//Changing components:
 	 TextArea console;
@@ -75,6 +77,12 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 	private SplitPane south_2;
 	private SplitPane east_3;
 	private SplitPane west_4;
+	
+	//Table areas
+	private Table west = new Table();
+	private Table east = new Table();
+	private Table north = new Table();
+	private Table south = new Table();
     
     /**
      *
@@ -115,18 +123,18 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
         //
         console = new TextArea("console log",skin);
         
-        Table north = createNorth(table);
+       north = createNorth(table);
         
         
         table.add(north).top().height(NORTH_HEIGHT).expandX().fillX();
         table.row();
         
     	
-        Table west = createWest(table);
+        west = createWest(table);
 //        table.add(west).left().width(WEST_WIDTH).fillY().expandY();
         viewArea = createCentre(table);
 //        table.add(viewArea).center().fill().expand();
-        Table east = createEast(table);
+        east = createEast(table);
 //        table.add(east).left().width(EAST_WIDTH).fillY().expandY();
 //        table.row();
         float splitwidth = (float)width/2;
@@ -156,9 +164,18 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
         splitPanes.add(west_4).left().width(width).fill().expand();//fillY().expandY();
         splitPanes.add(east_3).left().width(width).fill().expand();//fillY().expandY();
 //        splitPanes.debug();
+        
         west_4.addListener(new InputListener(){
         	public boolean touchDragged(int screenX, int screenY, int pointer) {
-//        		setViewRect(west_4.get);
+        		setViewRect(north, south, east, west);
+        		west.pack();
+        		System.out.println("resizing west " + west.getWidth());
+        		return false;
+        	}
+        });
+        east_3.addListener(new InputListener(){
+        	public boolean touchDragged(int screenX, int screenY, int pointer) {
+        		setViewRect(north, south, east, west);
         		return false;
         	}
         });
@@ -168,7 +185,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 //        table.add(splitPanes).fill().expand();
         table.row();
         
-        Table south = createSouth(table);
+        south = createSouth(table);
         table.add(south).bottom().height(SOUTH_HEIGHT).expandX().fillX();
         table.pack();
         setViewRect(north, south, east, west);
@@ -365,6 +382,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
     public void resize(int width, int height){
     	setViewRect(width, height);
     	boidTree.resize();
+    	
 //    	objectTree.resize();
     }
     
@@ -389,9 +407,9 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
     	}
     }
     private void setViewRect(Table north, Table south, Table east, Table west) {
-    	float width = Gdx.graphics.getWidth() - (east.getWidth() + west.getWidth());
-    	float height = Gdx.graphics.getHeight() - (north.getHeight() + south.getHeight());
-  		screenRect.set(west.getWidth(), north.getHeight(), width, height);
+    	float width = Gdx.graphics.getWidth() - (east.getWidth() + west.getWidth())-(screenOffset*2);
+    	float height = Gdx.graphics.getHeight() - (north.getHeight() + south.getHeight())-(screenOffset*2);
+  		screenRect.set(west.getWidth()+screenOffset, north.getHeight()+screenOffset, width, height);
   	}
     
     public Rectangle getViewArea(){
@@ -408,7 +426,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 //        	}
 //        	else 
 //        		boidInfo.setText("");
-        	System.out.println("View aera size " + viewArea.getWidth() + " " + viewArea.getHeight());
+        	setViewRect(north, south, east, west);
         	if(boids != null){
 //        		System.out.println("update tree");s
         		boidInfo.setText(boidTree.update(boids, true));
