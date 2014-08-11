@@ -69,6 +69,12 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 	private final Window hoverWindow = new Window("", skin);
 	private final Label hoverLabel = new Label("", skin);
 	private Actor hoverTip;
+	
+	//SplitPane's
+	private SplitPane north_1;
+	private SplitPane south_2;
+	private SplitPane east_3;
+	private SplitPane west_4;
     
     /**
      *
@@ -108,24 +114,84 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 
         //
         console = new TextArea("console log",skin);
-
+        
         Table north = createNorth(table);
+        
+        
+        table.add(north).top().height(NORTH_HEIGHT).expandX().fillX();
         table.row();
         
     	
         Table west = createWest(table);
+//        table.add(west).left().width(WEST_WIDTH).fillY().expandY();
         viewArea = createCentre(table);
+//        table.add(viewArea).center().fill().expand();
         Table east = createEast(table);
+//        table.add(east).left().width(EAST_WIDTH).fillY().expandY();
+//        table.row();
+        float splitwidth = (float)width/2;
+//        float maxsplit = (1f/width)*splitwidth;
+        System.out.println("Split width " + splitwidth);
+        float split;
+        split = ((1f/splitwidth) * (float)WEST_WIDTH);
+        west_4 = new SplitPane(west, null, false, skin);
+        west_4.setSplitAmount(split);
+        west_4.setMaxSplitAmount(1f);
+        west_4.setMinSplitAmount(0.01f);
+//      pane
+        east_3 = new SplitPane(null, east, false, skin);
+//        pane1.setMaxSplitAmount(720);
+//        pane1.setMinSplitAmount(0);
+        
+        split = 1 - ((1f/splitwidth) * (float)EAST_WIDTH);
+        System.out.println(split);
+        
+        System.out.println("SPLIT AMOUNT " + split);
+//        split = 1-split;
+        east_3.setSplitAmount(split);
+        
+        east_3.setMinSplitAmount(0f);
+        east_3.setMaxSplitAmount(0.99f);
+        Table splitPanes = new Table();
+        splitPanes.add(west_4).left().width(width).fill().expand();//fillY().expandY();
+        splitPanes.add(east_3).left().width(width).fill().expand();//fillY().expandY();
+//        splitPanes.debug();
+        west_4.addListener(new InputListener(){
+        	public boolean touchDragged(int screenX, int screenY, int pointer) {
+//        		setViewRect(west_4.get);
+        		return false;
+        	}
+        });
+//        table.add(pane2).left().width(width).fillY().expandY();
+//        table.add(pane1).right().width(width).fillY().expandY();
+        table.add(splitPanes).fill().expand();
+//        table.add(splitPanes).fill().expand();
         table.row();
+        
         Table south = createSouth(table);
+        table.add(south).bottom().height(SOUTH_HEIGHT).expandX().fillX();
         table.pack();
         setViewRect(north, south, east, west);
+        
+//        SplitPane pane4 = new SplitPane(west, viewArea, false, skin);
+//        pane4.setSplitAmount(EAST_WIDTH + screenRect.width);
+        
+//        SplitPane pane3 = new SplitPane(east, pane4, false, skin);
+//        pane3.setMinSplitAmount(EAST_WIDTH);
+//        pane3.setMaxSplitAmount(EAST_WIDTH + screenRect.width);
+//        pane3.setSplitAmount(EAST_WIDTH);
+       
+  
+        
+ 
+        
+//        table.add(pane1).top().expandX().fillX();
 //        screenRect.set(0, 0, width, height);
     }    
         
 	private Table createNorth(Table t){
     	Table menuTable = new Table(skin);
-    	t.add(menuTable).top().height(NORTH_HEIGHT).expandX().fillX().colspan(3);
+//    	t.add(menuTable).top().height(NORTH_HEIGHT).expandX().fillX().colspan(3);
     	menuTable.add("north").fill();
 //    	menuGroup.fill(Gdx.graphics.getWidth());
     	return menuTable;
@@ -142,7 +208,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 	
     private Table createSouth(Table t){
     	Table southTable = new Table(skin);
-    	t.add(southTable).bottom().height(SOUTH_HEIGHT).expandX().fillX().colspan(3);
+//    	t.add(southTable).bottom().height(SOUTH_HEIGHT).expandX().fillX().colspan(3);
 //    	southTable.add("south");
         // play/pause button
         final TextButton playButton = new TextButton("Play", skin, "default");
@@ -234,13 +300,13 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
     }
     private Table createCentre(Table t){
     	Table centreTable = new Table(skin);
-    	t.add(centreTable).center().fill().expand();
+//    	t.add(centreTable).center().fill().expand();
     	return centreTable;
     }
     
     private Table createEast(Table t){
     	Table eastTable = new Table(skin);
-    	t.add(eastTable).left().width(EAST_WIDTH).fillY().expandY();
+//    	t.add(eastTable).left().width(EAST_WIDTH).fillY().expandY();
     	boidInfo = new Label("some stuff ", skin);
     	boidInfo.setAlignment(Align.left);
 
@@ -251,13 +317,15 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
     }
     private Table createWest(Table t){
     	Table westTable = new Table(skin);
-    	t.add(westTable).left().width(WEST_WIDTH).fillY().expandY();
+    	SplitPane pane = new SplitPane(boidTree, objectTree, true, skin);
+    	westTable.add(pane).fill().expand();
+//    	t.add(westTable).left().width(WEST_WIDTH).fillY().expandY();
 //    	westTable.add(new Label("Boids", skin));
-    	westTable.row();
-   	 	westTable.add(boidTree).top().fill().expand();
+//    	westTable.row();
+//   	 	westTable.add(boidTree).top().fill().expand();
 //   	 	westTable.row();
 //   	 	westTable.add(objectTree).top().fill().expand();
-   	 	westTable.pack();
+//   	 	westTable.pack();
     	return westTable;
     }
 
@@ -300,6 +368,12 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 //    	objectTree.resize();
     }
     
+    private void setviewRect(int left, int right, int top, int bottom){
+    	if(screenRect!=null){
+    		screenRect.setSize(right-left, top-bottom);
+    		screenRect.setPosition(left, bottom);
+    	}
+	}
     private void setViewRect(int width, int height){
     	if(screenRect!=null){
     		screenRect.setSize(width - (EAST_WIDTH + WEST_WIDTH),
@@ -334,6 +408,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 //        	}
 //        	else 
 //        		boidInfo.setText("");
+        	System.out.println("View aera size " + viewArea.getWidth() + " " + viewArea.getHeight());
         	if(boids != null){
 //        		System.out.println("update tree");s
         		boidInfo.setText(boidTree.update(boids, true));
@@ -344,7 +419,8 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
 	    	
         }
 //        batch.end();
-//        Table.drawDebug(stage);  //debug lines for UI
+//        table.debug();
+        Table.drawDebug(stage);  //debug lines for UI
 //        font.draw(spriteBatch, getFPSString(), 0, 20);
     	
 	}

@@ -47,7 +47,7 @@ public class InputManager implements InputProcessor{
             default:
                 break;
         }
-		return true;
+		return false;
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class InputManager implements InputProcessor{
 			
 			dragX = screenX; dragY= screenY;
 		}
-		return true;
+		return false;
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class InputManager implements InputProcessor{
 				//screen.pickPoint(screenX, flipY(screenY));
 			}
 		}
-		return true;
+		return false;
 	}
 
 	@Override

@@ -212,8 +212,9 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     	input = new InputMultiplexer();
     	
     	input.addProcessor(eagui);
+    	
     	input.addProcessor(inputManager);	
-        input.addProcessor(gui); 
+    	input.addProcessor(gui); 
         
         //sets up GUI
         

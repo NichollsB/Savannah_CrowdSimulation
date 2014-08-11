@@ -123,9 +123,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	
 	private Table buttons(){
 		Table btnGrp = new Table();
-		
-		
-		
+
 		TextButton btn = (TextButton) buttons.get(ButtonType.ADD);
 		btn.addListener(new SelectOptionsListener(ButtonType.ADD, buttonsInfo.get(btn)));
 		btnGrp.add(btn).expandX().fillX();
@@ -157,28 +155,39 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 			System.out.println("Missing rootNode");
 			return null;
 		}
-		if(!rootGroups.containsKey(spByte) || !rootGroups.get(spByte).containsKey(boid.getType())){
-			addNodeGroup(spByte, boid.getTertiaryType(), info);
-		}
+		node = boidRoots.get(spByte);
 		String boidName = (boidRoots.get(spByte).getName() + " " + boid.getTertiaryType());
 		label = new Label(boidName, skin);
-		node = new BoidTree_Node(label, boidName, info, spByte, boid, false);
-		boidNode = node;
-		try{
-			rootGroups.get(spByte).get(boid.getTertiaryType()).add(node);
-			rootGroups.get(spByte).get(boid.getTertiaryType()).incrementNumChildren(1);
-			rootGroups.get(spByte).get(boid.getTertiaryType()).setText();
-			node = boidRoots.get(spByte);
-			node.incrementNumChildren(1);
-			node.setText();
-			boidNodes_num++;
-			root.setNumChildren(boidNodes_num);
-		}
-		catch(NullPointerException e){
-			System.out.println("Adding boid node to root.");
-			boidRoots.get(spByte).add(node);
-		}
+		boidNode = new BoidTree_Node(label, boidName, info, spByte, boid, false);
+		node.addNode(boidNode, boid.getTertiaryType());
+		boidNodes_num++;
+		root.setNumChildren(boidNodes_num);
+//			boidNodes.put()
+//		System.out.println("boidNode added." +  " type " + boidNode.getName() + " subtype " + boid.getTertiaryType());
 		return boidNode;
+//		if(!rootGroups.containsKey(spByte) || !rootGroups.get(spByte).containsKey(boid.getType())){
+//			addNodeGroup(spByte, boid.getTertiaryType(), info);
+//			System.out.println("GROUP TYPE " + boid.getTertiaryType());
+//		}
+//		String boidName = (boidRoots.get(spByte).getName() + " " + boid.getTertiaryType());
+//		label = new Label(boidName, skin);
+//		node = new BoidTree_Node(label, boidName, info, spByte, boid, false);
+//		boidNode = node;
+//		try{
+//			rootGroups.get(spByte).get(boid.getTertiaryType()).add(node);
+//			rootGroups.get(spByte).get(boid.getTertiaryType()).incrementNumChildren(1);
+//			rootGroups.get(spByte).get(boid.getTertiaryType()).setText();
+//			node = boidRoots.get(spByte);
+//			node.incrementNumChildren(1);
+//			node.setText();
+//			boidNodes_num++;
+//			root.setNumChildren(boidNodes_num);
+//		}
+//		catch(NullPointerException e){
+//			System.out.println("Adding boid node to root.");
+//			boidRoots.get(spByte).add(node);
+//		}
+
 		
 	}	
 	
@@ -207,7 +216,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 * @return Null if no root node with identifier spByte exists, or BoidTree_Node if a new group node is created, or already exists
 	 */
 	public BoidTree_Node addNodeGroup(byte spByte, byte group, String info){
-		System.out.println("Make group for species " + spByte + " group " + group);
+//		System.out.println("Make group for species " + spByte + " group " + group);
 		if(!boidRoots.containsKey(spByte)) return null;
 		if(!rootGroups.containsKey(spByte)){
 //			addRootNode(spByte, Byte.toString(spByte), info);
@@ -224,7 +233,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		groups.put(group, newGroup);
 		rootGroups.put(spByte, groups);
 		rootNode.add(newGroup);
-		System.out.println("new group "+ newGroup);
+//		System.out.println("new group "+ newGroup);
 		return newGroup;
 	}
 	
@@ -252,10 +261,11 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		if(nodeComparison != null){
 			for(Entity b : nodeComparison){
 				if(boidNodes.containsKey(b)){
+					System.out.println("Remove boid. Species " + b.getSubType() + " group " + b.getTertiaryType());
 					tree.remove(boidNodes.get(b));
 					boidNodes.remove(b);
-					rootGroups.get(b.getSubType()).get(b.getTertiaryType()).findNumChildren();
-					boidRoots.get(b.getSubType()).findNumChildren();
+//					rootGroups.get(b.getSubType()).get(b.getTertiaryType()).findNumChildren();
+//					boidRoots.get(b.getSubType()).findNumChildren();
 					boidNodes_num--;
 				}
 			}
@@ -347,7 +357,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 			}
 			else{
 				selectedType = node.getID();
-				selectedGroup = (byte) (rootGroups.get(selectedType).keys().toArray().size+1);
+				selectedGroup = -1;
 			}
 				
 			selectedInfo = node.getInfo();
@@ -424,16 +434,17 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		scrollTable.add(content).left().top();
 
 		ScrollPane scroll = new ScrollPane(scrollTable, skin);
-    	InputListener stopTouchDown = new InputListener() {
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				event.stop();
-				return false;
-			}
-		};
+//    	InputListener stopTouchDown = new InputListener() {
+//			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//				event.stop();
+//				return false;
+//			}
+//		};
 
 		scroll.setSmoothScrolling(true);
 		scroll.setScrollBarPositions(true, false);
 		scroll.setFadeScrollBars(false);
+		
 		return scroll;
 	}
 
