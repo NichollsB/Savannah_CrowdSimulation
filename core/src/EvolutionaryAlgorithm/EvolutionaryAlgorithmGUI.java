@@ -178,8 +178,9 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					//EA Settings menu disappears
+//					window.setVisible(false);
 					simScreen.flipEARender();               
-          
+					
 				}
 			});
 			// Apply changes
@@ -352,6 +353,11 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				stage.act();
 				stage.draw();	
 			}
+		}
+		
+		//Added by ben nicholls
+		public void toggleWindowVisible(){
+			window.setVisible(!window.isVisible());
 		}
 		
 }
