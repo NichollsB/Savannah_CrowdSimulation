@@ -87,6 +87,7 @@ public class TileGraphics extends SpriteCache {
 		boolean recreate = false;
 		boolean copyMap = false;
 		int id = 0;
+		int n=0;
 		if(cacheRow_Map.containsKey(y)){
 			
 			recreate = true;
@@ -99,12 +100,14 @@ public class TileGraphics extends SpriteCache {
 		outer:
 		for(int x = 0; x<mapElementsX; x++)
 		{
-			if(numCachedLayers+1 > cacheLimit){
-				System.out.println("Exceding Cache Limit!");
-				break;
-			}
+			
+			n = 0;
 			for(String layer : infoLayers.keySet())
-			{
+			{	
+				if(numCachedLayers+1 > cacheLimit){
+					System.out.println("Exceding Cache Limit!");
+					break outer;
+				}
 //				System.out.println("count " + count + " cache count? " + numCachedLayers);
 				
 				layermap = infoLayers.get(layer);
@@ -136,16 +139,18 @@ public class TileGraphics extends SpriteCache {
 					this.add(lastRegion, xPos, y*lastRegion.originalHeight, lastRegion.originalWidth, lastRegion.originalHeight);
 					cacheCount ++;
 					numCachedLayers++;
+//					break;
 //					copyMap = true;
 				}
 				else if(!cacheRow_Count.contains(id, true)){
 //				else if(!cacheRow_Map.containsKey(y)){
 					lastRegion = manager.getEmptyRegion();
-					this.add(lastRegion, xPos, y*lastRegion.originalHeight, lastRegion.originalWidth, lastRegion.originalHeight);
+					this.add(new Sprite(), xPos, y*lastRegion.originalHeight, lastRegion.originalWidth, lastRegion.originalHeight);
 					cacheCount ++;
 					numCachedLayers++;
 //					copyMap = true;
 				}
+				n++;
 				count++;
 			}
 			if(lastRegion!= null)
