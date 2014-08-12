@@ -45,6 +45,8 @@ public class StaXParser {
     private static final String MAXSIZE = "maxSize";
     private static final String NEWBORNSIZE = "newbornSize";
     private static final String PANICLEVEL = "panicLevel";
+    private static final String HUNGERLEVEL = "hungerLevel";
+    private static final String THIRSTLEVEL = "thirstLevel";
 
 
     @SuppressWarnings({ "unchecked", "null" })
@@ -93,6 +95,24 @@ public class StaXParser {
                                 .equals(PANICLEVEL)) {
                             event = eventReader.nextEvent();
                             species.setPanicLevel(Integer.parseInt(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(HUNGERLEVEL)) {
+                            event = eventReader.nextEvent();
+                            species.setHungerLevel(Integer.parseInt(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(THIRSTLEVEL)) {
+                            event = eventReader.nextEvent();
+                            species.setThirstLevel(Integer.parseInt(event.asCharacters().getData()));
                             continue;
                         }
                     }

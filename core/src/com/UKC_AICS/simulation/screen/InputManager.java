@@ -71,8 +71,8 @@ public class InputManager implements InputProcessor{
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		System.out.println("Mouse down " + inBounds);
-		if(!inBounds) return false;
-		inDragBounds = true;
+		if(!inBounds(screenX, screenY)) return false;
+//		inDragBounds = true;
 		if(button == Input.Buttons.LEFT){
 			lClick = true;
 			
@@ -86,7 +86,7 @@ public class InputManager implements InputProcessor{
 			
 			dragX = screenX; dragY= screenY;
 		}
-		return false;
+		return inBounds;
 	}
 
 	@Override
@@ -108,8 +108,10 @@ public class InputManager implements InputProcessor{
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		if(!inDragBounds) return false;
-		if(lClick || rClick){
+//		if(!inDragBounds) return false;
+//		if(lClick || rClick){
+		System.out.println("In bounds " +inBounds(screenX, screenY));
+		if(inBounds(screenX, screenY)){
 			if(ControlState.STATE == ControlState.State.NAVIGATE || rClick){
 	//			Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
 	//			screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
@@ -124,17 +126,18 @@ public class InputManager implements InputProcessor{
 				//screen.pickPoint(screenX, flipY(screenY));
 			}
 		}
-		return true;
+		return inBounds;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
 		inBounds = inBounds(screenX, screenY);
-		System.out.println("inBounds " + inBounds + " mouse pos " + screenX + " " + screenY +
-				" boundrect min " + viewportRectangle.x);
-//		Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
-//		screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
-//		screen.setMousePosition(screenX, Gdx.graphics.getHeight() - screenY);
+//		
+		screen.setMousePosition(screenX, Gdx.graphics.getHeight() - screenY);
+		if(inBounds){
+			Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
+			screen.setMouseWorldPosition((int)screenToMouse.x, (int)screenToMouse.y);
+		}
 		if(inBounds)
 			return true;
 		else

@@ -33,7 +33,7 @@ public class Hunt extends State {
     public boolean update(Boid boid) {
 
         //check still hungry
-        if (boid.hunger > 32) {
+        if (boid.hunger > boid.hungerLevel/2) {
 
             Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
@@ -115,20 +115,6 @@ public class Hunt extends State {
                 //collision avoidance
                 boid.setAcceleration(tempVec);
             }
-
-//        Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
-//        Array<Boid> closeBoids = new Array<Boid>();
-//
-//        for (Boid b : nearBoids) {
-//            steering.set(boid.getPosition());
-//            steering.sub(b.getPosition());
-//            // Check possible prey boids are within sight radius and not predator boid
-//            if (steering.len() < boid.sightRadius && !b.equals(boid)) {
-//                closeBoids.add(b);
-//            }
-//        }
-
-
 
             Array<Boid> rmList = new Array<Boid>();
             int sameSpecies = 0;

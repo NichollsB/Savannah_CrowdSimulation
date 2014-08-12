@@ -1,6 +1,8 @@
 package com.UKC_AICS.simulation.entity.states.herbivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.behaviours.Evade;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
@@ -21,6 +23,8 @@ public class Panic extends State {
 
         Array<Boid> nearBoids = BoidManager.getBoidGrid().findInSight(boid);
         Array<Boid> predators = new Array<Boid>();
+        Array<Entity> nearEntities = new Array<Entity>();
+        nearEntities.addAll(nearBoids);
 
         for (Boid b : nearBoids) {
             if (SimulationManager.speciesData.get(b.getSpecies()).getDiet().equals("carnivore")) {
@@ -31,6 +35,8 @@ public class Panic extends State {
         if(predators.size > 0) {
             for(Boid predator : predators) {
                 steering.add(Evade.act(boid, predator));
+                steering.add(Collision.act(nearEntities, boid));
+                steering.add(Collision.act(boid));
             }
         } else {
             boid.panic -= 10;

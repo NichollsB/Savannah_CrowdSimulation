@@ -37,19 +37,14 @@ public class Thirsty extends State {
             //search for water
             byte waterAmount = WorldManager.getTileInfoAt((int) boid.position.x, (int) boid.position.y).get("water");
             if(waterAmount >= 10) {
-//                System.out.println(boid + "\n Just posted DRINK state ");
                 parent.pushState(boid, new Drink(parent, bm));
                 boid.setVelocity(0f, 0f, 0f);
                 boid.setAcceleration(boid.getVelocity());
             }
             else {
 
-                Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
+                Array<Boid> nearBoids = BoidManager.getBoidGrid().findInSight(boid);
                 Array<Boid> closeBoids = new Array<Boid>();
-
-            /*
-            * CELL  ATTEMPTS.
-            */
 
                 for (Boid b : nearBoids) {
                     steering.set(boid.getPosition());
@@ -78,7 +73,7 @@ public class Thirsty extends State {
 
                 //just add collision avoidance
                 steering.add(Collision.act(collisionObjects, boid));  //.scl(avoid)   //Maybe have some scaling for avoidance?
-//                steering.add(behaviours.get("collision").act(collisionObjects, boid));
+                steering.add(Collision.act(boid));
 
 //                steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));

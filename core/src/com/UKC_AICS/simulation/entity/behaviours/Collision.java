@@ -23,7 +23,7 @@ public class Collision extends Behaviour {
     private static Vector3 tmpVec = new Vector3(0f,0f,0f);
     private static Vector3 tmpVec2 = new Vector3(0f,0f,0f);
 
-    static float MAX_AVOID_FORCE = 0.2f;
+    static float MAX_AVOID_FORCE = 0.15f;
     static float LOOK_AHEAD = 20f;
     static float HALF_LOOK_AHEAD = LOOK_AHEAD/2f;
     static int tileSize = Constants.TILE_SIZE;
@@ -54,7 +54,7 @@ public class Collision extends Behaviour {
                 posToCheckY = Constants.mapHeight + posY;
             }
             //TODO need a check for outofbounds, wrap check for blocked, but steer from extended map coords
-            if(WorldManager.getTileInfoAt(posToCheckX, posToCheckY).get("terrain") == 1) {
+            if(WorldManager.getTileInfoAt(posToCheckX, posToCheckY).get("blocked") == 1) {
                 cell = new ArrayList<Integer>();
                 cell.add(posX);
                 cell.add(posY);
