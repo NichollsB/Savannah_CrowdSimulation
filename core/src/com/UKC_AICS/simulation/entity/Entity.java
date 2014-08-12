@@ -11,7 +11,7 @@ public class Entity {
     public double orientation; // explicitly 3d vectors for extensibility
 
     public byte type = 0; //what category of object is it? // 1 == boid(any boid),
-    public byte subType = 0; //what type of object is it? // for boids this would be subType
+    public byte subType = 0; //what type of object is it? // for boids this would be subType(species)
     
     //Added by Ben Nicholls
     public byte tertiaryType = 0;//Any additional sub-classification of boid or object

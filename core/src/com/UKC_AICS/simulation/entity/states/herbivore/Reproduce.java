@@ -3,6 +3,7 @@ package com.UKC_AICS.simulation.entity.states.herbivore;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.Arrive;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
@@ -25,7 +26,7 @@ public class Reproduce extends State {
 
     @Override
     public boolean update(Boid boid) {
-        if (boid.hunger < 35 && boid.thirst < 35) {
+        if (boid.hunger < boid.hungerLevel/2 && boid.thirst < boid.thirstLevel/2) {
             boid.setState(this.toString());
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
@@ -59,12 +60,12 @@ public class Reproduce extends State {
 
                     tempVec.set(boid.getPosition());
                     tempVec.sub(nearest.getPosition());
-                    if (tempVec.len2() < steering.len2() && other.hunger>60 && other.thirst > 60) {
+                    if (tempVec.len2() < steering.len2() && other.hunger < other.hungerLevel/2 && other.thirst < other.thirstLevel/2) {
                         nearest = other;
                     }
 
                 }
-                if(tempVec.len2() < 10f && nearest.hunger < 40 && nearest.thirst < 40) {
+                if(tempVec.len2() < 10f) { // && nearest.hunger < 40 && nearest.thirst < 40) {
                     System.out.println("boid made a baby " + boid.getSpecies());
 //                    bm.createBoid(boid); //create copy of self.
                     Boid baby = new Boid(boid);
@@ -82,6 +83,7 @@ public class Reproduce extends State {
                 steering.set(0f,0f,0f);
 
                 steering.add(Arrive.act(boid, nearest.getPosition()));
+                steering.add(Collision.act(boid));
 
                 boid.setAcceleration(steering);
 
@@ -112,6 +114,9 @@ public class Reproduce extends State {
                 steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
                 steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
+
+                steering.add(Collision.act(boid));
+                steering.add(Collision.act(dummyObjects, boid));
 
 //                steering.add(behaviours.get("collision").act(collisionObjects, boid));
 

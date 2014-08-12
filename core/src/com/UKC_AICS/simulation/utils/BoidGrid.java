@@ -240,7 +240,7 @@ public class BoidGrid {
 
     /**
      *
-     * return all boids in the cell by adding them to the array given (bnearby) 
+     * return all boids in the cell by adding them to the array given (bnearby)
      *
      * @param bnearby array to add the boids to.
      * @param cellX cell index x

@@ -40,6 +40,11 @@ public class Species {
 	private int population;
     private int panicLevel;
 
+
+
+    private int hungerLevel;
+    private int thirstLevel;
+
     public String getName() {
         return name;
     }
@@ -226,8 +231,20 @@ public class Species {
     public void setPanicLevel(int panicLevel) {
         this.panicLevel = panicLevel;
     }
-
     public int getPanicLevel() {
         return panicLevel;
+    }
+    public int getHungerLevel() {
+        return hungerLevel;
+    }
+    public void setHungerLevel(int hungerLevel) {
+        this.hungerLevel = hungerLevel;
+    }
+
+    public int getThirstLevel() {
+        return thirstLevel;
+    }
+    public void setThirstLevel(int thirstLevel) {
+        this.thirstLevel = thirstLevel;
     }
 }

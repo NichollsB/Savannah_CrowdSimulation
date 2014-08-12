@@ -65,17 +65,17 @@ public class Thirsty extends State {
                 Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
                 collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
 
-                float coh = boid.cohesion /2;
-                float sep = boid.separation /2;
-                float ali = boid.alignment /2;
-                float wan = boid.wander;
+                float wan = SimulationManager.speciesData.get(boid.getSpecies()).getWander() / 2;
+//                float ali = SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
+                float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
 
                 steering.set(0f, 0f, 0f);
 
                 //just add collision avoidance
                 steering.add(Collision.act(collisionObjects, boid));  //.scl(avoid)   //Maybe have some scaling for avoidance?
+                steering.add(Collision.act(boid));
 
-                steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
+//                steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
                 steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
