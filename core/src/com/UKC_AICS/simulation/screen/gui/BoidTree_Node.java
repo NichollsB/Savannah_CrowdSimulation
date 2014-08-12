@@ -6,6 +6,7 @@ import com.UKC_AICS.simulation.entity.Species;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
+import com.badlogic.gdx.utils.ObjectMap;
 
 public class BoidTree_Node extends Node{
 	private Entity boid;
@@ -18,6 +19,7 @@ public class BoidTree_Node extends Node{
 	private boolean root;
 	private String text;
 	private int numChildren = 0;
+	private ObjectMap<Byte, BoidTree_Node> childNodes = new ObjectMap<Byte, BoidTree_Node>();
 	
 	private Label label;
 	
@@ -113,5 +115,27 @@ public class BoidTree_Node extends Node{
 
 	public int numChildren(){
 		return numChildren;
+	}
+	
+	public BoidTree_Node addNode(BoidTree_Node node, byte id){
+		BoidTree_Node child;
+		if(!childNodes.containsKey(id)){
+			child = childNodes.get(id);
+			String name = this.getName() + " " + id;
+			Label groupLabel = (Label)node.getActor();
+			groupLabel = new Label(name, groupLabel.getStyle());
+			String groupInfo = name + "/n" + "/t" + "Population: " + 0;
+			BoidTree_Node newNode = new BoidTree_Node(groupLabel, name, groupInfo, id, null, false);
+			childNodes.put(id, newNode);
+			this.add(newNode);
+//			return newNode;
+		}
+		child = childNodes.get(id);
+		child.add(node);
+		child.incrementNumChildren(1);
+//		childNodes.put((byte)childNodes.size, node);
+		this.incrementNumChildren(1);
+		this.setText();
+		return child;
 	}
 }

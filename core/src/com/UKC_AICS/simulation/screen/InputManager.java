@@ -1,12 +1,14 @@
 package com.UKC_AICS.simulation.screen;
 
 import com.UKC_AICS.simulation.gui.controlutils.ControlState;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class InputManager implements InputProcessor{
 	
@@ -19,15 +21,18 @@ public class InputManager implements InputProcessor{
 	
 	private int mouseX =0, mouseY = 0;
 	private boolean inBounds = false;
+	private boolean inDragBounds = false;
 	
 	private Rectangle viewportRectangle;
+	private Viewport view;
 	
-	public InputManager(SimulationScreen screen, int width, int height, OrthographicCamera camera){
+	public InputManager(SimulationScreen screen, int width, int height, OrthographicCamera camera, Viewport view){
 		this.screen = screen;
 		this.width = width;
 		this.height = height;
 		this.camera = camera;
 		camera.zoom = 1.2f;
+		this.view = view;
 	}
 	
 	public int flipY(int y){
@@ -47,7 +52,7 @@ public class InputManager implements InputProcessor{
             default:
                 break;
         }
-		return true;
+		return false;
 	}
 
 	@Override
@@ -65,7 +70,9 @@ public class InputManager implements InputProcessor{
 	private int dragX = 0, dragY = 0;
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		System.out.println("Mouse down " + inBounds);
 		if(!inBounds) return false;
+		inDragBounds = true;
 		if(button == Input.Buttons.LEFT){
 			lClick = true;
 			
@@ -79,7 +86,7 @@ public class InputManager implements InputProcessor{
 			
 			dragX = screenX; dragY= screenY;
 		}
-		return true;
+		return false;
 	}
 
 	@Override
@@ -87,10 +94,12 @@ public class InputManager implements InputProcessor{
 		if(lClick|| rClick){
 			lClick = false;
 			rClick = false;
+			
 			if(!dragging){
-				Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
+				Vector3 screenToMouse = view.unproject(new Vector3(screenX, screenY, 0));
 				screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
 			}
+			inDragBounds =false;
 				dragging = false;
 			
 		}
@@ -99,7 +108,7 @@ public class InputManager implements InputProcessor{
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		if(!inBounds) return false;
+		if(!inDragBounds) return false;
 		if(lClick || rClick){
 			if(ControlState.STATE == ControlState.State.NAVIGATE || rClick){
 	//			Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
@@ -121,9 +130,11 @@ public class InputManager implements InputProcessor{
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
 		inBounds = inBounds(screenX, screenY);
+		System.out.println("inBounds " + inBounds + " mouse pos " + screenX + " " + screenY +
+				" boundrect min " + viewportRectangle.x);
 //		Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
 //		screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
-		screen.setMousePosition(screenX, height-screenY);
+//		screen.setMousePosition(screenX, Gdx.graphics.getHeight() - screenY);
 		if(inBounds)
 			return true;
 		else
@@ -146,7 +157,10 @@ public class InputManager implements InputProcessor{
 	}
 	
 	public void resize(Rectangle viewRect){
-		viewportRectangle = viewRect;
+		setViewportRect(viewRect);
+	}
+	public void setViewportRect(Rectangle rect){
+		viewportRectangle = rect;
 	}
 	
 	private boolean inBounds(int x, int y){

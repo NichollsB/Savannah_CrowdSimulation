@@ -31,14 +31,9 @@ public class CarnDefault extends State{
 
 
         if(boid.thirst > 65) {
-//            System.out.println(boid + "\n Just posted Thirsty state "  );
             parent.pushState(boid, new Thirsty(parent, bm));
         }
         else if(boid.hunger > 82) {
-//            System.out.println(boid + "\n Just posted Hungry state "  );
-//            parent.pushState(boid, new Hunt(parent,bm));
-            //This is test GoForKill state change, CHANGE to Hunt State
-
             parent.pushState(boid, new Hunt(parent, bm));
         } else if (boid.age > 10 && boid.hunger < 35 && boid.thirst < 35) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
@@ -69,7 +64,6 @@ public class CarnDefault extends State{
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
 
             tempVec = Collision.act(collisionObjects, boid);
-//            tempVec = behaviours.get("collision").act(collisionObjects, boid);
             tempVec.add(Collision.act(boid));
             steering.set(0f, 0f, 0f);
             boid.setAcceleration(steering);
@@ -101,12 +95,9 @@ public class CarnDefault extends State{
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
                 steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
-//                steering.add(Collision.act(boid));
-
 //                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
 //                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
 
-//                steering.add(tempVec);
                 boid.setAcceleration(steering);
 
             } else {

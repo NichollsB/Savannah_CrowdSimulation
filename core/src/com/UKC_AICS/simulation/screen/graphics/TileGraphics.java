@@ -29,7 +29,7 @@ public class TileGraphics extends SpriteCache {
 	int cacheCount = 0;
 	private Array<Byte> cacheRows;
 	private ObjectMap<Integer, Integer> cacheRow_Map = new ObjectMap<Integer, Integer>();
-	private ObjectMap<Integer, Integer> cacheRow_Count = new ObjectMap<Integer, Integer>();
+	private Array<Integer> cacheRow_Count = new Array<Integer>();
 //	private int[][] 
 	
 	private final static int MAXCACHE = 100000;
@@ -138,7 +138,8 @@ public class TileGraphics extends SpriteCache {
 					numCachedLayers++;
 //					copyMap = true;
 				}
-				else if(!cacheRow_Count.containsKey(id)){
+				else if(!cacheRow_Count.contains(id, true)){
+//				else if(!cacheRow_Map.containsKey(y)){
 					lastRegion = manager.getEmptyRegion();
 					this.add(lastRegion, xPos, y*lastRegion.originalHeight, lastRegion.originalWidth, lastRegion.originalHeight);
 					cacheCount ++;
@@ -157,9 +158,10 @@ public class TileGraphics extends SpriteCache {
 //		if(!recreate) System.out.println("Row " + y + "Initial id " + id + " layers " + numCachedLayers);
 		if(!cacheRow_Map.containsKey(y))
 			cacheRow_Map.put(y, id);
-		if(!cacheRow_Count.containsKey(id)){
-			cacheRow_Count.put(id, numCachedLayers);
-			cacheableLayers = numCachedLayers;
+		if(!cacheRow_Count.contains(id, true)){
+			cacheRow_Count.add(id);
+//			cacheRow_Count.put(id, numCachedLayers);
+//			cacheableLayers = numCachedLayers;
 		}
 		return copyMap;
 	}

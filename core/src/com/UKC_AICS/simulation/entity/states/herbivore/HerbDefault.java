@@ -30,19 +30,6 @@ public class HerbDefault extends State {
     @Override
     public boolean update(Boid boid) {
 
-//
-//            //find objects nearby
-//            Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
-//            for (Entity ent : dummyObjects) {
-////                if (ent.getPosition().dst2(boid.getPosition()) > boid.sightRadius) {
-//                steering.set(boid.position);
-//                steering.sub(ent.position);
-//                if (steering.len2() > boid.sightRadius * boid.sightRadius) {
-//                    dummyObjects.removeValue(ent, false);
-//                }
-//            }
-
-
         if(boid.panic > boid.panicLevel) {
             parent.pushState(boid, new Panic(parent, bm));
         }
@@ -55,9 +42,6 @@ public class HerbDefault extends State {
         } else if (boid.age > SimulationManager.speciesData.get(boid.getSpecies()).getMaturity() && boid.hunger < 35 && boid.thirst < 35) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
             parent.pushState(boid, new Reproduce(parent, bm));
-//        } else if (boid.age > 10 && boid.hunger > 70 && boid.thirst > 70) {
-////            System.out.println(boid + "\nJust posted Reproduce state ");
-//            parent.pushState(boid, new Reproduce(parent, bm));
         } else {
             boid.setState(this.toString());
 
@@ -114,7 +98,6 @@ public class HerbDefault extends State {
             Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
             tempVec = Collision.act(collisionObjects, boid);
-//            tempVec = behaviours.get("collision").act(collisionObjects, boid);
             tempVec.add(Collision.act(boid));
 
             steering.set(0f, 0f, 0f);

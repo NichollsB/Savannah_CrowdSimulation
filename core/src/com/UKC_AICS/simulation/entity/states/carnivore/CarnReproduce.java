@@ -68,7 +68,6 @@ public class CarnReproduce extends State {
                 }
                 if(tempVec.len2() < 10f && nearest.hunger < 60 && nearest.thirst < 60) {
                     System.out.println("CARNIVORE boid made a baby " + boid.getSpecies());
-//                    bm.createBoid(boid); //create copy of self.
                     Boid baby = new Boid(boid);
                     baby.setAge(0);
                     bm.storeBoidForAddition(baby);
@@ -78,7 +77,6 @@ public class CarnReproduce extends State {
                     nearest.thirst = 100;
                     return true;
                 }
-//                steering.set(0f,0f,0f);
 
                 steering.add(Arrive.act(boid, nearest.getPosition()));
 
