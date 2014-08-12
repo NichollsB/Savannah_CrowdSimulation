@@ -144,6 +144,10 @@ public class SpriteManager {
 		if(assetManager.isLoaded(environmentTiles_path)){
 			environmentTiles_Atlas = assetManager.get(environmentTiles_path, TextureAtlas.class);
 			TextureAtlas atlas = environmentTiles_Atlas;
+			Pixmap blankImage = new Pixmap(16, 16, Format.Alpha);
+			blankImage.setColor(0, 0, 0, 0);
+			blankImage.fillRectangle(0, 0, 16, 16);
+			environmentTiles_Atlas.addRegion("0", new Texture(blankImage), 0, 0, 0, 0);
 			
 			String[] parts;
 			AtlasSprite atSprite;
@@ -259,7 +263,7 @@ public class SpriteManager {
 	}
 	
 	public AtlasRegion getEmptyRegion(){
-		return blankAtlas.findRegion("0"); 
+		return environmentTiles_Atlas.findRegion("0"); 
 	}
 	public int getNumTileRegions(){
 		
