@@ -80,15 +80,14 @@ public class SimulationManager extends Manager {
         objectData.put((byte)3, new ObjectData((byte)3, (byte)1, "Repeller"));
 
         ea.setup();
+        addTestObjects();
+    }
 
+    private void addTestObjects() {
         Array<Byte> objTypes = new Array<Byte>();
         Object obj = new Object(objectData.get((byte)2),355,450);
         objTypes.add(obj.getType());
         WorldManager.putObject(obj);
-
-        
-        
-        
         obj = new Object(objectData.get((byte)2),500,200);
 ////        obj = new Object((byte)2,(byte)1,900,300);
         WorldManager.putObject(obj);
@@ -112,11 +111,12 @@ public class SimulationManager extends Manager {
         WorldManager.putObject(obj);
         obj = new Object(objectData.get((byte)1),1100,600);
         WorldManager.putObject(obj);
-
     }
 
     public void reset(){
     	boidManager.clearBoidList();
+        WorldManager.clearObjects();
+        addTestObjects();
     	generateBoids();
     	resetTime();
     }

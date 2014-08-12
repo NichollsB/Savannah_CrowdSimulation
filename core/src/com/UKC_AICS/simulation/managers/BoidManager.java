@@ -138,8 +138,8 @@ public class BoidManager extends Manager {
         boid.setPosition(xPos, yPos, 0);
         boid.setVelocity(xVel, yVel, 0);
 
-        boid.hunger = rand.nextInt(80);
-        boid.thirst = rand.nextInt(80);
+        boid.hunger = rand.nextInt(boid.hungerLevel);
+        boid.thirst = rand.nextInt(boid.thirstLevel);
 
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.
@@ -249,14 +249,14 @@ public class BoidManager extends Manager {
 
     public boolean checkForDeath(final Boid boid) {
         float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
-        if (boid.hunger >= 120) {
+        if (boid.hunger >= boid.hungerLevel*2) {
             Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f), boid.size);
             WorldManager.putObject(food);
             removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of hunger :( ");
             return true;
         }
-        else if( boid.thirst >= 110) {
+        else if( boid.thirst >= boid.thirstLevel*2) {
             Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f), boid.size);
             WorldManager.putObject(food);
             boids.removeValue(boid, false);

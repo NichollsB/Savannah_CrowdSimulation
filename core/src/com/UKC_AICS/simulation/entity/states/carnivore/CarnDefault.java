@@ -30,12 +30,12 @@ public class CarnDefault extends State{
     public boolean update(Boid boid) {
 
 
-        if(boid.thirst > 65) {
+        if(boid.thirst > boid.thirstLevel) {
             parent.pushState(boid, new Thirsty(parent, bm));
         }
-        else if(boid.hunger > 82) {
+        else if(boid.hunger > boid.hungerLevel) {
             parent.pushState(boid, new Hunt(parent, bm));
-        } else if (boid.age > 10 && boid.hunger < 35 && boid.thirst < 35) {
+        } else if (boid.age > 10 && boid.hunger < boid.hungerLevel/2 && boid.thirst < boid.thirstLevel/2) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
                 parent.pushState(boid, new CarnReproduce(parent, bm));
         } else {

@@ -26,7 +26,7 @@ public class Reproduce extends State {
 
     @Override
     public boolean update(Boid boid) {
-        if (boid.hunger < 35 && boid.thirst < 35) {
+        if (boid.hunger < boid.hungerLevel/2 && boid.thirst < boid.thirstLevel/2) {
             boid.setState(this.toString());
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
@@ -60,12 +60,12 @@ public class Reproduce extends State {
 
                     tempVec.set(boid.getPosition());
                     tempVec.sub(nearest.getPosition());
-                    if (tempVec.len2() < steering.len2() && other.hunger>60 && other.thirst > 60) {
+                    if (tempVec.len2() < steering.len2() && other.hunger < other.hungerLevel/2 && other.thirst < other.thirstLevel/2) {
                         nearest = other;
                     }
 
                 }
-                if(tempVec.len2() < 10f && nearest.hunger < 40 && nearest.thirst < 40) {
+                if(tempVec.len2() < 10f) { // && nearest.hunger < 40 && nearest.thirst < 40) {
                     System.out.println("boid made a baby " + boid.getSpecies());
 //                    bm.createBoid(boid); //create copy of self.
                     Boid baby = new Boid(boid);

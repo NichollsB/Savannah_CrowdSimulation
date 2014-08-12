@@ -60,6 +60,10 @@ public class WorldManager extends Manager {
         objects.add(entity);
     }
 
+    public static void clearObjects() {
+        objects.clear();
+    }
+
     public static void removeObject(Entity entity) {
         objects.removeValue(entity, true);
         rebuildTree(objects);
@@ -141,6 +145,10 @@ public class WorldManager extends Manager {
     	com.UKC_AICS.simulation.entity.Object obj = new com.UKC_AICS.simulation.entity.Object(objData, x, y);
     	obj.setSubType(subtype);
     	putObject(obj);
+    }
+
+    public static boolean checkObject(Entity object) {
+        return objects.contains(object, false);
     }
   
 }

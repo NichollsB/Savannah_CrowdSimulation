@@ -27,7 +27,7 @@ public class CarnReproduce extends State {
 
     @Override
     public boolean update(Boid boid) {
-        if (boid.hunger < 45 && boid.thirst < 45) {
+        if (boid.hunger < boid.hungerLevel/2 && boid.thirst < boid.thirstLevel/2) {
 
             boid.setState(this.toString());
 
@@ -67,7 +67,7 @@ public class CarnReproduce extends State {
                     }
 
                 }
-                if(tempVec.len2() < 10f && nearest.hunger < 60 && nearest.thirst < 60) {
+                if(tempVec.len2() < 10f && nearest.hunger < nearest.hungerLevel/2 && nearest.thirst < nearest.hungerLevel/2) {
                     System.out.println("CARNIVORE boid made a baby " + boid.getSpecies());
                     Boid baby = new Boid(boid);
                     baby.setAge(0);
