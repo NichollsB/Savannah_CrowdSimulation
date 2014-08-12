@@ -61,9 +61,10 @@ public class LandMap {
         byte[][] blockedInfo = new byte[width / TILE_SIZE][height / TILE_SIZE];
         for (int i = 0; i < blockedInfo.length; i++) {
             for (int j = 0; j < blockedInfo[i].length; j++) {
-                blockedInfo[i][j] = (byte) 0;
+                blockedInfo[i][j] = (byte) 0;  // not bloacked
+
                 if (terrain[i][j]  == 1) {
-                    blockedInfo[i][j] = (byte) 1;
+                    blockedInfo[i][j] = (byte) 1;  // blocked terrain
                 }
             }
         }

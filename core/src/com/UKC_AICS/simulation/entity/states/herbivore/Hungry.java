@@ -107,7 +107,7 @@ public class Hungry extends State {
 
             //Add collision avoidance
             steering.add(Collision.act(collisionObjects, boid));
-//            steering.add(behaviours.get("collision").act(collisionObjects, boid));
+            steering.add(Collision.act(boid));
 
             steering.nor().scl(boid.maxSpeed / 2);
             steering.sub(boid.getVelocity());

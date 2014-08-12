@@ -73,7 +73,7 @@ public class Thirsty extends State {
 
                 //just add collision avoidance
                 steering.add(Collision.act(collisionObjects, boid));  //.scl(avoid)   //Maybe have some scaling for avoidance?
-//                steering.add(behaviours.get("collision").act(collisionObjects, boid));
+                steering.add(Collision.act(boid));
 
 //                steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));

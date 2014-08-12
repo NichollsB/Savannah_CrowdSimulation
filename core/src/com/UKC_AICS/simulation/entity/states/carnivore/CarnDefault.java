@@ -40,7 +40,7 @@ public class CarnDefault extends State{
                 parent.pushState(boid, new CarnReproduce(parent, bm));
         } else {
 
-            Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
+            Array<Boid> nearBoids = BoidManager.getBoidGrid().findInSight(boid);
             Array<Boid> closeBoids = new Array<Boid>();
 
             for (Boid b : nearBoids) {

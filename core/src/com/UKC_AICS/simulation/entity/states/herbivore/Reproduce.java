@@ -3,6 +3,7 @@ package com.UKC_AICS.simulation.entity.states.herbivore;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.Arrive;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
@@ -82,6 +83,7 @@ public class Reproduce extends State {
                 steering.set(0f,0f,0f);
 
                 steering.add(Arrive.act(boid, nearest.getPosition()));
+                steering.add(Collision.act(boid));
 
                 boid.setAcceleration(steering);
 
@@ -112,6 +114,9 @@ public class Reproduce extends State {
                 steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
                 steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
+
+                steering.add(Collision.act(boid));
+                steering.add(Collision.act(dummyObjects, boid));
 
 //                steering.add(behaviours.get("collision").act(collisionObjects, boid));
 

@@ -4,6 +4,7 @@ import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.Arrive;
 import com.UKC_AICS.simulation.entity.behaviours.Arrive2;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
@@ -86,6 +87,9 @@ public class CarnReproduce extends State {
                 //stay with the herd
 
                 Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
+                //Collision avoidance arrays
+                Array<Entity> collisionObjects = new Array<Entity>(dummyObjects);
+                collisionObjects.addAll(nearBoids);
 
                 for (Entity dummyObject : dummyObjects) {
                     Entity ent = dummyObject;
@@ -109,6 +113,9 @@ public class CarnReproduce extends State {
                 steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
                 steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
+
+                steering.add(Collision.act(collisionObjects, boid));
+                steering.add(Collision.act(boid));
 
 //                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
 //                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
