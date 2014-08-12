@@ -49,6 +49,7 @@ public class Object extends Entity {
     public String toString() {
     	String string = "";
         string += "OBJECT: " + "\t" + "\t position: \n \t" + position.toString() ;
+        string += "\n\t Mass: " + mass;
 
 
     	return string;

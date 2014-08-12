@@ -73,7 +73,8 @@ public class SimulationManager extends Manager {
             species.setGrowthPerDay((species.getMaxSize() - species.getNewbornSize()) / species.getMaturity());
         }
         generateBoids();
-        
+
+        //TODO make a staxparser for objects.xml to objectData class
         objectData.put((byte)0, new ObjectData((byte)0, (byte)1, "Corpse"));
         objectData.put((byte)1, new ObjectData((byte)1, (byte)1, "Corpse"));
         objectData.put((byte)2, new ObjectData((byte)2, (byte)1, "Attractor"));

@@ -27,14 +27,12 @@ public class WorldManager extends Manager {
 
     private static Array<Entity> objects = new Array<Entity>();
     private static QuadTree objects_map;
-    private ObjectGrid objectGrid;
 
     public WorldManager(int width, int height) {
         tileSize = new Vector3(width/TILE_SIZE, height/TILE_SIZE, 1);
         size = new Vector3(width, height, 1);
 
         objects_map = new QuadTree(0, new Rectangle(0,0,width,height));
-        objectGrid = new ObjectGrid(60, width, height);
 
         map = new LandMap(width, height);
     }
@@ -74,7 +72,7 @@ public class WorldManager extends Manager {
             objects_map.insert(boid);
     }
 
-    public Array<Entity> getObjects() {
+    public  Array<Entity> getObjects() {
         return objects;
     }
 
