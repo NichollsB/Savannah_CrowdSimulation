@@ -279,6 +279,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //EA Settings menu appears
+            	
             	simScreen.flipEARender();               
           
             }

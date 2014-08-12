@@ -27,6 +27,8 @@ public class StaXParserLoad {
     private String SIGHTRADIUS = "sightRadius";
     private String NEARRADIUS = "nearRadius";
     private String FLOCKRADIUS = "flockRadius";
+    private String STAMINA = "stamina";
+    private String MAXSTAMINA = "maxStamina";
     private String HUNGER = "hunger";
     private String THIRST = "thirst";
     private String PANIC = "panic";
@@ -36,7 +38,7 @@ public class StaXParserLoad {
     private String WANDER = "wander";
     private int age = 0;
     private int bDay = 0;
-    private float cohesion, separation,  alignment, wander ,hunger ,thirst, panic, sightRadius, nearRadius, flockRadius;
+    private float cohesion, separation,  alignment, wander ,hunger ,thirst, panic, sightRadius, nearRadius, flockRadius, stamina, maxStamina;
     private byte spec = 0; 
     private byte group = 0;
     public Float[] fltArray = new Float[3] ;
@@ -154,6 +156,24 @@ public class StaXParserLoad {
                     
                     if (event.isStartElement()) {
                         if (event.asStartElement().getName().getLocalPart()
+                                .equals(STAMINA)) {
+                            event = eventReader.nextEvent();
+                            stamina = Float.valueOf(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(MAXSTAMINA)) {
+                            event = eventReader.nextEvent();
+                            maxStamina = Float.valueOf(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+                    
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
                                 .equals(HUNGER)) {
                             event = eventReader.nextEvent();
                             hunger = Float.valueOf(event.asCharacters().getData());
@@ -222,7 +242,7 @@ public class StaXParserLoad {
                     EndElement endElement = event.asEndElement();
                     if (endElement.getName().getLocalPart() == (BOID)) {
                         BoidManager.createBoid(spec, group, age, bDay, fltArray[0], fltArray[1], fltArray[2], fltArray2[0], fltArray2[1], fltArray2[2], cohesion, separation, alignment, wander,
-                        		sightRadius, nearRadius, flockRadius, hunger, thirst, panic );
+                        		sightRadius, nearRadius, flockRadius, hunger, thirst, panic, stamina, maxStamina);
                     }
                 }
 
