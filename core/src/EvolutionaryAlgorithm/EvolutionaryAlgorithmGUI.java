@@ -93,6 +93,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			Label FRLabel = new Label("Flock Radius", skin);
 			Label NRLabel = new Label("Near Radius", skin);
 			Label SRLabel = new Label("Sight Radius", skin);
+			Label maxStaminaLabel = new Label("Max Stamina", skin);
 			
 			labels.add(cohLabel);
 			labels.add(alignLabel);
@@ -101,7 +102,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			labels.add(FRLabel);
 			labels.add(NRLabel);
 			labels.add(SRLabel);
-			
+			labels.add(maxStaminaLabel);
 			
 			for(int i = 0 ; i<labels.size() ;i++){
 				Label valuelabel = new Label("0", skin);

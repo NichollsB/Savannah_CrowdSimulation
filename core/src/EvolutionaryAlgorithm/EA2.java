@@ -243,10 +243,12 @@ public class EA2 {
 		double rangeMax = 0;
 		double rangeMin = 1;
 		float muteValMin = 0;
+		//TODO get original species value
 		float muteValMax = 0;
 		
 		for(int j =0 ; j < geneLength ; j++) {
 			System.out.println("Current "+newGene[j]);
+			muteValMin = 0.5f*newGene[j];
 			muteValMax = 1.5f*newGene[j];
 			System.out.println("Max Value "+muteValMax);
 			
