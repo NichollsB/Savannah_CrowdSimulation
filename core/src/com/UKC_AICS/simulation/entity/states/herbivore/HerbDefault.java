@@ -118,10 +118,10 @@ public class HerbDefault extends State {
 
                 steering.set(0f, 0f, 0f);
 
-                float coh = boid.cohesion; //SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
-                float sep = boid.separation; //SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
-                float ali = boid.alignment; //SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
-                float wan = boid.wander; //SimulationManager.speciesData.get(boid.getSpecies()).getWander();
+                float coh = boid.cohesion;
+                float sep = boid.separation;
+                float ali = boid.alignment;
+                float wan = boid.wander;
 
 //                float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
 //                float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
