@@ -123,7 +123,7 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
         //
         console = new TextArea("console log",skin);
         
-       north = createNorth(table);
+        north = createNorth(table);
         
         
         table.add(north).top().height(NORTH_HEIGHT).expandX().fillX();
@@ -163,25 +163,15 @@ public class SimScreenGUI extends Stage implements DialogueWindowHandler, HoverL
         Table splitPanes = new Table();
         splitPanes.add(west_4).left().width(width).fill().expand();//fillY().expandY();
         splitPanes.add(east_3).left().width(width).fill().expand();//fillY().expandY();
+        
+        Table bottom = new Table();
+        SplitPane pane = new SplitPane(splitPanes, bottom, true, skin);
+        pane.setSplitAmount(1);
+       
 //        splitPanes.debug();
         
-        west_4.addListener(new InputListener(){
-        	public boolean touchDragged(int screenX, int screenY, int pointer) {
-        		setViewRect(north, south, east, west);
-        		west.pack();
-        		System.out.println("resizing west " + west.getWidth());
-        		return false;
-        	}
-        });
-        east_3.addListener(new InputListener(){
-        	public boolean touchDragged(int screenX, int screenY, int pointer) {
-        		setViewRect(north, south, east, west);
-        		return false;
-        	}
-        });
-//        table.add(pane2).left().width(width).fillY().expandY();
-//        table.add(pane1).right().width(width).fillY().expandY();
-        table.add(splitPanes).fill().expand();
+       
+        table.add(pane).fill().expand();
 //        table.add(splitPanes).fill().expand();
         table.row();
         
