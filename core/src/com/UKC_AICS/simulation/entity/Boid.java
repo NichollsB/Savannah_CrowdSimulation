@@ -57,6 +57,9 @@ public class Boid extends Entity {
     
     public int geneSize=8;		
     public Float[] gene= new Float[geneSize];
+
+    public int hungerLevel=70;
+    public int thirstLevel=70;
     public int panicLevel=30;
 
 
@@ -100,6 +103,8 @@ public class Boid extends Entity {
         setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius, maxStamina);
 
         panicLevel = species.getPanicLevel();
+        hungerLevel = species.getHungerLevel();
+        thirstLevel = species.getThirstLevel();
 
 
         bounds.set(position.x, position.y, 16, 16);
@@ -173,7 +178,7 @@ public class Boid extends Entity {
 
         bounds.setPosition(position.x, position.y);
         //TODO: potentially have different species "degrade" at different rates
-        hunger += (float) 0.25 /60;
+        hunger += (float) 1 /60;
         thirst += (float) 1 /60;
 
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
@@ -182,7 +187,7 @@ public class Boid extends Entity {
     private boolean changeStamina(float speed) {
         boolean haveStamina = stamina > 0;
         float sprintThreshold = maxSpeed*0.7f;
-        float staminaChange = speed-sprintThreshold;  //+ if using stamina / - if regaining stamina
+        float staminaChange = speed-sprintThreshold*0.3f;  //+ if using stamina / - if regaining stamina
         //has stamina and
         if(haveStamina && stamina - staminaChange > 0) {
             stamina -= staminaChange;

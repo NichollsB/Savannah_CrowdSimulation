@@ -139,11 +139,14 @@ public class BoidGrid {
     }
 
 
-
+    /**
+     *  this will return boids from the cell the position is in and the cells adjacent to it.
+     * @param pos location that you want to find boids from.
+     * @return list of boids.
+     */
     public Array<Boid> findNearby(Vector3 pos) {
         nearby.clear();
 
-//        //TODO: account for potential variable "look" ranges. right now fixed to one cell distance around current one.
         int cellX = (int) pos.x / cellSize;
         int cellY = (int) pos.y / cellSize;
 
@@ -173,9 +176,9 @@ public class BoidGrid {
 
         int startX = (int)boid.position.x;
         int startY = (int)boid.position.y;
-//        int endX = startX + (int)boid.sightRadius;
-//        int endY = startY + (int)boid.sightRadius;
+
         int sightRadLengthInCells = (int) boid.sightRadius / cellSize; //floored
+
         int startCellX = startX/cellSize - sightRadLengthInCells;
         int endCellX = startCellX + sightRadLengthInCells * 2;
 
@@ -222,19 +225,28 @@ public class BoidGrid {
         }
 
 
-        try {
+//        try {
             for (int i = 0; i < grid[cellX][cellY].size; i++) {
                 //            if(!bnearby.contains(grid[cellX][cellY].get(i),true)) {
                 bnearby.add(grid[cellX][cellY].get(i));
                 //            }
             }
-        }catch (ArrayIndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
+//        }catch (ArrayIndexOutOfBoundsException e) {
+//            e.printStackTrace();
+//        }
 
         return bnearby;
     }
 
+    /**
+     *
+     * return all boids in the cell by adding them to the array given (bnearby)
+     *
+     * @param bnearby array to add the boids to.
+     * @param cellX cell index x
+     * @param cellY cell index y
+     * @return all boids in cell location.
+     */
     public Array<Boid> findBoidsInCell(Array<Boid> bnearby, int cellX, int cellY) {
 
 
@@ -262,9 +274,6 @@ public class BoidGrid {
                 bnearby.add(grid[cellX][cellY].get(i));
 //            }
         }
-//        if(bnearby.size > 0) {
-//            System.out.println("hurrah " + bnearby.size);
-//        }
 
         return bnearby;
     }

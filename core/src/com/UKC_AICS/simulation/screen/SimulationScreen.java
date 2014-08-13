@@ -35,6 +35,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -218,6 +219,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     	
     	input.addProcessor(eagui);
     	input.addProcessor(inputManager);	
+    	
     	input.addProcessor(gui); 
     	
     	simViewport.update(width, height, true);
@@ -297,6 +299,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     }
     
     public void flipEARender() {
+    	eagui.toggleWindowVisible();
         if (eaRender)
         	eaRender = false;
         else
@@ -387,6 +390,11 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
 	@Override
 	public void onCheck(byte type, byte subtype, Object object,
 			boolean isChecked, State stateChanged) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setMouseWorldPosition(int x, int y) {
 		// TODO Auto-generated method stub
 		
 	}

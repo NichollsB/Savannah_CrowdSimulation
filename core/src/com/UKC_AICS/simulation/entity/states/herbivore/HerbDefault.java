@@ -38,10 +38,10 @@ public class HerbDefault extends State {
         if(boid.panic > boid.panicLevel) {
             parent.pushState(boid, new Panic(parent, bm));
         }
-        else if (boid.thirst > 85) {
+        else if (boid.thirst > boid.thirstLevel) {
 //            System.out.println(boid + "\nJust posted Thirsty state ");
             parent.pushState(boid, new Thirsty(parent, bm));
-        } else if (boid.hunger > 75) {
+        } else if (boid.hunger > boid.hungerLevel) {
 //            System.out.println(boid + "\nJust posted Hungry state ");
             parent.pushState(boid, new Hungry(parent, bm));
         } else if (boid.age > SimulationManager.speciesData.get(boid.getSpecies()).getMaturity() && boid.hunger < 35 && boid.thirst < 35) {
@@ -123,10 +123,10 @@ public class HerbDefault extends State {
 
                 steering.set(0f, 0f, 0f);
 
-                float coh = boid.cohesion; //SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
-                float sep = boid.separation; //SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
-                float ali = boid.alignment; //SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
-                float wan = boid.wander; //SimulationManager.speciesData.get(boid.getSpecies()).getWander();
+                float coh = boid.cohesion;
+                float sep = boid.separation;
+                float ali = boid.alignment;
+                float wan = boid.wander;
 
 //                float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
 //                float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
