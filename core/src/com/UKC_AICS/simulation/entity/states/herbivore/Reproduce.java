@@ -74,10 +74,10 @@ public class Reproduce extends State {
                     // POSSIBLE MATES = POPULATION
                     
                     bm.storeBoidForAddition(baby);
-                    boid.hunger = 100;
-                    boid.thirst = 100;
-                    nearest.hunger = 100;
-                    nearest.thirst = 100;
+                    boid.hunger = boid.hungerLevel;
+                    boid.thirst = boid.thirstLevel;
+                    nearest.hunger = nearest.hungerLevel;
+                    nearest.thirst = nearest.thirstLevel;
                     return true;
                 }
                 steering.set(0f,0f,0f);

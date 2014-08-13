@@ -75,9 +75,20 @@ public class BoidGrid {
     }
 
     public Boid removeBoid(Boid boid) {
-        Vector2 pos = cells.remove(boid);
-        int cellX = (int) pos.x;
-        int cellY = (int) pos.y;
+        Vector2 pos = new Vector2();
+        if (cells.containsKey(boid)) {
+            pos = cells.remove(boid);
+        }
+        int cellX;
+        int cellY;
+
+        if (pos.len2() == 0) {
+            cellX = (int) boid.position.x;
+            cellY = (int) boid.position.y;
+        } else {
+            cellX = (int) pos.x;
+            cellY = (int) pos.y;
+        }
         Vector2 cPos = new Vector2((int) boid.getPosition().x / cellSize, (int) boid.getPosition().y / cellSize);
         int curCellX = (int) cPos.x;
         int curCellY = (int) cPos.y;
