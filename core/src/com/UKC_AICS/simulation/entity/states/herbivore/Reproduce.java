@@ -1,5 +1,9 @@
 package com.UKC_AICS.simulation.entity.states.herbivore;
 
+import java.util.Arrays;
+
+import EvolutionaryAlgorithm.EA2;
+
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.Arrive;
@@ -19,9 +23,10 @@ import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
  */
 public class Reproduce extends State {
     private Vector3 tempVec = new Vector3();
-
-    public Reproduce(StateMachine parent, BoidManager bm) {
+    private EA2 ea;
+    public Reproduce(StateMachine parent, BoidManager bm, EA2 ea) {
         super(parent, bm);
+        this.ea=ea;
     }
 
     @Override
@@ -72,12 +77,16 @@ public class Reproduce extends State {
                     baby.setAge(0);
                     //TODO CALL EA HERE
                     // POSSIBLE MATES = POPULATION
-                    
+                    System.out.print("pm " + potentialMates);
+                    if(ea.getEaOn()){
+                    	baby.setGene(ea.createBaby(boid,potentialMates));
+                    	System.out.println(Arrays.toString(baby.getGene()));
+                    }
                     bm.storeBoidForAddition(baby);
-                    boid.hunger = 100;
-                    boid.thirst = 100;
-                    nearest.hunger = 100;
-                    nearest.thirst = 100;
+                    boid.hunger = boid.hungerLevel;
+                    boid.thirst = boid.thirstLevel;
+                    nearest.hunger = nearest.hungerLevel;
+                    nearest.thirst = nearest.thirstLevel;
                     return true;
                 }
                 steering.set(0f,0f,0f);

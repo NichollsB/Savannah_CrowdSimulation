@@ -178,7 +178,7 @@ public class Boid extends Entity {
 
         bounds.setPosition(position.x, position.y);
         //TODO: potentially have different species "degrade" at different rates
-        hunger += (float) 1 /60;
+        hunger += (float) 0.5 /60;
         thirst += (float) 1 /60;
 
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);

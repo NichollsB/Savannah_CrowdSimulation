@@ -58,7 +58,7 @@
 
         <panicLevel>50</panicLevel>
         <hungerLevel>65</hungerLevel>
-        <thirstLevel>20</thirstLevel>
+        <thirstLevel>60</thirstLevel>
     </species>
 
     <species name="gazelle">
@@ -116,7 +116,7 @@
 
         <panicLevel>100</panicLevel>
         <hungerLevel>85</hungerLevel>
-        <thirstLevel>30</thirstLevel>
+        <thirstLevel>45</thirstLevel>
     </species>
 
     <species name="hyena">
@@ -144,7 +144,7 @@
 
         <panicLevel>100</panicLevel>
         <hungerLevel>80</hungerLevel>
-        <thirstLevel>30</thirstLevel>
+        <thirstLevel>50</thirstLevel>
     </species>
 </settings>
 
