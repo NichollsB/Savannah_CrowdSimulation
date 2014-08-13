@@ -1,5 +1,7 @@
 package com.UKC_AICS.simulation.entity.states.herbivore;
 
+import EvolutionaryAlgorithm.EA2;
+
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.Collision;
@@ -19,17 +21,20 @@ import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
  */
 public class HerbDefault extends State {
 
-
+	
     private Vector3 tempVec = new Vector3();
-
-    public HerbDefault(StateMachine parent, BoidManager bm) {
+    private EA2 ea;
+    
+    public HerbDefault(StateMachine parent, BoidManager bm ,EA2 ea) {
         super(parent, bm);
+       this.ea=ea;
+        
     }
 
 
     @Override
     public boolean update(Boid boid) {
-
+    	
         if(boid.panic > boid.panicLevel) {
             parent.pushState(boid, new Panic(parent, bm));
         }
@@ -41,7 +46,7 @@ public class HerbDefault extends State {
             parent.pushState(boid, new Hungry(parent, bm));
         } else if (boid.age > SimulationManager.speciesData.get(boid.getSpecies()).getMaturity() && boid.hunger < boid.hungerLevel/2 && boid.thirst < boid.thirstLevel/2) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
-            parent.pushState(boid, new Reproduce(parent, bm));
+            parent.pushState(boid, new Reproduce(parent, bm , ea));
         } else {
             boid.setState(this.toString());
 
