@@ -130,8 +130,8 @@ public class InputManager implements InputProcessor{
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
 		inBounds = inBounds(screenX, screenY);
-		System.out.println("inBounds " + inBounds + " mouse pos " + screenX + " " + screenY +
-				" boundrect min " + viewportRectangle.x);
+		//System.out.println("inBounds " + inBounds + " mouse pos " + screenX + " " + screenY +
+		//		" boundrect min " + viewportRectangle.x);
 //		Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
 //		screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
 //		screen.setMousePosition(screenX, Gdx.graphics.getHeight() - screenY);

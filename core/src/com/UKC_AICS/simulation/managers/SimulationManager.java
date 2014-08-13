@@ -32,11 +32,11 @@ public class SimulationManager extends Manager {
 //    static final BoidManagerThreadedTwo boidManager = new BoidManagerThreadedTwo();
 //    BoidManagerThreadedThree boidManager = new BoidManagerThreadedThree(this);
 //    BoidManagerOld boidManager = new BoidManagerOld(this);
-
-    BoidManager boidManager = new BoidManager(this);
+    public EA2 ea = new EA2();
+    BoidManager boidManager = new BoidManager(this, ea);
     WorldManager worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
 
-    public EA2 ea = new EA2();
+   
 
     static public int minutes = 0;
     static public int hours = 0;
@@ -68,7 +68,7 @@ public class SimulationManager extends Manager {
     public SimulationManager(SimulationScreen parent) {
         this.parent = parent;
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
-
+        
         for (Species species : speciesData.values()) {
             species.setGrowthPerDay((species.getMaxSize() - species.getNewbornSize()) / species.getMaturity());
         }

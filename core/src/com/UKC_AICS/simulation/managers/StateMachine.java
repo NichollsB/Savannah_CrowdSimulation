@@ -1,5 +1,7 @@
 package com.UKC_AICS.simulation.managers;
 
+import EvolutionaryAlgorithm.EA2;
+
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.behaviours.*;
 import com.UKC_AICS.simulation.entity.states.State;
@@ -16,6 +18,7 @@ import java.util.Stack;
 public class StateMachine {
 
     private static BoidManager boidManager;
+    private EA2 ea;
     public static Map<String, Behaviour> behaviours = new HashMap<String, Behaviour>();
 //    private Boid owner;
 //    private State currentState;
@@ -27,11 +30,12 @@ public class StateMachine {
      * first implementation of a stack finite state machine.
      *
      */
-    public StateMachine(BoidManager bm) {
+    public StateMachine(BoidManager bm, EA2 ea) {
 //        this.owner = owner;
 //        this.currentState = initialState;
+    	this.ea=ea;
         this.boidManager = bm;
-
+  
         behaviours.put("separation", new Separation());
         behaviours.put("alignment", new Alignment());
         behaviours.put("cohesion", new Cohesion());
@@ -81,7 +85,7 @@ public class StateMachine {
     private State getDefaultState(byte species) {
         String diet = SimulationManager.speciesData.get(species).getDiet();
         if(diet.equals("herbivore")) {
-            return new HerbDefault(this, boidManager);
+            return new HerbDefault(this, boidManager, ea);
         }
         else if(diet.equals("carnivore")) {
             return new CarnDefault(this, boidManager);

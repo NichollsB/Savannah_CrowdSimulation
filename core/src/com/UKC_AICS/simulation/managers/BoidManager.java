@@ -1,5 +1,7 @@
 package com.UKC_AICS.simulation.managers;
 
+import EvolutionaryAlgorithm.EA2;
+
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
@@ -31,16 +33,13 @@ public class BoidManager extends Manager {
     private QuadTree quadtree;
     private Random rand = new Random();
     private static StateMachine stateMachine;
+    public EA2 ea;
 
-
-    public BoidManager(SimulationManager parent) {
-
+    public BoidManager(SimulationManager parent, EA2 ea) {
         this.parent = parent;
         setBoidGrid(new BoidGrid(60, Constants.mapWidth, Constants.mapHeight));
-
         quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.mapWidth, Constants.mapHeight));
-
-        stateMachine = new StateMachine(this);
+        stateMachine = new StateMachine(this,ea);
     }
 
     /**
