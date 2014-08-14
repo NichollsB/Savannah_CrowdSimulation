@@ -1,7 +1,6 @@
 package com.UKC_AICS.simulation.entity;
 
 import com.UKC_AICS.simulation.Constants;
-import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -26,6 +25,7 @@ public class Boid extends Entity {
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //
     private Vector3 acceleration = new Vector3();
+    private float sprintThreshold = maxSpeed*0.7f;
 
     public float maxStamina = 60;
     public float stamina = maxStamina;
@@ -86,6 +86,7 @@ public class Boid extends Entity {
         flockRadius = species.getFlockRadius();
 
         maxSpeed = species.getMaxSpeed();
+
         maxForce = species.getMaxForce();
 
         maxStamina = species.getStamina();
@@ -170,7 +171,9 @@ public class Boid extends Entity {
 
         //Stamina related calcs
         float speed = velocity.len();
-        changeStamina(speed);
+        if(speed > sprintThreshold)
+            useStamina(speed);
+        else recoverStamina(speed);
         position.add(velocity);
 
         //check for out of bounds
@@ -184,10 +187,10 @@ public class Boid extends Entity {
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
     }
 
-    private boolean changeStamina(float speed) {
+    private boolean useStamina(float speed) {
         boolean haveStamina = stamina > 0;
         float sprintThreshold = maxSpeed*0.7f;
-        float staminaChange = speed-sprintThreshold*0.3f;  //+ if using stamina / - if regaining stamina
+        float staminaChange = (speed-sprintThreshold)*0.3f;  //+ if using stamina / - if regaining stamina
         //has stamina and
         if(haveStamina && stamina - staminaChange > 0) {
             stamina -= staminaChange;
@@ -200,8 +203,12 @@ public class Boid extends Entity {
             System.out.println(" ,new speed = " + velocity.len());
         }
         return stamina > 0;
-
     }
+
+    private void recoverStamina(float speed) {
+        stamina -= (speed-sprintThreshold)*0.3f;
+    }
+
     public void setNewVelocity(Vector3 newVel){
         velocity.set(newVel);
     }
