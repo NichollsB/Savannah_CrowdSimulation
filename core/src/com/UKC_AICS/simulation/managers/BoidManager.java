@@ -32,7 +32,8 @@ public class BoidManager extends Manager {
     private Random rand = new Random();
     private static StateMachine stateMachine;
 
-
+    private boolean removeBoids = false;
+    
     public BoidManager(SimulationManager parent) {
 
         this.parent = parent;
@@ -248,6 +249,10 @@ public class BoidManager extends Manager {
     }
 
     public boolean checkForDeath(final Boid boid) {
+		if(boid.toDelete){
+    		removeBoid(boid);
+    		return true;
+		}
         float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
         if (boid.hunger >= 120) {
             Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f), boid.size);

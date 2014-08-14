@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.screen.gui;
 
+import java.io.File;
 import java.util.HashMap;
 
 import com.UKC_AICS.simulation.entity.*;
@@ -90,7 +91,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
     
 	
 	//File Choosers
-	private FileChooser fileChooser = new FileChooser("Load", skin, "../bin", true, "Confirm", "Cancel", stage);;
+	private FileChooser fileChooser;
 	private final ObjectMap<Button, FileChooser> fileChoosers = new ObjectMap<Button, FileChooser>();
 	
     /**
@@ -123,10 +124,20 @@ public class SimScreenGUI extends Stage implements HoverListener {
        
 //        table.pack();
 //        table.debug();
-   
-        
+        fileChooser = new FileChooser("Load", skin, "Load", "Species", "../", true, "Confirm", "Cancel", this);
+        fileChooser.addSelectionListener(new MenuSelectListener(){
+			public void selectionMade(java.lang.Object menu, java.lang.Object object) {
+				FileChooser chooser = (FileChooser) menu;
+				simScreen.simulationManager.loadSaveCall(chooser.getCommand(), chooser.getIdentifier(), (File)object);
+			}
+		});
+ 
+//        fileChooser.hide();
+//        fileChooser.open(this);
         stage.addActor(table);
 
+        
+        
         table.setFillParent(true);
 
         //
@@ -205,8 +216,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
 //        pane3.setSplitAmount(EAST_WIDTH);
        
   
-        
- 
+       
         
 //        table.add(pane1).top().expandX().fillX();
 //        screenRect.set(0, 0, width, height);
@@ -244,13 +254,11 @@ public class SimScreenGUI extends Stage implements HoverListener {
     		public void selectionMade(java.lang.Object menu, java.lang.Object object){
     			if((String)object == "Load"){
 //    				System.out.println("Selection has been made " + (String)object);
-    				FileChooser choose = new FileChooser("Load", skin, "../bin", true, "Load", "Cancel", stage);
-    				choose.addSelectionListener(new MenuSelectListener(){
-    					public void selectionMade(java.lang.Object menu, java.lang.Object object) {
-    						
-    						
-    					}
-    				});
+    				fileChooser.setOptionsText("Load", "Cancel");
+    				fileChooser.setCommand("Load");
+    				fileChooser.setIdentifier("species");
+//    				fileChooser
+    				fileChooser.open(stage);
     			}
     		}
     	});
@@ -303,6 +311,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
             public void clicked(InputEvent event, float x, float y) {
                 simScreen.simulationManager.reset();
                 simScreen.setup();
+                simScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             }
         });
         

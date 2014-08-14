@@ -28,7 +28,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.OrderedMap;
 
 public class FileChooser extends Dialog implements MenuSelectEvent{
-	private static final File defaultDir = new File("./bin");
+	private static final File defaultDir = new File("./");
 	private File startDir = defaultDir;
 	private File currentDir;
 	private File selectedFile;
@@ -51,19 +51,25 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 	private String type;
 	private String identifier;
 	
+	private Stage stage;
+	
+	private String command;
+	
 	private final ObjectMap<String, TextButton> buttons = new ObjectMap<String, TextButton>(){{
 		put("confirm", null);
 		put("cancel", null);
 	}};
 	
-	public FileChooser(String title, Skin skin, Stage stage){
-		this(title, skin, defaultDir, false, null, null, stage);
+	public FileChooser(String title, Skin skin, String command, String id, Stage stage){
+		this(title, skin, command, id, defaultDir, false, null, null, stage);
 	}
-	public FileChooser(String title, Skin skin, String dir, boolean internal, Stage stage){
-		this(title, skin, dir, internal, null, null, stage);
+	public FileChooser(String title, Skin skin, String command, String id, String dir, boolean internal, Stage stage){
+		this(title, skin, dir, command, id, internal, null, null, stage);
 	}
-	public FileChooser(String title, Skin skin, String dir, boolean internal, String confirmText, String cancelText, Stage stage) {
+	public FileChooser(String title, Skin skin, String command, String id, String dir, boolean internal, String confirmText, String cancelText, Stage stage) {
 		super(title, skin);
+		this.command = command;
+		this.identifier = id;
 		startDir = defaultDir;
 		this.skin = skin;
 		if(dir != null || !dir.isEmpty()){
@@ -74,8 +80,10 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		
 		create(confirmText, cancelText, stage);
 	}
-	public FileChooser(String title, Skin skin, File dir, boolean internal, String confirmText, String cancelText, Stage stage) {
+	public FileChooser(String title, Skin skin, String command, String id, File dir, boolean internal, String confirmText, String cancelText, Stage stage) {
 		super(title, skin);
+		this.command = command;
+		this.identifier = id;
 		identifier = title;
 		if(dir != null)
 			startDir = dir;
@@ -87,6 +95,10 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 	}
 	
 	private void create(String confirmText, String cancelText, Stage stage){
+//		this.hide();
+		this.setWidth(400);
+		this.setHeight(400);
+		this.setPosition((stage.getWidth()/2)-(this.getWidth()/2), (stage.getHeight()/2)-(this.getHeight()/2));
 		//Try adding this back in on full build
 //		if(Gdx.files.isLocalStorageAvailable())
 //			startDir = Gdx.files.internal(Gdx.files.getLocalStoragePath());
@@ -115,59 +127,10 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		TextButton.TextButtonStyle style = new TextButton("", skin).getStyle();
 		listStyle = new TextButton.TextButtonStyle(lstyle.background, style.down, style.checked, style.font);
 		listStyle.over = style.down;
-
-//		TextButton.TextButtonStyle style = new TextButton("", skin).getStyle();
-//		Label.LabelStyle lstyle = new Label("", skin).getStyle();
-//		SelectBox.SelectBoxStyle sstyle = new SelectBox(skin).getStyle();
-//		listStyle = new TextButton.TextButtonStyle(lstyle.background, lstyle.background, style.checked, style.font);
-//		listStyle.checked = sstyle.backgroundOver;
-//		listStyle.over = sstyle.backgroundOver;
-//		listStyle.down = lstyle.background;
-		
-//		if(dir == null || dir.isEmpty()) return;
-//		if(internal == null) return;
-//		if(internal)
-//			dirHandle = Gdx.files.internal(dir);
-//		else
-//			dirHandle = Gdx.files.external(dir);
 		Table content = getContentTable();	
-		
-//		dirSelect = new SelectBox(skin);
-//		Array<Label> selectItems = new Array<Label>();
-//		Label label;
-//		label = new Label(startDir.name(), skin);
-//		dirSelectMenu.add(startDir.name());
-//		int p = 0;
-//		for(File h : startDir.list()){
-//			if(h.isDirectory()){
-//				p++;
-//				dirSelectMenu.add("\t"+h.name());
-//				dirSelectMenu_roots.add("\t"+h.name());
-//				dirSelectHandles.add(h);
-//				createDirectoriesList(h, "\t", p, dirSelectMenu);
-//			}
-//		}
-		
-//		dirSelect.setItems(dirSelectMenu);
-//		dirSelect.addListener(new ChangeListener(){
-//			@Override
-//			public void changed(ChangeEvent event, Actor actor) {
-//				File h = dirSelectHandles.get(dirSelect.getSelectedIndex());
-//				if(h.isDirectory()){
-//					openDir(h);
-//				}
-//			}
-//			
-//		});
-//		
-//		content.add(dirSelect).fillX().expandX();
-		
+		content.add(new Label(command + " " + identifier + " file.", skin)).align(Align.left).expandX().fillX();
+		content.row();
 		ScrollPane pane = (ScrollPane) createScrollPane(listTable, false, true, true, false);
-//		Table scrollTable = new Table();
-//		scrollTable.add(pane).fillY().expandY();
-//		scrollTable.add(new Table()).fill().expand();
-//		content.debug();listTable.debug();
-//		scrollTable.debug();
 		content.add(pane).left().fill().expand();
 //		content.add(new Table()).fill().expand();
 		content.row();
@@ -198,11 +161,9 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		System.out.println("Try to open " + startDir.getPath());
 		openDir(startDir);
 		
-		stage.addActor(this);
+//		stage.addActor(this);
 //		this.pack();
-		this.setWidth(400);
-		this.setHeight(400);
-		this.setPosition((stage.getWidth()/2)-(this.getWidth()/2), (stage.getHeight()/2)-(this.getHeight()/2));
+
 		
 	}
 	
@@ -408,9 +369,6 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 //    	scrollTable.add("east");
     	Table fillTable = new Table();
 		scrollTable.add(content).left().fill().expand();
-//		scrollTable.add(fillTable).fill().expand();
-//		scrollTable.pad(10);
-		scrollTable.debug();
 		scrollTable.add(new Table()).fill().expand();
 		ScrollPane scroll = new ScrollPane(scrollTable, skin);
     	InputListener stopTouchDown = new InputListener() {
@@ -429,6 +387,16 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		return scroll;
 	}
 	
+	public File getSelected(){
+		return selectedFile;
+	}
+	
+	public void setCommand(String command){
+		this.command = command;
+	}
+	public String getCommand(){
+		return command;
+	}
 	public void setIdentifier(String id){
 		identifier = id;
 		setTitle(id);
@@ -449,6 +417,16 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		if(cancel != null && !cancel.isEmpty()){
 			buttons.get("cancel").setText(cancel);
 		}
+	}
+	
+	public void open(Stage stage){
+//		stage.addActor(this);
+		selectedFile = null;
+		this.show(stage);
+		this.setHeight(400);
+		this.setWidth(400);
+		this.setPosition((stage.getWidth()/2)-(this.getWidth()/2), (stage.getHeight()/2)-(this.getHeight()/2));
+		openDir(startDir);
 	}
 	
 	

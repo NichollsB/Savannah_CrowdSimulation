@@ -44,6 +44,7 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 
+import java.io.File;
 import java.util.HashMap;
 
 
@@ -93,7 +94,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         gui = new SimScreenGUI(this, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         eagui = new EvolutionaryAlgorithmGUI(this,simulationManager.ea);
         setup();
-        
+        setupUI();
         
         
         //Test
@@ -234,6 +235,10 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
 
     }
 
+    public void setupUI(){
+    	gui.createBoidTree(simulationManager.getSpeciesInfo(), simulationManager.getBoids());
+        gui.createObjectTree(simulationManager.getObjectDataInfo(), simulationManager.getObjects());
+    }
     /**
      * 
      */
@@ -254,8 +259,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         
         //UI
         
-        gui.createBoidTree(simulationManager.getSpeciesInfo(), simulationManager.getBoids());
-        gui.createObjectTree(simulationManager.getObjectDataInfo(), simulationManager.getObjects());
+        
         
     }
 
@@ -397,6 +401,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
 		HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(x, y);
     	gui.setConsole("x: " + x + " y: " + y + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
 	}
+
 
 
 }

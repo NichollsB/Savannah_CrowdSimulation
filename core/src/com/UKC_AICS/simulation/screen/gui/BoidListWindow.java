@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -164,6 +165,8 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		label = new Label(boidName, skin);
 		boidNode = new BoidTree_Node(label, boidName, info, spByte, boid, false);
 		node.addNode(boidNode, boid.getTertiaryType());
+//		boidNode.setParent(node);
+//		boidNode.setParent(node);
 		boidNodes_num++;
 		root.setNumChildren(boidNodes_num);
 //			boidNodes.put()
@@ -249,6 +252,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 */
 	public void compareAndUpdateNodes(Array<Entity> boids){
 		boolean change = false;
+		nodeComparison = boidNodes.keys().toArray();
 		for(Entity b : boids){
 			if(!boidNodes.containsKey(b) && boidRoots.containsKey(b.getSubType())){
 				boidNodes.put(b, addBoidNode(b.getSubType(), null, b.toString(), b));
@@ -265,18 +269,18 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		if(nodeComparison != null){
 			for(Entity b : nodeComparison){
 				if(boidNodes.containsKey(b)){
-					System.out.println("Remove boid. Species " + b.getSubType() + " group " + b.getTertiaryType());
-					tree.remove(boidNodes.get(b));
+					boidNodes.get(b).removeNode(boidNodes.get(b));
 					boidNodes.remove(b);
-//					rootGroups.get(b.getSubType()).get(b.getTertiaryType()).findNumChildren();
-//					boidRoots.get(b.getSubType()).findNumChildren();
 					boidNodes_num--;
 				}
 			}
 			root.setNumChildren(boidNodes_num);
 		}
-		nodeComparison = boidNodes.keys().toArray();
+		
+		
 	}
+	
+
 	
 	
 	/**
@@ -497,14 +501,10 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 			else
 				SelectedEntity.set((byte)1, selectedType, selectedGroup);
 		}
-		for(TreeOptionsListener listener : listeners){
-			if(button == ButtonType.ADD){
-				 listener.onAdd(selectedType, selectedGroup, selectedBoid);
-			}
-			if(button == ButtonType.REMOVE){
-				 listener.onRemove(selectedType, selectedGroup, selectedBoid);
-			}
-			
+		if(button == ButtonType.REMOVE){
+			markForDeletion(selectedNode);
+//			removeBoidNodes(selectedNode);
+//			selectedNode.remove();
 		}
 		clicked = false;
 		
@@ -537,6 +537,18 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		public void exit(InputEvent event, float x, float y, int pointer, Actor toActor){
 			for(HoverListener listener : hoverListeners){
 				listener.unhover(event);
+			}
+		}
+	}
+	
+	private void markForDeletion(BoidTree_Node node){
+		if(node.hasBoid()){
+			node.getBoid().delete();
+			return;
+		}
+		else if(node.getChildren().size>0){
+			for(Node n : node.getChildren()){
+				markForDeletion((BoidTree_Node)n);
 			}
 		}
 	}
