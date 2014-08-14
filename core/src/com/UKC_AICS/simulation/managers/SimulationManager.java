@@ -56,7 +56,7 @@ public class SimulationManager extends Manager {
     /**
      * Added by ben nicholls - for the creation of objects from ObjectData type/ creation of ObjectData types...
      */
-    public static final HashMap<Byte, ObjectData> objectData = new HashMap<Byte, ObjectData>();
+    public static  HashMap<Byte, ObjectData> objectData = new HashMap<Byte, ObjectData>();
     
 
     /**
@@ -68,17 +68,17 @@ public class SimulationManager extends Manager {
     public SimulationManager(SimulationScreen parent) {
         this.parent = parent;
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
-        
+        objectData = staXParser.readObjectFile("../core/assets/data/objects.xml");
         for (Species species : speciesData.values()) {
             species.setGrowthPerDay((species.getMaxSize() - species.getNewbornSize()) / species.getMaturity());
         }
         generateBoids();
 
         //TODO make a staxparser for objects.xml to objectData class
-        objectData.put((byte)0, new ObjectData((byte)0, (byte)1, "Corpse"));
-        objectData.put((byte)1, new ObjectData((byte)1, (byte)1, "Corpse"));
-        objectData.put((byte)2, new ObjectData((byte)2, (byte)1, "Attractor"));
-        objectData.put((byte)3, new ObjectData((byte)3, (byte)1, "Repeller"));
+//        objectData.put((byte)0, new ObjectData((byte)0, (byte)1, "Corpse"));
+//        objectData.put((byte)1, new ObjectData((byte)1, (byte)1, "Corpse"));
+//        objectData.put((byte)2, new ObjectData((byte)2, (byte)1, "Attractor"));
+//        objectData.put((byte)3, new ObjectData((byte)3, (byte)1, "Repeller"));
 
         ea.setup();
         addTestObjects();

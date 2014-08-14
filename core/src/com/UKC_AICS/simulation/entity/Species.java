@@ -23,8 +23,6 @@ public class Species {
     private float lifespan;
     private String diet;
 
-
-
     private float stamina;
 
     private float rgb[];
@@ -39,9 +37,6 @@ public class Species {
 	
 	private int population;
     private int panicLevel;
-
-
-
     private int hungerLevel;
     private int thirstLevel;
 

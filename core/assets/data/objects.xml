@@ -16,6 +16,16 @@
         <subtype>2</subtype> <!-- byte -->
         <spriteLocation>data/corpse_object_x16_3.png</spriteLocation>
     </object>
+    <object name="Attractor">
+        <type>2</type> <!-- byte -->
+        <subtype>3</subtype> <!-- byte -->
+        <spriteLocation>data/corpse_object_x16_3.png</spriteLocation>
+    </object>
+    <object name="Repeller">
+        <type>3</type> <!-- byte -->
+        <subtype>4</subtype> <!-- byte -->
+        <spriteLocation>data/corpse_object_x16_3.png</spriteLocation>
+    </object>
 </settings>
 
 
