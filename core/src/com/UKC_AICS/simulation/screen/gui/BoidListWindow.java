@@ -66,6 +66,8 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	private boolean fixedType = false;
 	private byte fixedTypeValue = 0;
 	
+	private ScrollPane scrollPane;
+	
 	public void initButtons(Skin skin){
 		final Skin s = skin;
 		buttons = new ObjectMap<ButtonType, Button>(){{
@@ -95,6 +97,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		
 		this.gui = gui;
 		this.tree = new Tree(skin);
+		createScrollPane(tree);
 		hoverListeners.add(gui);
 		
 		root = new BoidTree_Node(new Label(title, skin), title);
@@ -109,7 +112,8 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		//Add components to the table
 		this.add(new Label(title, skin));
 		this.row();
-		this.add(createScrollPane(tree)).fill().expand();
+		
+		this.add(scrollPane).fill().expand();
 		this.row();
 		this.add(buttons());
 		this.pack();
@@ -309,17 +313,22 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 */
 	private void nodeSelected(BoidTree_Node node){
 //		deselectNodes();
+		Actor actor;
 		if (node.equals(root)){
 			deselectNodes();
 			root.expandTo();
 			root.setExpanded(true);
 			selectedNode = node;
+			actor = root.getActor();
+			scrollPane.scrollToCenter(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
 			return;
 		} else if(node.equals(selectedNode)){
 			deselectNodes();
 			node.expandTo();
 			node.setExpanded(true);
 			selectedNode = node;
+			actor = selectedNode.getActor();
+			scrollPane.scrollTo(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
 			return;
 		}
 		deselectNodes();
@@ -359,13 +368,13 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 				selectedType = node.getID();
 				selectedGroup = -1;
 			}
-				
 			selectedInfo = node.getInfo();
 		}
 		if(!node.equals(root)) rootSelected = false;
 		else rootSelected = true;
 		selectedNode = node;
-		
+		actor = node.getActor();
+		scrollPane.scrollToCenter(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
 		SelectedEntity.set((byte)1, selectedType, selectedGroup);
 	}
 	
@@ -440,11 +449,13 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 //				return false;
 //			}
 //		};
-
 		scroll.setSmoothScrolling(true);
-		scroll.setScrollBarPositions(true, false);
-		scroll.setFadeScrollBars(false);
-		
+		scroll.setScrollBarPositions(false, false);
+		scroll.setForceScroll(false, true);
+//	    scroll.setFlickScroll(true);
+	    scroll.setOverscroll(false, false);
+	    scroll.setFadeScrollBars(false);
+		scrollPane = scroll;
 		return scroll;
 	}
 

@@ -101,10 +101,9 @@ public class TileGraphics extends SpriteCache {
 		outer:
 		for(int x = 0; x<mapElementsX; x++)
 		{
-			if(x!= loopCheck + 1){
-				System.out.println("RANDOM SKIP");
+			if(x!= 0 && x!= loopCheck + 1){
+				System.out.println("RANDOM SKIP. x " + x + " should be " + loopCheck);
 				x = loopCheck +1;
-				
 			}
 			loopCheck = x;
 			n = 1;
@@ -162,7 +161,6 @@ public class TileGraphics extends SpriteCache {
 			if(lastRegion!= null)
 				xPos += lastRegion.originalWidth;
 		}
-		System.out.println("FINISHED CREATING CACHE. Size " + count);
 //		if(recreate){
 //			System.out.println("Row " + y + "Recreate id " + id + " layers " + numCachedLayers);
 //		}

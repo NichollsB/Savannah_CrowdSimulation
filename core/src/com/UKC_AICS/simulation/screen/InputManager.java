@@ -109,21 +109,21 @@ public class InputManager implements InputProcessor{
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 //		if(!inDragBounds) return false;
-//		if(lClick || rClick){
-		System.out.println("In bounds " +inBounds(screenX, screenY));
-		if(inBounds(screenX, screenY)){
-			if(ControlState.STATE == ControlState.State.NAVIGATE || rClick){
-	//			Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
-	//			screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
-				if(!dragging)
-					dragging = true;
-				if(dragging){
-					camera.translate(dragX-screenX, screenY-dragY);
-	//				camera.update();
-					dragX = screenX;
-					dragY = screenY;
+		if(lClick || rClick){
+			if(inBounds(screenX, screenY)){
+				if(ControlState.STATE == ControlState.State.NAVIGATE || rClick){
+		//			Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
+		//			screen.pickPoint((int)screenToMouse.x, (int)screenToMouse.y);
+					if(!dragging)
+						dragging = true;
+					if(dragging){
+						camera.translate(dragX-screenX, screenY-dragY);
+		//				camera.update();
+						dragX = screenX;
+						dragY = screenY;
+					}
+					//screen.pickPoint(screenX, flipY(screenY));
 				}
-				//screen.pickPoint(screenX, flipY(screenY));
 			}
 		}
 		return inBounds;
@@ -135,7 +135,7 @@ public class InputManager implements InputProcessor{
 //		
 		screen.setMousePosition(screenX, Gdx.graphics.getHeight() - screenY);
 		if(inBounds){
-			Vector3 screenToMouse = camera.unproject(new Vector3(screenX, screenY, 0));
+			Vector3 screenToMouse = view.unproject(new Vector3(screenX, screenY, 0));
 			screen.setMouseWorldPosition((int)screenToMouse.x, (int)screenToMouse.y);
 		}
 		if(inBounds)
@@ -167,12 +167,18 @@ public class InputManager implements InputProcessor{
 	}
 	
 	private boolean inBounds(int x, int y){
-		int xMin = (int) viewportRectangle.getX(), yMin = (int) viewportRectangle.getY(),
-				xMax = (int) (xMin + viewportRectangle.getWidth()), yMax = (int) (yMin + viewportRectangle.getHeight());
-		if((x >= xMin && x <= xMax)
-				&& (y >= yMin && y <= yMax)){
-			return true;
-		}
+		int inverseY = Gdx.graphics.getHeight() - y;
+//		System.out.println("Mouse " + x + " " + inverseY + " rect x's " + viewportRectangle.x + " " + viewportRectangle.width + " "
+//				+ (viewportRectangle.x+viewportRectangle.width));
+//		int xMin = (int) viewportRectangle.getX(), yMin = (int) viewportRectangle.getY(),
+//				xMax = (int) (xMin + viewportRectangle.getWidth()), yMax = (int) (yMin + viewportRectangle.getHeight());
+//		if((x >= xMin && x <= xMax)
+//				&& (inverseY >= yMin && inverseY <= yMax)){
+//			return true;
+//		}
+//		
+		if(viewportRectangle.contains(x, inverseY)) return true;
+		
 		return false;
 	}
 
