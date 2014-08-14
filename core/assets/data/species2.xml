@@ -41,10 +41,8 @@
         <sightRadius>180f</sightRadius>
         <flockRadius>120f</flockRadius>
         <nearRadius>40f</nearRadius>
-
-
-        <maxSpeed>20</maxSpeed>
-        <maxForce>0.4f</maxForce>
+        <maxSpeed>2f</maxSpeed>
+        <maxForce>0.04f</maxForce>
 
         <stamina>20f</stamina>
         <lifespan>90f</lifespan>

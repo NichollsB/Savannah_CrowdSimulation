@@ -1,7 +1,6 @@
 package com.UKC_AICS.simulation.entity;
 
 import com.UKC_AICS.simulation.Constants;
-import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -11,17 +10,6 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class Boid extends Entity {
 
-//    public enum State {
-//        DEFAULT,
-//        HUNGRY,
-//        THIRSTY,
-//        EVADE;
-//
-//
-//        public int getStateID() {
-//            return ordinal();
-//        }
-//    }
     //boids own specific variants on the species.
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //
@@ -39,6 +27,7 @@ public class Boid extends Entity {
     public float hunger = 40;
     public float thirst = 40;
     public float panic = 0;
+    public float fertility = 0;
 
     public String state = "default";
 
@@ -107,7 +96,7 @@ public class Boid extends Entity {
         thirstLevel = species.getThirstLevel();
 
 
-        bounds.set(position.x, position.y, 16, 16);
+        bounds.set(position.x, position.y, size, size); //TODO take it from species file
     }
 
     /**
@@ -159,11 +148,11 @@ public class Boid extends Entity {
     }
 
 
-    public void move() {
+    public void update() {
         //TODO: Add in better limiter for speed. Possibly??
         //move
 //        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
-        velocity.add(acceleration).limit(maxSpeed);
+        velocity.add(acceleration.scl(0.1f)).limit(maxSpeed);
         velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
         //TODO add method to calc stamina usage -> based on velocity.len % of maxspeed - 0-1
         //TODO make it so stamina must be above xx amount to move
@@ -237,13 +226,6 @@ public class Boid extends Entity {
         return velocity;
     }
 
-//    public void setBirthDay(int birthDay) {
-//       this.birthDay = birthDay;
-//    }
-//
-//    public int getBirthDay() {
-//    	return birthDay;
-//    }
 
     public void setAge(int newAge) {
         age = newAge;

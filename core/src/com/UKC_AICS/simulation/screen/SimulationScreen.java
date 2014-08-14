@@ -346,7 +346,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
      */
     public void pickPoint(int screenX, int screenY) {
     	HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
-        gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
+        gui.setConsole("x: " + screenX + " y: " + screenY + "\tt:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass") + " w:" + tileInfo.get("water"));
         //What should happen when clicking on the screen
         System.out.println("Mousex " + mousePosition.x + " y " + mousePosition.y +
         		screenX + " " + screenY);
