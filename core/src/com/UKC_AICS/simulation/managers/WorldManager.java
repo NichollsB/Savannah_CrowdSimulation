@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * @author Emily
@@ -22,6 +23,7 @@ public class WorldManager extends Manager {
     private static LandMap map;
     private static Vector3 tileSize;
     private static Vector3 size;
+    private static Random rand = new Random();
 //    private HashMap<String, byte[][]> information_layers = new HashMap<String, byte[][]>();
 
 
@@ -40,8 +42,27 @@ public class WorldManager extends Manager {
 
     @Override
     public void update(boolean dayIncrement) {
-        if(dayIncrement)
-        decayCorpses();
+        if (dayIncrement)
+            decayCorpses();
+
+//        if(rand.nextInt(100) > 50) {
+//            byte[][] grassGrowth = map.information_layers.get("grassGrowth");
+//            byte[][] grass = map.information_layers.get("grass");
+//
+//            for (int i = 0; i < grassGrowth.length; i++) {
+//                for (int j = 0; j < grassGrowth[i].length; j++) {
+//                    if(rand.nextInt(100) > 50) {
+//                        grassGrowth[i][j] += 1;
+//                        if (grassGrowth[i][j] == 127 && grass[i][j] < 127) {
+//                            grass[i][j] += 1;
+//                            if (grass[i][j] < 0) {
+//
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     public static void putObject(Entity entity, int x, int y) {

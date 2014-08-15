@@ -154,7 +154,7 @@ public class Boid extends Entity {
         //TODO: Add in better limiter for speed. Possibly??
         //move
 //        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
-        velocity.add(acceleration.scl(0.1f)).limit(maxSpeed);
+        velocity.add(acceleration).limit(maxSpeed);
         velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
         //TODO add method to calc stamina usage -> based on velocity.len % of maxspeed - 0-1
         //TODO make it so stamina must be above xx amount to move
@@ -173,6 +173,8 @@ public class Boid extends Entity {
         //TODO: potentially have different species "degrade" at different rates
         hunger += (float) 0.5 /60;
         thirst += (float) 1 /60;
+
+        fertility += 0.05/60;
 
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
     }
@@ -312,6 +314,7 @@ public class Boid extends Entity {
         string += "\n\t thirst:" + (int)thirst;
         string += "\n\t panic:" + (int)panic + "/" + panicLevel;
         string += "\n\t age:" + age ;
+        string += "\n\t fertility:" + fertility;
         string += "\n\t stamina:" + stamina;
         string += "\n\t size:" + size ;
         string += "\n\t state:" + state;

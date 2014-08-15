@@ -137,7 +137,7 @@ public class BoidManager extends Manager {
 
         boid.hunger = rand.nextInt(boid.hungerLevel);
         boid.thirst = rand.nextInt(boid.thirstLevel);
-
+        boid.fertility = rand.nextInt(100);
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.
 

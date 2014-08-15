@@ -85,8 +85,11 @@ public class Reproduce extends State {
                     bm.storeBoidForAddition(baby);
                     boid.hunger = boid.hungerLevel;
                     boid.thirst = boid.thirstLevel;
+                    boid.fertility = 0;
                     nearest.hunger = nearest.hungerLevel;
                     nearest.thirst = nearest.thirstLevel;
+                    nearest.fertility = 0;
+
                     return true;
                 }
                 steering.set(0f,0f,0f);
