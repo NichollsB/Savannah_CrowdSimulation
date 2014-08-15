@@ -74,29 +74,23 @@ public class SimulationManager extends Manager {
         }
         generateBoids();
 
-        //TODO make a staxparser for objects.xml to objectData class
-//        objectData.put((byte)0, new ObjectData((byte)0, (byte)1, "Corpse"));
-//        objectData.put((byte)1, new ObjectData((byte)1, (byte)1, "Corpse"));
-//        objectData.put((byte)2, new ObjectData((byte)2, (byte)1, "Attractor"));
-//        objectData.put((byte)3, new ObjectData((byte)3, (byte)1, "Repeller"));
-
         ea.setup();
         addTestObjects();
     }
 
     private void addTestObjects() {
-        Array<Byte> objTypes = new Array<Byte>();
+//        Array<Byte> objTypes = new Array<Byte>();
         Object obj = new Object(objectData.get((byte)2),355,450);
-        objTypes.add(obj.getType());
+//        objTypes.add(obj.getType());
         WorldManager.putObject(obj);
         obj = new Object(objectData.get((byte)2),500,200);
 ////        obj = new Object((byte)2,(byte)1,900,300);
         WorldManager.putObject(obj);
 
         obj = new Object(objectData.get((byte)3),755,450);
-        objTypes.add(obj.getType());
+//        objTypes.add(obj.getType());
         WorldManager.putObject(obj);
-        objTypes.add((byte)0);
+//        objTypes.add((byte)0);
 
         obj = new Object(objectData.get((byte)1),400,600);
         WorldManager.putObject(obj);

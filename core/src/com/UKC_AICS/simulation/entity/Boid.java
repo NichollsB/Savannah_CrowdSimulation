@@ -179,6 +179,11 @@ public class Boid extends Entity {
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
     }
 
+    /**
+     * Should be called when boid is moving over the "sprintThreshold" 70% of maxSpeed
+     * @param speed current speed, length of boids velocity
+     * @return  true if stamina is used // this may be redundant now.
+     */
     private boolean useStamina(float speed) {
         boolean haveStamina = stamina > 0;
         float sprintThreshold = maxSpeed*0.7f;
@@ -197,6 +202,10 @@ public class Boid extends Entity {
         return stamina > 0;
     }
 
+    /**
+     * Recovers the stamina of the boid if it is not travelling over "sprintThreshold"
+     * @param speed of the boid, length of velocity
+     */
     private void recoverStamina(float speed) {
         stamina -= (speed-sprintThreshold)*0.3f;
     }

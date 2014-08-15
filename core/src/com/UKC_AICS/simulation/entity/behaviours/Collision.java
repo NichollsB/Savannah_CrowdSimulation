@@ -33,6 +33,14 @@ public class Collision extends Behaviour {
         throw new Error("Collision is not to be used in this manner. Try static access Collision.act(Array<Entity> targets, Boid boid)");
     }
 
+    /**
+     * Finds the first cell along the boids trajectory
+     * @param x0
+     * @param y0
+     * @param dx_dt
+     * @param dy_dt
+     * @return
+     */
     private static ArrayList<Integer> cellInPath(float x0, float y0, float dx_dt, float dy_dt) {
         ArrayList<Integer> cell = null;
         for(int i = 0; i < stepsAhead; i++){
