@@ -40,6 +40,11 @@ public class WorldManager extends Manager {
 
     @Override
     public void update(boolean dayIncrement) {
+        for(int i = 0 ; i < objects.size ; i++){
+            if(objects.get(i).toDelete){
+                removeObject(objects.get(i));
+            }
+        }
         if(dayIncrement)
         decayCorpses();
     }

@@ -94,6 +94,8 @@ public class SimScreenGUI extends Stage implements HoverListener {
 	//File Choosers
 	private FileChooser fileChooser;
 	private final ObjectMap<Button, FileChooser> fileChoosers = new ObjectMap<Button, FileChooser>();
+
+    private Actor infoItemSelected;
 	
     /**
      *
@@ -529,11 +531,19 @@ public class SimScreenGUI extends Stage implements HoverListener {
 //        		boidInfo.setText("");
         	setViewRect(north, south, east, west);
 //        	System.out.println(east.getWidth());
-        	if(boids != null){
-        		boidInfo.setText(boidTree.update(boids, true));
-        	}
-            if(objects != null) {
-                boidInfo.setText(objectTree.update(objects, true));
+            if(infoItemSelected != null) {
+                if(infoItemSelected.equals(boidTree)) {
+                    if (boids != null) {
+                        boidInfo.setText(boidTree.update(boids, true));
+                        objectTree.selectNodeByBoid(null, false);
+                    }
+                }
+                else if(infoItemSelected.equals(objectTree)) {
+                    if (objects != null) {
+                        boidInfo.setText(objectTree.update(objects, true));
+                        boidTree.selectNodeByBoid(null, false);
+                    }
+                }
             }
 	        stage.act();
 	    
@@ -626,4 +636,9 @@ public class SimScreenGUI extends Stage implements HoverListener {
 		hoverLabel.remove();
 //		hoverWindow.remove();
 	}
+
+    public void setSelctedInfoItem(Actor item){
+        infoItemSelected = item;
+
+    }
 }

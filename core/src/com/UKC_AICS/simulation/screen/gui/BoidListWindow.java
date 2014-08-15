@@ -121,6 +121,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		//Listener Test
 		TreeOptionsListener listener = new SettingsEditor();
 //		registerListener(listener);
+        tree.getSelection().clear();
 	}
 	public void resize(){
 		this.pack();
@@ -252,6 +253,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 */
 	public void compareAndUpdateNodes(Array<Entity> boids){
 		boolean change = false;
+
 		nodeComparison = boidNodes.keys().toArray();
 		for(Entity b : boids){
 			if(!boidNodes.containsKey(b) && boidRoots.containsKey(b.getSubType())){
@@ -266,17 +268,30 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 			}
 		}
 		if(!change) return;
-		if(nodeComparison != null){
-			for(Entity b : nodeComparison){
-				if(boidNodes.containsKey(b)){
-					boidNodes.get(b).removeNode(boidNodes.get(b));
-					boidNodes.remove(b);
-					boidNodes_num--;
-				}
-			}
-			root.setNumChildren(boidNodes_num);
-		}
-		
+//		if(nodeComparison != null){
+//			for(Entity b : nodeComparison){
+//				if(boidNodes.containsKey(b)){
+//					boidNodes.get(b).removeNode(boidNodes.get(b));
+//					boidNodes.remove(b);
+//					boidNodes_num--;
+//				}
+//			}
+//			root.setNumChildren(boidNodes_num);
+//		}
+        int n = boidNodes.size;
+        int removed = 0;
+        for(Entity b : boidNodes.keys()){
+            if(!boids.contains(b, true)){
+                removed++;
+                boidNodes.get(b).removeNode(boidNodes.get(b));
+                boidNodes.remove(b);
+                boidNodes_num--;
+            }
+        }
+        if(boidNodes.size != n)
+             System.out.println("Finished removing redundant entity nodes. Entity num " + boidNodes.size + " original size " +
+              " removed " + removed);
+        root.setNumChildren(boidNodes_num);
 		
 	}
 	
@@ -295,6 +310,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		if(!select || boid == null){ 
 			deselectNodes(); 
 //			tree.getSelection().choose(root);
+            tree.getSelection().clear();
 			root.expandTo();
 			root.setExpanded(true);
 			return;
@@ -380,6 +396,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 		actor = node.getActor();
 		scrollPane.scrollToCenter(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
 		SelectedEntity.set((byte)1, selectedType, selectedGroup);
+        gui.setSelctedInfoItem(this);
 	}
 	
 	/**
