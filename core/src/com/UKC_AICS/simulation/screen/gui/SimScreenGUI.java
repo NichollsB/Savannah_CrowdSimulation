@@ -238,32 +238,63 @@ public class SimScreenGUI extends Stage implements HoverListener {
     private ObjectMap<Button, FileChooser> chooserMap = new ObjectMap<Button, FileChooser>();
 	private Table createNorth(Actor a){
     	Table menuTable = new Table(skin);
-    	   	
-    	TextButton btn;
-    	Array<TextButton> btns = new Array<TextButton>();
     	
     	//SPECIES LOAD/SAVE
-    	final MenuDropdown menu = new MenuDropdown(skin, "Species Settings", "SPECIES");  
-    	String items[] = {"Load", "Save"};
-    	menu.addItems(items, true);
+    	final MenuDropdown menu = createFileMenu(new String[]{"load", "save"}, new String[]{"Load", "Save"}, "Species Settings",
+    			"SPECIES");
     	menuTable.add(menu);
     	menuTable.add(new Table()).fillX().expandX();
+//    	final MenuDropdown menu = new MenuDropdown(skin, "Species Settings", "SPECIES");  
+//    	String items[] = {"Load", "Save"};
+//    	menu.addItems(items, true);
+//    	menuTable.add(menu);
+//    	menuTable.add(new Table()).fillX().expandX();
+//    	
+//    	menu.addSelectionListener(new MenuSelectListener(){
+//    		@Override
+//    		public void selectionMade(java.lang.Object menu, java.lang.Object object){
+//    			if((String)object == "Load"){
+////    				System.out.println("Selection has been made " + (String)object);
+//    				fileChooser.setOptionsText("Load", "Cancel");
+//    				fileChooser.setCommand("Load");
+//    				fileChooser.setIdentifier("species");
+////    				fileChooser
+//    				fileChooser.open(stage);
+//    			}
+//    		}
+//    	});
+    	return menuTable;
+    }
+	
+	private MenuDropdown createFileMenu(final String options[], final String optionsText[], String name, final String identifier){
+    	final MenuDropdown menu = new MenuDropdown(skin, name, identifier);  
+//    	String items[] = {"Load", "Save"};
+    	menu.addItems(optionsText, true);
     	
     	menu.addSelectionListener(new MenuSelectListener(){
     		@Override
     		public void selectionMade(java.lang.Object menu, java.lang.Object object){
-    			if((String)object == "Load"){
-//    				System.out.println("Selection has been made " + (String)object);
-    				fileChooser.setOptionsText("Load", "Cancel");
-    				fileChooser.setCommand("Load");
-    				fileChooser.setIdentifier("species");
-//    				fileChooser
-    				fileChooser.open(stage);
+    			for(int i = 0; i < options.length; i ++){
+    				String option = options[i];
+    				if(option.equalsIgnoreCase((String)object)){
+    					fileChooser.setOptionsText(optionsText[i], "Cancel");
+    					fileChooser.setCommand(option);
+    					fileChooser.setIdentifier(identifier);
+    					fileChooser.open(stage);
+    				}
     			}
+//    			if(loadOption.equalsIgnoreCase((String)object)){
+////    				System.out.println("Selection has been made " + (String)object);
+//    				fileChooser.setOptionsText(loadOption, "Cancel");
+//    				fileChooser.setCommand(loadOption);
+//    				fileChooser.setIdentifier("species");
+////    				fileChooser
+//    				fileChooser.open(stage);
+//    			}
     		}
     	});
-    	return menuTable;
-    }
+    	return menu;
+	}
 	
 
     

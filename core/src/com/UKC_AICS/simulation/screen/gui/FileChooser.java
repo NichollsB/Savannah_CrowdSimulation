@@ -55,6 +55,9 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 	
 	private String command;
 	
+	private TextField pathField;
+	private Label headerLabel;
+	
 	private final ObjectMap<String, TextButton> buttons = new ObjectMap<String, TextButton>(){{
 		put("confirm", null);
 		put("cancel", null);
@@ -102,6 +105,9 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		//Try adding this back in on full build
 //		if(Gdx.files.isLocalStorageAvailable())
 //			startDir = Gdx.files.internal(Gdx.files.getLocalStoragePath());
+		
+		pathField = new TextField("", skin);
+		pathField.setDisabled(true);
 		fileField = new TextField("", skin);
 		fileField.setTextFieldListener(new TextField.TextFieldListener() {
 			@Override
@@ -127,9 +133,12 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		TextButton.TextButtonStyle style = new TextButton("", skin).getStyle();
 		listStyle = new TextButton.TextButtonStyle(lstyle.background, style.down, style.checked, style.font);
 		listStyle.over = style.down;
-		Table content = getContentTable();	
-		content.add(new Label(command + " " + identifier + " file.", skin)).align(Align.left).expandX().fillX();
+		Table content = getContentTable();
+		headerLabel = new Label(command + " " + identifier + " file.", skin);
+		content.add(headerLabel).align(Align.left).expandX().fillX();
 		content.row();
+		content.add(new Label("Directory Path", skin));
+		content.add(pathField).fillX().expandX();
 		ScrollPane pane = (ScrollPane) createScrollPane(listTable, false, true, true, false);
 		content.add(pane).left().fill().expand();
 //		content.add(new Table()).fill().expand();
@@ -227,9 +236,11 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 			if(path.contains("./bin/")){//path.startsWith("./bin")){
 				path = path.replaceFirst("./bin/", "./");
 			}
-			else if(path.contains("./bin"))
+			else if(path.contains("./bin")){
 				path = path.replace("./bin", "./");
-				fileField.setText(path);
+				pathField.setText(path);
+				fileField.setText(currentDir.getName());
+			}
 			return true;
 		}
 		else if (!dir.isDirectory() && !dir.equals(currentDir)){
@@ -303,15 +314,16 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 //			fieldPath = f.getName();
 //			f = f.getParentFile();
 //		}
-		fileField.setText(handle.getPath());
+		pathField.setText(currentDir.getPath());
+		fileField.setText(handle.getName());
 		pathFromTextField = false;
 	}
 	
 	private void updateSelectedFile(String path){
 		File targetPath = new File(path);
 		String filePath = currentDir.getPath();
-		if(!filePath.endsWith("/")&&!targetPath.getName().startsWith("/"))
-			filePath += "/";
+//		if(!filePath.endsWith("/")&&!targetPath.getName().startsWith("/"))
+//			filePath += "/";
 		filePath = filePath + targetPath.getName();
 				
 		selectedFile = new File(filePath);
@@ -426,6 +438,7 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		this.setHeight(400);
 		this.setWidth(400);
 		this.setPosition((stage.getWidth()/2)-(this.getWidth()/2), (stage.getHeight()/2)-(this.getHeight()/2));
+		headerLabel.setText(command + " " + identifier + " file.");
 		openDir(startDir);
 	}
 	
