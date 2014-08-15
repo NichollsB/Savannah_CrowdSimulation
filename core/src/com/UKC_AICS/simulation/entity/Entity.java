@@ -16,6 +16,7 @@ public class Entity {
     public byte tertiaryType = 0;//Any additional sub-classification of boid or object
     //Added to check if boid info is being displayed or not - for highlighting in graphics
   	public boolean tracked = false;
+  	public boolean toDelete = false;
     /**
      *
      * @return the position of the object as a Vector3 for its map location.
@@ -88,6 +89,10 @@ public class Entity {
 
 	public byte getTertiaryType() {
 		return tertiaryType;
+	}
+
+	public void delete() {
+		this.toDelete = true;
 	}
 
 }

@@ -42,8 +42,6 @@ public class WorldManager extends Manager {
 
     @Override
     public void update(boolean dayIncrement) {
-        if (dayIncrement)
-            decayCorpses();
 
 //        if(rand.nextInt(100) > 50) {
 //            byte[][] grassGrowth = map.information_layers.get("grassGrowth");
@@ -63,6 +61,15 @@ public class WorldManager extends Manager {
 //                }
 //            }
 //        }
+        
+        for(int i = 0 ; i < objects.size ; i++){
+            if(objects.get(i).toDelete){
+                removeObject(objects.get(i));
+            }
+        }
+
+        if(dayIncrement)
+        decayCorpses();
     }
 
     public static void putObject(Entity entity, int x, int y) {

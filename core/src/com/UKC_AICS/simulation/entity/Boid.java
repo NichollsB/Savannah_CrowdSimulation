@@ -174,7 +174,7 @@ public class Boid extends Entity {
         hunger += (float) 0.5 /60;
         thirst += (float) 1 /60;
 
-        fertility += 0.05/60;
+        fertility += 0.1/60;
 
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
     }

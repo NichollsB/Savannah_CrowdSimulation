@@ -18,6 +18,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -287,5 +288,39 @@ public class SimulationManager extends Manager {
     }
     public HashMap<Byte, ObjectData> getObjectDataInfo(){
     	return objectData;
+    }
+    
+    public void loadSpecies(File file){
+    	
+    }
+    public void saveSpecies(File file){
+    	
+    }
+    public void loadEnvironment(File file){
+    	
+    }
+    public void saveEnvironment(File file){
+    	
+    }
+    
+    public void loadSaveCall(String command, String identifier, File file){
+    	System.out.println("Load/save call. Command " + command + " id " + identifier + " file " + file.getPath());
+    	if(command.equalsIgnoreCase("save")){
+    		if(identifier.equalsIgnoreCase("species")){
+    			
+    		}
+    		if(identifier.equalsIgnoreCase("environment")){
+    			
+    		}
+    	}
+    	else 
+		if(command.equalsIgnoreCase("load")){
+			if(identifier.equalsIgnoreCase("species")){
+    			
+    		}
+    		if(identifier.equalsIgnoreCase("environment")){
+    			
+    		}
+		}
     }
 }

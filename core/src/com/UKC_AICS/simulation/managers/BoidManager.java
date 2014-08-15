@@ -33,7 +33,12 @@ public class BoidManager extends Manager {
     private static StateMachine stateMachine;
     public EA2 ea;
 
+
+    private boolean removeBoids = false;
+    
+
     public BoidManager(SimulationManager parent, EA2 ea) {
+
         this.parent = parent;
         setBoidGrid(new BoidGrid(60, Constants.mapWidth, Constants.mapHeight));
         quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.mapWidth, Constants.mapHeight));
@@ -245,6 +250,10 @@ public class BoidManager extends Manager {
     }
 
     public boolean checkForDeath(final Boid boid) {
+		if(boid.toDelete){
+    		removeBoid(boid);
+    		return true;
+		}
         float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
         if (boid.hunger >= boid.hungerLevel*2) {
             Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f), boid.size);
