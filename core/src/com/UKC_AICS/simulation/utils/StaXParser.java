@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.utils;
 
+import com.UKC_AICS.simulation.entity.ObjectData;
 import com.UKC_AICS.simulation.entity.Species;
 
 import javax.xml.namespace.QName;
@@ -45,6 +46,12 @@ public class StaXParser {
     private static final String MAXSIZE = "maxSize";
     private static final String NEWBORNSIZE = "newbornSize";
     private static final String PANICLEVEL = "panicLevel";
+    private static final String HUNGERLEVEL = "hungerLevel";
+    private static final String THIRSTLEVEL = "thirstLevel";
+
+    private static final String OBJECT = "object";
+    private static final String TYPE = "type";
+    private static final String SUBTYPE = "subtype";
 
 
     @SuppressWarnings({ "unchecked", "null" })
@@ -93,6 +100,24 @@ public class StaXParser {
                                 .equals(PANICLEVEL)) {
                             event = eventReader.nextEvent();
                             species.setPanicLevel(Integer.parseInt(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(HUNGERLEVEL)) {
+                            event = eventReader.nextEvent();
+                            species.setHungerLevel(Integer.parseInt(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(THIRSTLEVEL)) {
+                            event = eventReader.nextEvent();
+                            species.setThirstLevel(Integer.parseInt(event.asCharacters().getData()));
                             continue;
                         }
                     }
@@ -290,7 +315,7 @@ public class StaXParser {
                         speciesData.put(species.getSpbyte(), species);
                     }
                 }
-                
+
                 
       
 
@@ -301,5 +326,117 @@ public class StaXParser {
             e.printStackTrace();
         }
         return speciesData;
+    }
+
+    public HashMap<Byte, ObjectData> readObjectFile(String configFile) {
+        HashMap<Byte, ObjectData> objectData = new HashMap<Byte, ObjectData>();
+        try {
+            // First, create a new XMLInputFactory
+            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+            // Setup a new eventReader
+            InputStream in = new FileInputStream(configFile);
+            XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+            // read the XML document
+            ObjectData object = null;
+
+            while (eventReader.hasNext()) {
+                XMLEvent event = eventReader.nextEvent();
+
+                if (event.isStartElement()) {
+                    StartElement startElement = event.asStartElement();
+                    // If we have an item element, we create a new item
+                    if (startElement.getName().getLocalPart() == (OBJECT)) {
+                        object = new ObjectData();
+                        // We read the attributes from this tag and add the date
+                        // attribute to our object
+                        Iterator<Attribute> attributes = startElement
+                                .getAttributes();
+                        while (attributes.hasNext()) {
+                            Attribute attribute = attributes.next();
+                            if (attribute.getName().toString().equals(NAME)) {
+                                object.setName(attribute.getValue());
+                            }
+                        }
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(SPRITELOCATION)) {
+                            event = eventReader.nextEvent();
+                            object.setImagePath(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(TYPE)) {
+                            event = eventReader.nextEvent();
+                            object.setType(Byte.valueOf(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(SUBTYPE)) {
+                            event = eventReader.nextEvent();
+                            object.setSubType(Byte.valueOf(event.asCharacters().getData()));
+                            continue;
+                        }
+                    }
+
+                    /////////////////////////////////////////////////////
+                    //Added by Ben Nicholls for graphics purposes
+//                    if (event.isStartElement()) {
+//                        if (event.asStartElement().getName().getLocalPart()
+//                                .equals(SPRITERGB)) {
+//                            float rgb[] = {0f, 0f, 0f};
+//                            Iterator iterator = event.asStartElement().getAttributes();
+//                            while (iterator.hasNext()) {
+//                                Attribute attribute = (Attribute) iterator.next();
+//                                String name = attribute.getName().toString();
+//                                String value = attribute.getValue();
+//                                try {
+//                                    if(name == "r"){
+//                                        rgb[0] = Float.parseFloat(value);
+//
+//                                    }
+//                                    else if(name == "g"){
+//                                        rgb[1] = Float.parseFloat(attribute.getValue());
+//                                    }
+//                                    else if(name == "b"){
+//                                        rgb[2] = Float.parseFloat(attribute.getValue());
+//                                    }
+//                                }
+//                                catch (NumberFormatException nfe) {
+//                                    System.out.println("Non-numeric value in "+ name + " colour attribute of species xml");
+//                                }
+//                                species.setRGB(rgb);
+//                            }
+////                            event = eventReader.nextEvent();
+//
+////                            species.setSpriteLocation(event.asCharacters().getData());
+//                            continue;
+//                        }
+//                    }
+                    ////////////////////////////////////////////////
+                }
+                // If we reach the end of an item element, we add it to the list
+                if (event.isEndElement()) {
+                    EndElement endElement = event.asEndElement();
+                    if (endElement.getName().getLocalPart() == (OBJECT)) {
+                        objectData.put(object.getSubType(), object);
+                    }
+                }
+
+
+
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+        }
+        return objectData;
     }
 }

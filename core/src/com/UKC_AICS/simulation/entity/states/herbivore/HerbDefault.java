@@ -1,5 +1,7 @@
 package com.UKC_AICS.simulation.entity.states.herbivore;
 
+import EvolutionaryAlgorithm.EA2;
+
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.Collision;
@@ -19,29 +21,32 @@ import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
  */
 public class HerbDefault extends State {
 
-
+	
     private Vector3 tempVec = new Vector3();
-
-    public HerbDefault(StateMachine parent, BoidManager bm) {
+    private EA2 ea;
+    
+    public HerbDefault(StateMachine parent, BoidManager bm ,EA2 ea) {
         super(parent, bm);
+       this.ea=ea;
+        
     }
 
 
     @Override
     public boolean update(Boid boid) {
-
+    	
         if(boid.panic > boid.panicLevel) {
             parent.pushState(boid, new Panic(parent, bm));
         }
-        else if (boid.thirst > 85) {
+        else if (boid.thirst > boid.thirstLevel) {
 //            System.out.println(boid + "\nJust posted Thirsty state ");
             parent.pushState(boid, new Thirsty(parent, bm));
-        } else if (boid.hunger > 75) {
+        } else if (boid.hunger > boid.hungerLevel) {
 //            System.out.println(boid + "\nJust posted Hungry state ");
             parent.pushState(boid, new Hungry(parent, bm));
-        } else if (boid.age > SimulationManager.speciesData.get(boid.getSpecies()).getMaturity() && boid.hunger < 35 && boid.thirst < 35) {
+        } else if (boid.age > SimulationManager.speciesData.get(boid.getSpecies()).getMaturity() && boid.hunger < boid.hungerLevel/2 && boid.thirst < boid.thirstLevel/2) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
-            parent.pushState(boid, new Reproduce(parent, bm));
+            parent.pushState(boid, new Reproduce(parent, bm , ea));
         } else {
             boid.setState(this.toString());
 
@@ -118,10 +123,10 @@ public class HerbDefault extends State {
 
                 steering.set(0f, 0f, 0f);
 
-                float coh = boid.cohesion; //SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
-                float sep = boid.separation; //SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
-                float ali = boid.alignment; //SimulationManager.speciesData.get(boid.getSpecies()).getAlignment();
-                float wan = boid.wander; //SimulationManager.speciesData.get(boid.getSpecies()).getWander();
+                float coh = boid.cohesion;
+                float sep = boid.separation;
+                float ali = boid.alignment;
+                float wan = boid.wander;
 
 //                float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
 //                float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();

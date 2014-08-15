@@ -3,7 +3,7 @@
 <!--xml file for species based information-->
 <settings>
     <species name="zebra">
-        <number>20</number>
+        <number>25</number>
         <byte>0</byte>  <!-- this is the sub-type -->
 
         <spritergb r = "0" g="0" b="0.6"/>
@@ -28,10 +28,12 @@
         <wander>0.1f</wander>
 
         <panicLevel>40</panicLevel>
+        <hungerLevel>65</hungerLevel>
+        <thirstLevel>20</thirstLevel>
     </species>
 
     <species name="wildebeest">
-        <number>20</number>
+        <number>25</number>
         <byte>1</byte>  <!-- this is the sub-type -->
 
         <spritergb r = "0.6" g="0" b="0"/>
@@ -55,10 +57,12 @@
         <wander>0.1f</wander>
 
         <panicLevel>50</panicLevel>
+        <hungerLevel>65</hungerLevel>
+        <thirstLevel>60</thirstLevel>
     </species>
 
     <species name="gazelle">
-        <number>20</number>
+        <number>25</number>
         <byte>2</byte>  <!-- this is the sub-type -->
         <spritergb r = "0" g="0.6" b="0"/>
 
@@ -82,11 +86,13 @@
         <wander>0.1f</wander>
 
         <panicLevel>30</panicLevel>
+        <hungerLevel>55</hungerLevel>
+        <thirstLevel>30</thirstLevel>
     </species>
 
 <!-- Carnivores -->
     <species name="lion">
-        <number>4</number>
+        <number>10</number>
         <byte>3</byte>  <!-- this is the sub-type -->
         <spritergb r = "0.6" g="0" b="0.6"/>
         <diet>carnivore</diet>
@@ -109,10 +115,12 @@
         <wander>0.1f</wander>
 
         <panicLevel>100</panicLevel>
+        <hungerLevel>85</hungerLevel>
+        <thirstLevel>45</thirstLevel>
     </species>
 
     <species name="hyena">
-        <number>4</number>
+        <number>9</number>
         <byte>4</byte>  <!-- this is the sub-type -->
         <spritergb r = "0" g="0.6" b="0.6"/>
         <diet>carnivore</diet>
@@ -135,6 +143,8 @@
         <wander>0.1f</wander>
 
         <panicLevel>100</panicLevel>
+        <hungerLevel>80</hungerLevel>
+        <thirstLevel>50</thirstLevel>
     </species>
 </settings>
 

@@ -12,12 +12,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.Random;
+
 import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
 
 /**
  * Created by Emily on 10/07/2014.
  */
 public class Hungry extends State {
+
+    Random rand = new Random();
 
     public Hungry(StateMachine parent, BoidManager bm) {
         super(parent, bm);
@@ -31,7 +35,7 @@ public class Hungry extends State {
             parent.pushState(boid, new Panic(parent, bm));
             return false;
         }
-        else if (boid.hunger < 40) {
+        else if (boid.hunger < boid.hungerLevel/10+rand.nextInt(10)) {
             // pop
             return true; //stop looking for food.
         } else {
@@ -107,7 +111,7 @@ public class Hungry extends State {
 
             //Add collision avoidance
             steering.add(Collision.act(collisionObjects, boid));
-//            steering.add(behaviours.get("collision").act(collisionObjects, boid));
+            steering.add(Collision.act(boid));
 
             steering.nor().scl(boid.maxSpeed / 2);
             steering.sub(boid.getVelocity());

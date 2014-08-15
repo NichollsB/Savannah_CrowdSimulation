@@ -1,8 +1,13 @@
 package com.UKC_AICS.simulation.entity.states.herbivore;
 
+import java.util.Arrays;
+
+import EvolutionaryAlgorithm.EA2;
+
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.Arrive;
+import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
@@ -18,14 +23,15 @@ import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
  */
 public class Reproduce extends State {
     private Vector3 tempVec = new Vector3();
-
-    public Reproduce(StateMachine parent, BoidManager bm) {
+    private EA2 ea;
+    public Reproduce(StateMachine parent, BoidManager bm, EA2 ea) {
         super(parent, bm);
+        this.ea=ea;
     }
 
     @Override
     public boolean update(Boid boid) {
-        if (boid.hunger < 35 && boid.thirst < 35) {
+        if (boid.hunger < boid.hungerLevel/2 && boid.thirst < boid.thirstLevel/2) {
             boid.setState(this.toString());
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
@@ -59,29 +65,34 @@ public class Reproduce extends State {
 
                     tempVec.set(boid.getPosition());
                     tempVec.sub(nearest.getPosition());
-                    if (tempVec.len2() < steering.len2() && other.hunger>60 && other.thirst > 60) {
+                    if (tempVec.len2() < steering.len2() && other.hunger < other.hungerLevel/2 && other.thirst < other.thirstLevel/2) {
                         nearest = other;
                     }
 
                 }
-                if(tempVec.len2() < 10f && nearest.hunger < 40 && nearest.thirst < 40) {
+                if(tempVec.len2() < 10f) { // && nearest.hunger < 40 && nearest.thirst < 40) {
                     System.out.println("boid made a baby " + boid.getSpecies());
 //                    bm.createBoid(boid); //create copy of self.
                     Boid baby = new Boid(boid);
                     baby.setAge(0);
                     //TODO CALL EA HERE
                     // POSSIBLE MATES = POPULATION
-                    
+                    System.out.print("pm " + potentialMates);
+                    if(ea.getEaOn()){
+                    	baby.setGene(ea.createBaby(boid,potentialMates));
+                    	System.out.println(Arrays.toString(baby.getGene()));
+                    }
                     bm.storeBoidForAddition(baby);
-                    boid.hunger = 100;
-                    boid.thirst = 100;
-                    nearest.hunger = 100;
-                    nearest.thirst = 100;
+                    boid.hunger = boid.hungerLevel;
+                    boid.thirst = boid.thirstLevel;
+                    nearest.hunger = nearest.hungerLevel;
+                    nearest.thirst = nearest.thirstLevel;
                     return true;
                 }
                 steering.set(0f,0f,0f);
 
                 steering.add(Arrive.act(boid, nearest.getPosition()));
+                steering.add(Collision.act(boid));
 
                 boid.setAcceleration(steering);
 
@@ -112,6 +123,9 @@ public class Reproduce extends State {
                 steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
                 steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
+
+                steering.add(Collision.act(boid));
+                steering.add(Collision.act(dummyObjects, boid));
 
 //                steering.add(behaviours.get("collision").act(collisionObjects, boid));
 

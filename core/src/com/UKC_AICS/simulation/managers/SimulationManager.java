@@ -33,11 +33,11 @@ public class SimulationManager extends Manager {
 //    static final BoidManagerThreadedTwo boidManager = new BoidManagerThreadedTwo();
 //    BoidManagerThreadedThree boidManager = new BoidManagerThreadedThree(this);
 //    BoidManagerOld boidManager = new BoidManagerOld(this);
-
-    BoidManager boidManager = new BoidManager(this);
+    public EA2 ea = new EA2();
+    BoidManager boidManager = new BoidManager(this, ea);
     WorldManager worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
 
-    public EA2 ea = new EA2();
+   
 
     static public int minutes = 0;
     static public int hours = 0;
@@ -57,7 +57,7 @@ public class SimulationManager extends Manager {
     /**
      * Added by ben nicholls - for the creation of objects from ObjectData type/ creation of ObjectData types...
      */
-    public static final HashMap<Byte, ObjectData> objectData = new HashMap<Byte, ObjectData>();
+    public static  HashMap<Byte, ObjectData> objectData = new HashMap<Byte, ObjectData>();
     
 
     /**
@@ -69,35 +69,29 @@ public class SimulationManager extends Manager {
     public SimulationManager(SimulationScreen parent) {
         this.parent = parent;
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
-
+        objectData = staXParser.readObjectFile("../core/assets/data/objects.xml");
         for (Species species : speciesData.values()) {
             species.setGrowthPerDay((species.getMaxSize() - species.getNewbornSize()) / species.getMaturity());
         }
         generateBoids();
-        
-        objectData.put((byte)0, new ObjectData((byte)0, (byte)1, "Corpse"));
-        objectData.put((byte)1, new ObjectData((byte)1, (byte)1, "Corpse"));
-        objectData.put((byte)2, new ObjectData((byte)2, (byte)1, "Attractor"));
-        objectData.put((byte)3, new ObjectData((byte)3, (byte)1, "Repeller"));
 
         ea.setup();
+        addTestObjects();
+    }
 
-        Array<Byte> objTypes = new Array<Byte>();
+    private void addTestObjects() {
+//        Array<Byte> objTypes = new Array<Byte>();
         Object obj = new Object(objectData.get((byte)2),355,450);
-        objTypes.add(obj.getType());
+//        objTypes.add(obj.getType());
         WorldManager.putObject(obj);
-
-        
-        
-        
         obj = new Object(objectData.get((byte)2),500,200);
 ////        obj = new Object((byte)2,(byte)1,900,300);
         WorldManager.putObject(obj);
 
         obj = new Object(objectData.get((byte)3),755,450);
-        objTypes.add(obj.getType());
+//        objTypes.add(obj.getType());
         WorldManager.putObject(obj);
-        objTypes.add((byte)0);
+//        objTypes.add((byte)0);
 
         obj = new Object(objectData.get((byte)1),400,600);
         WorldManager.putObject(obj);
@@ -113,11 +107,12 @@ public class SimulationManager extends Manager {
         WorldManager.putObject(obj);
         obj = new Object(objectData.get((byte)1),1100,600);
         WorldManager.putObject(obj);
-
     }
 
     public void reset(){
     	boidManager.clearBoidList();
+        WorldManager.clearObjects();
+        addTestObjects();
     	generateBoids();
     	resetTime();
     }

@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.Random;
+
 import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
 
 /**
@@ -20,6 +22,7 @@ import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
 public class Thirsty extends State {
 
 
+    private Random rand = new Random();
     public Thirsty(StateMachine parent, BoidManager bm) {
         super(parent, bm);
     }
@@ -27,7 +30,7 @@ public class Thirsty extends State {
     @Override
     public boolean update(Boid boid) {
         //am i still thirsty?
-        if ( boid.thirst < 45) {
+        if ( boid.thirst < boid.thirstLevel/10 + rand.nextInt(10)) {
             return true;  //not thirsty return to default
         } else {
             boid.setState(this.toString());
@@ -73,7 +76,7 @@ public class Thirsty extends State {
 
                 //just add collision avoidance
                 steering.add(Collision.act(collisionObjects, boid));  //.scl(avoid)   //Maybe have some scaling for avoidance?
-//                steering.add(behaviours.get("collision").act(collisionObjects, boid));
+                steering.add(Collision.act(boid));
 
 //                steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
