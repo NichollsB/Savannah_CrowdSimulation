@@ -80,9 +80,13 @@ public class SimulationManager extends Manager {
 //        objectData.put((byte)2, new ObjectData((byte)2, (byte)1, "Attractor"));
 //        objectData.put((byte)3, new ObjectData((byte)3, (byte)1, "Repeller"));
 
-        ea.setup();
+
+       ea.setup(this);
         addTestObjects();
     }
+
+        
+
 
     private void addTestObjects() {
         Array<Byte> objTypes = new Array<Byte>();
@@ -196,13 +200,15 @@ public class SimulationManager extends Manager {
             hours += 1;
             //TODO work in progress - Matt
            // boidManager.trackPop();
-            
+             
         } else if (days < 6) {
             minutes = 0;
             hours = 0;
             days += 1;
-            if(ea.getEaOn()){
+            
+           if(ea.getEaOn()){
             	ea.Evolve();  //causes behaviour to go crazy so turned off for now.
+            	
             }
             increment = true;
         } else {
