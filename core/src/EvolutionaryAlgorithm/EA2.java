@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.managers.BoidManager;
+import com.badlogic.gdx.utils.Array;
 
 
 public class EA2 {
@@ -20,7 +21,7 @@ public class EA2 {
 	//Mutation rate
 	private double muteRate =0.02;
 	public static int geneLength = 8;
-	public boolean eaON = true;
+	public boolean eaON = false;
 
 	
 
@@ -45,13 +46,10 @@ public class EA2 {
 	 
 	 
 	 public void setup() {
-		
-		  
 		 Float[] held = new Float[geneLength];
 		
-		 
 		 for(Byte species = 0; species<totalSpecies; species++){
-		 heldValues.put(species,held);
+			 heldValues.put(species,held);
 		 }
 		
 	 }
@@ -97,11 +95,24 @@ public class EA2 {
 	
 	
 	
-	public Float[] createBaby() {
+	public Float[] createBaby(Boid parent, Array<Boid> potentialMates) {
+		System.out.println("Baby being created");
+		System.out.println("PotentialMtes "+ potentialMates);
+		population.add(parent);
+		popNum++;
+		
+		for(int i = 0; i < potentialMates.size ; i++){
+			Boid temp = potentialMates.get(i);
+			population.add(i+1,temp );
+			popNum++;
+			
+		}
+		System.out.println("popnum " +popNum);
 			calculateFitness();
 			calculateProbabilty();
 			Float[] tmp = new Float[geneLength];
-			System.arraycopy(selection(),0 ,tmp , 0, geneLength);	
+			System.arraycopy(selection(),0 ,tmp , 0, geneLength);
+			reset();
 			return tmp;
 	}
 	
@@ -179,21 +190,37 @@ public class EA2 {
 		double rangeMin = probabilityList.get(0);
 		double rangeMax = probabilityList.get(popNum-1);
 		//Select random number	
+		int parent1 = -1;
+		int parent2 = -1;
 		
-		for(int j = 0 ; j<2 ; j++) {
-			double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
-			
-			for(int i = 0; i<popNum ; i++){	
-				if(probabilityList.get(i) <=randomValue && randomValue<probabilityList.get(i+1)){	
-					geneList.add(population.get(i).getGene());
-					
-					System.out.println("Selected =" + i);
-					
-				}			
+		double randomValue1 = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+		
+		for(int i = 0; i<popNum ; i++){	
+			if(probabilityList.get(i) <=randomValue1 && randomValue1<probabilityList.get(i+1)){	
+				geneList.add(population.get(i).getGene());
+				parent1 = i;
+				System.out.println("First Selected =" + i);
+			}	
+		}		
+		do{
+			double randomValue2 = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+			for(int j = 0; j<popNum ; j++){	
+				if(probabilityList.get(j) <=randomValue2 && randomValue2<probabilityList.get(j+1)){	
+					parent2 = j;
+					System.out.println("Selected =" + parent2);
+					}			
 			}	
 		}
+		while(parent1==parent2);
+		geneList.add(population.get(parent2).getGene());
+		System.out.println("Final Selected =" + parent2);
+				
+		
 		gene1 = geneList.get(0);
 		gene2 = geneList.get(1);
+		
+		parent1 = -1;
+		parent2 = -1;
 		
 		System.out.println("Gene 1 " + Arrays.toString(geneList.get(0)));
 		System.out.println("Gene 2 " + Arrays.toString(geneList.get(1)));
@@ -283,15 +310,12 @@ public class EA2 {
 	public boolean getEaOn() {
 		return eaON;
 	}
-	 
-	
 	public static int getGeneLength() {
 		return geneLength; 
 	}
 	public static byte getTotalSpecies() {
 		return totalSpecies; 
 	}
-	
 	public void setCrossRate(double newCross){
 		crossRate= newCross;
 	}

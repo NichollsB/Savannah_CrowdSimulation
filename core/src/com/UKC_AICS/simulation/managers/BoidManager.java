@@ -1,5 +1,7 @@
 package com.UKC_AICS.simulation.managers;
 
+import EvolutionaryAlgorithm.EA2;
+
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
@@ -31,17 +33,18 @@ public class BoidManager extends Manager {
     private QuadTree quadtree;
     private Random rand = new Random();
     private static StateMachine stateMachine;
+    public EA2 ea;
+
 
     private boolean removeBoids = false;
     
-    public BoidManager(SimulationManager parent) {
+
+    public BoidManager(SimulationManager parent, EA2 ea) {
 
         this.parent = parent;
         setBoidGrid(new BoidGrid(60, Constants.mapWidth, Constants.mapHeight));
-
         quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.mapWidth, Constants.mapHeight));
-
-        stateMachine = new StateMachine(this);
+        stateMachine = new StateMachine(this,ea);
     }
 
     /**
@@ -139,8 +142,8 @@ public class BoidManager extends Manager {
         boid.setPosition(xPos, yPos, 0);
         boid.setVelocity(xVel, yVel, 0);
 
-        boid.hunger = rand.nextInt(80);
-        boid.thirst = rand.nextInt(80);
+        boid.hunger = rand.nextInt(boid.hungerLevel);
+        boid.thirst = rand.nextInt(boid.thirstLevel);
 
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.
@@ -254,14 +257,14 @@ public class BoidManager extends Manager {
     		return true;
 		}
         float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
-        if (boid.hunger >= 120) {
+        if (boid.hunger >= boid.hungerLevel*2) {
             Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f), boid.size);
             WorldManager.putObject(food);
             removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of hunger :( ");
             return true;
         }
-        else if( boid.thirst >= 110) {
+        else if( boid.thirst >= boid.thirstLevel*2) {
             Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f), boid.size);
             WorldManager.putObject(food);
             boids.removeValue(boid, false);

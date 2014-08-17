@@ -1,7 +1,6 @@
 package com.UKC_AICS.simulation.entity;
 
 import com.UKC_AICS.simulation.Constants;
-import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -26,6 +25,7 @@ public class Boid extends Entity {
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //
     private Vector3 acceleration = new Vector3();
+    private float sprintThreshold = maxSpeed*0.7f;
 
     public float maxStamina = 60;
     public float stamina = maxStamina;
@@ -57,6 +57,9 @@ public class Boid extends Entity {
     
     public int geneSize=8;		
     public Float[] gene= new Float[geneSize];
+
+    public int hungerLevel=70;
+    public int thirstLevel=70;
     public int panicLevel=30;
 
 
@@ -83,6 +86,7 @@ public class Boid extends Entity {
         flockRadius = species.getFlockRadius();
 
         maxSpeed = species.getMaxSpeed();
+
         maxForce = species.getMaxForce();
 
         maxStamina = species.getStamina();
@@ -100,6 +104,8 @@ public class Boid extends Entity {
         setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius, maxStamina);
 
         panicLevel = species.getPanicLevel();
+        hungerLevel = species.getHungerLevel();
+        thirstLevel = species.getThirstLevel();
 
 
         bounds.set(position.x, position.y, 16, 16);
@@ -165,7 +171,9 @@ public class Boid extends Entity {
 
         //Stamina related calcs
         float speed = velocity.len();
-        changeStamina(speed);
+        if(speed > sprintThreshold)
+            useStamina(speed);
+        else recoverStamina(speed);
         position.add(velocity);
 
         //check for out of bounds
@@ -173,16 +181,21 @@ public class Boid extends Entity {
 
         bounds.setPosition(position.x, position.y);
         //TODO: potentially have different species "degrade" at different rates
-        hunger += (float) 0.25 /60;
+        hunger += (float) 0.5 /60;
         thirst += (float) 1 /60;
 
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
     }
 
-    private boolean changeStamina(float speed) {
+    /**
+     * Should be called when boid is moving over the "sprintThreshold" 70% of maxSpeed
+     * @param speed current speed, length of boids velocity
+     * @return  true if stamina is used // this may be redundant now.
+     */
+    private boolean useStamina(float speed) {
         boolean haveStamina = stamina > 0;
         float sprintThreshold = maxSpeed*0.7f;
-        float staminaChange = speed-sprintThreshold;  //+ if using stamina / - if regaining stamina
+        float staminaChange = (speed-sprintThreshold)*0.3f;  //+ if using stamina / - if regaining stamina
         //has stamina and
         if(haveStamina && stamina - staminaChange > 0) {
             stamina -= staminaChange;
@@ -195,8 +208,16 @@ public class Boid extends Entity {
             System.out.println(" ,new speed = " + velocity.len());
         }
         return stamina > 0;
-
     }
+
+    /**
+     * Recovers the stamina of the boid if it is not travelling over "sprintThreshold"
+     * @param speed of the boid, length of velocity
+     */
+    private void recoverStamina(float speed) {
+        stamina -= (speed-sprintThreshold)*0.3f;
+    }
+
     public void setNewVelocity(Vector3 newVel){
         velocity.set(newVel);
     }

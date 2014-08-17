@@ -29,7 +29,7 @@ public class Stalk extends State {
     @Override
     public boolean update(Boid boid) {
         //check boid still exists
-        if(boid.hunger > 75) {
+        if(boid.hunger > boid.hungerLevel/2) {
             if (parent.checkBoid(target)) {
                 float distance = boid.getPosition().cpy().sub(target.getPosition()).len2();
                 //check still within sight
@@ -53,7 +53,6 @@ public class Stalk extends State {
                     //Add collision avoidance
                     steering.add(Collision.act(collisionObjects, boid));
                     steering.add(Collision.act(boid));
-//                    steering.add(behaviours.get("collision").act(collisionObjects, boid));
 
                     boid.setAcceleration(steering);
                     //Check is boid is still in list.  If not pop to hunt (for corpse)

@@ -1,19 +1,29 @@
 <?xml version="1.0"?>
 <!--xml file for object based information-->
 <settings>
-    <object id="00" name="zebra corpse">
+    <object name="zebra corpse">
         <type>0</type> <!-- byte -->
         <subtype>0</subtype> <!-- byte -->
         <spriteLocation>data/corpse_object_x16.png</spriteLocation>
     </object>
-    <object id="01" name="wildebeest">
+    <object name="wildebeest corpse">
         <type>0</type> <!-- byte -->
         <subtype>1</subtype> <!-- byte -->
         <spriteLocation>data/corpse_object_x16_2.png</spriteLocation>
     </object>
-    <object id="02" name="gazelles">
+    <object name="gazelle corpse">
         <type>0</type> <!-- byte -->
         <subtype>2</subtype> <!-- byte -->
+        <spriteLocation>data/corpse_object_x16_3.png</spriteLocation>
+    </object>
+    <object name="Attractor">
+        <type>2</type> <!-- byte -->
+        <subtype>3</subtype> <!-- byte -->
+        <spriteLocation>data/corpse_object_x16_3.png</spriteLocation>
+    </object>
+    <object name="Repeller">
+        <type>3</type> <!-- byte -->
+        <subtype>4</subtype> <!-- byte -->
         <spriteLocation>data/corpse_object_x16_3.png</spriteLocation>
     </object>
 </settings>

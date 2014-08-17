@@ -27,14 +27,12 @@ public class WorldManager extends Manager {
 
     private static Array<Entity> objects = new Array<Entity>();
     private static QuadTree objects_map;
-    private ObjectGrid objectGrid;
 
     public WorldManager(int width, int height) {
         tileSize = new Vector3(width/TILE_SIZE, height/TILE_SIZE, 1);
         size = new Vector3(width, height, 1);
 
         objects_map = new QuadTree(0, new Rectangle(0,0,width,height));
-        objectGrid = new ObjectGrid(60, width, height);
 
         map = new LandMap(width, height);
     }
@@ -42,6 +40,11 @@ public class WorldManager extends Manager {
 
     @Override
     public void update(boolean dayIncrement) {
+        for(int i = 0 ; i < objects.size ; i++){
+            if(objects.get(i).toDelete){
+                removeObject(objects.get(i));
+            }
+        }
         if(dayIncrement)
         decayCorpses();
     }
@@ -60,6 +63,10 @@ public class WorldManager extends Manager {
         objects.add(entity);
     }
 
+    public static void clearObjects() {
+        objects.clear();
+    }
+
     public static void removeObject(Entity entity) {
         objects.removeValue(entity, true);
         rebuildTree(objects);
@@ -70,7 +77,7 @@ public class WorldManager extends Manager {
             objects_map.insert(boid);
     }
 
-    public Array<Entity> getObjects() {
+    public  Array<Entity> getObjects() {
         return objects;
     }
 
@@ -126,7 +133,9 @@ public class WorldManager extends Manager {
     }
 
     private void decayCorpses() {
-        for(Entity corpse : objects) {
+        Entity corpse;
+        for (int i = 0; i < objects.size; i++) {
+             corpse = objects.get(i);
             if( corpse.getType()==0) {
                 ((Object)corpse).reduceMass(1f);
                 if(((Object)corpse).getMass()<0.5f) {
@@ -141,6 +150,10 @@ public class WorldManager extends Manager {
     	com.UKC_AICS.simulation.entity.Object obj = new com.UKC_AICS.simulation.entity.Object(objData, x, y);
     	obj.setSubType(subtype);
     	putObject(obj);
+    }
+
+    public static boolean checkObject(Entity object) {
+        return objects.contains(object, false);
     }
   
 }

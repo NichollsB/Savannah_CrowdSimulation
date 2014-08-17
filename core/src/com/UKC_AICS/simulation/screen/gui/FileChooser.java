@@ -137,14 +137,17 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		headerLabel = new Label(command + " " + identifier + " file.", skin);
 		content.add(headerLabel).align(Align.left).expandX().fillX();
 		content.row();
-		content.add(new Label("Directory Path", skin));
-		content.add(pathField).fillX().expandX();
+        Table t = new Table();
+		t.add(new Label("Directory Path", skin));
+		t.add(pathField).fillX().expandX();
+        content.add(t).fillX().expandX();
+        content.row();
 		ScrollPane pane = (ScrollPane) createScrollPane(listTable, false, true, true, false);
 		content.add(pane).left().fill().expand();
 //		content.add(new Table()).fill().expand();
 		content.row();
-		Table pathBar = new Table();
-		pathBar.add(fileField).fillX().expandX();
+		Table fileBar = new Table();
+		fileBar.add(fileField).fillX().expandX();
 		TextButton upBtn = new TextButton("Back", skin);
 		upBtn.addListener(new ClickListener(){
 			public void clicked (InputEvent event, float x, float y) {
@@ -154,8 +157,8 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 					openDir(currentDir.getParentFile());
 			}
 		});
-		pathBar.add(upBtn);
-		content.add(pathBar).expandX().fillX();
+		fileBar.add(upBtn);
+		content.add(fileBar).expandX().fillX();
 //		dirSelectLabels.put(new Label(startDir.name(), skin), startDir);
 //		for(File handle : startDir.list()){
 //			if(handle.isDirectory()){
@@ -238,7 +241,6 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 			}
 			else if(path.contains("./bin")){
 				path = path.replace("./bin", "./");
-				pathField.setText(path);
 				fileField.setText(currentDir.getName());
 			}
 			return true;
@@ -253,6 +255,9 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 			updateSelectedFile(dir);
 		}
 		pathFromTextField = false;
+        pathField.setDisabled(false);
+        pathField.setText(currentDir.getPath());
+        pathField.setDisabled(true);
 		return false;
 	}
 	
@@ -314,7 +319,6 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 //			fieldPath = f.getName();
 //			f = f.getParentFile();
 //		}
-		pathField.setText(currentDir.getPath());
 		fileField.setText(handle.getName());
 		pathFromTextField = false;
 	}
