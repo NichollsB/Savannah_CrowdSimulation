@@ -248,11 +248,15 @@ public class SpriteManager {
 	}
 
 	public AtlasRegion getTileRegion(String layer, int amount){
+		
 		try{
+			
 			if(layer == "terrain")
 				layer = "water";
-			if(layer != null && amount > 0)
+			if(layer != null && amount > 0){
+				System.out.println("Where is grass tile " + layer + " amount " + amount + " region " + environmentTiles_Atlas.findRegion(layer + "#" + amount).getTexture());
 				return environmentTiles_Atlas.findRegion(layer + "#" + amount);
+			}
 			else
 				return null;
 			

@@ -9,6 +9,7 @@ import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.gui.controlutils.ControlState;
 import com.UKC_AICS.simulation.gui.controlutils.ControlState.State;
+import com.UKC_AICS.simulation.gui.controlutils.RenderState;
 import com.UKC_AICS.simulation.gui.controlutils.SelectedEntity;
 import com.UKC_AICS.simulation.gui.controlutils.TreeOptionsListener;
 import com.UKC_AICS.simulation.screen.graphics.Graphics;
@@ -256,7 +257,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         boidGraphics.initObjSprites(simulationManager.getObjects());
         boidGraphics.initTileSprites(simulationManager.getFullInfo());
         //boidGraphics.initTileSprites(simulationManager.getMapTiles());
-        
+        boidGraphics.initGrassMesh((byte[][])simulationManager.getFullInfo().get("grass"), Constants.TILE_SIZE);
         //UI
         
         
@@ -401,6 +402,8 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
 		HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(x, y);
     	gui.setConsole("x: " + x + " y: " + y + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
 	}
+	
+	
 
 
 

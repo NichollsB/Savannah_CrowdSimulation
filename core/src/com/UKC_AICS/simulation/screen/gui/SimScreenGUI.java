@@ -8,6 +8,7 @@ import com.UKC_AICS.simulation.gui.controlutils.DialogueWindowHandler;
 import com.UKC_AICS.simulation.gui.controlutils.HoverListener;
 import com.UKC_AICS.simulation.gui.controlutils.MenuSelectListener;
 import com.UKC_AICS.simulation.gui.controlutils.MenuSelectEvent;
+import com.UKC_AICS.simulation.gui.controlutils.RenderState;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -94,6 +95,8 @@ public class SimScreenGUI extends Stage implements HoverListener {
 	private FileChooser fileChooser;
 	private final ObjectMap<Button, FileChooser> fileChoosers = new ObjectMap<Button, FileChooser>();
 	
+	private RenderOptionsWindow renderOptions;
+	
     /**
      *
      * @param ss the simulationScreen creating the gui
@@ -131,6 +134,15 @@ public class SimScreenGUI extends Stage implements HoverListener {
 				simScreen.simulationManager.loadSaveCall(chooser.getCommand(), chooser.getIdentifier(), (File)object);
 			}
 		});
+        
+        renderOptions = new RenderOptionsWindow("Render Options", skin, null, null, null, stage);
+        renderOptions.addSelectionListener(new MenuSelectListener(){
+        	public void selectionMade(java.lang.Object menu, java.lang.Object object) {
+//        		System.out.println();
+        		RenderOptionsWindow window = (RenderOptionsWindow) menu;
+        		RenderState.changeTileState(RenderState.TILESTATE.stateName, window.getRenderType());
+        	}
+        });
  
 //        fileChooser.hide();
 //        fileChooser.open(this);
@@ -242,27 +254,19 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	//SPECIES LOAD/SAVE
     	final MenuDropdown menu = createFileMenu(new String[]{"load", "save"}, new String[]{"Load", "Save"}, "Species Settings",
     			"SPECIES");
-    	menuTable.add(menu);
+    	menuTable.add(menu).padLeft(5);
+    	
+    	
+    	TextButton renderButton = new TextButton("Render Options", skin);
+    	renderButton.addListener(new ClickListener(){
+    		@Override
+            public void clicked(InputEvent event, float x, float y) {
+    			renderOptions.open(stage);
+    		}
+    	});
+    	
+    	menuTable.add(renderButton).padLeft(5);
     	menuTable.add(new Table()).fillX().expandX();
-//    	final MenuDropdown menu = new MenuDropdown(skin, "Species Settings", "SPECIES");  
-//    	String items[] = {"Load", "Save"};
-//    	menu.addItems(items, true);
-//    	menuTable.add(menu);
-//    	menuTable.add(new Table()).fillX().expandX();
-//    	
-//    	menu.addSelectionListener(new MenuSelectListener(){
-//    		@Override
-//    		public void selectionMade(java.lang.Object menu, java.lang.Object object){
-//    			if((String)object == "Load"){
-////    				System.out.println("Selection has been made " + (String)object);
-//    				fileChooser.setOptionsText("Load", "Cancel");
-//    				fileChooser.setCommand("Load");
-//    				fileChooser.setIdentifier("species");
-////    				fileChooser
-//    				fileChooser.open(stage);
-//    			}
-//    		}
-//    	});
     	return menuTable;
     }
 	

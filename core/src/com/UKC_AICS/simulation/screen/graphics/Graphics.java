@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -20,8 +21,10 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.gui.controlutils.RenderState;
 import com.UKC_AICS.simulation.utils.EnvironmentLoader;
 import com.UKC_AICS.simulation.utils.EnvironmentLoader.EnvironmentLayer;
 
@@ -67,11 +70,21 @@ public class Graphics {
 	SpriteCache backgroundCache = new SpriteCache(20000, false);
 	private TileGraphics dynamicTiles;
 	
+	private final TileMesh grassMesh = new TileMesh();
+	
+	private static enum DynamicRenderOption{
+		TILED, MESH;
+	}
+	private DynamicRenderOption renderMode = DynamicRenderOption.TILED;
+	private final MeshRenderer meshRenderer = new MeshRenderer();
+	
 	public Graphics(int width, int height){
 		renderWidth = width;
 		renderHeight = height;
 	}
 	
+	
+//	private Texture test = new Texture(Gdx.files.internal("/data/grass_tile_x16.png"));
 
 	/**
 	 * Update and render the sprites representing the boids. Renders via the SpriteBatch passed in.
@@ -79,11 +92,32 @@ public class Graphics {
 	 * @param viewRect 
 	 */
 	public void update(SpriteBatch batch, Rectangle viewRect){
-			
-			
 			if(spriteManager.update()){
-				
+				AtlasRegion region;
 				ScissorStack.pushScissors(viewRect);
+				if(RenderState.TILESTATE.equals(RenderState.State.MESH)){
+					if(grassMesh.update(tileMap.get("grass"))){
+						meshRenderer.renderAll(camera);
+					}
+					else{
+//						grassMesh.createMesh(tileMap.get("grass"), 0, 0, 16, 16, test, false, 0, 0);
+//						grassMesh.createMesh(tileMap.get("grass"), 0, 0, 16, 16, Color.WHITE);
+						meshRenderer.addMesh(grassMesh);
+					}
+//					if(grassMesh.update(tileMap.get("grass"))){
+//						meshRenderer.renderAll(camera);
+//					}
+//					else{
+//						region = spriteManager.getTileRegion("grass", 100);
+//						System.out.println();
+//						if(region != null){
+//							grassMesh.createMesh(tileMap.get("grass"), 0, 0, 16, 16, region.originalWidth, region.originalHeight, false, 0, 0);
+//							meshRenderer.addMesh(grassMesh);
+//						}
+//						
+//					}
+					
+				}
 				batch.begin();
 //				ScissorStack.pushScissors(scissor);
 //				spriteManager.drawTileCache();
@@ -92,6 +126,7 @@ public class Graphics {
 //		    	back.rect(0, 0, renderWidth, renderHeight);
 //		    	back.end();
 //				batch.begin();
+				
 				try{
 					background.draw(batch);
 				}
@@ -99,10 +134,10 @@ public class Graphics {
 					System.out.println("Missing GROUND environment layer");
 				}
 				batch.end();
-				if(dynamicTiles != null){
+				if(RenderState.TILESTATE.equals(RenderState.State.TILED) && dynamicTiles != null){
 					Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
 					dynamicTiles.updateTiles(batch, true, tileMap);
-					}
+				}
 				
 		    	batch.begin();
 				byte b = 0;
@@ -196,8 +231,16 @@ public class Graphics {
 		spriteManager.loadAssets_Objects(types);
 	}
 	
+	public void initGrassMesh(byte[][] bs, int tileSize){
+		AtlasRegion region = spriteManager.getTileRegion("grass", 100);
+		if(region != null){
+			grassMesh.createMesh(bs, 0, 0, tileSize, tileSize, region.originalWidth, region.originalHeight, false, 0, 0);
+			meshRenderer.addMesh(grassMesh);
+		}
+	}
 	public void initTileSprites(HashMap<String, byte[][]> tileLayers){
 		this.tileMap = tileLayers;
+		spriteManager.loadAssets_Tiles(null);
 		dynamicTiles = new TileGraphics(tileLayers, spriteManager, backgroundCache);
 	}
 	public void initBackground(){
