@@ -36,7 +36,8 @@ public class Reproduce extends State {
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findNearby(boid.getPosition());
             Array<Boid> potentialMates = new Array<Boid>();
             Array<Boid> closeBoids = new Array<Boid>();
-
+            Float[] gene = new Float[EA2.getGeneLength()];
+            
             for (Boid b : nearBoids) {
                 //see if the boid is the same species and in the same state - should be Reproduce AND not self
                 if (boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state) && !boid.equals(b)) {
@@ -54,6 +55,13 @@ public class Reproduce extends State {
             }
 
             if(potentialMates.size > 0  ) {
+            	  //TODO CALL EA HERE
+                    // POSSIBLE MATES = POPULATION
+                    System.out.print("pm " + potentialMates);
+                    if(ea.getEaOn()){
+                    	gene = ea.createBaby(boid,potentialMates);
+                    	System.out.println("Baby Gene "+Arrays.toString(gene));
+                    }
                 //pick the closest and go towards it!
                 Boid nearest = potentialMates.pop();
                 Boid other;
@@ -74,12 +82,10 @@ public class Reproduce extends State {
 //                    bm.createBoid(boid); //create copy of self.
                     Boid baby = new Boid(boid);
                     baby.setAge(0);
-                    //TODO CALL EA HERE
-                    // POSSIBLE MATES = POPULATION
-                    System.out.print("pm " + potentialMates);
-                    if(ea.getEaOn()){
-                    	baby.setGene(ea.createBaby(boid,potentialMates));
-                    	System.out.println(Arrays.toString(baby.getGene()));
+                    System.out.println(Arrays.toString(gene));
+                    if(gene[0]!=null){
+                    	System.out.println("not empty");
+                    	baby.setGene(gene);
                     }
                     bm.storeBoidForAddition(baby);
                     boid.hunger = 100;

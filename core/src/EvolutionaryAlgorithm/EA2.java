@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.HashMap;
-
+import java.lang.Object;
+import java.lang.Math;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.managers.BoidManager;
+import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.badlogic.gdx.utils.Array;
 
 
@@ -22,14 +24,14 @@ public class EA2 {
 	private double muteRate =0.02;
 	public static int geneLength = 8;
 	public boolean eaON = false;
-
 	
-
+	
+	public SimulationManager sm; 
 	
 	public HashMap<Byte, Float[]> heldValues = new HashMap<Byte,Float[]>();
 	private ArrayList<Boid> population = new ArrayList<Boid>();
-	private ArrayList<Double> fitnessList = new ArrayList<Double>();
-	private ArrayList<Double> probabilityList = new ArrayList<Double>();
+	private ArrayList<Float> fitnessList = new ArrayList<Float>();
+	private ArrayList<Float> probabilityList = new ArrayList<Float>();
 	private Random r = new Random();
 	private Float[] newGene = new Float[geneLength];
 	private Float[] gene1 = new Float[geneLength];
@@ -39,13 +41,11 @@ public class EA2 {
 	private Byte currentSpecies = 0;
 	public static Byte totalSpecies = 5;
 	 
-	// private SimulationScreen ss ;
+
 	 
-//SimulationScreen ss
-	// this.ss = ss;
-	 
-	 
-	 public void setup() {
+	 public void setup(SimulationManager sm) {
+		this.sm=sm;
+		 
 		 Float[] held = new Float[geneLength];
 		
 		 for(Byte species = 0; species<totalSpecies; species++){
@@ -58,9 +58,10 @@ public class EA2 {
 	 
 	 
 	public void Evolve() {	
-		
-		
-		for(byte i =0 ; i<totalSpecies; i++){
+		System.out.println("------------------------------------------------------------------------------------------------------------");
+		System.out.println("EVOLVE CALLED");
+		System.out.println("------------------------------------------------------------------------------------------------------------");
+		for(byte i =0 ; i<1; i++){
 			currentSpecies = i ;
 			System.out.println("Species "+ currentSpecies);
 			
@@ -96,18 +97,19 @@ public class EA2 {
 	
 	
 	public Float[] createBaby(Boid parent, Array<Boid> potentialMates) {
-		System.out.println("Baby being created");
-		System.out.println("PotentialMtes "+ potentialMates);
+		//System.out.println("Baby being created");
+		//System.out.println("PotentialMtes "+ potentialMates);
 		population.add(parent);
 		popNum++;
 		
 		for(int i = 0; i < potentialMates.size ; i++){
 			Boid temp = potentialMates.get(i);
-			population.add(i+1,temp );
+			population.add(i+1,temp);
 			popNum++;
 			
 		}
-		System.out.println("popnum " +popNum);
+		//System.out.println("popnum " +popNum);
+		//System.out.println("population "+ population);
 			calculateFitness();
 			calculateProbabilty();
 			Float[] tmp = new Float[geneLength];
@@ -138,89 +140,157 @@ public class EA2 {
 		for(Boid b : BoidManager.boids){
 			if(b.getAge() >= breedingAge && b.getSpecies()==currentSpecies){
 				population.add(b);
+				
 				//add to population
 				popNum++;
-				System.out.print(b.getAge()+" ");	
+				//System.out.print(b.getAge()+" ");	
 			}
 		}
 		
 		System.out.println();
 		
 		for(Boid b : population) {
-		System.out.println(b.getAge());
+		//System.out.println(b.getAge());
 		}
 		
 		System.out.println("popnum " + popNum);
 	}
 
 	
+	
+	
 	//Calculate fitness
 	public  void calculateFitness() {
-		double fitness = 0.0;
+		fitnessList.clear();
+		float fitness = 0f;
+		float lifespan = 0f;
+		double y = -1;
+		
+		//Gets the species. Only done once as method is called for each species.
+		
+		byte species = population.get(0).getSpecies();
+		lifespan = sm.speciesData.get(species).getLifespan();
+		double x = (double) lifespan;
+		//System.out.println("Lifespan "+ lifespan);
+		//System.out.println("x "+ x);
 		
 		for(Boid b : population){
-			fitness=b.getAge();
+			float age = (float) b.getAge();
+			//System.out.println("Age "+ age);
+			
+			if(age<=(lifespan/2)){
+				//System.out.println("1");
+				float m = (float) Math.pow(x/2,y);	
+				//System.out.println("m "+ m);
+				fitness=m*age;
+				//System.out.println("fitness "+ fitness);
+			}
+			else if (age>(lifespan/2)){
+				//System.out.println("2 ");
+				float m = (float) Math.pow(x/2,y);	
+				//System.out.println("m "+ m);
+				m=m*-1f;
+				//System.out.println("m "+ m);
+				fitness=m*age;
+				//System.out.println("fitness "+ fitness);
+			
+			} else{
+				System.out.println("Error ");
+			}
+							
 			//Add to fitnessList
 			fitnessList.add(fitness);	
 		}	
+		
+		//System.out.println("Fitnesslist " + fitnessList);
+		//System.out.println("Fitnesslist size" + fitnessList.size());
 	}
 	
 	public  void calculateProbabilty() {
-		double totalFitness = 0.0;
-		double p = 0.0;
-		double totalProbability = 0.0;
+		probabilityList.clear();
+		float totalFitness = 0f;
+		float p = 0f;
+		float totalProbability = 0f;
+		probabilityList.add(0f);
 		//calculate total fitness
-		for(double fitness :fitnessList) { 
+		for(float fitness :fitnessList) { 
 			totalFitness = totalFitness + fitness;	
 		}
 		
-		for(double val : fitnessList){
+		for(float val : fitnessList){
 			p = val/totalFitness;
 			totalProbability = totalProbability + p;
 			probabilityList.add(totalProbability);
 		}
+		//System.out.println("problist " + probabilityList);
+		//System.out.println("problist size" + probabilityList.size());
 	}
 	
 
 	
 	//Selection
 	public  Float[] selection() {
-		System.out.println();
-		System.out.println("SELECTION");
-		double rangeMin = probabilityList.get(0);
-		double rangeMax = probabilityList.get(popNum-1);
+		//System.out.println();
+		//System.out.println("-------------------------------------------------------------------------------------------------------------------");
+		//System.out.println("SELECTION");
+		
 		//Select random number	
-		int parent1 = -1;
-		int parent2 = -1;
+		double rangeMin = probabilityList.get(0);
+		Boid parent = null;
+		int parentPos = 0;
 		
-		double randomValue1 = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+		//TODO issue here with popnumber
+		for(int pairRun = 0 ; pairRun <2 ; pairRun++){
+			System.out.println("Run=" + pairRun);
+			
+			double rangeMax = probabilityList.get(popNum-1);
+			//System.out.println("rangeMax "+ rangeMax);
+			double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+			//System.out.println("ORIGINAL POPNUM "+ popNum);
+			for(int i = 0; i<popNum ; i++){	
 		
-		for(int i = 0; i<popNum ; i++){	
-			if(probabilityList.get(i) <=randomValue1 && randomValue1<probabilityList.get(i+1)){	
-				geneList.add(population.get(i).getGene());
-				parent1 = i;
-				System.out.println("First Selected =" + i);
-			}	
-		}		
-		do{
-			double randomValue2 = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
-			for(int j = 0; j<popNum ; j++){	
-				if(probabilityList.get(j) <=randomValue2 && randomValue2<probabilityList.get(j+1)){	
-					parent2 = j;
-					System.out.println("Selected =" + parent2);
-					}			
-			}	
-		}
-		while(parent1==parent2);
-		geneList.add(population.get(parent2).getGene());
-		System.out.println("Final Selected =" + parent2);
+				if(probabilityList.get(i) <=randomValue && randomValue<probabilityList.get(i+1)){	
+					geneList.add(population.get(i).getGene());
+					//System.out.println("Selected = " + i);
+					//System.out.println("POPNUM "+ popNum);
+					//System.out.println("GENE LIST "+ geneList);
+					
+					
+					if(pairRun==0){
+						//System.out.println("REMOVING IF");
+						parent = population.get(i);
+						parentPos = i;
+					//	System.out.println("Parent" + parent);
+					//	System.out.println("ParentPos" + parentPos);
+						population.remove(i);	
+
+						calculateFitness();
+						calculateProbabilty();
+						
+						popNum=popNum-1;
+					//	System.out.println("New POPNUM "+ popNum);
+					//	System.out.println("Population size" + population.size());
+					}
+					
+				}
 				
+				
+				
+				
+			}
+		}		
+		
+		population.add(parentPos, parent);
+		//System.out.println("Add Population size" + population.size());
+		calculateFitness();
+		calculateProbabilty();
+		popNum=popNum + 1;
+		//System.out.println("popnumber after "+ popNum);		
 		
 		gene1 = geneList.get(0);
 		gene2 = geneList.get(1);
 		
-		parent1 = -1;
-		parent2 = -1;
+		
 		
 		System.out.println("Gene 1 " + Arrays.toString(geneList.get(0)));
 		System.out.println("Gene 2 " + Arrays.toString(geneList.get(1)));
