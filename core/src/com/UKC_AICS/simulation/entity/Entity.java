@@ -6,17 +6,17 @@ import com.badlogic.gdx.math.Vector3;
  * Created by Emily on 30/06/2014.
  */
 public class Entity {
-    public Vector3 position; // explicitly 3d vectors for extensibility
-    public Vector3 velocity; // explicitly 3d vectors for extensibility
-    public double orientation; // explicitly 3d vectors for extensibility
+    public Vector3 position;
+    public Vector3 velocity;
+    public double orientation;
 
     public byte type = 0; //what category of object is it? // 1 == boid(any boid),
     public byte subType = 0; //what type of object is it? // for boids this would be subType(species)
-    
     //Added by Ben Nicholls
     public byte tertiaryType = 0;//Any additional sub-classification of boid or object
     //Added to check if boid info is being displayed or not - for highlighting in graphics
   	public boolean tracked = false;
+  	public boolean toDelete = false;
     /**
      *
      * @return the position of the object as a Vector3 for its map location.
@@ -89,6 +89,10 @@ public class Entity {
 
 	public byte getTertiaryType() {
 		return tertiaryType;
+	}
+
+	public void delete() {
+		this.toDelete = true;
 	}
 
 }

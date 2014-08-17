@@ -99,9 +99,10 @@ public class Graphics {
 					System.out.println("Missing GROUND environment layer");
 				}
 				batch.end();
-				if(dynamicTiles != null)
+				if(dynamicTiles != null){
 					Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
 					dynamicTiles.updateTiles(batch, true, tileMap);
+					}
 				
 		    	batch.begin();
 				byte b = 0;

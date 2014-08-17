@@ -44,6 +44,7 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 
+import java.io.File;
 import java.util.HashMap;
 
 
@@ -73,8 +74,8 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     private Viewport uiViewport;
     private SpriteBatch simBatch = new SpriteBatch();
 
-    private Rectangle viewRect;
-    
+
+    private Rectangle scissorRect = new Rectangle();
     
     private Graphics boidGraphics;
 
@@ -93,7 +94,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         gui = new SimScreenGUI(this, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         eagui = new EvolutionaryAlgorithmGUI(this,simulationManager.ea);
         setup();
-        
+        setupUI();
         
         
         //Test
@@ -118,9 +119,9 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         }
         simBatch.enableBlending();
 //    	simBatch.begin();
-        
-        viewRect = gui.getViewArea();
-        inputManager.setViewportRect(viewRect);
+//        Rectangle rect = gui.getViewArea();
+        scissorRect = gui.getViewArea();
+        inputManager.setViewportRect(scissorRect);
         if (render) {
     		 try {
                  long number = (long) (1000 / 60 - Gdx.graphics.getDeltaTime());
@@ -171,7 +172,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
 	    	simBatch.setProjectionMatrix(simViewcamera.combined);
 //	        ScissorStack.pushScissors(viewRect);
 //	    	simBatch.begin();
-	    	boidGraphics.update(simBatch, viewRect);
+	    	boidGraphics.update(simBatch, scissorRect);
 //	    	simBatch.end();
 //	    	ScissorStack.popScissors();
     	}
@@ -191,8 +192,8 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     	//Call the gui resize method and retrieve the viewRect specifying the provided area in which the
     	//simulation will be viewed - also update and center the viewports with the resize dimensions
     	gui.resize(width, height);
-        viewRect = gui.getViewArea();
-        inputManager.resize(viewRect);
+//        scissorRect = gui.getViewArea();
+        inputManager.resize(scissorRect);
         simViewport.update(width, height, false);
         uiViewport.update(width, height, true);
         eagui.getViewport().update(width, height, true);
@@ -207,7 +208,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
      */
     private void initialiseCameras(int width, int height) {
         //create a camera. perspective? orthographic? etc etc.
-    	viewRect =  gui.getViewArea();
+    	scissorRect = gui.getViewArea();
     	uiCamera = gui.getCamera();
     	uiViewport = gui.getViewport();
 
@@ -218,9 +219,10 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     	input = new InputMultiplexer();
     	
     	input.addProcessor(eagui);
+    	input.addProcessor(gui); 
     	input.addProcessor(inputManager);	
     	
-    	input.addProcessor(gui); 
+    	
     	
     	simViewport.update(width, height, true);
     	
@@ -233,6 +235,10 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
 
     }
 
+    public void setupUI(){
+    	gui.createBoidTree(simulationManager.getSpeciesInfo(), simulationManager.getBoids());
+        gui.createObjectTree(simulationManager.getObjectDataInfo(), simulationManager.getObjects());
+    }
     /**
      * 
      */
@@ -253,8 +259,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         
         //UI
         
-        gui.createBoidTree(simulationManager.getSpeciesInfo(), simulationManager.getBoids());
-        gui.createObjectTree(simulationManager.getObjectDataInfo(), simulationManager.getObjects());
+        
         
     }
 
@@ -346,14 +351,12 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
      */
     public void pickPoint(int screenX, int screenY) {
     	HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
-        gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
+        gui.setConsole("x: " + screenX + " y: " + screenY + "\tt:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass") + " w:" + tileInfo.get("water"));
         //What should happen when clicking on the screen
-        System.out.println("Mousex " + mousePosition.x + " y " + mousePosition.y +
-        		screenX + " " + screenY);
     	if(ControlState.STATE == ControlState.State.NAVIGATE){
 	        Boid boid = simulationManager.getBoidAt(screenX,screenY);
 	//        System.out.println(simulationManager.getBoidAt(screenX,screenY));
-	        if(viewRect.contains(screenX, screenY)) gui.selectEntity(boid);
+	        if(scissorRect.contains(screenX, screenY)) gui.selectEntity(boid);
 	        return;
     	}
     	if(ControlState.STATE == ControlState.State.PLACEMENT){
@@ -371,8 +374,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     public void setMousePosition(int x, int y){
     	mousePosition.x = x;
     	mousePosition.y = y;
-    	HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(x, y);
-    	gui.setConsole("x: " + x + " y: " + y + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
+    	
     }
 
 	@Override
@@ -395,9 +397,11 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
 	}
 
 	public void setMouseWorldPosition(int x, int y) {
-		// TODO Auto-generated method stub
-		
+		Vector2 mouseWorldPosition = new Vector2(x,y);
+		HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(x, y);
+    	gui.setConsole("x: " + x + " y: " + y + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
 	}
+
 
 
 }

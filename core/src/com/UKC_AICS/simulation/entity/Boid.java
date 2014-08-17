@@ -10,17 +10,6 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class Boid extends Entity {
 
-//    public enum State {
-//        DEFAULT,
-//        HUNGRY,
-//        THIRSTY,
-//        EVADE;
-//
-//
-//        public int getStateID() {
-//            return ordinal();
-//        }
-//    }
     //boids own specific variants on the species.
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //
@@ -39,6 +28,7 @@ public class Boid extends Entity {
     public float hunger = 40;
     public float thirst = 40;
     public float panic = 0;
+    public float fertility = 0;
 
     public String state = "default";
 
@@ -108,7 +98,7 @@ public class Boid extends Entity {
         thirstLevel = species.getThirstLevel();
 
 
-        bounds.set(position.x, position.y, 16, 16);
+        bounds.set(position.x, position.y, size, size); //TODO take it from species file
     }
 
     /**
@@ -160,7 +150,7 @@ public class Boid extends Entity {
     }
 
 
-    public void move() {
+    public void update() {
         //TODO: Add in better limiter for speed. Possibly??
         //move
 //        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
@@ -184,9 +174,16 @@ public class Boid extends Entity {
         hunger += (float) 0.5 /60;
         thirst += (float) 1 /60;
 
+        fertility += 0.1/60;
+
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
     }
 
+    /**
+     * Should be called when boid is moving over the "sprintThreshold" 70% of maxSpeed
+     * @param speed current speed, length of boids velocity
+     * @return  true if stamina is used // this may be redundant now.
+     */
     private boolean useStamina(float speed) {
         boolean haveStamina = stamina > 0;
         float sprintThreshold = maxSpeed*0.7f;
@@ -205,6 +202,10 @@ public class Boid extends Entity {
         return stamina > 0;
     }
 
+    /**
+     * Recovers the stamina of the boid if it is not travelling over "sprintThreshold"
+     * @param speed of the boid, length of velocity
+     */
     private void recoverStamina(float speed) {
         stamina -= (speed-sprintThreshold)*0.3f;
     }
@@ -244,13 +245,6 @@ public class Boid extends Entity {
         return velocity;
     }
 
-//    public void setBirthDay(int birthDay) {
-//       this.birthDay = birthDay;
-//    }
-//
-//    public int getBirthDay() {
-//    	return birthDay;
-//    }
 
     public void setAge(int newAge) {
         age = newAge;
@@ -329,6 +323,7 @@ public class Boid extends Entity {
         string += "\n\t thirst:" + (int)thirst;
         string += "\n\t panic:" + (int)panic + "/" + panicLevel;
         string += "\n\t age:" + age ;
+        string += "\n\t fertility:" + fertility;
         string += "\n\t stamina:" + stamina;
         string += "\n\t size:" + size ;
         string += "\n\t state:" + state;

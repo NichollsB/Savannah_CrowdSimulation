@@ -18,6 +18,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -74,6 +75,7 @@ public class SimulationManager extends Manager {
         }
         generateBoids();
 
+
         //TODO make a staxparser for objects.xml to objectData class
 //        objectData.put((byte)0, new ObjectData((byte)0, (byte)1, "Corpse"));
 //        objectData.put((byte)1, new ObjectData((byte)1, (byte)1, "Corpse"));
@@ -81,7 +83,10 @@ public class SimulationManager extends Manager {
 //        objectData.put((byte)3, new ObjectData((byte)3, (byte)1, "Repeller"));
 
 
-       ea.setup(this);
+      
+
+         ea.setup(this);
+
         addTestObjects();
     }
 
@@ -89,18 +94,18 @@ public class SimulationManager extends Manager {
 
 
     private void addTestObjects() {
-        Array<Byte> objTypes = new Array<Byte>();
+//        Array<Byte> objTypes = new Array<Byte>();
         Object obj = new Object(objectData.get((byte)2),355,450);
-        objTypes.add(obj.getType());
+//        objTypes.add(obj.getType());
         WorldManager.putObject(obj);
         obj = new Object(objectData.get((byte)2),500,200);
 ////        obj = new Object((byte)2,(byte)1,900,300);
         WorldManager.putObject(obj);
 
         obj = new Object(objectData.get((byte)3),755,450);
-        objTypes.add(obj.getType());
+//        objTypes.add(obj.getType());
         WorldManager.putObject(obj);
-        objTypes.add((byte)0);
+//        objTypes.add((byte)0);
 
         obj = new Object(objectData.get((byte)1),400,600);
         WorldManager.putObject(obj);
@@ -299,5 +304,39 @@ public class SimulationManager extends Manager {
     }
     public HashMap<Byte, ObjectData> getObjectDataInfo(){
     	return objectData;
+    }
+    
+    public void loadSpecies(File file){
+    	
+    }
+    public void saveSpecies(File file){
+    	
+    }
+    public void loadEnvironment(File file){
+    	
+    }
+    public void saveEnvironment(File file){
+    	
+    }
+    
+    public void loadSaveCall(String command, String identifier, File file){
+    	System.out.println("Load/save call. Command " + command + " id " + identifier + " file " + file.getPath());
+    	if(command.equalsIgnoreCase("save")){
+    		if(identifier.equalsIgnoreCase("species")){
+    			
+    		}
+    		if(identifier.equalsIgnoreCase("environment")){
+    			
+    		}
+    	}
+    	else 
+		if(command.equalsIgnoreCase("load")){
+			if(identifier.equalsIgnoreCase("species")){
+    			
+    		}
+    		if(identifier.equalsIgnoreCase("environment")){
+    			
+    		}
+		}
     }
 }
