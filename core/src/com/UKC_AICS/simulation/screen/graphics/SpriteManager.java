@@ -25,17 +25,21 @@ public class SpriteManager {
 	private final static ObjectMap<String, ObjectMap<Float, AtlasRegion>> environmentTiles_regions = new ObjectMap<String, ObjectMap<Float, AtlasRegion>>();
 	
 	private static Sprite defaultBoid;
-	private final static String defaultBoid_path = "data/newTriangle.png";
+	private final static String defaultBoid_path = "data/EntitySprites/newTriangle.png";
 	private static Sprite defaultBoid_selected;
-	private final static String defaultBoid_selected_path = "data/newTriangle_highlight.png";
+	private final static String defaultBoid_selected_path = "data/EntitySprites/newTriangle_highlight.png";
 	
 	private final static HashMap<Byte, float[]> boidColors = new HashMap<Byte, float[]>();
 	private final static ObjectMap<Byte, Sprite> boidSprites = new ObjectMap<Byte, Sprite>();
+    private final static ObjectMap<Byte, Sprite> corpseSprites = new ObjectMap<Byte, Sprite>();
+
+    private final static String entitySheet_Path = "data/EntitySprites/EntitySheet.pack";
+    private TextureAtlas entitySheet;
 
 	//World Tiling:
 	private ObjectMap<String, String> tileFiles = new ObjectMap<String, String>(){{
-		put("grass", "data/grass_tile_x16.png");
-		put("terrain", "data/water_tile_x16.png");
+		put("grass", "data/EntitySprites/grass_tile_x16.png");
+		put("terrain", "data/EntitySprites/water_tile_x16.png");
 	}}
 	;
 	
@@ -44,16 +48,25 @@ public class SpriteManager {
 //		put(1, "data/triangle3.png");
 //        put(2, "data/triangle3.png");
 //	}};
-	private String defaultBoidTextureFile = "data/triangle2.png";
+	private String defaultBoidTextureFile = "data/EntitySprites/triangle2.png";
 	private ObjectMap<Integer, String> objectsFiles = new ObjectMap<Integer, String>(){{
-				put(0, "data/corpse_object_x16.png");
-				put(1, "data/corpse_object_x16.png");
-				put(2, "data/Attractor.png");
-				put(3, "data/Repellor.png");
+				put(0, "data/EntitySprites/corpse_object_x16.png");
+				put(1, "data/EntitySprites/corpse_object_x16.png");
+				put(2, "data/EntitySprites/Attractor.png");
+				put(3, "data/EntitySprites/Repellor.png");
 			}};
+    private final ObjectMap<Integer, String> objectNames = new ObjectMap<Integer, String>(){{
+        put(0, "corpse");
+        put(1, "corpse");
+        put(2, "A");
+        put(3, "R");
+        put(4, "tree");
+        put(5, "rock");
+    }};
 	
 
-	private ObjectMap<Integer, Sprite> objectSprites;
+	private ObjectMap<Integer, Sprite> objectSprites = new ObjectMap<Integer, Sprite>();
+    private ObjectMap<Integer, Sprite> objectSprites_Selected = new ObjectMap<Integer, Sprite>();
 	private Array<Array<Sprite>> entitySprites;
 	
 	private ObjectMap<String, Sprite> tileTextures;
@@ -138,6 +151,41 @@ public class SpriteManager {
 			defaultBoid_selected = new Sprite(spriteTexture);
 			defaultBoid_selected.setSize(spriteTexture.getWidth(), spriteTexture.getHeight());
 		}
+        //USING A SINGLE ENTITY SHEET
+        if(assetManager.isLoaded(entitySheet_Path)){
+            entitySheet = assetManager.get(entitySheet_Path, TextureAtlas.class);
+            Sprite s;
+            for(Integer i : objectNames.keys()){
+                s = entitySheet.createSprite(objectNames.get(i));
+                if(s!=null){
+                    objectSprites.put(i, s);
+                }
+                s = entitySheet.createSprite((objectNames.get(i)+"_highlight"));
+                if(s!=null){
+                    objectSprites_Selected.put(i, s);
+                }
+            }
+
+            s = entitySheet.createSprite("boid");
+            defaultBoid = s;
+            s = entitySheet.createSprite("boid_highlight");
+            defaultBoid_selected = s;
+            for(byte b: boidColors.keySet()){
+                if(!boidSprites.containsKey(b)){
+                    s = entitySheet.createSprite("boid");
+                    float[] color = boidColors.get(b);
+                    s.setColor(color[0], color[1], color[2], 1);
+                    boidSprites.put(b, s);
+                }
+                if(!corpseSprites.containsKey(b)){
+                    s = entitySheet.createSprite("corpse");
+                    float[] color = boidColors.get(b);
+                    s.setColor(color[0], color[1], color[2], 1);
+                    corpseSprites.put(b, s);
+                }
+            }
+
+        }
 		
 		
 		//Environment sprites
@@ -189,9 +237,14 @@ public class SpriteManager {
 		return null;
 	}
 
-	private boolean loadAsset(String fileLocation){
+	private boolean loadAsset(String fileLocation, boolean atlas){
 		try {
-			assetManager.load(fileLocation, Texture.class);
+            if(atlas) {
+                assetManager.load(fileLocation, TextureAtlas.class);
+            }
+            else {
+                assetManager.load(fileLocation, Texture.class);
+            }
 			return true;
 		} 
 		catch(NullPointerException e) {
@@ -211,7 +264,7 @@ public class SpriteManager {
 		String fileStr;
 		for(Byte entity : entityTextureLocation.keySet()){
 			fileStr = entityTextureLocation.get(entity);
-			if(loadAsset(fileStr)){
+			if(loadAsset(fileStr, false)){
 				if(continuousEntities){
 					boidsFiles.put(entity, fileStr);
 				}
@@ -222,6 +275,10 @@ public class SpriteManager {
 			
 		}
 	}
+
+    public void loadAssets_Entities(){
+        loadAsset(entitySheet_Path, true);
+    }
 	public void loadAssets_Boids(HashMap<Byte, float[]> spriteColors){
 		created = false;
 		String fileStr;
@@ -236,7 +293,7 @@ public class SpriteManager {
 		for(int type : objectsFiles.keys()){
 			filename = objectsFiles.get(type);
 			//System.out.println(filename);
-			loadAsset(filename);
+			loadAsset(filename, false);
 
 		}
 	}
@@ -254,7 +311,6 @@ public class SpriteManager {
 			if(layer == "terrain")
 				layer = "water";
 			if(layer != null && amount > 0){
-				System.out.println("Where is grass tile " + layer + " amount " + amount + " region " + environmentTiles_Atlas.findRegion(layer + "#" + amount).getTexture());
 				return environmentTiles_Atlas.findRegion(layer + "#" + amount);
 			}
 			else
@@ -297,5 +353,11 @@ public class SpriteManager {
 	public Sprite getBoid_DefaultSprite(){
 		return defaultBoid;
 	}
+
+    public Sprite getCorpse_Sprite(byte species){ return corpseSprites.get(species); }
+
+    public Sprite getObject_highlight(byte type){
+        return objectSprites_Selected.get((int)type);
+    }
 	
 }

@@ -267,6 +267,7 @@ public class SimulationManager extends Manager {
     }
     
     //Added by Ben Nicholls for graphics purposes
+//    public Entity getEntityAt
     public HashMap<String, byte[][]> getFullInfo(){
     	return worldManager.getMapInfo();
     }
@@ -322,5 +323,8 @@ public class SimulationManager extends Manager {
     			
     		}
 		}
+    }
+    public Entity getObjectAt(int x, int y){
+        return worldManager.getObjectAt(x,y);
     }
 }

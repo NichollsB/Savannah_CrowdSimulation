@@ -355,7 +355,10 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         gui.setConsole("x: " + screenX + " y: " + screenY + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
         //What should happen when clicking on the screen
     	if(ControlState.STATE == ControlState.State.NAVIGATE){
-	        Boid boid = simulationManager.getBoidAt(screenX,screenY);
+	        Entity boid = simulationManager.getBoidAt(screenX,screenY);
+            if(boid == null){
+                boid = simulationManager.getObjectAt(screenX, screenY);
+            }
 	//        System.out.println(simulationManager.getBoidAt(screenX,screenY));
 	        if(scissorRect.contains(screenX, screenY)) gui.selectEntity(boid);
 	        return;

@@ -41,12 +41,12 @@ public class MeshRenderer  {
             ShaderProgram shader = new ShaderProgram(VERT_SHADER, FRAG_SHADER);
             String log = shader.getLog();
             if (!shader.isCompiled())
-                throw new GdxRuntimeException(log);     
+                throw new GdxRuntimeException(log);
             if (log!=null && log.length()!=0)
                 System.out.println("Shader Log: "+log);
             return shader;
     }
-       
+
 	 public int addMesh(TileMesh mesh){
 		 meshes.add(mesh);
 		 return meshes.indexOf(mesh, true);

@@ -186,6 +186,7 @@ public class TileMesh {
 	    	return array;
 	    }
 	    private void createMesh(byte[][] grid, int startX, int startY, int cellWidth, int cellHeight){
+            System.out.println("Creating mesh");
 	    	if(cellWidth <= 0) cellWidth = cellSize;
 	    	if(cellHeight <= 0) cellHeight = cellSize;
 //	        this.grid = grid.clone();
@@ -277,6 +278,7 @@ public class TileMesh {
 	            ypos = y*cellHeight + startY;
 	            for(x = 0; x < gridSizeX; x++){
 	                xpos = x*cellWidth + startX;
+                    System.out.println("Drawing cell " + x + " " + y);
 	                if(!usesTexture)
 	                    drawTrianglePair(x, y, xpos, ypos, cellWidth, cellHeight, Color.WHITE);
 	                else{
@@ -494,6 +496,7 @@ public class TileMesh {
 	    public boolean update(byte[][] grid){
 //	        System.out.println("update Start");
 	    	if(created){
+
 		    	compareAndUpdate(grid);
 		        if(updateMesh){
 	//	            System.out.println("updateMesh is true");
@@ -506,6 +509,7 @@ public class TileMesh {
 		                
 		            mesh.setVertices(verts);
 		            updateMesh = false;
+                    this.grid = deepCopyArray(grid);
 		        }
 		        return true;
 	    	}
@@ -516,6 +520,7 @@ public class TileMesh {
 	    // NEW UPDATE METHOD///////////////////////////
 	    /////////////////////////////////
 	    public void compareAndUpdate(byte[][] newGrid){
+//            System.out.println("Comparing");
 	        boolean updated = false;
 	        int gridSizeX = this.grid[0].length;
 	        int gridSizeY = this.grid.length;
@@ -542,6 +547,7 @@ public class TileMesh {
 	               
 	                //If this grid cell is not the same as the old grid cell, update
 	                if (this.grid[y][x] != newGrid[y][x]){
+                        System.out.println("Difference Found!");
 	///////////////////////////////////////////////////////////
 	/////////////////////GRID UPDATE TALLY CHECK METHOD
 	/////////////////////////////////////////////////////////////
@@ -632,14 +638,15 @@ public class TileMesh {
 	                else{
 	                    updateCornerCount++;
 	                }
-	                    updateMesh = true;
+
 	            }
 	        }
 	        if(updated){
+                updateMesh = updated;
 	            for(byte[] array : updateTally){
 	                Arrays.fill(array, (byte)0);
 	            }
-	            this.grid = deepCopyArray(newGrid);
+
 	        }
 	    }
 	    public void updateCorner(int cornerX, int cornerY, byte[][] grid){
@@ -668,6 +675,7 @@ public class TileMesh {
 	                aIndex = cornersVerts[cornerX][cornerY][n];
 	                //Then update the alpha component in the vert array with the new alpha value
 	                verts[aIndex] = average;
+                    System.out.println("Update corner " + cornerX + " " + cornerY + " alpha " + average);
 	                
 	            }
 	        }
