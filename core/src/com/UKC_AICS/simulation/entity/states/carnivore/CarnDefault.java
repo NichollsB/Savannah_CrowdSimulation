@@ -1,5 +1,7 @@
 package com.UKC_AICS.simulation.entity.states.carnivore;
 
+import EvolutionaryAlgorithm.EA2;
+
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.Collision;
@@ -21,9 +23,10 @@ import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
 public class CarnDefault extends State{
 
     private Vector3 tempVec = new Vector3();
-
-    public CarnDefault(StateMachine parent, BoidManager bm) {
+    private EA2 ea;
+    public CarnDefault(StateMachine parent, BoidManager bm, EA2 ea) {
         super(parent, bm);
+        this.ea=ea;
     }
 
     @Override
@@ -37,7 +40,7 @@ public class CarnDefault extends State{
             parent.pushState(boid, new Hunt(parent, bm));
         } else if (boid.age > 10 && boid.hunger < boid.hungerLevel/2 && boid.thirst < boid.thirstLevel/2) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
-                parent.pushState(boid, new CarnReproduce(parent, bm));
+                parent.pushState(boid, new CarnReproduce(parent, bm, ea));
         } else {
 
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findInSight(boid);

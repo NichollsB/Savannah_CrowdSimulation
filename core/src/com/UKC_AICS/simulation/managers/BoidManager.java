@@ -5,6 +5,18 @@ import EvolutionaryAlgorithm.EA2;
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.entity.states.carnivore.ApproachCorpse;
+import com.UKC_AICS.simulation.entity.states.carnivore.CarnDefault;
+import com.UKC_AICS.simulation.entity.states.carnivore.CarnReproduce;
+import com.UKC_AICS.simulation.entity.states.carnivore.Eat;
+import com.UKC_AICS.simulation.entity.states.carnivore.GoForKill;
+import com.UKC_AICS.simulation.entity.states.carnivore.Hunt;
+import com.UKC_AICS.simulation.entity.states.carnivore.Stalk;
+import com.UKC_AICS.simulation.entity.states.herbivore.EatGrass;
+import com.UKC_AICS.simulation.entity.states.herbivore.HerbDefault;
+import com.UKC_AICS.simulation.entity.states.herbivore.Hungry;
+import com.UKC_AICS.simulation.entity.states.herbivore.Panic;
+import com.UKC_AICS.simulation.entity.states.herbivore.Reproduce;
 import com.UKC_AICS.simulation.utils.BoidGrid;
 import com.UKC_AICS.simulation.utils.MathsUtils;
 import com.UKC_AICS.simulation.utils.QuadTree;
@@ -30,7 +42,7 @@ public class BoidManager extends Manager {
 
     private QuadTree quadtree;
     private Random rand = new Random();
-    private static StateMachine stateMachine;
+    static StateMachine stateMachine;
     public EA2 ea;
 
 
@@ -63,18 +75,18 @@ public class BoidManager extends Manager {
      */
     public static void createBoid(byte species, byte group, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ,
     		float cohesion, float separation, float alignment, float wander, float flockRadius, float sightRadius, float nearRadius,
-    		float hunger, float thirst, float panic, float stamina, float maxStamina) {
+    		float hunger, float thirst, float panic, float stamina, float maxStamina, float hungerLevel, float thirstLevel, float panicLevel,
+    		float size, String currentState, float fertility, String states) {
         Boid boid = new Boid(species);
 
         boid.setAge(age);
-
         boid.setPosition(pX, pY, pZ);
         boid.setVelocity(vX, vY, vZ);
         boid.setCohesion(cohesion);
         boid.setAlignment(alignment);
         boid.setSpearation(separation);
         boid.setWander(wander);
-        boid.setGene(cohesion, separation, alignment, wander,flockRadius, nearRadius, sightRadius, maxStamina);
+        boid.setGene(cohesion, separation, alignment, wander,flockRadius, nearRadius, sightRadius, maxStamina, hungerLevel, thirstLevel, panicLevel);
         boid.setGroup(group);
         boid.setFlockRadius(flockRadius);
         boid.setSightRadius(sightRadius);
@@ -84,7 +96,30 @@ public class BoidManager extends Manager {
         boid.setHunger(hunger);
         boid.setPanic(panic);
         boid.setThirst(thirst);
+        boid.setHungerLevel(hungerLevel);
+        boid.setPanicLevel(panicLevel);
+        boid.setThirstLevel(thirstLevel);
+        boid.setSize(size);
+        boid.setState(currentState);
+        boid.setFertility(fertility);
+        
+        
+        String[] strArray = (states.split(","));
+        
+        stateMachine.retriveStates(boid, strArray);
+       
+       
+        
+       
+        
+       
+        System.out.println("stamina " + stamina);
+        System.out.println("maxStamina " + maxStamina);
+        System.out.println("states " + states);
+        
         addToLists(boid);
+        
+        
     }
     
     /**
@@ -140,8 +175,24 @@ public class BoidManager extends Manager {
         boid.setPosition(xPos, yPos, 0);
         boid.setVelocity(xVel, yVel, 0);
 
-        boid.hunger = rand.nextInt(boid.hungerLevel);
-        boid.thirst = rand.nextInt(boid.thirstLevel);
+        
+        
+        float min = 0f;
+        float maxStartingHungerLevel = boid.hungerLevel;
+        float maxStartingThirstLevel = boid.thirstLevel;
+        System.out.println("maxStartingHungerLevel " + maxStartingHungerLevel);
+        System.out.println("maxStartingThirstLevel " + maxStartingThirstLevel);
+        float startHunger = rand.nextFloat() * (maxStartingHungerLevel - min) + min;
+        float startThirst = rand.nextFloat() * (maxStartingThirstLevel - min) + min;
+        System.out.println("startHunger " +startHunger);
+        System.out.println("startThirst " +startThirst);
+        boid.hunger = startHunger;
+        boid.thirst = startThirst;
+        System.out.println( "boid.hunger "+boid.hunger);
+        System.out.println( "boid.thirst" + boid.thirst);
+        
+        
+        
         boid.fertility = rand.nextInt(100);
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.

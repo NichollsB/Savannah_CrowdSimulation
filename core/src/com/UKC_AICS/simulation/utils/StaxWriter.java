@@ -2,30 +2,33 @@ package com.UKC_AICS.simulation.utils;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.managers.BoidManager;
+import com.UKC_AICS.simulation.managers.StateMachine;
 import com.badlogic.gdx.math.Vector3;
+import com.UKC_AICS.simulation.entity.states.State;
 
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.*;
-import java.io.FileOutputStream;
 
+import java.io.FileOutputStream;
+import java.util.Stack;
 /**
  * 
  * @author Matt
  *
  */
 	public class StaxWriter {
-		 
+		StateMachine stateMachine; 
 	  private String configFile;
 
 	  public void setFile(String configFile) {
 	    this.configFile = configFile;
 	  }
 
-	  public void saveConfig() throws Exception {
-	
+	  public void saveConfig(StateMachine stateMachine) throws Exception {
+		 this.stateMachine=stateMachine;
 	    // create an XMLOutputFactory
 	    XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
 	  
@@ -46,10 +49,13 @@ import java.io.FileOutputStream;
 	 
 	    	for(Boid b : BoidManager.boids) {
 	 
+	    		
+				Stack<State> stateStore = stateMachine.boidStates.get(b);
+	    		String states = "" + stateStore;
+				
 	    		int ageInt = b.getAge();
 	    		String age = "" + ageInt;
 
-	    	
 	    		Vector3 positionVec = b.getPosition();
 	    		String position = "" + positionVec;
 	    	
@@ -84,6 +90,8 @@ import java.io.FileOutputStream;
 	    		String sightRadius = "" + sightRadiusVal;
 	    		
 	    		//TODO size
+	    		float sizeVal = b.getSize();
+	    		String size = "" + sizeVal;
 	    		
 	    		float staminaVal = b.getStamina();
 	    		String stamina = "" + staminaVal;
@@ -100,8 +108,19 @@ import java.io.FileOutputStream;
 	    		float panicVal = b.getPanic();
 	    		String panic = "" + panicVal;
 	    				
+	    		float hungerLevelVal = b.getHungerLevel();
+	    		String hungerLevel = "" + hungerLevelVal;
+	    		
+	    		float thirstLevelVal = b.getThirstLevel();
+	    		String thirstLevel = "" + thirstLevelVal;
+	    		
+	    		float panicLevelVal = b.getPanicLevel();
+	    		String panicLevel = "" + panicLevelVal;		
 	    				
-	    				
+	    		String state = b.getState();
+	    		
+	    		float fertilityVal = b.getFertility();
+	    		String fertility = "" + fertilityVal;
 	    	
 	    		StartElement configElement = eventFactory.createStartElement("",
 	    				"", "boid");
@@ -116,17 +135,22 @@ import java.io.FileOutputStream;
 	    		createNode(eventWriter, "nearRadius", nearRadius);
 	    		createNode(eventWriter, "flockRadius", flockRadius);
 	    		createNode(eventWriter, "signtRadius", sightRadius);
-	    		//createNode(eventWriter, "size", size);
+	    		createNode(eventWriter, "size", size);
 	    		createNode(eventWriter, "stamina", stamina);
 	    		createNode(eventWriter, "maxStamina", maxStamina);
 	    		createNode(eventWriter, "panic", panic);
-	    		createNode(eventWriter,"hunger", hunger);
-	    		createNode(eventWriter,"thirst", thirst);
+	    		createNode(eventWriter,	"hunger", hunger);
+	    		createNode(eventWriter,	"thirst", thirst);
+	    		createNode(eventWriter, "panicLevel", panicLevel);
+	    		createNode(eventWriter,	"hungerLevel", hungerLevel);
+	    		createNode(eventWriter,	"thirstLevel", thirstLevel);
 	    		createNode(eventWriter, "cohesion", cohesion);
 	    		createNode(eventWriter, "alignment", alignment);
 	    		createNode(eventWriter, "separation", separation);
 	    		createNode(eventWriter, "wander", wander);
-	    	
+	    		createNode(eventWriter, "state", state);
+	    		createNode(eventWriter, "fertility", fertility);
+	    		createNode(eventWriter, "states", states);
 	    		eventWriter.add(eventFactory.createEndElement("", "", "boid"));
 	    		eventWriter.add(end);
 	  
