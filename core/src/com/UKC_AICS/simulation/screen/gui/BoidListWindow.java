@@ -305,7 +305,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 * @param select If Boolean is false will deselect all nodes, otherwise attempts the selection of associated node
 	 */
 	public void selectNodeByBoid(Entity boid, boolean select){
-		
+		System.out.println("Select " + select);
 		
 		if(!select || boid == null){ 
 			deselectNodes(); 

@@ -70,7 +70,7 @@ public class InputManager implements InputProcessor{
 	private int dragX = 0, dragY = 0;
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		System.out.println("Mouse down " + inBounds);
+//		System.out.println("Mouse down " + inBounds);
 		if(!inBounds(screenX, screenY)) return false;
 //		inDragBounds = true;
 		if(button == Input.Buttons.LEFT){

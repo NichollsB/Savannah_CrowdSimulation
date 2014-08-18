@@ -610,6 +610,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
 	}
 	
 	public void selectEntity(Entity entity){
+		System.out.println("Selecting " + entity);
 		boolean select = false; 
 		select = (entity == null) ? false : true;
 		boidTree.selectNodeByBoid(entity, select);
