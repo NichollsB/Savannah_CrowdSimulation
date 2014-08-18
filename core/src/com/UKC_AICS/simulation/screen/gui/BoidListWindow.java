@@ -463,17 +463,18 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 
 		scrollTable.add(content).left().top();
 
-		ScrollPane scroll = new ScrollPane(scrollTable, skin);
-//    	InputListener stopTouchDown = new InputListener() {
-//			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-//				event.stop();
-//				return false;
-//			}
-//		};
-		scroll.setSmoothScrolling(true);
+		final ScrollPane scroll = new ScrollPane(scrollTable, skin);
+    	InputListener stopTouchDown = new InputListener() {
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				event.stop();
+				return false;
+			}
+		};
+	
+//		scroll.setSmoothScrolling(true);
 		scroll.setScrollBarPositions(false, false);
 		scroll.setForceScroll(false, true);
-//	    scroll.setFlickScroll(true);
+	    scroll.setFlickScroll(false);
 	    scroll.setOverscroll(false, false);
 	    scroll.setFadeScrollBars(false);
 		scrollPane = scroll;
