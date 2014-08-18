@@ -146,7 +146,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
         		RenderState.changeTileState(RenderState.TILESTATE.stateName, window.getRenderType());
         	}
         });
- 
 //        fileChooser.hide();
 //        fileChooser.open(this);
         stage.addActor(table);
@@ -160,7 +159,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
         
         north = createNorth(table);
         
-        
         table.add(north).top().height(NORTH_HEIGHT).expandX().fillX();
         table.row();
         
@@ -170,7 +168,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
         viewArea = createCentre(table);
 //        table.add(viewArea).center().fill().expand();
         east = createEast(table);
-        
 //        this.bottom = createLower();
 //        table.add(east).left().width(EAST_WIDTH).fillY().expandY();
 //        table.row();
@@ -215,7 +212,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
         table.row();
         
         south = createSouth(table);
-        
       
         
         table.add(south).bottom().height(SOUTH_HEIGHT).expandX().fillX();
@@ -646,4 +642,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
         infoItemSelected = item;
 
     }
+    
+ 
 }

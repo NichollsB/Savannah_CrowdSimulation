@@ -68,6 +68,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	private byte fixedTypeValue = 0;
 	
 	private ScrollPane scrollPane;
+	private Stage stage;
 	
 	public void initButtons(Skin skin){
 		final Skin s = skin;
@@ -305,7 +306,6 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 * @param select If Boolean is false will deselect all nodes, otherwise attempts the selection of associated node
 	 */
 	public void selectNodeByBoid(Entity boid, boolean select){
-		System.out.println("Select " + select);
 		
 		if(!select || boid == null){ 
 			deselectNodes(); 
@@ -479,6 +479,16 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	    scroll.setFadeScrollBars(false);
 	    scroll.setCancelTouchFocus(true);
 		scrollPane = scroll;
+		
+		scroll.addListener(new ClickListener(){
+			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+	    		gui.setScrollFocus(scroll);
+			}
+			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor){
+				gui.setScrollFocus(null);
+			}
+		});
+		
 		return scroll;
 	}
 

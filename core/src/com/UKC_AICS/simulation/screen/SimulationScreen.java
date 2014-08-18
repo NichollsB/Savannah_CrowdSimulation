@@ -360,7 +360,6 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
 //            if(boid == null){
 //                boid = simulationManager.getObjectAt(screenX, screenY);
 //            }
-	        System.out.println(simulationManager.getBoidAt(screenX,screenY));
 	        if(scissorRect.contains(screenX, screenY)) gui.selectEntity(boid);
 	        return;
     	}
