@@ -477,6 +477,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	    scroll.setFlickScroll(false);
 	    scroll.setOverscroll(false, false);
 	    scroll.setFadeScrollBars(false);
+	    scroll.setCancelTouchFocus(true);
 		scrollPane = scroll;
 		return scroll;
 	}
