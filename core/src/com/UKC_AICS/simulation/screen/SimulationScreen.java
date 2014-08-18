@@ -9,6 +9,7 @@ import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.gui.controlutils.ControlState;
 import com.UKC_AICS.simulation.gui.controlutils.ControlState.State;
+import com.UKC_AICS.simulation.gui.controlutils.RenderState;
 import com.UKC_AICS.simulation.gui.controlutils.SelectedEntity;
 import com.UKC_AICS.simulation.gui.controlutils.TreeOptionsListener;
 import com.UKC_AICS.simulation.screen.graphics.Graphics;
@@ -194,9 +195,10 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     	gui.resize(width, height);
 //        scissorRect = gui.getViewArea();
         inputManager.resize(scissorRect);
-        simViewport.update(width, height, false);
+        
         uiViewport.update(width, height, true);
         eagui.getViewport().update(width, height, true);
+        simViewport.update(width, height, false);
 //        uiViewport.
     }
 
@@ -256,7 +258,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         boidGraphics.initObjSprites(simulationManager.getObjects());
         boidGraphics.initTileSprites(simulationManager.getFullInfo());
         //boidGraphics.initTileSprites(simulationManager.getMapTiles());
-        
+        boidGraphics.initGrassMesh((byte[][])simulationManager.getFullInfo().get("grass"), Constants.TILE_SIZE);
         //UI
         
         
@@ -354,8 +356,10 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         gui.setConsole("x: " + screenX + " y: " + screenY + "\tt:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass") + " w:" + tileInfo.get("water"));
         //What should happen when clicking on the screen
     	if(ControlState.STATE == ControlState.State.NAVIGATE){
-	        Boid boid = simulationManager.getBoidAt(screenX,screenY);
-	//        System.out.println(simulationManager.getBoidAt(screenX,screenY));
+	        Entity boid = simulationManager.getBoidAt(screenX,screenY);
+//            if(boid == null){
+//                boid = simulationManager.getObjectAt(screenX, screenY);
+//            }
 	        if(scissorRect.contains(screenX, screenY)) gui.selectEntity(boid);
 	        return;
     	}
@@ -401,6 +405,8 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
 		HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(x, y);
     	gui.setConsole("x: " + x + " y: " + y + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
 	}
+	
+	
 
 
 

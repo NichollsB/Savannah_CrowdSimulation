@@ -178,5 +178,11 @@ public class WorldManager extends Manager {
     public static boolean checkObject(Entity object) {
         return objects.contains(object, false);
     }
+
+    public Entity getObjectAt(int x, int y){
+        Array<Entity> objs = new Array<Entity>();
+        objects_map.retrieveObjects(objs, new Vector2(x, y));
+        return objs.first();
+    }
   
 }

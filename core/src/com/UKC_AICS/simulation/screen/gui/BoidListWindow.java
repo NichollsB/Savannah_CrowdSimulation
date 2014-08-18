@@ -68,6 +68,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	private byte fixedTypeValue = 0;
 	
 	private ScrollPane scrollPane;
+	private Stage stage;
 	
 	public void initButtons(Skin skin){
 		final Skin s = skin;
@@ -306,7 +307,6 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	 */
 	public void selectNodeByBoid(Entity boid, boolean select){
 		
-		
 		if(!select || boid == null){ 
 			deselectNodes(); 
 //			tree.getSelection().choose(root);
@@ -463,20 +463,32 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 
 		scrollTable.add(content).left().top();
 
-		ScrollPane scroll = new ScrollPane(scrollTable, skin);
-//    	InputListener stopTouchDown = new InputListener() {
-//			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-//				event.stop();
-//				return false;
-//			}
-//		};
-		scroll.setSmoothScrolling(true);
+		final ScrollPane scroll = new ScrollPane(scrollTable, skin);
+    	InputListener stopTouchDown = new InputListener() {
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				event.stop();
+				return false;
+			}
+		};
+	
+//		scroll.setSmoothScrolling(true);
 		scroll.setScrollBarPositions(false, false);
 		scroll.setForceScroll(false, true);
-//	    scroll.setFlickScroll(true);
+	    scroll.setFlickScroll(false);
 	    scroll.setOverscroll(false, false);
 	    scroll.setFadeScrollBars(false);
+	    scroll.setCancelTouchFocus(true);
 		scrollPane = scroll;
+		
+		scroll.addListener(new ClickListener(){
+			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+	    		gui.setScrollFocus(scroll);
+			}
+			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor){
+				gui.setScrollFocus(null);
+			}
+		});
+		
 		return scroll;
 	}
 

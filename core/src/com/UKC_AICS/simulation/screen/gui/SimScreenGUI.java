@@ -8,6 +8,7 @@ import com.UKC_AICS.simulation.gui.controlutils.DialogueWindowHandler;
 import com.UKC_AICS.simulation.gui.controlutils.HoverListener;
 import com.UKC_AICS.simulation.gui.controlutils.MenuSelectListener;
 import com.UKC_AICS.simulation.gui.controlutils.MenuSelectEvent;
+import com.UKC_AICS.simulation.gui.controlutils.RenderState;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -97,6 +98,8 @@ public class SimScreenGUI extends Stage implements HoverListener {
 
     private Actor infoItemSelected;
 	
+	private RenderOptionsWindow renderOptions;
+	
     /**
      *
      * @param ss the simulationScreen creating the gui
@@ -134,7 +137,15 @@ public class SimScreenGUI extends Stage implements HoverListener {
 				simScreen.simulationManager.loadSaveCall(chooser.getCommand(), chooser.getIdentifier(), (File)object);
 			}
 		});
- 
+        
+        renderOptions = new RenderOptionsWindow("Render Options", skin, null, null, null, stage);
+        renderOptions.addSelectionListener(new MenuSelectListener(){
+        	public void selectionMade(java.lang.Object menu, java.lang.Object object) {
+//        		System.out.println();
+        		RenderOptionsWindow window = (RenderOptionsWindow) menu;
+        		RenderState.changeTileState(RenderState.TILESTATE.stateName, window.getRenderType());
+        	}
+        });
 //        fileChooser.hide();
 //        fileChooser.open(this);
         stage.addActor(table);
@@ -148,7 +159,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
         
         north = createNorth(table);
         
-        
         table.add(north).top().height(NORTH_HEIGHT).expandX().fillX();
         table.row();
         
@@ -158,7 +168,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
         viewArea = createCentre(table);
 //        table.add(viewArea).center().fill().expand();
         east = createEast(table);
-        
 //        this.bottom = createLower();
 //        table.add(east).left().width(EAST_WIDTH).fillY().expandY();
 //        table.row();
@@ -203,7 +212,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
         table.row();
         
         south = createSouth(table);
-        
       
         
         table.add(south).bottom().height(SOUTH_HEIGHT).expandX().fillX();
@@ -245,27 +253,19 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	//SPECIES LOAD/SAVE
     	final MenuDropdown menu = createFileMenu(new String[]{"load", "save"}, new String[]{"Load", "Save"}, "Species Settings",
     			"SPECIES");
-    	menuTable.add(menu);
+    	menuTable.add(menu).padLeft(5);
+    	
+    	
+    	TextButton renderButton = new TextButton("Render Options", skin);
+    	renderButton.addListener(new ClickListener(){
+    		@Override
+            public void clicked(InputEvent event, float x, float y) {
+    			renderOptions.open(stage);
+    		}
+    	});
+    	
+    	menuTable.add(renderButton).padLeft(5);
     	menuTable.add(new Table()).fillX().expandX();
-//    	final MenuDropdown menu = new MenuDropdown(skin, "Species Settings", "SPECIES");  
-//    	String items[] = {"Load", "Save"};
-//    	menu.addItems(items, true);
-//    	menuTable.add(menu);
-//    	menuTable.add(new Table()).fillX().expandX();
-//    	
-//    	menu.addSelectionListener(new MenuSelectListener(){
-//    		@Override
-//    		public void selectionMade(java.lang.Object menu, java.lang.Object object){
-//    			if((String)object == "Load"){
-////    				System.out.println("Selection has been made " + (String)object);
-//    				fileChooser.setOptionsText("Load", "Cancel");
-//    				fileChooser.setCommand("Load");
-//    				fileChooser.setIdentifier("species");
-////    				fileChooser
-//    				fileChooser.open(stage);
-//    			}
-//    		}
-//    	});
     	return menuTable;
     }
 	
@@ -606,6 +606,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
 	}
 	
 	public void selectEntity(Entity entity){
+		System.out.println("Selecting " + entity);
 		boolean select = false; 
 		select = (entity == null) ? false : true;
 		boidTree.selectNodeByBoid(entity, select);
@@ -641,4 +642,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
         infoItemSelected = item;
 
     }
+    
+ 
 }
