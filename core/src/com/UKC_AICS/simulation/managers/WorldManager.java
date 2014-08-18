@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * @author Emily
@@ -22,6 +23,7 @@ public class WorldManager extends Manager {
     private static LandMap map;
     private static Vector3 tileSize;
     private static Vector3 size;
+    private static Random rand = new Random();
 //    private HashMap<String, byte[][]> information_layers = new HashMap<String, byte[][]>();
 
 
@@ -40,11 +42,32 @@ public class WorldManager extends Manager {
 
     @Override
     public void update(boolean dayIncrement) {
+
+//        if(rand.nextInt(100) > 50) {
+//            byte[][] grassGrowth = map.information_layers.get("grassGrowth");
+//            byte[][] grass = map.information_layers.get("grass");
+//
+//            for (int i = 0; i < grassGrowth.length; i++) {
+//                for (int j = 0; j < grassGrowth[i].length; j++) {
+//                    if(rand.nextInt(100) > 50) {
+//                        grassGrowth[i][j] += 1;
+//                        if (grassGrowth[i][j] == 127 && grass[i][j] < 127) {
+//                            grass[i][j] += 1;
+//                            if (grass[i][j] < 0) {
+//
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        
         for(int i = 0 ; i < objects.size ; i++){
             if(objects.get(i).toDelete){
                 removeObject(objects.get(i));
             }
         }
+
         if(dayIncrement)
         decayCorpses();
     }
@@ -135,7 +158,7 @@ public class WorldManager extends Manager {
     private void decayCorpses() {
         Entity corpse;
         for (int i = 0; i < objects.size; i++) {
-             corpse = objects.get(i);
+            corpse = objects.get(i);
             if( corpse.getType()==0) {
                 ((Object)corpse).reduceMass(1f);
                 if(((Object)corpse).getMass()<0.5f) {

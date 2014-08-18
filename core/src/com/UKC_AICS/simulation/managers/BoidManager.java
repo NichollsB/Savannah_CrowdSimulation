@@ -6,10 +6,8 @@ import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.utils.BoidGrid;
-import com.UKC_AICS.simulation.utils.BoidGridOld;
 import com.UKC_AICS.simulation.utils.MathsUtils;
 import com.UKC_AICS.simulation.utils.QuadTree;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -144,7 +142,7 @@ public class BoidManager extends Manager {
 
         boid.hunger = rand.nextInt(boid.hungerLevel);
         boid.thirst = rand.nextInt(boid.thirstLevel);
-
+        boid.fertility = rand.nextInt(100);
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.
 
@@ -226,7 +224,7 @@ public class BoidManager extends Manager {
         for (int i = 0; i < boids.size; i++) {
             boid = boids.get(i);
             //apply movement to it.
-            boid.move();
+            boid.update();
 
             if (checkForDeath(boid)) {
                 continue;

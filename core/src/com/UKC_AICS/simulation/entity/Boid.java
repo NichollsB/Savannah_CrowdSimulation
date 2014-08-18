@@ -10,17 +10,6 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class Boid extends Entity {
 
-//    public enum State {
-//        DEFAULT,
-//        HUNGRY,
-//        THIRSTY,
-//        EVADE;
-//
-//
-//        public int getStateID() {
-//            return ordinal();
-//        }
-//    }
     //boids own specific variants on the species.
     public float maxSpeed = 2f;
     public float maxForce = 0.03f; //
@@ -39,6 +28,7 @@ public class Boid extends Entity {
     public float hunger = 40;
     public float thirst = 40;
     public float panic = 0;
+    public float fertility = 0;
 
     public String state = "default";
 
@@ -108,7 +98,7 @@ public class Boid extends Entity {
         thirstLevel = species.getThirstLevel();
 
 
-        bounds.set(position.x, position.y, 16, 16);
+        bounds.set(position.x, position.y, size, size); //TODO take it from species file
     }
 
     /**
@@ -160,7 +150,7 @@ public class Boid extends Entity {
     }
 
 
-    public void move() {
+    public void update() {
         //TODO: Add in better limiter for speed. Possibly??
         //move
 //        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
@@ -183,6 +173,8 @@ public class Boid extends Entity {
         //TODO: potentially have different species "degrade" at different rates
         hunger += (float) 0.5 /60;
         thirst += (float) 1 /60;
+
+        fertility += 0.1/60;
 
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
     }
@@ -253,13 +245,6 @@ public class Boid extends Entity {
         return velocity;
     }
 
-//    public void setBirthDay(int birthDay) {
-//       this.birthDay = birthDay;
-//    }
-//
-//    public int getBirthDay() {
-//    	return birthDay;
-//    }
 
     public void setAge(int newAge) {
         age = newAge;
@@ -338,6 +323,7 @@ public class Boid extends Entity {
         string += "\n\t thirst:" + (int)thirst;
         string += "\n\t panic:" + (int)panic + "/" + panicLevel;
         string += "\n\t age:" + age ;
+        string += "\n\t fertility:" + fertility;
         string += "\n\t stamina:" + stamina;
         string += "\n\t size:" + size ;
         string += "\n\t state:" + state;

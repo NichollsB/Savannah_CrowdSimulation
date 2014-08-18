@@ -44,7 +44,7 @@ public class HerbDefault extends State {
         } else if (boid.hunger > boid.hungerLevel) {
 //            System.out.println(boid + "\nJust posted Hungry state ");
             parent.pushState(boid, new Hungry(parent, bm));
-        } else if (boid.age > SimulationManager.speciesData.get(boid.getSpecies()).getMaturity() && boid.hunger < boid.hungerLevel/2 && boid.thirst < boid.thirstLevel/2) {
+        } else if (boid.age > SimulationManager.speciesData.get(boid.getSpecies()).getMaturity() && boid.hunger < boid.hungerLevel/2 && boid.thirst < boid.thirstLevel/2 && boid.fertility > 100) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
             parent.pushState(boid, new Reproduce(parent, bm , ea));
         } else {

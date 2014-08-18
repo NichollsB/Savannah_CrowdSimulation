@@ -42,7 +42,7 @@ public class LandMap {
 
         for (int i = 0; i < grassInfo.length; i++) {
             for (int j = 0; j < grassInfo[i].length; j++) {
-                grassInfo[i][j] = (byte) rand.nextInt(100);
+                grassInfo[i][j] = (byte) rand.nextInt(128);
             }
         }
 
@@ -50,8 +50,8 @@ public class LandMap {
         byte[][] waterInfo = new byte[width / TILE_SIZE][height / TILE_SIZE];
         for (int i = 0; i < waterInfo.length; i++) {
             for (int j = 0; j < waterInfo[i].length; j++) {
-                waterInfo[i][j] = (byte) rand.nextInt(100);
-                if (waterInfo[i][j] > 95) {
+                waterInfo[i][j] = (byte) rand.nextInt(128);
+                if (waterInfo[i][j] > 126) {
                     terrain[i][j] = 1; //change terrain type to water.
                     grassInfo[i][j] = 0; // no grass/vegetation on a water tile.
                 }
@@ -61,7 +61,7 @@ public class LandMap {
         byte[][] blockedInfo = new byte[width / TILE_SIZE][height / TILE_SIZE];
         for (int i = 0; i < blockedInfo.length; i++) {
             for (int j = 0; j < blockedInfo[i].length; j++) {
-                blockedInfo[i][j] = (byte) 0;  // not bloacked
+                blockedInfo[i][j] = (byte) 0;  // not blocked
 
                 if (terrain[i][j]  == 1) {
                     blockedInfo[i][j] = (byte) 1;  // blocked terrain
@@ -69,7 +69,16 @@ public class LandMap {
             }
         }
 
+        byte[][] grassGrowth = new byte[width / TILE_SIZE][height / TILE_SIZE];
+        for (int i = 0; i < grassGrowth.length; i++) {
+            for (int j = 0; j < grassGrowth[i].length; j++) {
+                grassGrowth[i][j] = (byte) 0;
+            }
+        }
+
         information_layers.put("grass", grassInfo);
+
+        information_layers.put("grassGrowth", grassInfo);
 
         information_layers.put("water", waterInfo);
 
