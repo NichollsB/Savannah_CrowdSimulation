@@ -32,7 +32,7 @@ public class BoidManager extends Manager {
 
     private QuadTree quadtree;
     private Random rand = new Random();
-    private static StateMachine stateMachine;
+    static StateMachine stateMachine;
     public EA2 ea;
 
 
@@ -43,7 +43,7 @@ public class BoidManager extends Manager {
 
         this.parent = parent;
         setBoidGrid(new BoidGrid(80, Constants.mapWidth, Constants.mapHeight));
-        quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.mapWidth, Constants.mapHeight));
+//        quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.mapWidth, Constants.mapHeight));
         stateMachine = new StateMachine(this,ea);
     }
 
@@ -65,30 +65,51 @@ public class BoidManager extends Manager {
      */
     public static void createBoid(byte species, byte group, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ,
     		float cohesion, float separation, float alignment, float wander, float flockRadius, float sightRadius, float nearRadius,
-    		float hunger, float thirst, float panic, float stamina, float maxStamina) {
+    		float hunger, float thirst, float panic, float stamina, float maxStamina, float hungerLevel, float thirstLevel, float panicLevel,
+    		float size, String currentState, float fertility, String states) {
         Boid boid = new Boid(species);
 
         boid.setAge(age);
-
         boid.setPosition(pX, pY, pZ);
         boid.setVelocity(vX, vY, vZ);
         boid.setCohesion(cohesion);
         boid.setAlignment(alignment);
         boid.setSpearation(separation);
         boid.setWander(wander);
-        boid.setGene(cohesion, separation, alignment, wander,flockRadius, nearRadius, sightRadius, maxStamina);
+        boid.setGene(cohesion, separation, alignment, wander,flockRadius, nearRadius, sightRadius, maxStamina, hungerLevel, thirstLevel, panicLevel);
         boid.setGroup(group);
+
         boid.setFlockRadius(flockRadius);
         boid.setSightRadius(sightRadius);
         boid.setNearRadius(nearRadius);
+
         boid.setStamina(stamina);
         boid.setMaxStamina(maxStamina);
+
         boid.setHunger(hunger);
         boid.setPanic(panic);
         boid.setThirst(thirst);
 
+        boid.setHungerLevel(hungerLevel);
+        boid.setPanicLevel(panicLevel);
+        boid.setThirstLevel(thirstLevel);
+        boid.setSize(size);
+        boid.setState(currentState);
+        boid.setFertility(fertility);
+        
+        
+        String[] strArray = (states.split(","));
+        
+        stateMachine.retriveStates(boid, strArray);
+        
+       
+        System.out.println("stamina " + stamina);
+        System.out.println("maxStamina " + maxStamina);
+        System.out.println("states " + states);
         
         addToLists(boid);
+        
+        
     }
     
     /**
@@ -146,6 +167,24 @@ public class BoidManager extends Manager {
 
         boid.hunger = rand.nextInt((int)boid.hungerLevel);
         boid.thirst = rand.nextInt((int)boid.thirstLevel);
+        
+        
+        float min = 0f;
+        float maxStartingHungerLevel = boid.hungerLevel;
+        float maxStartingThirstLevel = boid.thirstLevel;
+        System.out.println("maxStartingHungerLevel " + maxStartingHungerLevel);
+        System.out.println("maxStartingThirstLevel " + maxStartingThirstLevel);
+        float startHunger = rand.nextFloat() * (maxStartingHungerLevel - min) + min;
+        float startThirst = rand.nextFloat() * (maxStartingThirstLevel - min) + min;
+        System.out.println("startHunger " +startHunger);
+        System.out.println("startThirst " +startThirst);
+        boid.hunger = startHunger;
+        boid.thirst = startThirst;
+        System.out.println( "boid.hunger "+boid.hunger);
+        System.out.println( "boid.thirst" + boid.thirst);
+        
+        
+
         boid.fertility = rand.nextInt(100);
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.
@@ -202,10 +241,8 @@ public class BoidManager extends Manager {
      * and clears the boids list.
      */
     public void clearBoidList() {
-        for (Boid boid : boids) {
-            getBoidGrid().removeBoid(boid);
-            stateMachine.removeBoid(boid);
-        }
+        setBoidGrid(new BoidGrid(80, Constants.mapWidth, Constants.mapHeight));
+        stateMachine = new StateMachine(this, ea);
         boids.clear();
     }
 

@@ -49,11 +49,10 @@ public class Boid extends Entity {
     public float alignment = 0;
     public float wander = 0;
 
-
     //EA variables.
-    public int geneSize=8;		
+    
+    public int geneSize = 11;		
     public Float[] gene= new Float[geneSize];
-
 
 
     // no longer used or relevant
@@ -94,12 +93,12 @@ public class Boid extends Entity {
         separation = species.getSeparation();
         wander = species.getWander();
 
-        setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius, maxStamina);
-
+       
         panicLevel = species.getPanicLevel();
         hungerLevel = species.getHungerLevel();
         thirstLevel = species.getThirstLevel();
 
+        setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius, maxStamina,  panicLevel, hungerLevel , thirstLevel);
 
         size = species.getMaxSize();
         bounds.set(position.x, position.y, size, size); //TODO take it from species file
@@ -140,10 +139,13 @@ public class Boid extends Entity {
         separation = boid.separation;
         wander = boid.wander;
 
-
-        setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius,maxStamina);
-
         panicLevel = boid.panicLevel;
+        thirstLevel = boid.thirstLevel;
+        hungerLevel = boid.hungerLevel;
+        
+        setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius, maxStamina,  panicLevel, hungerLevel , thirstLevel);
+
+        
 
 
     }
@@ -313,6 +315,9 @@ public class Boid extends Entity {
     public void setState(String state) {
         this.state = state;
     }
+    public String getState() {
+        return state;
+    }
 
     public byte getSpecies() {
         return subType;
@@ -347,7 +352,8 @@ public class Boid extends Entity {
     	this.tracked = tracked;
     }
 
-    public void setGene(float cohesion, float separation, float alignment, float wander, float flockRadius, float nearRadius, float sightRadius, float maxStamina) {
+    public void setGene(float cohesion, float separation, float alignment, float wander, float flockRadius, float nearRadius, float sightRadius,
+    		float maxStamina, float hungerLevel, float thirstLevel, float panicLevel) {
 
     	gene[0] = cohesion;
     	gene[1] = separation;
@@ -357,6 +363,9 @@ public class Boid extends Entity {
     	gene[5]	= nearRadius; 
     	gene[6]	= sightRadius;
     	gene[7] = maxStamina;
+    	gene[8] = hungerLevel;
+    	gene[9] = thirstLevel;
+    	gene[10] = panicLevel;
     				
     	
     }      
@@ -373,6 +382,9 @@ public class Boid extends Entity {
     	setNearRadius(newGene[5]);
     	setSightRadius(newGene[6]);
     	setMaxStamina(newGene[7]);
+    	setHungerLevel(newGene[8]);
+    	setThirstLevel(newGene[9]);
+    	setPanicLevel(newGene[10]);
     }  
     
     public Float[] getGene() {
@@ -461,5 +473,34 @@ public class Boid extends Entity {
     public float getMaxStamina(){
     	return maxStamina;
     }
-
+    public void setThirstLevel( float newThirstLevel) {
+        thirstLevel = newThirstLevel;
+    }
+    public void setHungerLevel( float newHungerLevel) {
+    	hungerLevel = newHungerLevel;
+    }
+    public void setPanicLevel( float newPanicLevel) {
+        panicLevel = newPanicLevel;
+    }
+    public float getThirstLevel() {
+        return thirstLevel;
+    }
+    public float getHungerLevel() {
+        return hungerLevel;
+    }
+    public float getPanicLevel() {
+        return panicLevel;
+    }
+    public void setSize( float newSize) {
+    	size = newSize;
+    }
+    public float getSize() {
+    	return size;
+    }
+    public void setFertility(float fertility){
+    	this.fertility=fertility;
+    }
+    public float getFertility(){
+    	return fertility;
+    }
 }

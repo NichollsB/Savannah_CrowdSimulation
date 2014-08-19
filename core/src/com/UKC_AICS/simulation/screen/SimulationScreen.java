@@ -195,9 +195,10 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     	gui.resize(width, height);
 //        scissorRect = gui.getViewArea();
         inputManager.resize(scissorRect);
-        simViewport.update(width, height, false);
+        
         uiViewport.update(width, height, true);
         eagui.getViewport().update(width, height, true);
+        simViewport.update(width, height, false);
 //        uiViewport.
     }
 
@@ -356,10 +357,9 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         //What should happen when clicking on the screen
     	if(ControlState.STATE == ControlState.State.NAVIGATE){
 	        Entity boid = simulationManager.getBoidAt(screenX,screenY);
-            if(boid == null){
-                boid = simulationManager.getObjectAt(screenX, screenY);
-            }
-	//        System.out.println(simulationManager.getBoidAt(screenX,screenY));
+//            if(boid == null){
+//                boid = simulationManager.getObjectAt(screenX, screenY);
+//            }
 	        if(scissorRect.contains(screenX, screenY)) gui.selectEntity(boid);
 	        return;
     	}

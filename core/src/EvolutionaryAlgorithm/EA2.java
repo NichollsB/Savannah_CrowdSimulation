@@ -21,8 +21,8 @@ public class EA2 {
 	//Crossover rate
 	private double crossRate = 0.3;
 	//Mutation rate
-	private double muteRate =0.02;
-	public static int geneLength = 8;
+	private double muteRate = 0.02;
+	public static int geneLength = 11;
 	public boolean eaON = false;
 	
 	

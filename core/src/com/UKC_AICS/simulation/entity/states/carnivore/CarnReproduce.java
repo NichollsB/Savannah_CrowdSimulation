@@ -1,5 +1,9 @@
 package com.UKC_AICS.simulation.entity.states.carnivore;
 
+import java.util.Arrays;
+
+import EvolutionaryAlgorithm.EA2;
+
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.Arrive;
@@ -20,9 +24,10 @@ import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
  */
 public class CarnReproduce extends State {
     private Vector3 tempVec = new Vector3();
-
-    public CarnReproduce(StateMachine parent, BoidManager bm) {
+    private EA2 ea;
+    public CarnReproduce(StateMachine parent, BoidManager bm, EA2 ea) {
         super(parent, bm);
+        this.ea=ea;
     }
 
     @Override
@@ -34,7 +39,8 @@ public class CarnReproduce extends State {
             Array<Boid> nearBoids = BoidManager.getBoidGrid().findInSight(boid);
             Array<Boid> potentialMates = new Array<Boid>();
             Array<Boid> closeBoids = new Array<Boid>();
-
+            Float[] gene = new Float[EA2.getGeneLength()];
+            
             for (Boid b : nearBoids) {
                 //see if the boid is the same species and in the same state - should be Reproduce AND not self
                 if (boid.getSpecies() == b.getSpecies() && boid.state.equals(b.state) && !boid.equals(b)) {
@@ -52,6 +58,13 @@ public class CarnReproduce extends State {
             }
             //TODO need steering to find mates
             if(potentialMates.size > 0  ) {
+            	 //TODO CALL EA HERE
+                // POSSIBLE MATES = POPULATION
+                System.out.print("pm " + potentialMates);
+                if(ea.getEaOn()){
+                	gene = ea.createBaby(boid,potentialMates);
+                	System.out.println("Baby Gene "+Arrays.toString(gene));
+                }
                 //pick the closest and go towards it!
                 Boid nearest = potentialMates.pop();
                 Boid other;
@@ -70,6 +83,11 @@ public class CarnReproduce extends State {
                     System.out.println("CARNIVORE boid made a baby " + boid.getSpecies());
                     Boid baby = new Boid(boid);
                     baby.setAge(0);
+                    System.out.println(Arrays.toString(gene));
+                    if(gene[0]!=null){
+                    	System.out.println("not empty");
+                    	baby.setGene(gene);
+                    }
                     bm.storeBoidForAddition(baby);
                     boid.hunger = 100;
                     boid.thirst = 100;

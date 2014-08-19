@@ -4,9 +4,21 @@ import EvolutionaryAlgorithm.EA2;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.behaviours.*;
+import com.UKC_AICS.simulation.entity.states.Drink;
 import com.UKC_AICS.simulation.entity.states.State;
+import com.UKC_AICS.simulation.entity.states.Thirsty;
+import com.UKC_AICS.simulation.entity.states.carnivore.ApproachCorpse;
 import com.UKC_AICS.simulation.entity.states.carnivore.CarnDefault;
+import com.UKC_AICS.simulation.entity.states.carnivore.CarnReproduce;
+import com.UKC_AICS.simulation.entity.states.carnivore.Eat;
+import com.UKC_AICS.simulation.entity.states.carnivore.GoForKill;
+import com.UKC_AICS.simulation.entity.states.carnivore.Hunt;
+import com.UKC_AICS.simulation.entity.states.carnivore.Stalk;
+import com.UKC_AICS.simulation.entity.states.herbivore.EatGrass;
 import com.UKC_AICS.simulation.entity.states.herbivore.HerbDefault;
+import com.UKC_AICS.simulation.entity.states.herbivore.Hungry;
+import com.UKC_AICS.simulation.entity.states.herbivore.Panic;
+import com.UKC_AICS.simulation.entity.states.herbivore.Reproduce;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +33,7 @@ public class StateMachine {
     private EA2 ea;
     public static Map<String, Behaviour> behaviours = new HashMap<String, Behaviour>();
 
-    private HashMap<Boid,Stack<State>> boidStates;
+    public HashMap<Boid,Stack<State>> boidStates;
 
     /**
      * first implementation of a stack finite state machine.
@@ -69,12 +81,26 @@ public class StateMachine {
         }
     }
 
+    public void addBoid(Boid boid) {
+        if( ! boidStates.containsKey(boid)) {
+            Stack<State> stack = new Stack<State>();
+            stack.add(getDefaultState(boid.getSpecies()));
+            boidStates.put(boid, stack);
+        }
+    }
 
     public void addBoid(Boid boid, State initialState) {
         if( ! boidStates.containsKey(boid)) {
             Stack<State> stack = new Stack<State>();
             stack.add(getDefaultState(boid.getSpecies()));
             stack.add(initialState);
+            boidStates.put(boid, stack);
+        }
+    }
+
+    public void addBoid(Boid boid, boolean noUse) {
+        if( ! boidStates.containsKey(boid)) {
+            Stack<State> stack = new Stack<State>();
             boidStates.put(boid, stack);
         }
     }
@@ -91,16 +117,13 @@ public class StateMachine {
             return new HerbDefault(this, boidManager, ea);
         }
         else if(diet.equals("carnivore")) {
-            return new CarnDefault(this, boidManager);
+            return new CarnDefault(this, boidManager, ea);
         }
         else {
             return null;
         }
     }
 
-    public void addBoid(Boid boid) {
-        addBoid(boid, getDefaultState(boid.getSpecies()));
-    }
 
     public void removeBoid(Boid boid){
         if(boidStates.containsKey(boid)) {
@@ -113,11 +136,85 @@ public class StateMachine {
     }
 
     public void pushState(Boid boid, State state) {
-
         if(!boidStates.containsKey(boid)) {
             addBoid(boid);
         }
 
         boidStates.get(boid).add(state);
+    }
+    
+    public void retriveStates(Boid boid ,String[] strArray) {
+    	for(int i = strArray.length; i ==0  ; i--){
+            
+            if(strArray[i]=="HerbDefault"){
+            	HerbDefault state = new HerbDefault(this, boidManager, ea);
+            	pushState(boid, state);
+            }
+            
+            if(strArray[i]=="EatGrass"){
+                EatGrass state = new EatGrass(this, boidManager);
+                pushState(boid, state);
+            }
+            
+            if(strArray[i]=="Hungry"){
+            	Hungry state = new Hungry(this, boidManager);
+            	pushState(boid, state);
+            }
+            
+            if(strArray[i]=="Panic"){
+            	Panic state = new  Panic (this, boidManager);
+                pushState(boid, state);
+            }
+            
+            if(strArray[i]=="Reproduce"){
+                Reproduce state = new Reproduce(this, boidManager, ea);
+                pushState(boid, state);
+            }
+            
+            if(strArray[i]=="ApproachCorpse"){
+                ApproachCorpse state = new ApproachCorpse(this, boidManager, null);
+                pushState(boid, state);
+            }
+            
+            if(strArray[i]=="CarnDefault"){
+            	CarnDefault state = new  CarnDefault (this, boidManager, ea);
+            	pushState(boid, state);
+            }
+
+            if(strArray[i]=="CarnReproduce"){
+            	CarnReproduce state = new  CarnReproduce(this, boidManager, ea);
+            	pushState(boid, state);
+            }
+            
+            if(strArray[i]=="Eat"){
+                Eat state = new  Eat(this, boidManager);
+                pushState(boid, state);
+            }
+            
+            if(strArray[i]=="GoForKill"){
+            	GoForKill state = new GoForKill(this, boidManager, null);
+            	pushState(boid, state);
+            }
+            
+            if(strArray[i]=="Hunt"){
+            	Hunt state = new Hunt(this, boidManager);
+                pushState(boid, state);
+            }
+            
+            if(strArray[i]=="Stalk"){
+                Stalk state = new Stalk(this, boidManager, null);
+                pushState(boid, state); 
+            }
+            
+            if(strArray[i]=="Drink"){
+            	Drink state = new Drink(this, boidManager);
+            	pushState(boid, state);
+            }
+            
+            if(strArray[i]=="Thirsty"){
+                Thirsty state = new Thirsty(this, boidManager);
+                pushState(boid, state);
+            }   
+    	} 
     }
 }

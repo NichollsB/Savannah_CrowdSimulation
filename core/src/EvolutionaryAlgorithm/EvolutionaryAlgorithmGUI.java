@@ -87,22 +87,28 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			
 			
 			Label cohLabel = new Label("Cohesion", skin);
-			Label alignLabel = new Label("Alignment", skin);
 			Label sepLabel = new Label("Separation", skin);
+			Label alignLabel = new Label("Alignment", skin);
 			Label wanLabel = new Label("Wander", skin);
 			Label FRLabel = new Label("Flock Radius", skin);
 			Label NRLabel = new Label("Near Radius", skin);
 			Label SRLabel = new Label("Sight Radius", skin);
 			Label maxStaminaLabel = new Label("Max Stamina", skin);
+			Label HungerLevelLabel = new Label("Hunger Level", skin);
+			Label ThirstLevelLabel = new Label("Thirst Level", skin);
+			Label PanicLevelLabel = new Label("Panic Level", skin);
 			
 			labels.add(cohLabel);
-			labels.add(alignLabel);
 			labels.add(sepLabel);
+			labels.add(alignLabel);
 			labels.add(wanLabel);
 			labels.add(FRLabel);
 			labels.add(NRLabel);
 			labels.add(SRLabel);
 			labels.add(maxStaminaLabel);
+			labels.add(HungerLevelLabel);
+			labels.add(ThirstLevelLabel);
+			labels.add(PanicLevelLabel);
 			
 			for(int i = 0 ; i<labels.size() ;i++){
 				Label valuelabel = new Label("0", skin);
