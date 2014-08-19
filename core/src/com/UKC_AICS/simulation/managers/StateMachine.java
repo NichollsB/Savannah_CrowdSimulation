@@ -139,13 +139,15 @@ public class StateMachine {
         if(!boidStates.containsKey(boid)) {
             addBoid(boid);
         }
-
         boidStates.get(boid).add(state);
     }
     
     public void retriveStates(Boid boid ,String[] strArray) {
     	System.out.println("-----------------------------------------------------------------------------------------------------------------");
     	System.out.println("STATES");
+    	
+    	Stack<State> states = new Stack<State>();
+    	
     	for(int j = 0; j < strArray.length ; j++){
     		System.out.println(j);
     		System.out.println(strArray[j]);
@@ -156,87 +158,88 @@ public class StateMachine {
             if(strArray[i].equals("HerbDefault")){
             	System.out.println("HerbDefault");
             	HerbDefault state = new HerbDefault(this, boidManager, ea);
-            	pushState(boid, state);
+            	states.push(state);
             }
             
             if(strArray[i].equals("EatGrass")){
             	System.out.println("EatGrass");
                 EatGrass state = new EatGrass(this, boidManager);
-                pushState(boid, state);
+                states.push(state);
             }
             
             if(strArray[i].equals("Hungry")){
             	System.out.println("Hungry");
             	Hungry state = new Hungry(this, boidManager);
-            	pushState(boid, state);
+            	states.push(state);
             }
             
             if(strArray[i].equals("Panic")){
             	System.out.println("Panic");
             	Panic state = new  Panic (this, boidManager);
-                pushState(boid, state);
+            	states.push(state);
             }
             
             if(strArray[i].equals("Reproduce")){
             	System.out.println("Reproduce");
                 Reproduce state = new Reproduce(this, boidManager, ea);
-                pushState(boid, state);
+                states.push(state);
             }
             
             if(strArray[i].equals("ApproachCorpse")){
             	System.out.println("ApproachCorpse");
                 ApproachCorpse state = new ApproachCorpse(this, boidManager, null);
-                pushState(boid, state);
+                states.push(state);
             }
             
             if(strArray[i].equals("CarnDefault")){
             	System.out.println("CarnDefault");
             	CarnDefault state = new  CarnDefault (this, boidManager, ea);
-            	pushState(boid, state);
+            	states.push(state);
             }
 
             if(strArray[i].equals("CarnReproduce")){
             	System.out.println("CarnReproduce");
             	CarnReproduce state = new  CarnReproduce(this, boidManager, ea);
-            	pushState(boid, state);
+            	states.push(state);
             }
             
             if(strArray[i].equals("Eat")){
             	System.out.println("Eat");
                 Eat state = new  Eat(this, boidManager);
-                pushState(boid, state);
+                states.push(state);
             }
             
             if(strArray[i].equals("GoForKill")){
             	System.out.println("GoForKill");
             	GoForKill state = new GoForKill(this, boidManager, null);
-            	pushState(boid, state);
+            	states.push(state);
             }
             
             if(strArray[i].equals("Hunt")){
             	System.out.println("Hunt");
             	Hunt state = new Hunt(this, boidManager);
-                pushState(boid, state);
+            	states.push(state);
             }
             
             if(strArray[i].equals("Stalk")){
             	System.out.println("Stalk");
                 Stalk state = new Stalk(this, boidManager, null);
-                pushState(boid, state); 
+                states.push(state);
             }
             
             if(strArray[i].equals("Drink")){
             	System.out.println("Drink");
             	Drink state = new Drink(this, boidManager);
-            	pushState(boid, state);
+            	states.push(state);
             }
             
             if(strArray[i].equals("Thirsty")){
             	System.out.println("Thirsty");
                 Thirsty state = new Thirsty(this, boidManager);
-                pushState(boid, state);
+                states.push(state);
             }   
     	} 
+    	addBoid(boid, states);
     	System.out.println("STATES END");
     	System.out.println("FINAL " + boidStates.get(boid));
     	System.out.println("------------------------------------------------------------------------");

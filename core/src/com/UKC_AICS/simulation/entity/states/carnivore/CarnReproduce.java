@@ -61,6 +61,7 @@ public class CarnReproduce extends State {
             	 //TODO CALL EA HERE
                 // POSSIBLE MATES = POPULATION
                 System.out.print("pm " + potentialMates);
+                System.out.print("EA ON" + ea.getEaOn());
                 if(ea.getEaOn()){
                 	gene = ea.createBaby(boid,potentialMates);
                 	System.out.println("Baby Gene "+Arrays.toString(gene));

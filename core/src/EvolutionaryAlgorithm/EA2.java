@@ -61,7 +61,7 @@ public class EA2 {
 		System.out.println("------------------------------------------------------------------------------------------------------------");
 		System.out.println("EVOLVE CALLED");
 		System.out.println("------------------------------------------------------------------------------------------------------------");
-		for(byte i =0 ; i<1; i++){
+		for(byte i =0 ; i<totalSpecies; i++){
 			currentSpecies = i ;
 			System.out.println("Species "+ currentSpecies);
 			
