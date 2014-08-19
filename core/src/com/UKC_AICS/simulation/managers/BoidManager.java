@@ -103,8 +103,13 @@ public class BoidManager extends Manager {
         boid.setState(currentState);
         boid.setFertility(fertility);
         
-        
-        String[] strArray = (states.split(","));
+        System.out.println("Statestring" +states);
+        states.replaceAll("[^a-zA-Z0-9]","");
+        states=states.substring(1,states.length()-1);
+        String[] strArray = (states.split(", "));
+        for( String s : strArray){
+        	System.out.println("bm"+s);
+        }
         
         stateMachine.retriveStates(boid, strArray);
        
@@ -113,9 +118,9 @@ public class BoidManager extends Manager {
        
         
        
-        System.out.println("stamina " + stamina);
-        System.out.println("maxStamina " + maxStamina);
-        System.out.println("states " + states);
+       // System.out.println("stamina " + stamina);
+       // System.out.println("maxStamina " + maxStamina);
+      //  System.out.println("states " + states);
         
         addToLists(boid);
         
