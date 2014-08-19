@@ -51,7 +51,21 @@ import java.util.Stack;
 	 
 	    		
 				Stack<State> stateStore = stateMachine.boidStates.get(b);
-	    		String states = "" + stateStore;
+				
+						System.out.println("STATESTORE" + stateStore);
+						
+				//String[] strArray = new String[stateStore.size()]	;
+				String states = stateStore.toString();
+				
+				
+				
+			//	for( int i = 0; i < stateStore.size() ; i ++){
+				//	State state = stateStore.pop();
+				//	strArray[i] = state.getClass().getSimpleName().toString();
+				//}
+				//System.out.println("String array " + strArray);
+				System.out.println("boid stack " +stateMachine.boidStates.get(b) );
+	    	
 				
 	    		int ageInt = b.getAge();
 	    		String age = "" + ageInt;
