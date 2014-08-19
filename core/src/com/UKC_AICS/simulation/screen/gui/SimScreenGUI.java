@@ -135,6 +135,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
         fileChooser.addSelectionListener(new MenuSelectListener(){
 			public void selectionMade(java.lang.Object menu, java.lang.Object object) {
 				FileChooser chooser = (FileChooser) menu;
+                simScreen.loadSaveCall(chooser.getCommand(), chooser.getIdentifier(), (File)object);
 				simScreen.simulationManager.loadSaveCall(chooser.getCommand(), chooser.getIdentifier(), (File)object);
 			}
 		});
@@ -271,7 +272,24 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	final MenuDropdown menu = createFileMenu(new String[]{"load", "save"}, new String[]{"Load", "Save"}, "Species Settings",
     			"SPECIES");
     	menuTable.add(menu).padLeft(5);
+
+
         TextButton button;
+        //SET EA DIRECTORY
+        button = new TextButton("EA File Location", skin);
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                fileChooser.setOptionsText("Load EA File", "Cancel");
+                fileChooser.setCommand("load");
+                fileChooser.setIdentifier("eafile");
+                fileChooser.open(stage);
+            }
+        });
+        menuTable.add(button).padLeft(5);
+
+        //ENVIRONMENT OPTIONS
+
         button = new TextButton("Load Environment", skin);
         button.addListener(new ClickListener() {
             @Override
@@ -281,6 +299,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
         });
         menuTable.add(button).padLeft(5);
 
+        //RENDER OPTIONS
         button = new TextButton("Render Options", skin);
     	button.addListener(new ClickListener() {
             @Override

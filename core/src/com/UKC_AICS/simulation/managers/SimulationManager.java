@@ -420,7 +420,7 @@ public class SimulationManager extends Manager {
 //                EnvironmentLoader.lo
     		}
     		
-    		if(identifier.equalsIgnoreCase("guifile")){
+    		if(identifier.equalsIgnoreCase("eafile")){
     			
     		}
 		}
