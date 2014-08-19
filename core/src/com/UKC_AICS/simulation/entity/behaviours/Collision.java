@@ -61,6 +61,7 @@ public class Collision extends Behaviour {
             else if(posY < 0) {
                 posToCheckY = Constants.mapHeight + posY;
             }
+
             //TODO need a check for outofbounds, wrap check for blocked, but steer from extended map coords
             if(WorldManager.getTileInfoAt(posToCheckX, posToCheckY).get("blocked") == 1) {
                 cell = new ArrayList<Integer>();
