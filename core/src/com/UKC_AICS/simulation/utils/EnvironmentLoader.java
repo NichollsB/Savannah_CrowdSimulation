@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.utils;
 
+import java.io.File;
 import java.util.HashMap;
 
 import com.UKC_AICS.simulation.Constants;
@@ -70,9 +71,12 @@ public abstract class EnvironmentLoader {
 	 * Load the default maps texture sheet file and pack file
 	 */
 	public static void loadMaps(){
-		loadMaps(atlasPath, mapPath);
+		loadMaps(Gdx.files.internal(atlasPath), Gdx.files.internal(mapPath));
 	}
 
+    public static void loadMap(File filePath, String layer){
+        loadMap(new FileHandle(filePath), layer);
+    }
     public static void loadMap(FileHandle filePath, String layer){
         String ext = filePath.extension();
         if(!ext.contains("txt") && !ext.contains("png") && !ext.contains("bmp") ) return;
@@ -81,19 +85,22 @@ public abstract class EnvironmentLoader {
             environmentLayers_pixmap.put(layer, pixLayer);
         }
     }
-	
+
+    public static void loadMaps(File packfile, File packsheet){
+        loadMaps(new FileHandle(packfile), new FileHandle(packsheet));
+    }
 	/**
 	 * Load maps into a TextureAtlas via the pack file and the packed map sheet as a Pixmap. Retrieve regions from the 
 	 * pack file that match the EnvironmentLayer layerMap Strings and store Pixmaps for each region.
 	 * @param packfile_path String path for the pack file of the texture sheet to load
 	 * @param packsheet_path String path for the texture sheet to load
 	 */
-	public static void loadMaps(String packfile_path, String packsheet_path){
-//		environments.put(name, 
+	public static void loadMaps(FileHandle packfile_path, FileHandle packsheet_path){
+//		environments.put(name,
 //				new TextureAtlas(defaultEnvAtlas_path));
-		FileHandle handle = Gdx.files.internal(packfile_path);
+		FileHandle handle = packfile_path;
 		environmentAtlas = new TextureAtlas(handle);
-		handle = Gdx.files.internal(packsheet_path);
+		handle = packsheet_path;
 		environmentAtlas_pixmap = new Pixmap(handle);
 		
 		for(EnvironmentLayer layer : EnvironmentLayer.values()){
@@ -233,7 +240,6 @@ public abstract class EnvironmentLoader {
 
     public static int[] getGridDimensions(){
         if(environmentLayers_pixmap.size()>0){
-
             for(String s : environmentLayers.keySet()){
                 byte a[][] = getLayer_values(s, false);
                 for(int i = 0; i < s.length(); i ++){

@@ -405,9 +405,15 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
 		HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(x, y);
     	gui.setConsole("x: " + x + " y: " + y + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
 	}
-	
-	
 
+    public void loadSaveCall(String command, String identifier, File file) {
+        System.out.println("Load/save call. Command " + command + " id " + identifier + " file " + file.getPath());
+        if(command.equalsIgnoreCase("load")){
+            if(identifier.equalsIgnoreCase("eafile")){
 
-
+            }
+        }
+    }
+    
 }
+

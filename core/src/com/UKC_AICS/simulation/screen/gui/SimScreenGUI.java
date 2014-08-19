@@ -99,6 +99,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
     private Actor infoItemSelected;
 	
 	private RenderOptionsWindow renderOptions;
+    private EnvironmentFileWindow environmentOptions;
 	
     /**
      *
@@ -130,10 +131,11 @@ public class SimScreenGUI extends Stage implements HoverListener {
        
 //        table.pack();
 //        table.debug();
-        fileChooser = new FileChooser("Load", skin, "Load", "Species", "../", true, "Confirm", "Cancel", this);
+        fileChooser = new FileChooser("Load", skin, "Load", "Species", "../", "Confirm", "Cancel", this);
         fileChooser.addSelectionListener(new MenuSelectListener(){
 			public void selectionMade(java.lang.Object menu, java.lang.Object object) {
 				FileChooser chooser = (FileChooser) menu;
+                simScreen.loadSaveCall(chooser.getCommand(), chooser.getIdentifier(), (File)object);
 				simScreen.simulationManager.loadSaveCall(chooser.getCommand(), chooser.getIdentifier(), (File)object);
 			}
 		});
@@ -145,6 +147,21 @@ public class SimScreenGUI extends Stage implements HoverListener {
         		RenderOptionsWindow window = (RenderOptionsWindow) menu;
         		RenderState.changeTileState(RenderState.TILESTATE.stateName, window.getRenderType());
         	}
+        });
+        environmentOptions = new EnvironmentFileWindow("Environment Options", skin, stage);
+        environmentOptions.addSelectionListener(new MenuSelectListener(){
+            public void selectionMade(java.lang.Object menu, java.lang.Object object) {
+        		System.out.println("istener triggered");
+               EnvironmentFileWindow window = (EnvironmentFileWindow) menu;
+                HashMap<String, File> files = new HashMap<String, File>();
+                for(String s : window.getPackFiles().keys()){
+                    files.put(s, window.getPackFiles().get(s));
+                }
+                if(window.fromPackFile())
+                    simScreen.simulationManager.loadSaveCall("load", "envpack", files);//.loadSaveCall("load", "envpack", window.getPackFiles());
+                else
+                    simScreen.simulationManager.loadSaveCall("load", "envatlas", files);
+            }
         });
 //        fileChooser.hide();
 //        fileChooser.open(this);
@@ -247,6 +264,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
     
     
     private ObjectMap<Button, FileChooser> chooserMap = new ObjectMap<Button, FileChooser>();
+
 	private Table createNorth(Actor a){
     	Table menuTable = new Table(skin);
     	
@@ -254,15 +272,42 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	final MenuDropdown menu = createFileMenu(new String[]{"load", "save"}, new String[]{"Load", "Save"}, "Species Settings",
     			"SPECIES");
     	menuTable.add(menu).padLeft(5);
-    	TextButton renderButton = new TextButton("Render Options", skin);
-    	renderButton.addListener(new ClickListener(){
-    		@Override
+
+
+        TextButton button;
+        //SET EA DIRECTORY
+        button = new TextButton("EA File Location", skin);
+        button.addListener(new ClickListener() {
+            @Override
             public void clicked(InputEvent event, float x, float y) {
-    			renderOptions.open(stage);
-    		}
-    	});
-    	
-    	menuTable.add(renderButton).padLeft(5);
+                fileChooser.setOptionsText("Load EA File", "Cancel");
+                fileChooser.setCommand("load");
+                fileChooser.setIdentifier("eafile");
+                fileChooser.open(stage);
+            }
+        });
+        menuTable.add(button).padLeft(5);
+
+        //ENVIRONMENT OPTIONS
+
+        button = new TextButton("Load Environment", skin);
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                environmentOptions.open(stage);
+            }
+        });
+        menuTable.add(button).padLeft(5);
+
+        //RENDER OPTIONS
+        button = new TextButton("Render Options", skin);
+    	button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                renderOptions.open(stage);
+            }
+        });
+    	menuTable.add(button).padLeft(5);
     	menuTable.add(new Table()).fillX().expandX();
     	return menuTable;
     }
@@ -284,14 +329,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
     					fileChooser.open(stage);
     				}
     			}
-//    			if(loadOption.equalsIgnoreCase((String)object)){
-////    				System.out.println("Selection has been made " + (String)object);
-//    				fileChooser.setOptionsText(loadOption, "Cancel");
-//    				fileChooser.setCommand(loadOption);
-//    				fileChooser.setIdentifier("species");
-////    				fileChooser
-//    				fileChooser.open(stage);
-//    			}
     		}
     	});
     	return menu;

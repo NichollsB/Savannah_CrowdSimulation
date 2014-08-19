@@ -34,7 +34,6 @@ public class LandMap {
 
         byte[][] terrain = null; //
 //        byte[][] border = EnvironmentLoader.getLayer_values("terrain", false);
-        System.out.println("set up terrain layer " + terrain);
         if(terrain == null) {
             terrain = new byte[width / TILE_SIZE][height / TILE_SIZE];
             for (int i = 0; i < terrain.length; i++) {
@@ -45,7 +44,6 @@ public class LandMap {
         }
 //
         byte[][] grassInfo = EnvironmentLoader.getLayer_values("grass", false);//new byte[width / TILE_SIZE][height / TILE_SIZE];
-        System.out.println("set up grass layer " + grassInfo);
         if(grassInfo == null){
             grassInfo = new byte[width / TILE_SIZE][height / TILE_SIZE];
 
@@ -61,7 +59,6 @@ public class LandMap {
         // randomly assigns water to tiles
         byte[][] waterInfo = EnvironmentLoader.getLayer_values("water", false);
         float value;
-        System.out.println("set up water layer " + waterInfo);
         boolean loadedLayer = true;
         if(waterInfo == null) {
             waterInfo = new byte[width / TILE_SIZE][height / TILE_SIZE];
