@@ -3,29 +3,29 @@
 <!--xml file for species based information-->
 <settings>
     <species name="zebra">
-        <number>20</number>
+        <number>20</number> <!-- the quantity of this species you want. -->
         <byte>0</byte>  <!-- this is the sub-type -->
 
-        <spritergb r = "0" g="0" b="0.6"/>
-        <diet>herbivore</diet>
+        <spritergb r = "0" g="0" b="0.6"/> <!-- the colour of the sprite -->
+        <diet>herbivore</diet> <!-- carnivore or herbivore -->
 
-        <sightRadius>180f</sightRadius>
-        <flockRadius>120f</flockRadius>
-        <nearRadius>40f</nearRadius>
-        <maxSpeed>1.5f</maxSpeed>
-        <maxForce>0.04f</maxForce>
+        <sightRadius>180f</sightRadius> <!-- the distance they can see -->
+        <flockRadius>120f</flockRadius> <!-- the distance they will try and flock within -->
+        <nearRadius>40f</nearRadius> <!-- the distance within which they will try to avoid others-->
+        <maxSpeed>1.5f</maxSpeed> <!-- max speed per tick -->
+        <maxForce>0.04f</maxForce> <!-- max force applied per turn.-->
 
-        <stamina>50f</stamina>
-        <lifespan>80f</lifespan>
-        <maturity>10</maturity>
+        <stamina>50f</stamina> <!-- this is the sub-type -->
+        <lifespan>80f</lifespan> <!-- average lifespan of species-->
+        <maturity>10</maturity> <!-- the age at which they are considered adult -->
 
-        <newbornSize>8</newbornSize>
-        <maxSize>28</maxSize>
+        <newbornSize>8</newbornSize> <!-- the size of a new born-->
+        <maxSize>28</maxSize> <!-- average max size of an adult -->
 
-        <cohesion>0.5f</cohesion>
-        <separation>0.5f</separation>
-        <alignment>0.5f</alignment>
-        <wander>0.1f</wander>
+        <cohesion>0.5f</cohesion> <!-- weighting of cohesion behaviour -->
+        <separation>0.5f</separation> <!-- weighting of seperation behaviour -->
+        <alignment>0.5f</alignment> <!-- weighting of alignment behaviour -->
+        <wander>0.1f</wander> <!-- weighting of wander behaviour-->
 
         <panicLevel>40</panicLevel>
         <hungerLevel>65</hungerLevel>
@@ -81,7 +81,7 @@
         <maxSize>10</maxSize>
 
         <cohesion>0.5f</cohesion>
-        <separation>0.5f</separation>
+        <separation>0.6f</separation>
         <alignment>0.5f</alignment>
         <wander>0.1f</wander>
 
@@ -109,8 +109,8 @@
         <newbornSize>5</newbornSize>
         <maxSize>25</maxSize>
 
-        <cohesion>0.1f</cohesion>
-        <separation>0.2f</separation>
+        <cohesion>0.3f</cohesion>
+        <separation>0.3f</separation>
         <alignment>0.1f</alignment>
         <wander>0.1f</wander>
 

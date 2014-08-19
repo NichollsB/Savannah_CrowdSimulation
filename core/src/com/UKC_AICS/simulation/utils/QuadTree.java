@@ -23,6 +23,13 @@ public class QuadTree {
     private QuadTree[] nodes;
 
 
+    /**
+     *
+     * Create a quad tree
+     *
+     * @param level number of "levels" of splitting allowed.
+     * @param rectangle dimensions that this quadtree covers
+     */
     public QuadTree(int level, Rectangle rectangle) {
         this.level = level;
         bounds = rectangle;
@@ -62,8 +69,10 @@ public class QuadTree {
     }
 
     /**
-     * tries to insert the object
-     * @param obj
+     * tries to insert the object to this node. if node contains too many objects and
+     * its not at max levels it splits the quadtree.
+     *
+     * @param obj - the item to add.
      */
     public void insert(Entity obj) {
 
@@ -240,6 +249,13 @@ public class QuadTree {
         }
         return returnObjects;
     }
+
+    /**
+     *  returns a list of objects from the quadtree division area.
+     * @param returnObjects
+     * @param point
+     * @return
+     */
     public Array<Entity> retrieveObjects(Array<Entity> returnObjects, Vector2 point) {
         int index = getIndex(point);
         if (index != -1 && nodes[0] != null) {
@@ -263,6 +279,14 @@ public class QuadTree {
     }
 
 
+    /**
+     *
+     * casts the contents of the quadtree into boids.
+     *
+     * @param returnObjects
+     * @param rect
+     * @return
+     */
     public Array<Boid> retrieveBoids(Array<Boid>returnObjects,  Rectangle rect) {
         int index = getIndex(rect);
         if (index != -1 && nodes[0] != null) {

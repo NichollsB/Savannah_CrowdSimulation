@@ -7,6 +7,9 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Emily on 15/07/2014.
+ *
+ * Arrive returns the vector for the boid to arrive on a point, so it's speed will slow as it gets closer.
+ *
  */
 public class Arrive extends Behaviour {
 

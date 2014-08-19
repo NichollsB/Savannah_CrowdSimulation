@@ -20,9 +20,6 @@ public class StateMachine {
     private static BoidManager boidManager;
     private EA2 ea;
     public static Map<String, Behaviour> behaviours = new HashMap<String, Behaviour>();
-//    private Boid owner;
-//    private State currentState;
-//    private Stack<State> states;
 
     private HashMap<Boid,Stack<State>> boidStates;
 
@@ -79,6 +76,12 @@ public class StateMachine {
             stack.add(getDefaultState(boid.getSpecies()));
             stack.add(initialState);
             boidStates.put(boid, stack);
+        }
+    }
+
+    public void addBoid(Boid boid, Stack<State> states) {
+        if( ! boidStates.containsKey(boid)) {
+            boidStates.put(boid, states);
         }
     }
 

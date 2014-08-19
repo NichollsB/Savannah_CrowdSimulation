@@ -5,8 +5,12 @@ import com.UKC_AICS.simulation.entity.Entity;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * @author Emily
+ *
+ * Evade is the opposite of pursuit, so the Boid will attempt to evade the FUTURE position of the target.
+ */
 public class Evade extends Behaviour {
-
 
     static float STEPS_AHEAD = 3f;  //should look 3 steps ahead of prey (3f * velocity)
     static Vector3 vec = new Vector3();

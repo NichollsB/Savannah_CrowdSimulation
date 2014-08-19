@@ -182,7 +182,12 @@ public class WorldManager extends Manager {
     public Entity getObjectAt(int x, int y){
         Array<Entity> objs = new Array<Entity>();
         objects_map.retrieveObjects(objs, new Vector2(x, y));
-        return objs.first();
+
+        if (objs.size > 0 ) {
+            return objs.first();
+        } else {
+            return null;
+        }
     }
   
 }

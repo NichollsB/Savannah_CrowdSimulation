@@ -7,6 +7,9 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Emily on 01/07/2014.
+ *
+ * Seek returns the vector for the movement toward a point at full throttle.
+ *
  */
 public class Seek extends Behaviour {
 

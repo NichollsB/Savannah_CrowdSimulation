@@ -5,6 +5,7 @@ import EvolutionaryAlgorithm.EA2;
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.utils.BoidGrid;
 import com.UKC_AICS.simulation.utils.MathsUtils;
 import com.UKC_AICS.simulation.utils.QuadTree;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Random;
+import java.util.Stack;
 
 
 /**
@@ -40,7 +42,7 @@ public class BoidManager extends Manager {
     public BoidManager(SimulationManager parent, EA2 ea) {
 
         this.parent = parent;
-        setBoidGrid(new BoidGrid(60, Constants.mapWidth, Constants.mapHeight));
+        setBoidGrid(new BoidGrid(80, Constants.mapWidth, Constants.mapHeight));
         quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.mapWidth, Constants.mapHeight));
         stateMachine = new StateMachine(this,ea);
     }
@@ -84,6 +86,8 @@ public class BoidManager extends Manager {
         boid.setHunger(hunger);
         boid.setPanic(panic);
         boid.setThirst(thirst);
+
+        
         addToLists(boid);
     }
     
@@ -140,8 +144,8 @@ public class BoidManager extends Manager {
         boid.setPosition(xPos, yPos, 0);
         boid.setVelocity(xVel, yVel, 0);
 
-        boid.hunger = rand.nextInt(boid.hungerLevel);
-        boid.thirst = rand.nextInt(boid.thirstLevel);
+        boid.hunger = rand.nextInt((int)boid.hungerLevel);
+        boid.thirst = rand.nextInt((int)boid.thirstLevel);
         boid.fertility = rand.nextInt(100);
         //random start age
         boid.age = rand.nextInt((int) species.getLifespan()/2); //dont want the starting population to be too old.
@@ -186,13 +190,18 @@ public class BoidManager extends Manager {
         stateMachine.addBoid(boid);
     }
 
+    private static void addToLists(Boid boid, Stack<State> states) {
+        boids.add(boid);
+        getBoidGrid().addBoid(boid);
+        stateMachine.addBoid(boid, states);
+    }
+
     /**
      * removes all the boids from the boidGrid one-by-one TODO: make a method in boidGrid to do this better.
      * <p/>
      * and clears the boids list.
      */
     public void clearBoidList() {
-
         for (Boid boid : boids) {
             getBoidGrid().removeBoid(boid);
             stateMachine.removeBoid(boid);

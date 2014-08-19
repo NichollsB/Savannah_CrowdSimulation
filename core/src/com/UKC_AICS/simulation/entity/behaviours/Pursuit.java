@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by James on 17/07/2014.
+ *
+ * Pursuit is a seek that will seek the FUTURE position of the boid based on it's current velocity.
  */
 public class Pursuit extends Behaviour {
 
@@ -24,7 +26,6 @@ public class Pursuit extends Behaviour {
         vec.add(target.getVelocity().cpy().scl(STEPS_AHEAD));  //should look 3 steps ahead of prey (3f * velocity)
         vec.sub(boid.getPosition());
         vec.nor().scl(boid.maxSpeed);
-//        vec.sub(boid.getVelocity());
         vec.limit(boid.maxForce);
 
         return vec;

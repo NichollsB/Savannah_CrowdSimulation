@@ -5,6 +5,9 @@ import com.UKC_AICS.simulation.entity.Entity;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * @author Emily
+ */
 public class Alignment extends Behaviour {
 
 //    private static Vector3 tmpVec;
@@ -20,11 +23,13 @@ public class Alignment extends Behaviour {
             Boid b;
             for (int i = 0; i < boids.size; i++) {
                 b = boids.get(i);
-                //check if the boid is the same subType
-                //TODO: Multi-subType support
+
                 if(b == null || boid == null) {
                     System.out.println("one of the boids is null! " + i);
                 }
+
+                //check if the boid is the same subType
+                //TODO: Multi-subType support
                 if (b.getSpecies() == boid.getSpecies()) {
                     if (b.tertiaryType == boid.tertiaryType) {
                         tmpVec.add(b.getVelocity());

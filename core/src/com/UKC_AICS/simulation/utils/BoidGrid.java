@@ -182,6 +182,14 @@ public class BoidGrid {
     }
 
 
+    /**
+     *
+     * this will return a list of all boids in sight. Though this returns the contents of the cells that are within radius.
+     * so it is not definite that they are within range.
+     *
+     * @param boid
+     * @return
+     */
     public Array<Boid> findInSight(Boid boid) {
         nearby.clear();
 
@@ -216,6 +224,14 @@ public class BoidGrid {
         return nearby;
     }
 
+    /**
+     * This find in cell is to be used with the further than one cell. This one involves a check to see if the list
+     * already has the boid in the list as a precautionary.
+     * @param bnearby
+     * @param inCellX
+     * @param inCellY
+     * @return
+     */
     private Array<Boid> findBoidsInCellNew(Array<Boid> bnearby, int inCellX, int inCellY) {
         int cellX = inCellX, cellY = inCellY;
 
@@ -290,6 +306,12 @@ public class BoidGrid {
     }
 
 
+    /**
+     * returns a boid at the pixel (map) location. If there is more than one it simply returns the first one.
+     * @param screenX
+     * @param screenY
+     * @return
+     */
     public Boid findBoidAt(int screenX, int screenY) {
 
         int cellX = screenX / cellSize;

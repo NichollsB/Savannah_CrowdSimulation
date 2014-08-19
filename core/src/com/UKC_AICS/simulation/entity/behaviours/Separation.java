@@ -6,22 +6,20 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 
-public class Separation extends Behaviour {
+/**
+ * @author Emily
+ * Seperation accepts a list of the boids considered "Nearest" so within their "near radius"
+ * and then returns a vector moving to a position that is considered further away from them.
+ */
 
-//	@Override
-//	Vector3 act(ArrayList<Boid> boids, Boid boid) {
-//        for (Boid b : boids) {
-//
-//        }
-//        return new Vector3();
-//	}
+public class Separation extends Behaviour {
 
     @Override
     public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
         tmpVec.set(0, 0, 0); //will hold returnable
         tmpVec2.set(0, 0, 0); //will hold temporary value for
 
-        int num = 0; //holds counter for same subType boids.
+        int num = 0; //holds counter for boids.
 
         if (boids.size > 0) {
             for (Boid b : boids) {

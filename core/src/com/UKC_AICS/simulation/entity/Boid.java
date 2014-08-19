@@ -16,6 +16,10 @@ public class Boid extends Entity {
     private Vector3 acceleration = new Vector3();
     private float sprintThreshold = maxSpeed*0.7f;
 
+    public float size = 16;
+    public Rectangle bounds = new Rectangle();
+
+
     public float maxStamina = 60;
     public float stamina = maxStamina;
 
@@ -23,34 +27,33 @@ public class Boid extends Entity {
     public float flockRadius = 100f;
     public float nearRadius = 20f;
 
-    public Rectangle bounds = new Rectangle();
-
     public float hunger = 40;
     public float thirst = 40;
     public float panic = 0;
     public float fertility = 0;
 
+    public float hungerLevel=70;
+    public float thirstLevel=70;
+    public float panicLevel=30;
+
     public String state = "default";
 
     public int age = 0;
-    public float size = 16;
-//    public int birthDay = 0;
-    
 
-  
 
 //    public byte tertiaryType = 0; //family group of boid.
+
+    // Weights for the flocking behaviours.
     public float cohesion = 0;
     public float separation = 0;
     public float alignment = 0;
     public float wander = 0;
-    
+
+
+    //EA variables.
     public int geneSize=8;		
     public Float[] gene= new Float[geneSize];
 
-    public int hungerLevel=70;
-    public int thirstLevel=70;
-    public int panicLevel=30;
 
 
     // no longer used or relevant
@@ -98,6 +101,7 @@ public class Boid extends Entity {
         thirstLevel = species.getThirstLevel();
 
 
+        size = species.getMaxSize();
         bounds.set(position.x, position.y, size, size); //TODO take it from species file
     }
 

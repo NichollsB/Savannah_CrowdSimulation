@@ -7,6 +7,9 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Emily on 01/08/2014.
+ *
+ * Flee is the opposite of seek. It will flee from a point
+ *
  */
 public class Flee extends Behaviour {
 
