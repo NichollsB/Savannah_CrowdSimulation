@@ -150,7 +150,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
         environmentOptions = new EnvironmentFileWindow("Environment Options", skin, stage);
         environmentOptions.addSelectionListener(new MenuSelectListener(){
             public void selectionMade(java.lang.Object menu, java.lang.Object object) {
-//        		System.out.println();
+        		System.out.println("istener triggered");
                EnvironmentFileWindow window = (EnvironmentFileWindow) menu;
                 HashMap<String, File> files = new HashMap<String, File>();
                 for(String s : window.getPackFiles().keys()){

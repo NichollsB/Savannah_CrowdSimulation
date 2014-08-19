@@ -193,8 +193,11 @@ public class EnvironmentFileWindow extends Dialog implements MenuSelectEvent {
      */
     protected void result (Object object){
         String btn = (String)object;
-        if(!btn.equalsIgnoreCase("confirm")) return;
+        System.out.println("Dialog result " + btn);
+        if(!btn.equalsIgnoreCase("load")) return;
+        System.out.println("Dialog result " + btn);
         for(MenuSelectListener l : listeners){
+
                 l.selectionMade(this, fromPackFile);
         }
     }

@@ -378,10 +378,13 @@ public class SimulationManager extends Manager {
     }
 
     public void loadSaveCall(String command, String identifier, HashMap<String, File> file){
-//        System.out.println("Load call " + );
+        System.out.println("Load call ");
+        for(String s : file.keySet()){
+            System.out.println("name " + s + " file " + file.get(s).getPath());
+        }
         if(command.equalsIgnoreCase("load")){
             if(identifier.equalsIgnoreCase("envpack")){
-                if(!file.containsKey("packfile") || !file.containsKey("atlasfile")) {
+                if(!file.containsKey("packfile") || !file.containsKey("packatlas")) {
                     System.out.println("missing pack file path or pack atlas file path");
                     return;
                 }
