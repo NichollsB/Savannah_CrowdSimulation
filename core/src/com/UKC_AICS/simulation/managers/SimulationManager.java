@@ -1,7 +1,7 @@
 package com.UKC_AICS.simulation.managers;
 
 import EvolutionaryAlgorithm.EA2;
-import EvolutionaryAlgorithm.EAmain;
+
 
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;

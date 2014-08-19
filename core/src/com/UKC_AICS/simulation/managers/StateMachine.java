@@ -244,4 +244,7 @@ public class StateMachine {
     	System.out.println("FINAL " + boidStates.get(boid));
     	System.out.println("------------------------------------------------------------------------");
     }
+    public Stack<State> getStack(Boid b){
+    	return boidStates.get(b);
+    }
 }

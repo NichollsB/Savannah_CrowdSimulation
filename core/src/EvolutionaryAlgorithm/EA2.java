@@ -160,7 +160,7 @@ public class EA2 {
 	
 	
 	//Calculate fitness
-	public  void calculateFitness() {
+	private  void calculateFitness() {
 		fitnessList.clear();
 		float fitness = 0f;
 		float lifespan = 0f;
@@ -206,7 +206,7 @@ public class EA2 {
 		//System.out.println("Fitnesslist size" + fitnessList.size());
 	}
 	
-	public  void calculateProbabilty() {
+	private  void calculateProbabilty() {
 		probabilityList.clear();
 		float totalFitness = 0f;
 		float p = 0f;
@@ -229,7 +229,7 @@ public class EA2 {
 
 	
 	//Selection
-	public  Float[] selection() {
+	private  Float[] selection() {
 		//System.out.println();
 		//System.out.println("-------------------------------------------------------------------------------------------------------------------");
 		//System.out.println("SELECTION");
@@ -305,7 +305,7 @@ public class EA2 {
 	
 	
 	//Crossover
-	public Float[] crossover(Float[] gene1, Float[] gene2) {
+	private Float[] crossover(Float[] gene1, Float[] gene2) {
 		System.out.println();
 		System.out.println("CROSSOVER");
 		double rangeMax = 0;
@@ -334,7 +334,7 @@ public class EA2 {
 	
 
 	//Mutation
-	public  Float[] mutation(Float[] newGene) {
+	private Float[] mutation(Float[] newGene) {
 		System.out.println();
 		System.out.println("MUTATION");
 		double rangeMax = 0;
