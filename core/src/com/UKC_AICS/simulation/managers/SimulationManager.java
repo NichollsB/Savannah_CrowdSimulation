@@ -324,11 +324,11 @@ public class SimulationManager extends Manager {
 	}
 
     public HashMap<String, Byte> getTileInfo(int screenX, int screenY) {
-        return worldManager.getTileInfoAt(screenX,screenY);
+        return worldManager.getTileInfoAt(screenX, screenY);
     }
 
     public Boid getBoidAt(int screenX, int screenY) {
-        return boidManager.getBoidAt(screenX,screenY);
+        return boidManager.getBoidAt(screenX, screenY);
     }
     
     //Added by Ben Nicholls for graphics purposes
@@ -376,7 +376,28 @@ public class SimulationManager extends Manager {
         boidManager = new BoidManager(this, ea);
         reset();
     }
-    
+
+    public void loadSaveCall(String command, String identifier, HashMap<String, File> file){
+//        System.out.println("Load call " + );
+        if(command.equalsIgnoreCase("load")){
+            if(identifier.equalsIgnoreCase("envpack")){
+                if(!file.containsKey("packfile") || !file.containsKey("atlasfile")) {
+                    System.out.println("missing pack file path or pack atlas file path");
+                    return;
+                }
+                EnvironmentLoader.loadMaps(file.get("packfile"), file.get("packatlas"));
+                hardReset();
+                return;
+            }
+            if(identifier.equalsIgnoreCase("envatlas")){
+                for(String s : file.keySet()){
+                    EnvironmentLoader.loadMap(file.get(s), s);
+                }
+                hardReset();
+                return;
+            }
+        }
+    }
     public void loadSaveCall(String command, String identifier, File file){
     	System.out.println("Load/save call. Command " + command + " id " + identifier + " file " + file.getPath());
     	if(command.equalsIgnoreCase("save")){
@@ -393,7 +414,7 @@ public class SimulationManager extends Manager {
     			
     		}
     		if(identifier.equalsIgnoreCase("environment")){
-    			
+//                EnvironmentLoader.lo
     		}
     		
     		if(identifier.equalsIgnoreCase("guifile")){

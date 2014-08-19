@@ -62,14 +62,8 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		put("confirm", null);
 		put("cancel", null);
 	}};
-	
-	public FileChooser(String title, Skin skin, String command, String id, Stage stage){
-		this(title, skin, command, id, defaultDir, false, null, null, stage);
-	}
-	public FileChooser(String title, Skin skin, String command, String id, String dir, boolean internal, Stage stage){
-		this(title, skin, dir, command, id, internal, null, null, stage);
-	}
-	public FileChooser(String title, Skin skin, String command, String id, String dir, boolean internal, String confirmText, String cancelText, Stage stage) {
+
+	public FileChooser(String title, Skin skin, String command, String id, String dir, String confirmText, String cancelText, Stage stage) {
 		super(title, skin);
 		this.command = command;
 		this.identifier = id;
@@ -83,7 +77,7 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		
 		create(confirmText, cancelText, stage);
 	}
-	public FileChooser(String title, Skin skin, String command, String id, File dir, boolean internal, String confirmText, String cancelText, Stage stage) {
+	public FileChooser(String title, Skin skin, String command, String id, File dir, String confirmText, String cancelText, Stage stage) {
 		super(title, skin);
 		this.command = command;
 		this.identifier = id;

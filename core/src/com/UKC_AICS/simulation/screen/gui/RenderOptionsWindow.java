@@ -36,7 +36,7 @@ public class RenderOptionsWindow extends Dialog implements MenuSelectEvent {
 	private final Array<MenuSelectListener> listeners = new Array<MenuSelectListener>();
 	
 	public RenderOptionsWindow(String title, Skin skin, 
-			File water, File grass, File textureSheet, Stage stage ) {
+        File water, File grass, File textureSheet, Stage stage ) {
 		super(title, skin);
 		this.skin=skin;
 		this.stage = stage;
@@ -75,7 +75,7 @@ public class RenderOptionsWindow extends Dialog implements MenuSelectEvent {
 		backgroundOptions.setItems(RenderState.getTileStates());
 		backgroundOptions.setSelected(RenderState.TILESTATE.stateName);
 		
-		   fileChooser = new FileChooser("Load", skin, "Load", "Species", "../", true, "Confirm", "Cancel", stage);
+		   fileChooser = new FileChooser("Load", skin, "Load", "Species", "../", "Confirm", "Cancel", stage);
 	        fileChooser.addSelectionListener(new MenuSelectListener(){
 				public void selectionMade(java.lang.Object menu, java.lang.Object object) {
 					FileChooser chooser = (FileChooser) menu;
