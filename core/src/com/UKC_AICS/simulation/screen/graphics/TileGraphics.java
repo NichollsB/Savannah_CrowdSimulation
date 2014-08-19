@@ -135,7 +135,7 @@ public class TileGraphics extends SpriteCache {
 					
 					lastRegion = nextRegion;
 //					System.out.println("added to cache " + lastRegion.name + " as nth element " + count + " " + numCachedLayers);
-					this.add(lastRegion, xPos, y*lastRegion.originalHeight, lastRegion.originalWidth, lastRegion.originalHeight);
+					this.add(lastRegion, xPos, y*lastRegion.originalHeight, lastRegion.originalWidth+1, lastRegion.originalHeight+1);
 					cacheCount ++;
 					numCachedLayers++;
 //					break;
@@ -183,7 +183,7 @@ public class TileGraphics extends SpriteCache {
 	public void updateTiles(Batch batch, boolean update, HashMap<String, byte[][]> infoLayers){
 		this.setProjectionMatrix(batch.getProjectionMatrix());
 		
-		Gdx.gl.glEnable(GL20.GL_BLEND);
+		Gdx.gl.glEnable(GL20.GL_NEAREST);
 		
 		if(manager.update()){
 		

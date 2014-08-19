@@ -149,7 +149,7 @@ public class SpriteManager {
 		if(assetManager.isLoaded(defaultBoid_selected_path)){
 			spriteTexture = assetManager.get(defaultBoid_selected_path, Texture.class);
 			defaultBoid_selected = new Sprite(spriteTexture);
-			defaultBoid_selected.setSize(spriteTexture.getWidth(), spriteTexture.getHeight());
+			defaultBoid_selected.setScale(0.5f);//.setSize(spriteTexture.getWidth(), spriteTexture.getHeight());
 		}
         //USING A SINGLE ENTITY SHEET
         if(assetManager.isLoaded(entitySheet_Path)){
@@ -157,34 +157,34 @@ public class SpriteManager {
             Sprite s;
             for(Integer i : objectNames.keys()){
                 s = entitySheet.createSprite(objectNames.get(i));
-                s.setSize(s.getWidth()/2, s.getWidth()/2);
+                s.setScale(0.5f);//.setSize(s.getWidth()/2, s.getWidth()/2);
                 if(s!=null){
                     objectSprites.put(i, s);
                 }
                 s = entitySheet.createSprite((objectNames.get(i)+"_highlight"));
-                s.setSize(s.getWidth()/2, s.getWidth()/2);
+                s.setScale(0.5f);//.setSize(s.getWidth()/2, s.getWidth()/2);
                 if(s!=null){
                     objectSprites_Selected.put(i, s);
                 }
             }
 
             s = entitySheet.createSprite("boid");
-            s.setSize(s.getWidth()/2, s.getWidth()/2);
+            s.setScale(0.5f);//.setSize(s.getWidth()/2, s.getWidth()/2);
             defaultBoid = s;
             s = entitySheet.createSprite("boid_highlight");
-            s.setSize(s.getWidth()/2, s.getWidth()/2);
+            s.setScale(0.5f);//.setSize(s.getWidth()/2, s.getWidth()/2);
             defaultBoid_selected = s;
             for(byte b: boidColors.keySet()){
                 if(!boidSprites.containsKey(b)){
                     s = entitySheet.createSprite("boid");
-                    s.setSize(s.getWidth()/2, s.getWidth()/2);
+                    s.setScale(0.5f);//.setSize(s.getWidth()/2, s.getWidth()/2);
                     float[] color = boidColors.get(b);
                     s.setColor(color[0], color[1], color[2], 1);
                     boidSprites.put(b, s);
                 }
                 if(!corpseSprites.containsKey(b)){
                     s = entitySheet.createSprite("corpse");
-                    s.setSize(s.getWidth()/2, s.getWidth()/2);
+                    s.setScale(0.5f);//.setSize(s.getWidth()/2, s.getWidth()/2);
                     float[] color = boidColors.get(b);
                     s.setColor(color[0], color[1], color[2], 1);
                     corpseSprites.put(b, s);
@@ -326,6 +326,9 @@ public class SpriteManager {
 			
 			return null;
 		}
+	}
+	public AtlasRegion getTileRegion(String layer){
+		return environmentTiles_Atlas.findRegion(layer);
 	}
 	
 	public AtlasRegion getEmptyRegion(){

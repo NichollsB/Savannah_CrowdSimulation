@@ -338,6 +338,10 @@ public class SimulationManager extends Manager {
     		if(identifier.equalsIgnoreCase("environment")){
     			
     		}
+    		
+    		if(identifier.equalsIgnoreCase("guifile")){
+    			
+    		}
 		}
     }
     public Entity getObjectAt(int x, int y){

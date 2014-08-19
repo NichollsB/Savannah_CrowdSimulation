@@ -1,0 +1,25 @@
+EnvSettings.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Water
+  rotate: false
+  xy: 2, 2
+  size: 1028, 1028
+  orig: 1028, 1028
+  offset: 0, 0
+  index: -1
+grass
+  rotate: false
+  xy: 1032, 2
+  size: 1028, 1028
+  orig: 1028, 1028
+  offset: 0, 0
+  index: -1
+terrain
+  rotate: false
+  xy: 2062, 2
+  size: 1028, 1028
+  orig: 1028, 1028
+  offset: 0, 0
+  index: -1

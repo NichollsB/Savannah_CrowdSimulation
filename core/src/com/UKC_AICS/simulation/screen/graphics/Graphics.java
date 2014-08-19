@@ -66,7 +66,7 @@ public class Graphics {
 	ShapeRenderer back = new ShapeRenderer();
 	private HashMap<Byte, float[]> boidColours = new HashMap<Byte, float[]>();
 	
-	private AtlasSprite background;
+	private AtlasRegion background;
 	
 	
 	SpriteCache backgroundCache = new SpriteCache(20000, false);
@@ -142,9 +142,18 @@ public class Graphics {
 //		    	back.rect(0, 0, renderWidth, renderHeight);
 //		    	back.end();
 //				batch.begin();
-
+                
+                if(background == null){
+                	background = spriteManager.getTileRegion("ground");
+                }
                 try{
-                    background.draw(batch);
+                	for(int i = 0; i < renderWidth; i += background.originalWidth){
+                		for(int j = 0; j < renderHeight; j += background.originalHeight){
+//                			batch.draw(background, i, j);
+                			batch.draw(background, i, j, background.originalWidth+1, background.originalHeight+1);
+                		}
+                	}
+//                    background.draw(batch);
                 }
                 catch(NullPointerException e){
                     System.out.println("Missing GROUND environment layer");
@@ -227,10 +236,21 @@ public class Graphics {
 					}
 				}
 				batch.end();
+				//DEBUGGING BOID POSITIION
+				camera.update();
+			 	r.setProjectionMatrix(camera.combined);
+			 	r.setColor(Color.RED);
+				r.begin(ShapeType.Filled);
+				for(Boid boid : boidsArray){
+					r.circle(boid.position.x, boid.position.y, 2);
+//					r.rect(boid.position.x, boid.position.y, 16, 16);
+				}
+				r.end();
 				ScissorStack.popScissors();
 			}
 			
 		}
+	ShapeRenderer r = new ShapeRenderer();
 		/*if(boidMap.size>0){
 			 Boid boid;
 			 for(Iterator<Boid> boids = boidMap.keys(); boids.hasNext();){
@@ -286,7 +306,8 @@ public class Graphics {
 		dynamicTiles = new TileGraphics(tileLayers, spriteManager, backgroundCache);
 	}
 	public void initBackground(){
-		background = EnvironmentLoader.getLayer_sprite(EnvironmentLayer.GROUND);
+//		background = EnvironmentLoader.getLayer_sprite(EnvironmentLayer.GROUND);
+//		spriteManager.lo
 	}
 	
 	/**

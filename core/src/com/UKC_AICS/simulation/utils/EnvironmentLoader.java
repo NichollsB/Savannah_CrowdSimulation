@@ -23,8 +23,8 @@ import static com.UKC_AICS.simulation.Constants.*;
  */
 public abstract class EnvironmentLoader {
 	
-	private static final String defaultPackFile_path = "data/Maps/default/EnvSheet.txt";
-	private static final String defaultMapSheet_path = "data/Maps/default/EnvSheet.png";
+	private static final String defaultPackFile_path = "data/Maps/EnvSettings.txt";
+	private static final String defaultMapSheet_path = "data/Maps/EnvSettings.png";
 	private static String atlasPath = defaultPackFile_path;
 	private static String mapPath = defaultMapSheet_path;
 	
@@ -41,10 +41,9 @@ public abstract class EnvironmentLoader {
 	 */
 	public enum EnvironmentLayer{
 		
-		GROUND("ground", "Ground_Map"),
-		TERRAIN("terrain", "Movable_Map"),
-		WATER("water", "Water_Map"),
-		GRASS("grass", "InitialGrass_Map");
+		TERRAIN("terrain", "water"),
+		WATER("water", "grass"),
+		GRASS("grass", "terrain");
 
 		private final String name;
 		private final String layerMap;
@@ -144,23 +143,30 @@ public abstract class EnvironmentLoader {
 	}
 	
 	/**
+	 * /**
 	 * Return the specified environment layer as an byte[][] array corresponding to amounts indicated by the 
-	 * average pixel colour (alpha) within each cell area
+	 * average greyscale pixel colour (alpha or red channel) within each cell area
 	 * @param name String name of the layer to be retrieved (set by the name of the original image packed into the environment pack file
-	 * @return byte[][] array containing the average alpha value of each pixel within each TILE_SIZE square array.
-	 * This indicates the set 'amount' for each cell.
+	 * @param alphaChannel Boolean indicating whether or not to formulate values based on the alpha channel, alternativey will generate from red channel
+	 * @return
 	 */
-	public static byte[][] getLayer_values(String name){
+	public static byte[][] getLayer_values(String name, boolean alphaChannel){
 		byte[][] layerVals = {{0},{0}};
 		if(environmentLayers_pixmap.containsKey(name)){
 			Pixmap layer = environmentLayers_pixmap.get(name);
 			layerVals = new byte[layer.getHeight()/TILE_SIZE][layer.getWidth()/TILE_SIZE];
 			float color=0f;
+			Color c = new Color();
 			for(int xGrid = 0, j = 0, i = 0; xGrid < layer.getWidth(); xGrid+=TILE_SIZE, j++, i = 0){
 				for( int yGrid = 0; yGrid < layer.getHeight(); yGrid+=TILE_SIZE, i++){
 					for(int pixX = xGrid; pixX<(xGrid+TILE_SIZE); pixX++){
 						for(int pixY = yGrid; pixY<(yGrid+TILE_SIZE); pixY++){
-							color += (layer.getPixel(pixX, pixY) & 0x000000ff) / 255f;
+							Color.rgb888ToColor(c, layer.getPixel(pixX, pixY));
+//							color += (layer.getPixel(pixX, pixY) & 0x000000ff) / 255f;
+							if(alphaChannel)
+								color+= c.a;
+							else
+								color+= c.r;
 							
 						}
 					}
