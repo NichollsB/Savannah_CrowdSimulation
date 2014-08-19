@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.screen.graphics;
 
 import java.util.HashMap;
 
+import com.UKC_AICS.simulation.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -49,11 +50,11 @@ public class SpriteManager {
 //        put(2, "data/triangle3.png");
 //	}};
 	private String defaultBoidTextureFile = "data/EntitySprites/triangle2.png";
-	private ObjectMap<Integer, String> objectsFiles = new ObjectMap<Integer, String>(){{
-				put(0, "data/EntitySprites/corpse_object_x16.png");
-				put(1, "data/EntitySprites/corpse_object_x16.png");
-				put(2, "data/EntitySprites/Attractor.png");
-				put(3, "data/EntitySprites/Repellor.png");
+	private ObjectMap<Byte, String> objectsFiles = new ObjectMap<Byte, String>(){{
+				put((byte)0, "data/EntitySprites/corpse_object_x16.png");
+				put((byte)1, "data/EntitySprites/corpse_object_x16.png");
+				put((byte)2, "data/EntitySprites/Attractor.png");
+				put((byte)3, "data/EntitySprites/Repellor.png");
 			}};
     private final ObjectMap<Integer, String> objectNames = new ObjectMap<Integer, String>(){{
         put(0, "corpse");
@@ -65,8 +66,8 @@ public class SpriteManager {
     }};
 	
 
-	private ObjectMap<Integer, Sprite> objectSprites = new ObjectMap<Integer, Sprite>();
-    private ObjectMap<Integer, Sprite> objectSprites_Selected = new ObjectMap<Integer, Sprite>();
+	private ObjectMap<Byte, Sprite> objectSprites = new ObjectMap<Byte, Sprite>();
+    private ObjectMap<Byte, Sprite> objectSprites_Selected = new ObjectMap<Byte, Sprite>();
 	private Array<Array<Sprite>> entitySprites;
 	
 	private ObjectMap<String, Sprite> tileTextures;
@@ -123,8 +124,8 @@ public class SpriteManager {
 //			else
 //				created = false;
 		}
-		objectSprites = new ObjectMap<Integer, Sprite>(objectsFiles.size);
-		for(Integer entity: objectsFiles.keys()){
+		objectSprites = new ObjectMap<Byte, Sprite>(objectsFiles.size);
+		for(Byte entity: objectsFiles.keys()){
 			if(assetManager.isLoaded(objectsFiles.get(entity))){
 				spriteTexture = assetManager.get(objectsFiles.get(entity), Texture.class);
 				sprite = new Sprite(spriteTexture);
@@ -149,7 +150,7 @@ public class SpriteManager {
 		if(assetManager.isLoaded(defaultBoid_selected_path)){
 			spriteTexture = assetManager.get(defaultBoid_selected_path, Texture.class);
 			defaultBoid_selected = new Sprite(spriteTexture);
-			defaultBoid_selected.setSize(spriteTexture.getWidth(), spriteTexture.getHeight());
+			defaultBoid_selected.setScale(0.5f);//.setSize(spriteTexture.getWidth(), spriteTexture.getHeight());
 		}
         //USING A SINGLE ENTITY SHEET
         if(assetManager.isLoaded(entitySheet_Path)){
@@ -157,34 +158,34 @@ public class SpriteManager {
             Sprite s;
             for(Integer i : objectNames.keys()){
                 s = entitySheet.createSprite(objectNames.get(i));
-                s.setSize(s.getWidth()/2, s.getWidth()/2);
+                s.setScale(0.5f);//.setSize(s.getWidth()/2, s.getWidth()/2);
                 if(s!=null){
-                    objectSprites.put(i, s);
+                    objectSprites.put(i.byteValue(), s);
                 }
                 s = entitySheet.createSprite((objectNames.get(i)+"_highlight"));
-                s.setSize(s.getWidth()/2, s.getWidth()/2);
+                s.setScale(0.5f);//.setSize(s.getWidth()/2, s.getWidth()/2);
                 if(s!=null){
-                    objectSprites_Selected.put(i, s);
+                    objectSprites_Selected.put(i.byteValue(), s);
                 }
             }
 
             s = entitySheet.createSprite("boid");
-            s.setSize(s.getWidth()/2, s.getWidth()/2);
+            s.setScale(0.5f);//.setSize(s.getWidth()/2, s.getWidth()/2);
             defaultBoid = s;
             s = entitySheet.createSprite("boid_highlight");
-            s.setSize(s.getWidth()/2, s.getWidth()/2);
+            s.setScale(0.5f);//.setSize(s.getWidth()/2, s.getWidth()/2);
             defaultBoid_selected = s;
             for(byte b: boidColors.keySet()){
                 if(!boidSprites.containsKey(b)){
                     s = entitySheet.createSprite("boid");
-                    s.setSize(s.getWidth()/2, s.getWidth()/2);
+                    s.setScale(0.5f);//.setSize(s.getWidth()/2, s.getWidth()/2);
                     float[] color = boidColors.get(b);
                     s.setColor(color[0], color[1], color[2], 1);
                     boidSprites.put(b, s);
                 }
                 if(!corpseSprites.containsKey(b)){
                     s = entitySheet.createSprite("corpse");
-                    s.setSize(s.getWidth()/2, s.getWidth()/2);
+                    s.setScale(0.5f);//.setSize(s.getWidth()/2, s.getWidth()/2);
                     float[] color = boidColors.get(b);
                     s.setColor(color[0], color[1], color[2], 1);
                     corpseSprites.put(b, s);
@@ -202,21 +203,24 @@ public class SpriteManager {
 			blankImage.setColor(0, 0, 0, 0);
 			blankImage.fillRectangle(0, 0, 16, 16);
 			environmentTiles_Atlas.addRegion("0", new Texture(blankImage), 0, 0, 0, 0);
-			
+            ObjectMap<Float, AtlasSprite> m = new ObjectMap<Float, AtlasSprite>();
+            m.put(0f, new AtlasSprite(environmentTiles_Atlas.findRegion("0")));
+            environmentTiles_sprites.put("0", m);
 			String[] parts;
 			AtlasSprite atSprite;
 			for(AtlasRegion region : atlas.getRegions()){
 				atSprite = new AtlasSprite(region);
 				atSprite.setSize(region.originalWidth, region.originalHeight);
-				if(region.name == "0" || !region.name.contains("#")){
-					if(!environmentTiles_sprites.containsKey("0")){
-						ObjectMap atlasMap = new ObjectMap<Float, AtlasSprite>();
-						atlasMap.put(0, atSprite);
-						environmentTiles_sprites.put("0", atlasMap);
-					}
-					continue;
-				}
-//				else if (region.name.contains("#")){
+//				if(region.name == "0" || !region.name.contains("#")){
+//					if(!environmentTiles_sprites.containsKey("0")){
+//						ObjectMap atlasMap = new ObjectMap<Float, AtlasSprite>();
+//						atlasMap.put(0, atSprite);
+//						environmentTiles_sprites.put("0", atlasMap);
+//					}
+//					continue;
+//				}
+//				else
+                if (region.name.contains("#")){
 					parts = region.name.split("#");
 					if(!environmentTiles_sprites.containsKey(parts[0])){
 						ObjectMap atlasMap = new ObjectMap<Float, AtlasSprite>();
@@ -224,10 +228,10 @@ public class SpriteManager {
 						environmentTiles_sprites.put(parts[0], atlasMap);
 					}
 					else {
-						environmentTiles_sprites.get(parts[0]).put(Float.parseFloat(parts[1]), 
+						environmentTiles_sprites.get(parts[0]).put(Float.parseFloat(parts[1]),
 								atSprite);
 					}
-//				}
+				}
 			}
 		}
 		
@@ -237,8 +241,10 @@ public class SpriteManager {
 	
 
 	public Sprite getObjectSprite(Byte subtype){
-		if(objectSprites.containsKey((int)subtype)){
-			return objectSprites.get(subtype.intValue());
+//        System.out.println("Getting sprite " + subtype + " " + objectNames.get((int)subtype));
+		if(objectSprites.containsKey(subtype)){
+
+			return objectSprites.get(subtype);
 		}
 		return null;
 	}
@@ -296,7 +302,7 @@ public class SpriteManager {
 	public void loadAssets_Objects(Array<Byte> objs){
 		created = false;
 		String filename = "data/corpse_object_x16.png";
-		for(int type : objectsFiles.keys()){
+		for(byte type : objectsFiles.keys()){
 			filename = objectsFiles.get(type);
 			//System.out.println(filename);
 			loadAsset(filename, false);
@@ -314,9 +320,10 @@ public class SpriteManager {
 		
 		try{
 			
-			if(layer == "terrain")
-				layer = "water";
+//			if(layer == "terrain")
+//				layer = "water";
 			if(layer != null && amount > 0){
+//                return environmentTiles_regions.get(layer).get((float)amount);
 				return environmentTiles_Atlas.findRegion(layer + "#" + amount);
 			}
 			else
@@ -327,10 +334,14 @@ public class SpriteManager {
 			return null;
 		}
 	}
+	public AtlasRegion getTileRegion(String layer){
+		return environmentTiles_Atlas.findRegion(layer);
+	}
 	
 	public AtlasRegion getEmptyRegion(){
 		return environmentTiles_Atlas.findRegion("0"); 
 	}
+    public AtlasSprite getEmptySprite(){ return  environmentTiles_sprites.get("0").get(0f); }
 	public int getNumTileRegions(){
 		
 		return environmentTiles_Atlas.getRegions().size;
@@ -338,9 +349,9 @@ public class SpriteManager {
 		
 	public AtlasSprite getTileSprite(String layer, float amount){
 		String l = layer;
-		if(l == "water")return null;
-		if(l == "terrain")
-			l = "water";
+//		if(l == "water")return null;
+//		if(l == "terrain")
+//			l = "water";
 		
 		if(!environmentTiles_sprites.containsKey(l)) return null;
 		if(!environmentTiles_sprites.get(l).containsKey(amount)) return null;
@@ -363,7 +374,7 @@ public class SpriteManager {
     public Sprite getCorpse_Sprite(byte species){ return corpseSprites.get(species); }
 
     public Sprite getObject_highlight(byte type){
-        return objectSprites_Selected.get((int)type);
+        return objectSprites_Selected.get(type);
     }
 	
 }

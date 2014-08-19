@@ -254,8 +254,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	final MenuDropdown menu = createFileMenu(new String[]{"load", "save"}, new String[]{"Load", "Save"}, "Species Settings",
     			"SPECIES");
     	menuTable.add(menu).padLeft(5);
-    	
-    	
     	TextButton renderButton = new TextButton("Render Options", skin);
     	renderButton.addListener(new ClickListener(){
     		@Override

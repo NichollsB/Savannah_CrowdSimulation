@@ -19,7 +19,7 @@ import java.util.Random;
  */
 public class WorldManager extends Manager {
 
-    private static final int TILE_SIZE = 16;
+    private static final int TILE_SIZE = Constants.TILE_SIZE;
     private static LandMap map;
     private static Vector3 tileSize;
     private static Vector3 size;
@@ -131,17 +131,23 @@ public class WorldManager extends Manager {
 
     public static HashMap<String,Byte> getTileInfoAt(int x, int y) {
         HashMap<String, Byte> layers = new HashMap<String, Byte>();
-        int mapX = x/TILE_SIZE;
-        int mapY = y/TILE_SIZE;
-        if (mapX >= 0 && mapX < tileSize.x &&
-                mapY >= 0 && mapY < tileSize.y) {
+        int mapX = x/Constants.TILE_SIZE;
+        int mapY = y/Constants.TILE_SIZE;
+        if ((mapX < 0 || mapX >= tileSize.x) ||
+                (mapY < 0 || mapY >= tileSize.y)) {
+            return layers;
+        }
+
+        if ((mapX >= 0 && mapX < tileSize.x) &&
+                (mapY >= 0 && mapY < tileSize.y)) {
 
             for (String layer : map.information_layers.keySet()) {
                 layers.put(layer, map.information_layers.get(layer)[mapX][mapY]);
             }
         }
         else {
-            System.out.println("I'm mysteriously out of bounds");
+            System.out.println("I'm mysteriously out of bounds " + mapX + " " + mapY +
+            " tile size " + tileSize.x + " " + tileSize.y);
         }
         return layers;
     }
