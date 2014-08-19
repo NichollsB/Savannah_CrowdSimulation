@@ -147,10 +147,13 @@ public class Graphics {
                 	background = spriteManager.getTileRegion("ground");
                 }
                 try{
-                	for(int i = 0; i < renderWidth; i += background.originalWidth){
-                		for(int j = 0; j < renderHeight; j += background.originalHeight){
+                    int iNum = renderWidth/background.originalWidth;
+                    int jNum = renderHeight/background.originalHeight;
+                	for(int i = 0; i < iNum; i ++){
+                		for(int j = 0; j < jNum; j ++){
 //                			batch.draw(background, i, j);
-                			batch.draw(background, i, j, background.originalWidth+1, background.originalHeight+1);
+                			batch.draw(background, i*background.originalWidth, j*background.originalHeight,
+                                    background.originalWidth+1, background.originalHeight+1);
                 		}
                 	}
 //                    background.draw(batch);
@@ -195,10 +198,15 @@ public class Graphics {
                         }
                         else
 						    sprite = spriteManager.getObjectSprite(entity.getType());
+
                         if(sprite!=null){
+//                            System
                             updateSpritePosition(entity, sprite);
                             sprite.draw(batch);
                         }
+//                        else {
+//                            System.out.println("Null sprite " + entity.getType());
+//                        }
 					}
 
 				}

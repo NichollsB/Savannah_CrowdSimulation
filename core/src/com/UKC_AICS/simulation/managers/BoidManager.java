@@ -120,18 +120,24 @@ public class BoidManager extends Manager {
     public void createBoid(Species species) {
         Boid boid = new Boid(species);
 
-        int maxXPos = 1180;
+        int maxXPos = Constants.mapWidth-100;
         int minXPos = 100;
 
-        int maxYPos = 620;
+        int maxYPos = Constants.mapHeight-100;
         int minYPos = 100;
 
         int maxXVel = 1;
         int maxYVel = 1;
 
 
-        int xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
-        int yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        int xPos;
+        int yPos;
+        xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+        yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        while(WorldManager.getTileInfoAt(xPos, yPos).get("terrain") == 1){
+            xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+            yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        }
 
         int xVel = (rand.nextInt(2 * maxXVel) - maxXVel);
 

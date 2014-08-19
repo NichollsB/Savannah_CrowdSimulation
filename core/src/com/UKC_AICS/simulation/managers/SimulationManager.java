@@ -10,6 +10,7 @@ import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.entity.ObjectData;
 import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
+import com.UKC_AICS.simulation.utils.EnvironmentLoader;
 import com.UKC_AICS.simulation.utils.StaXParser;
 import com.UKC_AICS.simulation.utils.StaXParserLoad;
 import com.UKC_AICS.simulation.utils.StaxWriter;
@@ -17,10 +18,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.sun.corba.se.impl.orbutil.closure.Constant;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Random;
 
 
 /**
@@ -34,8 +37,8 @@ public class SimulationManager extends Manager {
 //    BoidManagerThreadedThree boidManager = new BoidManagerThreadedThree(this);
 //    BoidManagerOld boidManager = new BoidManagerOld(this);
     public EA2 ea = new EA2();
-    BoidManager boidManager = new BoidManager(this, ea);
-    WorldManager worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
+    BoidManager boidManager; //= new BoidManager(this, ea);
+    WorldManager worldManager;// = new WorldManager(Constants.mapWidth, Constants.mapHeight);
 
    
 
@@ -73,6 +76,16 @@ public class SimulationManager extends Manager {
         for (Species species : speciesData.values()) {
             species.setGrowthPerDay((species.getMaxSize() - species.getNewbornSize()) / species.getMaturity());
         }
+
+        EnvironmentLoader.loadMaps();
+        int size[] = EnvironmentLoader.getDimensions();
+        if(size[0] > 1 && size[1] > 1) {
+            Constants.mapWidth = size[0];
+            Constants.mapHeight = size[1];
+        }
+        boidManager = new BoidManager(this, ea);
+        worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
+
         generateBoids();
 
 
@@ -94,33 +107,67 @@ public class SimulationManager extends Manager {
 
 
     private void addTestObjects() {
+        Random rand = new Random();
+        int maxXPos = Constants.mapWidth-100;
+        int minXPos = 100;
+
+        int maxYPos = Constants.mapHeight-100;
+        int minYPos = 100;
+        int xPos;
+        int yPos;
+        xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+        yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        while(WorldManager.getTileInfoAt(xPos, yPos).get("terrain") == 1){
+            xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+            yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        }
 //        Array<Byte> objTypes = new Array<Byte>();
-        Object obj = new Object(objectData.get((byte)2),355,450);
+        Object obj = new Object(objectData.get((byte)2),xPos,yPos);
 //        objTypes.add(obj.getType());
         WorldManager.putObject(obj);
-        obj = new Object(objectData.get((byte)2),500,200);
+        xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+        yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        while(WorldManager.getTileInfoAt(xPos, yPos).get("terrain") == 1){
+            xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+            yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        }
+        obj = new Object(objectData.get((byte)2),xPos,yPos);
 ////        obj = new Object((byte)2,(byte)1,900,300);
         WorldManager.putObject(obj);
-
-        obj = new Object(objectData.get((byte)3),755,450);
+        xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+        yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        while(WorldManager.getTileInfoAt(xPos, yPos).get("terrain") == 1){
+            xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+            yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+        }
+        obj = new Object(objectData.get((byte)3),xPos,yPos);
 //        objTypes.add(obj.getType());
         WorldManager.putObject(obj);
 //        objTypes.add((byte)0);
-
-        obj = new Object(objectData.get((byte)1),400,600);
-        WorldManager.putObject(obj);
-        obj = new Object(objectData.get((byte)1),160,200);
-        WorldManager.putObject(obj);
-        obj = new Object(objectData.get((byte)1),160,400);
-        WorldManager.putObject(obj);
-        obj = new Object(objectData.get((byte)1),180,600);
-        WorldManager.putObject(obj);
-        obj = new Object(objectData.get((byte)1),1100,200);
-        WorldManager.putObject(obj);
-        obj = new Object(objectData.get((byte)1),1100,400);
-        WorldManager.putObject(obj);
-        obj = new Object(objectData.get((byte)1),1100,600);
-        WorldManager.putObject(obj);
+        for(int i = 0; i < 8; i ++){
+            xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+            yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+            while(WorldManager.getTileInfoAt(xPos, yPos).get("terrain") == 1){
+                xPos = rand.nextInt((maxXPos - minXPos) + 1) + minXPos;
+                yPos = rand.nextInt((maxYPos - minYPos) + 1) + minYPos;
+            }
+            obj = new Object(objectData.get((byte)1),xPos,yPos);
+            WorldManager.putObject(obj);
+        }
+//        obj = new Object(objectData.get((byte)1),400,600);
+//        WorldManager.putObject(obj);
+//        obj = new Object(objectData.get((byte)1),160,200);
+//        WorldManager.putObject(obj);
+//        obj = new Object(objectData.get((byte)1),160,400);
+//        WorldManager.putObject(obj);
+//        obj = new Object(objectData.get((byte)1),180,600);
+//        WorldManager.putObject(obj);
+//        obj = new Object(objectData.get((byte)1),1100,200);
+//        WorldManager.putObject(obj);
+//        obj = new Object(objectData.get((byte)1),1100,400);
+//        WorldManager.putObject(obj);
+//        obj = new Object(objectData.get((byte)1),1100,600);
+//        WorldManager.putObject(obj);
     }
 
     public void reset(){
@@ -313,11 +360,19 @@ public class SimulationManager extends Manager {
     public void saveSpecies(File file){
     	
     }
-    public void loadEnvironment(File file){
-    	
-    }
+
     public void saveEnvironment(File file){
     	
+    }
+
+    public void loadEnvironment(File file){
+
+    }
+
+    public void hardReset(){
+        worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
+        boidManager = new BoidManager(this, ea);
+        reset();
     }
     
     public void loadSaveCall(String command, String identifier, File file){

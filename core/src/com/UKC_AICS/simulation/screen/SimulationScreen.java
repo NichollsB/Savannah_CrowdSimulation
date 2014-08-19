@@ -245,7 +245,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
      * 
      */
     public void setup() {
-    	EnvironmentLoader.loadMaps();
+//    	EnvironmentLoader.loadMaps();
     	
     	boidGraphics = new Graphics(Constants.mapWidth, Constants.mapHeight); //changed these from gdx.graphics.getWidth to this. -Em
         setupCameraController();

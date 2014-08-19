@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.utils;
 
 import java.util.HashMap;
 
+import com.UKC_AICS.simulation.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
@@ -30,6 +31,11 @@ public abstract class EnvironmentLoader {
 	
 	private static TextureAtlas environmentAtlas;
 	private static Pixmap environmentAtlas_pixmap;
+    private static final HashMap<String, EnvironmentLayer> environmentLayers = new HashMap<String, EnvironmentLayer>(){{
+        for(EnvironmentLayer layer : EnvironmentLayer.values()){
+            put(layer.toString(), layer);
+        }
+    }};
 	private static final HashMap<String, Pixmap> environmentLayers_pixmap = new HashMap<String, Pixmap>();
 	private static final HashMap<String, AtlasRegion> environmentLayers_atlasRegion = new HashMap<String, AtlasRegion>();
 	
@@ -41,9 +47,9 @@ public abstract class EnvironmentLoader {
 	 */
 	public enum EnvironmentLayer{
 		
-		TERRAIN("terrain", "water"),
-		WATER("water", "grass"),
-		GRASS("grass", "terrain");
+		TERRAIN("terrain", "terrain"),
+		WATER("water", "water"),
+		GRASS("grass", "grass");
 
 		private final String name;
 		private final String layerMap;
@@ -66,6 +72,15 @@ public abstract class EnvironmentLoader {
 	public static void loadMaps(){
 		loadMaps(atlasPath, mapPath);
 	}
+
+    public static void loadMap(FileHandle filePath, String layer){
+        String ext = filePath.extension();
+        if(!ext.contains("txt") && !ext.contains("png") && !ext.contains("bmp") ) return;
+        if(environmentLayers.containsKey(layer)){
+            Pixmap pixLayer = new Pixmap(filePath);
+            environmentLayers_pixmap.put(layer, pixLayer);
+        }
+    }
 	
 	/**
 	 * Load maps into a TextureAtlas via the pack file and the packed map sheet as a Pixmap. Retrieve regions from the 
@@ -83,10 +98,13 @@ public abstract class EnvironmentLoader {
 		
 		for(EnvironmentLayer layer : EnvironmentLayer.values()){
 			AtlasRegion region = environmentAtlas.findRegion(layer.mapName());
+            System.out.println("Loading in " + layer + " region " + region);
 			try{
+                System.out.println("region name " + region.name + " layer to string " + layer.toString());
 				Pixmap pixLayer = new Pixmap(region.originalWidth, region.originalHeight, environmentAtlas_pixmap.getFormat());
 				pixLayer.drawPixmap(environmentAtlas_pixmap, (int)region.offsetX, (int)region.offsetY, region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight());
 				environmentLayers_pixmap.put(layer.toString(), pixLayer);
+                System.out.println(" added as " + layer.toString() + environmentLayers_pixmap.containsKey(layer.toString()));
 				environmentLayers_atlasRegion.put(layer.toString(), region);
 			}
 			catch(NullPointerException e){
@@ -99,15 +117,7 @@ public abstract class EnvironmentLoader {
 //			environmentLayers.put(region.name, layer);
 //		}
 	}
-	
-	public void loadLayer(String packfile_path, String packsheet_path){
-		try{
-			
-		}
-		catch(NullPointerException e){
-			
-		}
-	}
+
 	
 	/**
 	 * Return the specified environment layer as an AtlasSprite
@@ -151,33 +161,89 @@ public abstract class EnvironmentLoader {
 	 * @return
 	 */
 	public static byte[][] getLayer_values(String name, boolean alphaChannel){
-		byte[][] layerVals = {{0},{0}};
+		byte[][] layerVals = null;
+        System.out.println("Getting values for " + name + environmentLayers.containsKey(name));
 		if(environmentLayers_pixmap.containsKey(name)){
 			Pixmap layer = environmentLayers_pixmap.get(name);
-			layerVals = new byte[layer.getHeight()/TILE_SIZE][layer.getWidth()/TILE_SIZE];
+            int gridWidth = layer.getWidth()/TILE_SIZE;
+            int gridHeight = layer.getHeight()/TILE_SIZE;
+			layerVals = new byte[gridWidth][gridHeight];
 			float color=0f;
 			Color c = new Color();
-			for(int xGrid = 0, j = 0, i = 0; xGrid < layer.getWidth(); xGrid+=TILE_SIZE, j++, i = 0){
-				for( int yGrid = 0; yGrid < layer.getHeight(); yGrid+=TILE_SIZE, i++){
-					for(int pixX = xGrid; pixX<(xGrid+TILE_SIZE); pixX++){
-						for(int pixY = yGrid; pixY<(yGrid+TILE_SIZE); pixY++){
-							Color.rgb888ToColor(c, layer.getPixel(pixX, pixY));
+            int x = 0, y = 0;
+            for(int gridX = 0; gridX < gridWidth; gridX++){
+                for(int gridY = 0; gridY < gridHeight; gridY++){
+//                    int xMax =
+                    for(x = gridX*TILE_SIZE; x<((gridX*TILE_SIZE)+TILE_SIZE); x++){
+                        if(x >= layer.getWidth()) break;
+                        for(y = gridY*TILE_SIZE; y<((gridY*TILE_SIZE)+TILE_SIZE); y++){
+                            if(y >= layer.getHeight()) break;
+                            Color.rgb888ToColor(c, layer.getPixel(x, y));
 //							color += (layer.getPixel(pixX, pixY) & 0x000000ff) / 255f;
-							if(alphaChannel)
-								color+= c.a;
-							else
-								color+= c.r;
-							
-						}
-					}
-					color = (color/(TILE_SIZE*TILE_SIZE))*100;
-					layerVals[i][j] = (byte)color;
-					color = 0;
-				}
-			}
+                            if(alphaChannel)
+                                color+= c.a;
+                            else
+                                color+= c.r;
+
+                        }
+                    }
+
+                    color = (color/(TILE_SIZE*TILE_SIZE));
+//                    if(name.equals("water"))
+//                        System.out.println("Average " + color);
+                    color *= 100;
+//                    if(name.equals("water"))
+//                        System.out.println("Mult'd" + color);
+                    layerVals[gridX][gridY] = (byte)color;
+//                    if(name.equals("water"))
+//                        System.out.println("in grid " + layerVals[gridX][gridY]);
+                    color = 0;
+                }
+            }
+//			for(int xGrid = 0, j = 0, i = 0; xGrid < layer.getWidth(); xGrid+=TILE_SIZE, j++, i = 0){
+//				for( int yGrid = 0; yGrid < layer.getHeight(); yGrid+=TILE_SIZE, i++){
+//					for(int pixX = xGrid; pixX<(xGrid+TILE_SIZE); pixX++){
+//						for(int pixY = yGrid; pixY<(yGrid+TILE_SIZE); pixY++){
+//							Color.rgb888ToColor(c, layer.getPixel(pixX, pixY));
+////							color += (layer.getPixel(pixX, pixY) & 0x000000ff) / 255f;
+//							if(alphaChannel)
+//								color+= c.a;
+//							else
+//								color+= c.r;
+//
+//						}
+//					}
+//					color = (color/(TILE_SIZE*TILE_SIZE))*100;
+//					layerVals[i][j] = (byte)color;
+//					color = 0;
+//				}
+//			}
 		}
 		return layerVals;
 	}
+
+    public static int[] getDimensions(){
+        int i[] = getGridDimensions();
+        for(int j = 0; j < i.length; j++){
+            i[j] = i[j]*Constants.TILE_SIZE;
+        }
+        return i;
+
+    }
+
+    public static int[] getGridDimensions(){
+        if(environmentLayers_pixmap.size()>0){
+
+            for(String s : environmentLayers.keySet()){
+                byte a[][] = getLayer_values(s, false);
+                for(int i = 0; i < s.length(); i ++){
+                    return new int[] {a.length, a[i].length};
+                }
+
+            }
+        }
+        return null;
+    }
 	
 
 	
