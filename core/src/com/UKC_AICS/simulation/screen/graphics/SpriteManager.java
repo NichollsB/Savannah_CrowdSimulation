@@ -346,7 +346,7 @@ public class SpriteManager {
 		
 		return environmentTiles_Atlas.getRegions().size;
 	}
-		
+    public AtlasSprite getTileSprite(String layer){ return getTileSprite(layer, 100);}
 	public AtlasSprite getTileSprite(String layer, float amount){
 		String l = layer;
 //		if(l == "water")return null;

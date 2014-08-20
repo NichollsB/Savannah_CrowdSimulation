@@ -34,7 +34,7 @@ public class TileMesh {
 	    private int idx = 0;
 	    
 	    
-	    private static final Color defaultCol = new Color(255,255,255,255);
+	    private static final Color defaultCol = Color.WHITE;
 	    public Color color = defaultCol;
 	    public Texture texture;
 	    
@@ -61,11 +61,47 @@ public class TileMesh {
 	    private float maxTexCellsX;
 	    private float maxTexCellsY;
 	    boolean repeatTexX;
+
+        //ALPHA BUFFERS - Min/Max values
+    private float lowerAlphaCutoff = 0;
+    private float upperAlphaCutoff = 1;
+    private float upperAlpha = 1;
+    private float lowerAlpha = 0;
+    private int gridRange = 100;
+
+    public TileMesh(float lowerCutoff, float upperCutoff, float alphaMin, float alphaMax, int valueRange){
+            this.lowerAlphaCutoff = lowerCutoff;
+        this.upperAlphaCutoff = upperCutoff;
+        this.lowerAlpha = alphaMin;
+            this.upperAlpha = alphaMax;
+            this.gridRange = valueRange;
+        }
+        public TileMesh(){}
 	    
 	    private boolean created = false;
+
+        public void createMesh(int startX, int startY, int width, int height, Color c){
+
+            mesh = new Mesh(true, 6, 0,
+                    new VertexAttribute(VertexAttributes.Usage.Position, 2, "a_position"),
+                    new VertexAttribute(VertexAttributes.Usage.Color, 4, "a_color"),
+                    new VertexAttribute(VertexAttributes.Usage.TextureCoordinates, 2, "a_texCoords"));
+            vertexComponents = 2 + 4 + 2;
+            verts = new float[vertexComponents*6];
+            color = c;
+            cornersVerts = new int[2][2][6];
+            for(int[][] array : cornersVerts){
+                for(int[]inner : array){
+                    Arrays.fill(inner, -1);
+                }
+            }
+            drawTrianglePair(0, 0, startX, startY, width, height, 0, 1, 1, -1, color);
+        }
 	    public void createMesh(byte[][] grid, int startX, int startY, int cellWidth, int cellHeight, Color c){
-	    	usesTexture = false;
+	    	usesTexture = true;
 	    	this.color = c;
+            this.texIncrementY = 1;
+            this.texIncrementX = 1;
 	    	createMesh(grid, startX, startY, cellWidth, cellHeight);
 	    }
 	    public void createMesh(byte[][] grid, int startX, int startY, int cellWidth, int cellHeight,
@@ -75,7 +111,8 @@ public class TileMesh {
 	    			allowStretch, texCellsX, texCellsY);
 	    }
 	    public void createMesh(byte[][] grid, int startX, int startY, int cellWidth, int cellHeight,
-	            Texture texture, boolean allowStretch, int texCellsX, int texCellsY){
+	            Texture texture, boolean allowStretch, int texCellsX, int texCellsY, Color color){
+            this.color = color;
 	    	this.texture = texture;
 	    	createMesh(grid, startX, startY, cellWidth, cellHeight, texture.getWidth(), texture.getHeight(),
 	    			allowStretch, texCellsX, texCellsY);
@@ -111,7 +148,7 @@ public class TileMesh {
 	        usesTexture = true;
 	        this.texCellsX = texCellsX;
 	        this.texCellsY = texCellsY;
-	        
+
 	        if (allowStretch == true){
 	            //Divide the number of whole textures we want by the length of the grid gives the number of texture units per grid point.
 	            this.texIncrementX = (float)texCellsX / (float)bs[0].length;
@@ -122,7 +159,6 @@ public class TileMesh {
 	            //Divide pixel length of grid by pixel length of texture to give number of native textures that will fit on the grid.
 	            maxTexCellsX = (float)(bs[0].length*cellWidth) / (float)(texWidth);
 	            maxTexCellsY = (float)(bs.length*cellHeight) / (float)(texHeight);
-	            
 	            //Divide the max number of native texture cells by the number of grid points to get the number of texture units per grid point.
 	            this.texIncrementX = maxTexCellsX / (float)bs[0].length;
 	            this.texIncrementY = maxTexCellsY / (float)bs.length;
@@ -186,7 +222,6 @@ public class TileMesh {
 	    	return array;
 	    }
 	    private void createMesh(byte[][] grid, int startX, int startY, int cellWidth, int cellHeight){
-            System.out.println("Creating mesh");
 	    	if(cellWidth <= 0) cellWidth = cellSize;
 	    	if(cellHeight <= 0) cellHeight = cellSize;
 //	        this.grid = grid.clone();
@@ -257,7 +292,10 @@ public class TileMesh {
 	            
 	        }
 	        
-	        
+	        if(color.a > upperAlpha)
+                color.a = upperAlpha;
+            if(color.a < lowerAlphaCutoff)
+                color.a = lowerAlphaCutoff;
 	        //create an array to store the vertices data:
 	        // [x1, y1, r1, g1, b1, a1, x2, y2 ...  xn, yn, rn, gn, bn, an]
 	        verts = new float[maxVerts * vertexComponents];
@@ -274,16 +312,19 @@ public class TileMesh {
 	        int y,x, xpos, ypos;
 	        int texYCount = 0, texXCount = 0;
 	        float texXPos, texYPos;
-	        for(y = 0; y < gridSizeY; y++){
-	            ypos = y*cellHeight + startY;
-	            for(x = 0; x < gridSizeX; x++){
-	                xpos = x*cellWidth + startX;
-                    System.out.println("Drawing cell " + x + " " + y);
-	                if(!usesTexture)
-	                    drawTrianglePair(x, y, xpos, ypos, cellWidth, cellHeight, Color.WHITE);
+
+            for(x = 0; x < gridSizeX; x++){
+                xpos = x*cellWidth + startX;
+                for(y = 0; y < gridSizeY; y++){
+                    ypos = y*cellHeight + startY;
+//                    System.out.println("Drawing cell " + x + " " + y);
+	                if(!usesTexture) {
+//                        if(!flipped)
+                            drawTrianglePair(x, y, xpos, ypos, cellWidth, cellHeight, color);
+                    }
 	                else{
-	                    texYPos = y*texIncrementY + startY;
-	                    texXPos = x*texIncrementX + startX;
+	                    texYPos = y*texIncrementY ;
+	                    texXPos = x*texIncrementX ;
 	                    drawTrianglePair(x, y, xpos, ypos, cellWidth, cellHeight, texXPos, texCellsY-texYPos, texIncrementX, -texIncrementY, color);
 	                    texXCount++;
 	                   
@@ -296,9 +337,12 @@ public class TileMesh {
 	            }
 	        }
 	        
-	        //Give the list of vertices to the mesh so it can draw dat shit
+	        //Give the list of vertices to the mesh so it can draw
+            compareAndUpdate(grid, true);
 	        mesh.setVertices(verts);
+//            update(grid, true);
 	        created = true;
+
 	    }
 	    
 	    /////////////////////////////////////////////////////////////////////
@@ -482,7 +526,7 @@ public class TileMesh {
 	    public void addCornersVert(int cornerX, int cornerY, int aIndex){
 	        int verts[] = cornersVerts[cornerX][cornerY];
 	        for(int i = 0; i < 6; i++){
-	            if(verts[i] == aIndex) return; //If the vert index is already in this corenr, ignore
+	            if(verts[i] == aIndex) return; //If the vert index is already in this corner, ignore
 	            if(verts[i] == -1){
 	                //if we find a spot to add the index to this corner, do so and end the method
 	                verts[i] = aIndex;
@@ -492,8 +536,10 @@ public class TileMesh {
 	    }
 	    ////////////////////////////////////////////////////////
 	    /////////////////////////////////////////////////////////
-	    
 	    public boolean update(byte[][] grid){
+            return update(grid, false);
+        }
+	    public boolean update(byte[][] grid, boolean forceUpdate){
 //	        System.out.println("update Start");
 	    	if(created){
 
@@ -519,7 +565,10 @@ public class TileMesh {
 	    ////////////////////////////////////////////////////////
 	    // NEW UPDATE METHOD///////////////////////////
 	    /////////////////////////////////
-	    public void compareAndUpdate(byte[][] newGrid){
+        public void compareAndUpdate(byte[][] newGrid){
+            compareAndUpdate(newGrid, false);
+        }
+	    public void compareAndUpdate(byte[][] newGrid, boolean forceUpdate){
 //            System.out.println("Comparing");
 	        boolean updated = false;
 	        int gridSizeX = this.grid[0].length;
@@ -539,101 +588,48 @@ public class TileMesh {
 	        n = 0;
 	        int updateCornerCount = 0;
 	        for(y = 0; y < gridSizeY; y++){
-	        	if(Arrays.equals(this.grid[y], newGrid[y])) continue;
+	        	if(Arrays.equals(this.grid[y], newGrid[y]) && !forceUpdate) continue;
 	            for(x = 0; x < gridSizeX; x++){
 	                
 	                n++;
 	                //System.out.println("Start updating cell x " + x + " y " + y);
 	               
 	                //If this grid cell is not the same as the old grid cell, update
-	                if (this.grid[y][x] != newGrid[y][x]){
-                        System.out.println("Difference Found!");
+	                if ((this.grid[x][y] != newGrid[x][y] )|| forceUpdate){
+//                        System.out.println("Difference Found!");
 	///////////////////////////////////////////////////////////
 	/////////////////////GRID UPDATE TALLY CHECK METHOD
 	/////////////////////////////////////////////////////////////
 //	                    System.out.println("--------------------------------------UPDATE CELL " + x + " " + y);
-	                    if(updateTally[y][x] == 0){
+	                    if(updateTally[x][y] == 0){
 	                        updateCorner(x, y, newGrid);
 	                        updateCornerCount++;
-	                        updateTally[y][x] = 1;
+	                        updateTally[x][y] = 1;
 	                        updated = true;
 	                    }
 
-	                    if(updateTally[y][x+1] == 0){
+	                    if(updateTally[x+1][y] == 0){
 //	                                System.out.println("Bottom right");
 	                        updateCorner(x+1, y, newGrid);
 	                        updateCornerCount++;
-	                        updateTally[y][x] = 1;
+	                        updateTally[x][y] = 1;
 	                        updated = true;
 	                    }
 	                  
-	                    if(updateTally[y+1][x+1] == 0 ){
+	                    if(updateTally[x+1][y+1] == 0 ){
 //	                                System.out.println("Top right");
 	                        updateCorner(x+1, y+1, newGrid);
 	                        updateCornerCount++;
-	                        updateTally[y][x] = 1;
+	                        updateTally[x][y] = 1;
 	                        updated = true;
 	                    }
-	                    if(updateTally[y+1][x] == 0){
+	                    if(updateTally[x][y+1] == 0){
 //	                                System.out.println("Top left");
 	                        updateCorner(x, y+1, newGrid);
 	                        updateCornerCount++;
-	                        updateTally[y][x] = 1;
+	                        updateTally[x][y] = 1;
 	                        updated = true;
 	                    }
-	///////////////////////////////////////////////////////////////////////////////
-	/////////////////////OTHER METHOD/
-	/////////////////////////////////////////////////////////////////
-//	                    if (x == gridSizeX-1 && y != gridSizeY-1){
-//	                        //then we need to update bottom left and bottom right corner
-//	                        System.out.println("Bottom left");
-//	                        updateCorner(x, y, oldGrid);
-//	                        updateCornerCount++;
-	//
-//	                        System.out.println("Bottom right");
-//	                        updateCorner(x+1, y, oldGrid);
-//	                        updateCornerCount++;
-//	                        
-//	                    }
-//	                    else {
-//	                        if (y == gridSizeY-1 && x!= gridSizeX-1){
-//	                            //then we need to update bottom left and top left corners
-//	                            System.out.println("Bottom left");
-//	                            updateCorner(x, y, oldGrid);
-//	                            updateCornerCount++;
-	//
-//	                            System.out.println("Top left");
-//	                            updateCorner(x, y+1, oldGrid);
-//	                            updateCornerCount++;
-//	                        }
-//	                        else {
-//	                            if (y == gridSizeY-1 && x == gridSizeY-1){
-//	                                //then need to update all four corners
-//	                                //Update each of the four possible corners bordering the cell
-////	                                System.out.println("Bottom left");
-//	                                updateCorner(x, y, oldGrid);
-//	                                updateCornerCount++;
-	//
-////	                                System.out.println("Bottom right");
-//	                                updateCorner(x+1, y, oldGrid);
-//	                                updateCornerCount++;
-	//
-////	                                System.out.println("Top right");
-//	                                updateCorner(x+1, y+1, oldGrid);
-//	                                updateCornerCount++;
-	//
-////	                                System.out.println("Top left");
-//	                                updateCorner(x, y+1, oldGrid);
-//	                                updateCornerCount++;
-//	                            }
-//	                            else{
-//	                                //just update the bottom left
-////	                                System.out.println("Bottom left else");
-//	                                updateCorner(x, y, oldGrid);
-//	                                updateCornerCount++;                       
-//	                            }
-//	                        }
-//	                    }
 	                }
 	                else{
 	                    updateCornerCount++;
@@ -659,15 +655,20 @@ public class TileMesh {
 	            for(int i = cornerX-1; i <= cornerX; i++){
 	               if(i < 0 || i >= grid[0].length) continue;
 	               
-	               average += grid[j][i];
+	               average += grid[i][j];
 
 	               count++;
 	            }
 	        }
-	        average = (average / count)/100;
-
+	        average = (average / count)/gridRange;
+            if(average < lowerAlphaCutoff)
+                average = lowerAlpha;
+            if (average > upperAlphaCutoff)
+                average = upperAlpha;
+//            if(average >= lowerAlphaCutoff && average <= upperAlpha)
+//                return;
 	        //Then update all the vertices that correspond with this corner
-	    
+
 	        for(int n = 0; n < cornersVerts[cornerX][cornerY].length; n++){
 	           
 	            if(cornersVerts[cornerX][cornerY][n] != -1){
@@ -675,7 +676,7 @@ public class TileMesh {
 	                aIndex = cornersVerts[cornerX][cornerY][n];
 	                //Then update the alpha component in the vert array with the new alpha value
 	                verts[aIndex] = average;
-                    System.out.println("Update corner " + cornerX + " " + cornerY + " alpha " + average);
+//                    System.out.println("Update corner " + cornerX + " " + cornerY + " alpha " + average);
 	                
 	            }
 	        }
