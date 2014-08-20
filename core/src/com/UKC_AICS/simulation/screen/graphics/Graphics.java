@@ -1,34 +1,25 @@
 package com.UKC_AICS.simulation.screen.graphics;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Random;
 
+import com.UKC_AICS.simulation.Constants;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
-import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.ObjectMap;
-import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.*;
-import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.gui.controlutils.RenderState;
-import com.UKC_AICS.simulation.utils.EnvironmentLoader;
-import com.UKC_AICS.simulation.utils.EnvironmentLoader.EnvironmentLayer;
 
 /**
  * 
@@ -39,7 +30,7 @@ import com.UKC_AICS.simulation.utils.EnvironmentLoader.EnvironmentLayer;
 public class Graphics {
 	//generic sprite for all entities
 	private Sprite sprite;
-	
+
 	//private SpriteBatch boidBatch;
 	private Sprite boidSprite;
 	private Sprite selectedBoidSprite;
@@ -50,141 +41,135 @@ public class Graphics {
 	//TEMPORARY
 //	private Texture altTexture = new Texture(Gdx.files.internal("triangle3.png"));
 	private Sprite altSprite;
-	
+
 	private SpriteManager spriteManager = new SpriteManager();
-	
+
 	private HashMap<String, byte[][]> tileMap;
-	
+
 	private int renderWidth;
 	private int renderHeight;
-	
+
 	private OrthographicCamera camera = new OrthographicCamera();
-	
+
 
 	private Texture simBase;
-	
+
 	ShapeRenderer back = new ShapeRenderer();
 	private HashMap<Byte, float[]> boidColours = new HashMap<Byte, float[]>();
-	
+
 	private AtlasRegion background;
-	
-	
+
+
 	SpriteCache backgroundCache = new SpriteCache(20000, false);
 	private TileGraphics dynamicTiles;
-	
-	private final TileMesh grassMesh = new TileMesh();
-	
+
+	private final TileMesh grassMesh = new TileMesh(0f, 1f, 0f, 1f, 128);
+    private final TileMesh waterMesh = new TileMesh(0.3f, 0.8f, 0f, 0.8f, 128);
+    private final TileMesh groundMesh = new TileMesh(0f, 1f, 0f, 1f, 128);
+    private final TileMesh meshes[] = new TileMesh[]{groundMesh, grassMesh, waterMesh};
 	private static enum DynamicRenderOption{
 		TILED, MESH;
 	}
 	private DynamicRenderOption renderMode = DynamicRenderOption.TILED;
 	private final MeshRenderer meshRenderer = new MeshRenderer();
 
-    public static final String VERT_SHADER =
-            "attribute vec2 a_position;\n" +
-                    "attribute vec4 a_color;\n" +
-                    "attribute vec2 a_texCoords;\n" +
-                    "uniform mat4 u_projTrans;\n" +
-                    "varying vec4 vColor;\n" +
-                    "varying vec2 vTexCoords;\n" +
-                    "void main() {\n" +
-                    " vColor = a_color;\n" +
-                    " vTexCoords = a_texCoords;\n" +
-                    " gl_Position = u_projTrans * vec4(a_position.xy, 0.0, 1.0);\n" +
-                    "}";
-    public static final String FRAG_SHADER =
-            "#ifdef GL_ES\n" +
-                    "precision mediump float;\n" +
-                    "#endif\n" +
-                    "varying vec4 vColor;\n" +
-                    "varying vec2 vTexCoords;\n" +
-                    "uniform sampler2D u_texture;\n" +
-                    "uniform mat4 u_projTrans;\n" +
-                    "void main() {\n" +
-                    "// gl_FragColor = vColor;\n" +
-                    "gl_FragColor = vColor * texture2D(u_texture, vTexCoords);\n" +
-                    "}";
-    private static final ShaderProgram shader = createMeshShader();
-    private final Array<TileMesh> meshes = new Array<TileMesh>();
-    protected static ShaderProgram createMeshShader() {
-        ShaderProgram.pedantic = false;
-        ShaderProgram shader = new ShaderProgram(VERT_SHADER, FRAG_SHADER);
-        String log = shader.getLog();
-        if (!shader.isCompiled())
-            throw new GdxRuntimeException(log);
-        if (log!=null && log.length()!=0)
-            System.out.println("Shader Log: "+log);
-        return shader;
-    }
+
+    TileMesh gridMesh;
+    OrthographicCamera cam;
+    ShaderProgram shader;
+    Rectangle glViewport;
+    FileHandle imageFileHandle = Gdx.files.internal("data/EnvironmentTiles/grassSeamless.jpg");
+    Texture texture = new Texture(imageFileHandle){{
+        setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+    }};
+    //This is how we control the size of the input grid (and the meshgrid)
+
 
 	public Graphics(int width, int height){
 		renderWidth = width;
 		renderHeight = height;
+
+//        }
 	}
 
-	
-//	private Texture test = new Texture(Gdx.files.internal("/data/grass_tile_x16.png"));
 
+//	private Texture test = new Texture(Gdx.files.internal("/data/grass_tile_x16.png"));
+    boolean created = false;
 	/**
 	 * Update and render the sprites representing the boids. Renders via the SpriteBatch passed in.
 	 * @param batch is the SpriteBatch to render the boid sprites in
-	 * @param viewRect 
+	 * @param viewRect
 	 */
 	public void update(SpriteBatch batch, Rectangle viewRect){
 			if(spriteManager.update()){
-				AtlasRegion region;
-				ScissorStack.pushScissors(viewRect);
-                batch.begin();
-//				ScissorStack.pushScissors(scissor);
-//				spriteManager.drawTileCache();
-//				back.begin(ShapeType.Filled);
-//		    	back.setColor(0.8f,0.7f,0.5f,1f);
-//		    	back.rect(0, 0, renderWidth, renderHeight);
-//		    	back.end();
-//				batch.begin();
-                
-                if(background == null){
-                	background = spriteManager.getTileRegion("ground");
-                }
-                try{
-                    int iNum = renderWidth/background.originalWidth;
-                    int jNum = renderHeight/background.originalHeight;
-                	for(int i = 0; i < iNum; i ++){
-                		for(int j = 0; j < jNum; j ++){
-//                			batch.draw(background, i, j);
-                			batch.draw(background, i*background.originalWidth, j*background.originalHeight,
-                                    background.originalWidth+1, background.originalHeight+1);
-                		}
-                	}
-//                    background.draw(batch);
-                }
-                catch(NullPointerException e){
-                    System.out.println("Missing GROUND environment layer");
-                }
-                batch.end();
-				if(RenderState.TILESTATE.equals(RenderState.State.MESH)){
-//
-					if(grassMesh.update(tileMap.get("grass"))){
-						meshRenderer.renderAll(camera);
-					}
-					else{
-						region = spriteManager.getTileRegion("grass", 100);
-						System.out.println();
-						if(region != null){
-							grassMesh.createMesh(tileMap.get("grass"), 0, 0, 16, 16, region.getTexture(), false, 0, 0);
-							meshRenderer.addMesh(grassMesh);
-						}
+                Gdx.gl.glDepthMask(false);
+                //enable blending, for alpha
+                Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+                if(tileMap == null || tileMap.size()<1 || !created){
+//                    System.out.println("Trying to create mesh");
+                    if(!created){
 
-					}
-					
-				}
+                        if(texture!=null) {
+                            System.out.println("creating");
+                            grassMesh.createMesh(tileMap.get("grass"), 0, 0, Constants.TILE_SIZE, Constants.TILE_SIZE,
+                                    texture, true, 10, 10, new Color(0.55f, 0.7f, 0.41f, 1f));
+                            waterMesh.createMesh(tileMap.get("water"), 0, 0, Constants.TILE_SIZE, Constants.TILE_SIZE, Color.TEAL);
+                            byte g[][] = new byte[tileMap.get("water").length][tileMap.get("water")[0].length];
+                            for(byte b[] : g){
+                                Arrays.fill(b, (byte)100);
+                            }
+//                            groundMesh.createMesh(tileMap.get("water"), 0, 0, Constants.TILE_SIZE, Constants.TILE_SIZE, new Color(0.5f, 0.4f, 0.36f, 1f));
+                            groundMesh.createMesh(g, 0, 0, Constants.TILE_SIZE, Constants.TILE_SIZE, new Color(0.28f, 0.18f, 0.08f,1f));
+                            created = true;
+                        }
+                    }
+                }
+				AtlasRegion region;
+                AtlasSprite aSprite;
+				ScissorStack.pushScissors(viewRect);
+
+                if(RenderState.TILESTATE.equals(RenderState.State.MESH)){
+                    if(created){
+                        //update the mesh grid (setVertices again with the new verts)
+                        grassMesh.update(tileMap.get("grass"));
+//                        waterMesh.update(tileMap.get("water"));
+//                        meshRenderer.renderMesh(groundMesh, camera);
+                        meshRenderer.renderMeshes(meshes, camera);
+                    }
+
+                }
+
+                if(!RenderState.TILESTATE.equals(RenderState.State.MESH)) {
+                    batch.begin();
+                    Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
+                    if (background == null) {
+                        background = spriteManager.getTileRegion("ground");
+                    }
+                    try {
+                        int iNum = renderWidth / background.originalWidth;
+                        int jNum = renderHeight / background.originalHeight;
+
+                        for (int i = 0; i < iNum; i++) {
+                            for (int j = 0; j < jNum; j++) {
+//                			batch.draw(background, i, j);
+                                batch.draw(background, i * background.originalWidth, j * background.originalHeight,
+                                        background.originalWidth + 1, background.originalHeight + 1);
+                            }
+                        }
+//                    background.draw(batch);
+                    } catch (NullPointerException e) {
+                        System.out.println("Missing GROUND environment layer");
+                    }
+                    batch.end();
+                }
 
 				if(RenderState.TILESTATE.equals(RenderState.State.TILED) && dynamicTiles != null){
-					Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
+                    Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
 					dynamicTiles.updateTiles(batch, true, tileMap);
 				}
 
 		    	batch.begin();
+                Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
 				byte b = 0;
 				if(entityArray.size>0){
 					for(Entity entity : entityArray){
@@ -244,19 +229,24 @@ public class Graphics {
 					}
 				}
 				batch.end();
-				//DEBUGGING BOID POSITIION
-				camera.update();
-			 	r.setProjectionMatrix(camera.combined);
-			 	r.setColor(Color.RED);
-				r.begin(ShapeType.Filled);
-				for(Boid boid : boidsArray){
-					r.circle(boid.position.x, boid.position.y, 2);
-//					r.rect(boid.position.x, boid.position.y, 16, 16);
-				}
-				r.end();
+//				//DEBUGGING BOID POSITIION
+//				camera.update();
+//			 	r.setProjectionMatrix(camera.combined);
+//			 	r.setColor(Color.RED);
+//				r.begin(ShapeType.Filled);
+//				for(Boid boid : boidsArray){
+//					r.circle(boid.position.x, boid.position.y, 2);
+////					r.rect(boid.position.x, boid.position.y, 16, 16);
+//				}
+//				r.end();
+//                //////////////////////////////////
+
 				ScissorStack.popScissors();
 			}
-			
+
+
+//        Gdx.gl.glFinish();
+
 		}
 	ShapeRenderer r = new ShapeRenderer();
 		/*if(boidMap.size>0){
@@ -268,7 +258,7 @@ public class Graphics {
 				//boidMap.get(boid).draw(batch);
 			}
 		}*/
-		
+
 	
 	
 	/**
@@ -304,9 +294,11 @@ public class Graphics {
 //        meshRenderer.addMesh(grassMesh);
 		AtlasRegion region = spriteManager.getTileRegion("grass", 100);
 		if(region != null){
-			grassMesh.createMesh(bs, 0, 0, tileSize, tileSize, region.originalWidth, region.originalHeight, false, 0, 0);
-			meshRenderer.addMesh(grassMesh);
+//			grassMesh.createMesh(bs, 0, 0, tileSize, tileSize, region.originalWidth, region.originalHeight, false, 0, 0);
+//			meshRenderer.addMesh(grassMesh);
+
 		}
+
 	}
 	public void initTileSprites(HashMap<String, byte[][]> tileLayers){
 		this.tileMap = tileLayers;

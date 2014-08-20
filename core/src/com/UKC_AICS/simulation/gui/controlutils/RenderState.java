@@ -38,6 +38,11 @@ public abstract class RenderState extends ControlState {
 		System.out.println(TILESTATE.stateName);
 		
 	}
+    public static void changeTileState(String state){
+        if(!tileStates.containsKey(state)) return;
+        if(TILESTATE.stateName.equalsIgnoreCase(state)) return;
+        TILESTATE = tileStates.get(state);
+    }
 	
 
 }

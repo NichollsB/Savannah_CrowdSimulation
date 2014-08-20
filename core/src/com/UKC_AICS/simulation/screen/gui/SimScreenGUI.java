@@ -308,6 +308,22 @@ public class SimScreenGUI extends Stage implements HoverListener {
             }
         });
     	menuTable.add(button).padLeft(5);
+
+        MenuDropdown renderSelection = new MenuDropdown(skin, "Environment Render Type", "rendertype");
+        renderSelection.addItems(new String[]{"Tiles", "Mesh"}, true);
+        renderSelection.addSelectionListener(new MenuSelectListener(){
+            @Override
+            public void selectionMade(java.lang.Object menu, java.lang.Object object){
+                String s = (String)object;
+                if(s.equalsIgnoreCase("tiles")){
+                    RenderState.changeTileState("tiled");
+                }
+                if(s.equalsIgnoreCase("mesh")){
+                    RenderState.changeTileState("mesh");
+                }
+            }
+        });
+        menuTable.add(renderSelection).padLeft(5);
     	menuTable.add(new Table()).fillX().expandX();
     	return menuTable;
     }
