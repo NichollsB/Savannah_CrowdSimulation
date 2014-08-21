@@ -121,51 +121,80 @@ public class TileGraphics extends SpriteCache {
 				
 				layermap = infoLayers.get(layer);
 				amount = layermap[x][y];
-                if((!layer.equals("water") || amount > 30)){
+//                if((!layer.equals("water") || amount > 30)){
+//                    amount = (byte) (Math.round((amount+5)/10)*10);
+////				}
+////					nextRegion = manager.getTileRegion(layer, amount);
+//                    nextSprite = manager.getTileSprite(layer, amount);
+//                }
+                if((layer.equals("water")) || layer.equals("grass")){
                     amount = (byte) (Math.round((amount+5)/10)*10);
-//				}
-//					nextRegion = manager.getTileRegion(layer, amount);
-                    nextSprite = manager.getTileSprite(layer, amount);
+                    if(layer.equals("grass") || amount >30)
+                        nextSprite = manager.getTileSprite(layer, amount);
+                    else
+                        nextSprite=null;
+                    if(nextSprite == null){
+                        nextSprite = manager.getEmptySprite();
+                        lastSprite = nextSprite;
+                        this.add(lastSprite, xPos, y*lastSprite.getWidth(), lastSprite.getWidth()+1, lastSprite.getHeight()+1);
+                        numCachedLayers++;
+                        count++;
+//                        break;
+                    }
+                    else{
+                        lastSprite = nextSprite;
+                        this.add(lastSprite, xPos, y*lastSprite.getWidth(), lastSprite.getWidth()+1, lastSprite.getHeight()+1);
+                        cacheCount ++;
+                        numCachedLayers++;
+                        count++;
+//                        break;
+                    }
+//                    if(nextSprite != null){
+//                        lastSprite = nextSprite;
+//                        this.add(lastSprite, xPos, y*lastSprite.getWidth(), lastSprite.getWidth()+1, lastSprite.getHeight()+1);
+//                        cacheCount ++;
+//                        numCachedLayers++;
+//                        count++;
+//                        break;
+//                    }
+
+//                    else{//if(!cacheRow_Count.contains(id, true)){
+//                        lastSprite = manager.getTileSprite("grass", 100);//.getEmptySprite();
+//                        System.out.println("Empty sprite " + lastSprite);
+//                        this.add(lastSprite, xPos, y*lastSprite.getWidth(), lastSprite.getWidth()+1, lastSprite.getWidth()+1);
+//                        cacheCount ++;
+//                        numCachedLayers++;
+//                        count++;
+//                        break;
+//                    }
                 }
-				
-//				if(layer.equals("water"))
-//					amount = -1;
-//				else if(layer.equals("terrain")){
-//
-//					amount = (byte) ((amount==1) ? 90f : 0);
-//				}
-//				else{
-//                    amount = (byte) (amount/127 * 100);
-
-//				System.out.println("Tile " + x + " layer " + n);
-//				if( nextSprite != null){
-                if(nextSprite != null){
-//					lastRegion = nextRegion;
-                    lastSprite = nextSprite;
-//					System.out.println("added to cache " + lastRegion.name + " as nth element " + count + " " + numCachedLayers);
-//					this.add(lastRegion, xPos, y*lastRegion.originalHeight, lastRegion.originalWidth+1, lastRegion.originalHeight+1);
-                    this.add(lastSprite, xPos, y*lastSprite.getWidth(), lastSprite.getWidth()+1, lastSprite.getHeight()+1);
-					cacheCount ++;
-					numCachedLayers++;
+//                if(nextSprite != null){
+////					lastRegion = nextRegion;
+//                    lastSprite = nextSprite;
+////					System.out.println("added to cache " + lastRegion.name + " as nth element " + count + " " + numCachedLayers);
+////					this.add(lastRegion, xPos, y*lastRegion.originalHeight, lastRegion.originalWidth+1, lastRegion.originalHeight+1);
+//                    this.add(lastSprite, xPos, y*lastSprite.getWidth(), lastSprite.getWidth()+1, lastSprite.getHeight()+1);
+//					cacheCount ++;
+//					numCachedLayers++;
+////					break;
+////					copyMap = true;
+//					count++;
 //					break;
-//					copyMap = true;
-					count++;
-					break;
-				}
-
-				else if (n == infoLayers.size()){//if(!cacheRow_Count.contains(id, true)){
-//					lastRegion = manager.getEmptyRegion();
-                    lastSprite = manager.getEmptySprite();
-//					System.out.println("REgion Null. Adding empty." + " added to cache " + lastRegion.name + " as nth element " + count + " " + numCachedLayers);
-//					System.out.println("Adding empty " + lastRegion.name);
-//					this.add(lastRegion, xPos, y*lastRegion.originalHeight, lastRegion.originalWidth, lastRegion.originalHeight);
-                    this.add(lastSprite, xPos, y*lastSprite.getWidth(), lastSprite.getWidth()+1, lastSprite.getWidth()+1);
-                    cacheCount ++;
-					numCachedLayers++;
-					count++;
-//					copyMap = true;
-					break;
-				}
+//				}
+//
+//				else if (n == infoLayers.size()){//if(!cacheRow_Count.contains(id, true)){
+////					lastRegion = manager.getEmptyRegion();
+//                    lastSprite = manager.getEmptySprite();
+////					System.out.println("REgion Null. Adding empty." + " added to cache " + lastRegion.name + " as nth element " + count + " " + numCachedLayers);
+////					System.out.println("Adding empty " + lastRegion.name);
+////					this.add(lastRegion, xPos, y*lastRegion.originalHeight, lastRegion.originalWidth, lastRegion.originalHeight);
+//                    this.add(lastSprite, xPos, y*lastSprite.getWidth(), lastSprite.getWidth()+1, lastSprite.getWidth()+1);
+//                    cacheCount ++;
+//					numCachedLayers++;
+//					count++;
+////					copyMap = true;
+//					break;
+//				}
 				n++;
 				
 			}
@@ -194,7 +223,7 @@ public class TileGraphics extends SpriteCache {
 	public void updateTiles(Batch batch, boolean update, HashMap<String, byte[][]> infoLayers){
 		this.setProjectionMatrix(batch.getProjectionMatrix());
 		
-		Gdx.gl.glEnable(GL20.GL_NEAREST);
+
 		
 		if(manager.update()){
 		
@@ -231,7 +260,8 @@ public class TileGraphics extends SpriteCache {
 					copyLayers = false;
 					layersToCopy.clear();
 				}
-				
+            Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
+            Gdx.gl.glBlendFunc(Gdx.gl.GL_SRC_ALPHA, Gdx.gl.GL_ONE_MINUS_SRC_ALPHA);
 			this.begin();
 			int id;
 			for(int i : cacheRow_Map.keys()){

@@ -100,6 +100,8 @@ public class SimScreenGUI extends Stage implements HoverListener {
 	
 	private RenderOptionsWindow renderOptions;
     private EnvironmentFileWindow environmentOptions;
+
+    private final Table legend = new Table();
 	
     /**
      *
@@ -154,13 +156,18 @@ public class SimScreenGUI extends Stage implements HoverListener {
         		System.out.println("istener triggered");
                EnvironmentFileWindow window = (EnvironmentFileWindow) menu;
                 HashMap<String, File> files = new HashMap<String, File>();
-                for(String s : window.getPackFiles().keys()){
-                    files.put(s, window.getPackFiles().get(s));
+                if(window.fromPackFile()) {
+                    for (String s : window.getPackFiles().keys()) {
+                        files.put(s, window.getPackFiles().get(s));
+                    }
+                    simScreen.simulationManager.loadSaveCall("load", "envpack", files);
                 }
-                if(window.fromPackFile())
-                    simScreen.simulationManager.loadSaveCall("load", "envpack", files);//.loadSaveCall("load", "envpack", window.getPackFiles());
-                else
+                else{
+                    for (String s : window.getFiles().keys()) {
+                        files.put(s, window.getFiles().get(s));
+                    }
                     simScreen.simulationManager.loadSaveCall("load", "envatlas", files);
+                }
             }
         });
 //        fileChooser.hide();
@@ -196,7 +203,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
         west_4.setSplitAmount(split);
         west_4.setMaxSplitAmount(1f);
         west_4.setMinSplitAmount(0.01f);
-        
         east_3 = new SplitPane(null, east, false, skin);
         split = 1 - ((1f/splitwidth) * (float)WEST_WIDTH);
         east_3.setSplitAmount(split);
@@ -214,16 +220,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
         splitPanes.add(east_3).left().width(width).fill().expand();//fillY().expandY();
         
         Table bottom = new Table();
-//        SplitPane pane = new SplitPane(splitPanes, bottom, true, skin);
-//        pane.setSplitAmount(1);
-       
-//        splitPanes.debug();
-        
-//        split = ((1f/splitwidth) * (float)SOUTH_HEIGHT);
-//        Table t1 = createSplitPane(east, null, split, true);
-//        split = ((1f/splitwidth) * (float)WEST_WIDTH);
-//        Table t2 = createSplitPane(west, t1, split, false);
-        
+
         table.add(splitPanes).fill().expand();
 //        table.add(splitPanes).fill().expand();
         table.row();
@@ -243,8 +240,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
 //        pane3.setMaxSplitAmount(EAST_WIDTH + screenRect.width);
 //        pane3.setSplitAmount(EAST_WIDTH);
        
-  
-       
+
         
 //        table.add(pane1).top().expandX().fillX();
 //        screenRect.set(0, 0, width, height);
@@ -267,7 +263,9 @@ public class SimScreenGUI extends Stage implements HoverListener {
 
 	private Table createNorth(Actor a){
     	Table menuTable = new Table(skin);
-    	
+        final SelectBox renderSelect = new SelectBox(skin);
+        renderSelect.setItems(new String[]{"Tiles", "Mesh", "Off"});
+        renderSelect.setSelected("Tiles");
     	//SPECIES LOAD/SAVE
     	final MenuDropdown menu = createFileMenu(new String[]{"load", "save"}, new String[]{"Load", "Save"}, "Species Settings",
     			"SPECIES");
@@ -287,10 +285,38 @@ public class SimScreenGUI extends Stage implements HoverListener {
             }
         });
         menuTable.add(button).padLeft(5);
+//
+       button = new TextButton("Sim Record Location", skin);
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                fileChooser.setOptionsText("Set Record Location", "Cancel");
+                fileChooser.setCommand("load");
+                fileChooser.setIdentifier("record");
+                fileChooser.open(stage);
+            }
+        });
+        menuTable.add(button).padLeft(5);
+
+        final CheckBox recordCheck = new CheckBox("Record Simulation", skin);
+        recordCheck.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(recordCheck.isChecked()){
+                    RenderState.changeTileState("off");
+                    renderSelect.setSelected("Off");
+                    simScreen.simulationManager.commandCall("record", "start");
+                }
+                else if(!recordCheck.isChecked())
+                    simScreen.simulationManager.commandCall("record", "stop");
+            }
+        });
+        menuTable.add(recordCheck).padLeft(5);
 
         //ENVIRONMENT OPTIONS
-
+        menuTable.add(new Table()).fillX().expandX();
         button = new TextButton("Load Environment", skin);
+        button.padLeft(5).padRight(5);
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -300,31 +326,52 @@ public class SimScreenGUI extends Stage implements HoverListener {
         menuTable.add(button).padLeft(5);
 
         //RENDER OPTIONS
-        button = new TextButton("Render Options", skin);
-    	button.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                renderOptions.open(stage);
-            }
-        });
-    	menuTable.add(button).padLeft(5);
+//        button = new TextButton("Render Options", skin);
+//    	button.addListener(new ClickListener() {
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                renderOptions.open(stage);
+//            }
+//        });
+//    	menuTable.add(button).padLeft(5);
 
-        MenuDropdown renderSelection = new MenuDropdown(skin, "Environment Render Type", "rendertype");
-        renderSelection.addItems(new String[]{"Tiles", "Mesh"}, true);
-        renderSelection.addSelectionListener(new MenuSelectListener(){
+        //Render type
+//        MenuDropdown renderSelection = new MenuDropdown(skin, "Environment Render Type", "rendertype");
+//        renderSelection.addItems(new String[]{"Tiles", "Mesh"}, true);
+//        renderSelection.addSelectionListener(new MenuSelectListener(){
+//            @Override
+//            public void selectionMade(java.lang.Object menu, java.lang.Object object){
+//                String s = (String)object;
+//                if(s.equalsIgnoreCase("tiles")){
+//                    RenderState.changeTileState("tiled");
+//                }
+//                if(s.equalsIgnoreCase("mesh")){
+//                    RenderState.changeTileState("mesh");
+//                }
+//            }
+//        });
+
+        renderSelect.addListener(new ChangeListener() {
             @Override
-            public void selectionMade(java.lang.Object menu, java.lang.Object object){
-                String s = (String)object;
-                if(s.equalsIgnoreCase("tiles")){
+            public void changed(ChangeEvent event, Actor actor) {
+
+                if (renderSelect.getSelected().equals("Tiles")) {
+                    simScreen.simulationManager.commandCall("record", "stop");
                     RenderState.changeTileState("tiled");
                 }
-                if(s.equalsIgnoreCase("mesh")){
+                if (renderSelect.getSelected().equals("Mesh")) {
+                    simScreen.simulationManager.commandCall("record", "stop");
                     RenderState.changeTileState("mesh");
+                }
+                if(renderSelect.getSelected().equals("Off")){
+                    RenderState.changeTileState("off");
                 }
             }
         });
-        menuTable.add(renderSelection).padLeft(5);
-    	menuTable.add(new Table()).fillX().expandX();
+
+        menuTable.add(new Label("Environment Render Type:", skin)).padRight(5).padLeft(20);
+        menuTable.add(renderSelect).width(100).padLeft(5).padRight(20);
+//    	menuTable.add(new Table()).fillX().expandX();
     	return menuTable;
     }
 	
@@ -375,7 +422,8 @@ public class SimScreenGUI extends Stage implements HoverListener {
 //    	t.add(southTable).bottom().height(SOUTH_HEIGHT).expandX().fillX().colspan(3);
 //    	southTable.add("south");
         // play/pause button
-        final TextButton playButton = new TextButton("Play", skin, "default");
+        final TextButton playButton = new TextButton("Play", skin);
+        playButton.pad(5);
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -390,7 +438,8 @@ public class SimScreenGUI extends Stage implements HoverListener {
         });
 
         //Reset button
-        final TextButton resetButton = new TextButton("Reset", skin, "default");
+        final TextButton resetButton = new TextButton("Reset", skin);
+        resetButton.pad(5);
         resetButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -401,7 +450,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
         });
         
       //Save button
-        final TextButton saveButton = new TextButton("Save", skin, "default");
+        final TextButton saveButton = new TextButton("Save", skin);
         saveButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -411,7 +460,8 @@ public class SimScreenGUI extends Stage implements HoverListener {
         });
         
       //Load button
-        final TextButton loadButton = new TextButton("Load", skin, "default");
+        final TextButton loadButton = new TextButton("Load", skin);
+        loadButton.pad(5);
         loadButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -422,7 +472,8 @@ public class SimScreenGUI extends Stage implements HoverListener {
         });
 
         // Switch mode button.
-        final TextButton switchButton = new TextButton("Switch", skin,"default");
+        final TextButton switchButton = new TextButton("Switch", skin);
+        switchButton.pad(5);
         switchButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -432,7 +483,8 @@ public class SimScreenGUI extends Stage implements HoverListener {
             }
         });
         // EA settings button.
-        final TextButton EAButton = new TextButton("EA Settings", skin,"default");
+        final TextButton EAButton = new TextButton("EA Settings", skin);
+        EAButton.pad(5);
         EAButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -451,17 +503,26 @@ public class SimScreenGUI extends Stage implements HoverListener {
 //        fps.setWidth(500f);
 //        southTable.addActor(playButton);
 //        playButton.setSize(100f, 30f);
-        southTable.add(fps).size(100f, 30f).bottom().left().padLeft(20f).padBottom(10f);
+        Table legendTable = new Table();
+        legendTable.add(fps).bottom().left().padLeft(20f).padBottom(10f);
+        legendTable.add(legend).fillX().expandX();
+//        southTable.add(fps).bottom().left().padLeft(20f).padBottom(10f).fillX().expandX();
+//        southTable.add(new Table()).fillX().expandX().colspan(6);
+        southTable.add(legendTable).fillX().expandX();
         southTable.row();
-        southTable.add(playButton).size(100f, 30f).bottom().left().padLeft(20f).padBottom(10f);
-        southTable.add(resetButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
-        southTable.add(EAButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
-        southTable.add(switchButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
-        southTable.add(saveButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
-        southTable.add(loadButton).size(100f, 30f).expandX().bottom().left().padLeft(20f).padBottom(10f);
+        Table btnTable = new Table();
+        btnTable.add(playButton).bottom().left().padLeft(20f).padBottom(10f);
+        btnTable.add(resetButton).bottom().left().padLeft(20f).padBottom(10f);
+        btnTable.add(EAButton).bottom().left().padLeft(20f).padBottom(10f);
+        btnTable.add(switchButton).bottom().left().padLeft(20f).padBottom(10f);
+        btnTable.add(saveButton).bottom().left().padLeft(20f).padBottom(10f);
+        btnTable.add(loadButton).bottom().left().padLeft(20f).padBottom(10f);
        
         //table.add(graphicsWindow).size(500f,500f);
-        southTable.add(console).size(500f,30f).bottom();
+        btnTable.add(new Table()).expandX().fillX();
+        btnTable.add(console).bottom().width(400).padLeft(20).padRight(10);
+        southTable.add(btnTable).fillX().expandX().padBottom(20);
+        southTable.padTop(20);
 		return southTable;
     }
     private Table createCentre(Actor a){
@@ -473,9 +534,10 @@ public class SimScreenGUI extends Stage implements HoverListener {
     private Table createEast(Actor a){
     	Table eastTable = new Table(skin);
 //    	t.add(eastTable).left().width(EAST_WIDTH).fillY().expandY();
-    	boidInfo = new Label("East. some stuff ", skin);
+    	boidInfo = new Label("", skin);
     	boidInfo.setAlignment(Align.left);
-
+        eastTable.add(new Label("Information Display", skin)).center().pad(5).fillX().expandX();
+        eastTable.row();
     	eastTable.add(createScrollPane(boidInfo, false, true, true, true)).top().fill().expand();
 		eastTable.pack();
 		
@@ -578,7 +640,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
 //        	if(showBoidInfo){
 //        		boidInfo.setText(boidDisplaying.toString());
 //        	}
-//        	else 
+//        	else
 //        		boidInfo.setText("");
         	setViewRect(north, south, east, west);
 //        	System.out.println(east.getWidth());
@@ -607,9 +669,42 @@ public class SimScreenGUI extends Stage implements HoverListener {
 //        font.draw(spriteBatch, getFPSString(), 0, 20);
     	
 	}
-	
+    private Array<String> legendEntries = new Array<String>();
 
-
+    public boolean addObjectsToLegend(HashMap<Byte, ObjectData> map, HashMap<Byte, Image> images){
+        boolean added = false;
+        boolean corpseAdded = false;
+        for(ObjectData b : map.values()){
+            if(b.getType() == (byte)0 && !corpseAdded) {
+                added = addToLegend("Corpse", images.get(b.getType()));
+                corpseAdded = added;
+            }
+            else if(b.getType() != (byte)0)
+                added = addToLegend(b.getName(), images.get(b.getType()));
+        }
+        return added;
+    }
+    public boolean addBoidsToLegend(HashMap<Byte, Species> map, HashMap<Byte, Image> images){
+        boolean added = false;
+        for(byte b : map.keySet()){
+            if(images.containsKey(b)){
+                added = addToLegend(map.get(b).getName(), images.get(b));
+            }
+        }
+        return added;
+    }
+    public boolean addToLegend(String entity, Image img){
+        if(entity == null || img == null) return false;
+        if(legendEntries.contains(entity, false)) return true;
+        Table entry = new Table();
+        img.setScale(0.8f, 0.8f);
+        entry.add(img).top().padBottom(5);
+        entry.add(new Label(entity, skin)).padBottom(5);
+        legend.add(entry).padLeft(40);
+//        legend.row();
+//        legend.pack();
+        return true;
+    }
 	
 	public void showBoidInfo(Boid boid, boolean show){
 		if(boidDisplaying!= null)boidDisplaying.setTracked(false);

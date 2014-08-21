@@ -21,15 +21,8 @@ public class EnvironmentFileWindow extends Dialog implements MenuSelectEvent {
     private Table seperateFileTable = new Table();
     private Table variableTable = new Table();
     private boolean fromPackFile;
-    private final ObjectMap<String, File> packFiles = new ObjectMap<String, File>(){{
-        put("packfile", null);
-        put("packatlas", null);
-    }};
-    private final ObjectMap<String, File> seperateFiles = new ObjectMap<String, File>(){{
-        put("water", null);
-        put("grass", null);
-        put("terrain", null);
-    }};
+    private final ObjectMap<String, File> packFiles = new ObjectMap<String, File>();
+    private final ObjectMap<String, File> seperateFiles = new ObjectMap<String, File>();
 
     private FileChooser fileChooser;
 
@@ -100,6 +93,7 @@ public class EnvironmentFileWindow extends Dialog implements MenuSelectEvent {
         });
         seperateFileTable.add(waterFileBtn).padLeft(5).padRight(5);
         seperateFileTable.row();
+
         final TextField grassField = new TextField("Select grass layer image file", skin);
         seperateFileTable.add(new Label("Grass file ", skin)).padLeft(5);
         seperateFileTable.add(grassField).padLeft(5).fillX().expandX();
@@ -112,11 +106,12 @@ public class EnvironmentFileWindow extends Dialog implements MenuSelectEvent {
         });
         seperateFileTable.add(grassFileBtn).padLeft(5).padRight(5);
         seperateFileTable.row();
+
         final TextField terrainField = new TextField("Select terrain image file", skin);
         seperateFileTable.add(new Label("Terrain file ", skin)).padLeft(5);
         seperateFileTable.add(terrainField).padLeft(5).fillX().expandX();
         TextButton terrainFileBtn = new TextButton("Load", skin);
-        grassFileBtn.addListener(new ClickListener(){
+        terrainFileBtn.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 fileChooser.setIdentifier("terrain");
                 fileChooser.open(stage);
@@ -129,35 +124,37 @@ public class EnvironmentFileWindow extends Dialog implements MenuSelectEvent {
             public void selectionMade(java.lang.Object menu, java.lang.Object object) {
                 FileChooser chooser = (FileChooser) menu;
                 File file;
-                if(chooser.getIdentifier().equals("packfile")){
-                    file = (File) object;
-                    packFiles.put("packfile", file);
-                    packField.setText(file.getPath());
-                    return;
+                file = (File) object;
+                try {
+                    System.out.println(file.getPath());
+                    if (chooser.getIdentifier().equals("packfile")) {
+                        packFiles.put("packfile", file);
+                        packField.setText(file.getPath());
+                        return;
+                    }
+                    if (chooser.getIdentifier().equals("packatlas")) {
+                        packFiles.put("packatlas", file);
+                        atlasField.setText(file.getPath());
+                        return;
+                    }
+                    if (chooser.getIdentifier().equals("water")) {
+                        seperateFiles.put("water", file);
+                        waterField.setText(file.getPath());
+                        return;
+                    }
+                    if (chooser.getIdentifier().equals("grass")) {
+                        seperateFiles.put("grass", file);
+                        grassField.setText(file.getPath());
+                        return;
+                    }
+                    if (chooser.getIdentifier().equals("terrain")) {
+                        seperateFiles.put("terrain", file);
+                        terrainField.setText(file.getPath());
+                        return;
+                    }
                 }
-                if(chooser.getIdentifier().equals("packatlas")){
-                    file = (File) object;
-                    packFiles.put("packatlas", file);
-                    atlasField.setText(file.getPath());
-                    return;
-                }
-                if(chooser.getIdentifier().equals("water")){
-                    file = (File) object;
-                    seperateFiles.put("water", file);
-                    waterField.setText(file.getPath());
-                    return;
-                }
-                if(chooser.getIdentifier().equals("grass")){
-                    file = (File) object;
-                    seperateFiles.put("grass", file);
-                    waterField.setText(file.getPath());
-                    return;
-                }
-                if(chooser.getIdentifier().equals("terrain")){
-                    file = (File) object;
-                    seperateFiles.put("terrain", file);
-                    waterField.setText(file.getPath());
-                    return;
+                catch(NullPointerException e){
+
                 }
             }
         });

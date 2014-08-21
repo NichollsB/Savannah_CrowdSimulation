@@ -9,19 +9,13 @@ import com.UKC_AICS.simulation.gui.controlutils.SelectedEntity;
 import com.UKC_AICS.simulation.gui.controlutils.SettingsEditor;
 import com.UKC_AICS.simulation.gui.controlutils.TreeOptionsInterface;
 import com.UKC_AICS.simulation.gui.controlutils.TreeOptionsListener;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Tree;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -69,24 +63,25 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	
 	private ScrollPane scrollPane;
 	private Stage stage;
+
+    private final ObjectMap<Byte, Image> nodeImages = new ObjectMap<Byte, Image>();
 	
 	public void initButtons(Skin skin){
 		final Skin s = skin;
 		buttons = new ObjectMap<ButtonType, Button>(){{
-			put(ButtonType.ADD, new TextButton(ButtonType.ADD.getName(), s));
 			put(ButtonType.REMOVE, new TextButton(ButtonType.REMOVE.getName(), s));
 			TextButton.TextButtonStyle style = new TextButton("", s).getStyle();
 			TextButton.TextButtonStyle checkedStyle = new TextButton.TextButtonStyle(style.up, style.down, style.down, style.font);
 			put(ButtonType.CHECKED, new TextButton(ButtonType.CHECKED.getName(), checkedStyle));
 		}};
 		buttonsInfo = new ObjectMap<Button, String>(){{
-			put(buttons.get(ButtonType.ADD), "Create new item of selected type");
 			put(buttons.get(ButtonType.REMOVE), "Remove selected item");
 			put(buttons.get(ButtonType.CHECKED), "Place new item of selected type - click to place on map");
 		}};
 		
 	}
-	
+
+//    public
 	public BoidListWindow(String title, Skin skin, SimScreenGUI gui, boolean fixedType, byte fixedTypeValue) {
 		super(skin);
 		
@@ -131,9 +126,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 	private Table buttons(){
 		Table btnGrp = new Table();
 
-		TextButton btn = (TextButton) buttons.get(ButtonType.ADD);
-		btn.addListener(new SelectOptionsListener(ButtonType.ADD, buttonsInfo.get(btn)));
-		btnGrp.add(btn).expandX().fillX();
+		TextButton btn ;
 		btn = (TextButton) buttons.get(ButtonType.REMOVE);
 		btn.addListener(new SelectOptionsListener(ButtonType.REMOVE, buttonsInfo.get(btn)));
 		btnGrp.add(btn).expandX().fillX();
@@ -199,7 +192,7 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
 
 		
 	}	
-	
+
 	/**
 	 * Add a root node, under which all other nodes will be stored. May have a type (spByte) that may be used to specify
 	 * under which root additional nodes should be added.
@@ -290,8 +283,8 @@ public class BoidListWindow extends Table implements TreeOptionsInterface {
             }
         }
         if(boidNodes.size != n)
-             System.out.println("Finished removing redundant entity nodes. Entity num " + boidNodes.size + " original size " +
-              " removed " + removed);
+//             System.out.println("Finished removing redundant entity nodes. Entity num " + boidNodes.size + " original size " +
+//              " removed " + removed);
         root.setNumChildren(boidNodes_num);
 		
 	}

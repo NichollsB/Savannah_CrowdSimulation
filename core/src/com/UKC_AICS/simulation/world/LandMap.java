@@ -33,6 +33,7 @@ public class LandMap {
         Random rand = new Random();//for randomly assigning values to tiles
 
         byte[][] terrain = null; //
+        boolean loadedLayer = true;
 //        byte[][] border = EnvironmentLoader.getLayer_values("terrain", false);
         if(terrain == null) {
             terrain = new byte[width / TILE_SIZE][height / TILE_SIZE];
@@ -42,7 +43,7 @@ public class LandMap {
                 }
             }
         }
-//
+        loadedLayer = true;
         byte[][] grassInfo = EnvironmentLoader.getLayer_values("grass", false);//new byte[width / TILE_SIZE][height / TILE_SIZE];
         if(grassInfo == null){
             grassInfo = new byte[width / TILE_SIZE][height / TILE_SIZE];
@@ -59,7 +60,7 @@ public class LandMap {
         // randomly assigns water to tiles
         byte[][] waterInfo = EnvironmentLoader.getLayer_values("water", false);
         float value;
-        boolean loadedLayer = true;
+        loadedLayer = true;
         if(waterInfo == null) {
             waterInfo = new byte[width / TILE_SIZE][height / TILE_SIZE];
             loadedLayer = false;
@@ -81,7 +82,9 @@ public class LandMap {
 //                else
                 if (waterInfo[i][j] > 70) {
                     terrain[i][j] = 1; //change terrain type to water.
-                    grassInfo[i][j] = 0; // no grass/vegetation on a water tile.
+                    if(grassInfo.length > i )
+                        if(grassInfo[i].length > j)
+                            grassInfo[i][j] = 0; // no grass/vegetation on a water tile.
                 }
             }
         }

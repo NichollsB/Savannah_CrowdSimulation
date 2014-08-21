@@ -54,6 +54,9 @@ public abstract class EnvironmentLoader {
 
 		private final String name;
 		private final String layerMap;
+
+        private int width;
+        private int height;
 		
 		EnvironmentLayer(String name, String regionName){
 			this.name = name;
@@ -79,7 +82,9 @@ public abstract class EnvironmentLoader {
     }
     public static void loadMap(FileHandle filePath, String layer){
         String ext = filePath.extension();
+        System.out.println("File path " + filePath.path() + " ext " + filePath.extension());
         if(!ext.contains("txt") && !ext.contains("png") && !ext.contains("bmp") ) return;
+        System.out.println(layer + " contained "+ environmentLayers.containsKey(layer));
         if(environmentLayers.containsKey(layer)){
             Pixmap pixLayer = new Pixmap(filePath);
             environmentLayers_pixmap.put(layer, pixLayer);
@@ -102,10 +107,8 @@ public abstract class EnvironmentLoader {
 		environmentAtlas = new TextureAtlas(handle);
 		handle = packsheet_path;
 		environmentAtlas_pixmap = new Pixmap(handle);
-		
 		for(EnvironmentLayer layer : EnvironmentLayer.values()){
 			AtlasRegion region = environmentAtlas.findRegion(layer.mapName());
-            System.out.println("Loading in " + layer + " region " + region);
 			try{
                 System.out.println("region name " + region.name + " layer to string " + layer.toString());
 				Pixmap pixLayer = new Pixmap(region.originalWidth, region.originalHeight, environmentAtlas_pixmap.getFormat());
@@ -200,7 +203,6 @@ public abstract class EnvironmentLoader {
 //                        System.out.println("Average " + color);
                     color *= 100;
 //                    if(name.equals("water"))
-//                        System.out.println("Mult'd" + color);
                     layerVals[gridX][gridY] = (byte)color;
 //                    if(name.equals("water"))
 //                        System.out.println("in grid " + layerVals[gridX][gridY]);
@@ -230,22 +232,37 @@ public abstract class EnvironmentLoader {
 	}
 
     public static int[] getDimensions(){
-        int i[] = getGridDimensions();
-        for(int j = 0; j < i.length; j++){
-            i[j] = i[j]*Constants.TILE_SIZE;
-        }
-        return i;
+//        int i[] = getGridDimensions();
+//        for(int j = 0; j < i.length; j++){
+//            i[j] = i[j]*Constants.TILE_SIZE;
+//        }
 
+        if(environmentLayers_pixmap.size()>0){
+            int size[] = new int[]{0,0};
+            boolean first = true;
+            for(Pixmap s : environmentLayers_pixmap.values()){
+                if(s.getWidth() < size[0] || first);
+                    size[0]=s.getWidth();
+                if(s.getHeight()<size[1] || first)
+                    size[1]=s.getHeight();
+                first = false;
+            }
+            return size;
+        }
+        return null;
     }
 
     public static int[] getGridDimensions(){
         if(environmentLayers_pixmap.size()>0){
+            int size[] = new int[]{0,0};
+            boolean first = true;
             for(String s : environmentLayers.keySet()){
                 byte a[][] = getLayer_values(s, false);
-                for(int i = 0; i < s.length(); i ++){
-                    return new int[] {a.length, a[i].length};
-                }
-
+                if(a.length<size[0])
+                    size[0]=a.length;
+                if(a[0].length<size[1])
+                    size[1]=a[1].length;
+                first = false;
             }
         }
         return null;

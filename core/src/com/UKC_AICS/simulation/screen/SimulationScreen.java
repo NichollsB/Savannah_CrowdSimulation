@@ -7,6 +7,7 @@ import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.gui.controlutils.ControlState;
 import com.UKC_AICS.simulation.gui.controlutils.ControlState.State;
 import com.UKC_AICS.simulation.gui.controlutils.RenderState;
@@ -36,6 +37,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -76,7 +78,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
 
     private Rectangle scissorRect = new Rectangle();
     
-    private Graphics boidGraphics;
+    public Graphics boidGraphics;
 
     public SimScreenGUI gui; //= new SimScreenGUI(this); // Creates gui instance for this screen
     public EvolutionaryAlgorithmGUI eagui;
@@ -97,9 +99,6 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         eagui = new EvolutionaryAlgorithmGUI(this,simulationManager.ea);
         setup();
         setupUI();
-
-
-
 
     }
 
@@ -154,7 +153,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         eagui.update(eaRender);
     }
     
-   
+    boolean uiComplete = false;
     /**
      * Calls the update method to trigger the rendering calls in the gui and simulation view
      */
@@ -166,7 +165,12 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
 	    	simBatch.setProjectionMatrix(simViewcamera.combined);
 //	        ScissorStack.pushScissors(viewRect);
 //	    	simBatch.begin();
-	    	boidGraphics.update(simBatch, scissorRect);
+	    	if(boidGraphics.update(simBatch, scissorRect) && !uiComplete){
+                HashMap<Byte, Species> map = simulationManager.getSpeciesInfo();
+                gui.addBoidsToLegend(simulationManager.getSpeciesInfo(), boidGraphics.spriteManager.getBoidImages());
+                gui.addObjectsToLegend(simulationManager.getObjectDataInfo(), boidGraphics.spriteManager.getObjectImages());
+                uiComplete = true;
+            };
 //	    	simBatch.end();
 //	    	ScissorStack.popScissors();
     	}
@@ -252,10 +256,11 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         boidGraphics.initTileSprites(simulationManager.getFullInfo());
         //boidGraphics.initTileSprites(simulationManager.getMapTiles());
         boidGraphics.initGrassMesh((byte[][])simulationManager.getFullInfo().get("grass"), Constants.TILE_SIZE);
-        //UI
-        
-        
-        
+    }
+
+    public void resetGraphics(){
+        boidGraphics.initTileSprites(simulationManager.getFullInfo());
+        boidGraphics.initGrassMesh((byte[][])simulationManager.getFullInfo().get("grass"), Constants.TILE_SIZE);
     }
 
     /**
