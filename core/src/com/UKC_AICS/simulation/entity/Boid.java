@@ -70,6 +70,10 @@ public class Boid extends Entity {
     }
 
 
+    /**
+     * constructor that takes the standard species values from the species file provided.
+     * @param species
+     */
     public Boid(Species species) {
         type = 1;
         subType =  species.getSpbyte();
@@ -101,7 +105,7 @@ public class Boid extends Entity {
         setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius, maxStamina,  panicLevel, hungerLevel , thirstLevel);
 
         size = species.getMaxSize();
-        bounds.set(position.x, position.y, size, size); //TODO take it from species file
+        bounds.set(position.x, position.y, size*1.5f, size*1.5f);
     }
 
     /**
@@ -145,8 +149,6 @@ public class Boid extends Entity {
         
         setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius, maxStamina,  panicLevel, hungerLevel , thirstLevel);
 
-        
-
 
     }
 
@@ -175,7 +177,7 @@ public class Boid extends Entity {
         //check for out of bounds
         checkInBounds();
 
-        bounds.setPosition(position.x, position.y);
+//        bounds.setPosition(position.x, position.y);
         //TODO: potentially have different species "degrade" at different rates
         hunger += (float) 0.5 /60;
         thirst += (float) 1 /60;
@@ -216,10 +218,10 @@ public class Boid extends Entity {
         stamina -= (speed-sprintThreshold)*0.3f;
     }
 
-    public void setNewVelocity(Vector3 newVel){
-        velocity.set(newVel);
-    }
 
+    /**
+     * checks the boids position against the mapwidth held in constants. Adjusts position to within bounds (Wraps around)
+     */
     private void checkInBounds() {
         if(position.x > Constants.mapWidth - bounds.height/2) {
             position.x = position.x - Constants.mapWidth + bounds.height;
@@ -233,8 +235,6 @@ public class Boid extends Entity {
         }
     }
 
-
-
     public Vector3 getPosition() {
         return position;//.cpy();
     }
@@ -247,9 +247,6 @@ public class Boid extends Entity {
         setPosition(new Vector3(x, y, z));
     }
 
-    public Vector3 getVelocity() {
-        return velocity;
-    }
 
 
     public void setAge(int newAge) {
@@ -262,12 +259,9 @@ public class Boid extends Entity {
         }
         age++;
     }
-
     public int getAge() {
     	return age;
     }
-
-
 
     /**
      * explicit setting to a defined velocity.
@@ -277,10 +271,14 @@ public class Boid extends Entity {
     public void setVelocity(Vector3 velocity) {
         this.velocity = velocity;
     }
+
     public void setVelocity(float x, float y, float z) {
         this.velocity = new Vector3(x, y, z);
     }
 
+    public Vector3 getVelocity() {
+        return velocity;
+    }
 
     public double getOrientation() {
         if(velocity.len2() > 0) {
@@ -305,13 +303,7 @@ public class Boid extends Entity {
             return orientation;
         }
     }
-//
-//    public void setOrientation(Vector3 orientation) {
-//        this.orientation = orientation;
-//    }
-//    public void setOrientation(float x, float y, float z) {
-//        this.orientation = new Vector3(x,y,z);
-//    }
+
     public void setState(String state) {
         this.state = state;
     }
@@ -346,7 +338,6 @@ public class Boid extends Entity {
 
         return string;
     }
-
 
     public void setTracked(boolean tracked){
     	this.tracked = tracked;
