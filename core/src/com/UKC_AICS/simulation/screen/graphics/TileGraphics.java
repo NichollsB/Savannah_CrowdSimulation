@@ -121,7 +121,7 @@ public class TileGraphics extends SpriteCache {
 				
 				layermap = infoLayers.get(layer);
 				amount = layermap[x][y];
-                if((!layer.equals("water") || amount > 50)){
+                if((!layer.equals("water") || amount > 30)){
                     amount = (byte) (Math.round((amount+5)/10)*10);
 //				}
 //					nextRegion = manager.getTileRegion(layer, amount);
