@@ -74,18 +74,26 @@ public class Thirsty extends State {
 
                 steering.set(0f, 0f, 0f);
 
-                //just add collision avoidance
-                steering.add(Collision.act(collisionObjects, boid));  //.scl(avoid)   //Maybe have some scaling for avoidance?
-                steering.add(Collision.act(boid));
+                Vector3 tempVec = new Vector3(0f,0f,0f);
+                tempVec.add(Collision.act(collisionObjects, boid));
+                tempVec.add(Collision.act(boid));
+                if(steering.equals(tempVec)) {
+
+                    //just add collision avoidance
+//                    steering.add(Collision.act(collisionObjects, boid));  //.scl(avoid)   //Maybe have some scaling for avoidance?
+//                    steering.add(Collision.act(boid));
 
 //                steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
-                steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
-                steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
+                    steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
+                    steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
-                steering.nor().scl(boid.maxSpeed / 2);
-                steering.sub(boid.getVelocity());
-                steering.limit(boid.maxForce);
-
+                    steering.nor().scl(boid.maxSpeed / 2);
+                    steering.sub(boid.getVelocity());
+                    steering.limit(boid.maxForce);
+                }
+                else {
+                    steering.set(tempVec);
+                }
                 boid.setAcceleration(steering);
             }
             return false;

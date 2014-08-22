@@ -23,7 +23,7 @@ public class Collision extends Behaviour {
     private static Vector3 tmpVec = new Vector3(0f,0f,0f);
     private static Vector3 tmpVec2 = new Vector3(0f,0f,0f);
 
-    static float MAX_AVOID_FORCE = 0.05f;
+    static float MAX_AVOID_FORCE = 0.02f;
     static float LOOK_AHEAD = 20f;
     static float HALF_LOOK_AHEAD = LOOK_AHEAD/2f;
     static int tileSize = Constants.TILE_SIZE;
@@ -54,99 +54,12 @@ public class Collision extends Behaviour {
             int cellX = cell.get(0)/tileSize;
             int cellY = cell.get(1)/tileSize;
             tmpVec.set(boid.getPosition());
+            tmpVec.add(tmpVec2.scl(cell.get(2)));
             tmpVec.sub(new Vector3(cellX * tileSize + tileSize / 2, cellY * tileSize + tileSize / 2, 0f));
             tmpVec.nor();
             tmpVec.scl(MAX_AVOID_FORCE);
         }
 
-//        for(int[] cell : cellList) {
-//            tmpVec.set(0f,0f,0f);
-//            //get tile info, check if grass
-//            if (WorldManager.getTileInfoAt(cell[0], cell[1]).get("terrain") == 0) {
-//                //terrain is grass -- passable, no need to do anything
-//            }
-//            //else if water - impassable
-//            else {
-//
-//                tmpVec.set(boid.getPosition());
-//                tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
-//                tmpVec.nor();
-//                tmpVec.scl(MAX_AVOID_FORCE);
-//                // the tile is impassable,
-//                // need to do collision avoidance with  the intersect of closest edge and velocity intersect
-//                Vector2 intersect = new Vector2();
-//                //TODO is this getting the correct line for nearest edge of cell?
-//                if(mapX < cell[0]) {
-//                    if(mapY == cell[1]  && Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
-//                            tmpVec.x, tmpVec.y, cell[0] * tileSize + tileSize, cell[1] * tileSize, cell[0] * tileSize + tileSize,
-//                            cell[1] * tileSize + tileSize, intersect)) {
-//                        tmpVec.set(boid.getPosition());
-////                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
-//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
-//                        tmpVec.nor();
-//                        tmpVec.scl(MAX_AVOID_FORCE);
-//                    }
-//                    else if (mapY < cell[1]) {
-//                        tmpVec.set(boid.getPosition());
-////                        tmpVec.sub(new Vector3(cell[0]*tileSize + tileSize, cell[1]*tileSize + tileSize, 0f));
-//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
-//                        tmpVec.nor();
-//                        tmpVec.scl(MAX_AVOID_FORCE);
-//                    }
-//                    else if(mapY > cell[1]) {
-//                        tmpVec.set(boid.getPosition());
-////                        tmpVec.sub(new Vector3(cell[0]*tileSize + tileSize, cell[1]*tileSize, 0f));
-//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
-//                        tmpVec.nor();
-//                        tmpVec.scl(MAX_AVOID_FORCE);
-//                    }
-//                }
-//                else if(mapX > cell[0]) {
-//                    if(mapY == cell[1] && Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
-//                            tmpVec.x, tmpVec.y, cell[0] * tileSize, cell[1] * tileSize, cell[0] * tileSize,
-//                            cell[1] * tileSize + tileSize, intersect)) {
-//                        tmpVec.set(boid.getPosition());
-////                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
-//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
-//                        tmpVec.nor();
-//                        tmpVec.scl(MAX_AVOID_FORCE);
-//                    }
-//                    else if (mapY < cell[1]) {
-//                        tmpVec.set(boid.getPosition());
-////                        tmpVec.sub(new Vector3(cell[0]*tileSize, cell[1]*tileSize + tileSize, 0f));
-//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
-//                        tmpVec.nor();
-//                        tmpVec.scl(MAX_AVOID_FORCE);
-//                    }
-//                    else if(mapY > cell[1]) {
-//                        tmpVec.set(boid.getPosition());
-////                        tmpVec.sub(new Vector3(cell[0]*tileSize, cell[1]*tileSize, 0f));
-//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
-//                        tmpVec.nor();
-//                        tmpVec.scl(MAX_AVOID_FORCE);
-//                    }
-//                } else if (mapX == cell[0]) {
-//                    if (mapY < cell[1]&& Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
-//                            tmpVec.x, tmpVec.y, cell[0] * tileSize + tileSize, cell[1] * tileSize, cell[0] * tileSize + tileSize,
-//                            cell[1] * tileSize + tileSize, intersect)) {
-//                        tmpVec.set(boid.getPosition());
-////                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
-//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
-//                        tmpVec.nor();
-//                        tmpVec.scl(MAX_AVOID_FORCE);
-//                    }
-//                    else if(mapY > cell[1]&& Intersector.intersectLines(boid.getPosition().x, boid.getPosition().y,
-//                            tmpVec.x, tmpVec.y, cell[0] * tileSize, cell[1] * tileSize, cell[0] * tileSize,
-//                            cell[1] * tileSize + tileSize, intersect)) {
-//                        tmpVec.set(boid.getPosition());
-////                        tmpVec.sub(new Vector3(intersect.x, intersect.y, 0f));
-//                        tmpVec.sub(new Vector3(cell[0]*tileSize+tileSize/2,cell[1]*tileSize+tileSize/2,0f));
-//                        tmpVec.nor();
-//                        tmpVec.scl(MAX_AVOID_FORCE);
-//                    }
-//                }
-//            }
-//        }
 
         //get tile info at position tile
         //ray cast to check when tile changes along velocity and retrieve tile info of new tiles
@@ -188,6 +101,8 @@ public class Collision extends Behaviour {
                 cell = new ArrayList<Integer>();
                 cell.add(posX);
                 cell.add(posY);
+                cell.add(i);
+                break;
             }
         }
         return cell;
