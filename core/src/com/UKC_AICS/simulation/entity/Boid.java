@@ -212,6 +212,8 @@ public class Boid extends Entity {
      */
     private void recoverStamina(float speed) {
         stamina -= (speed-sprintThreshold)*0.3f;
+        if(stamina > maxStamina)
+            stamina = maxStamina;
     }
 
 
