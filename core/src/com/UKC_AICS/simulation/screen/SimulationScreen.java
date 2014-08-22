@@ -14,23 +14,20 @@ import com.UKC_AICS.simulation.gui.controlutils.SelectedEntity;
 import com.UKC_AICS.simulation.gui.controlutils.TreeOptionsListener;
 import com.UKC_AICS.simulation.screen.graphics.Graphics;
 import com.UKC_AICS.simulation.screen.graphics.TileGraphics;
+import com.UKC_AICS.simulation.screen.graphics.TileMesh;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.UKC_AICS.simulation.screen.gui.SimViewport;
 import com.UKC_AICS.simulation.utils.EnvironmentLoader;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteCache;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
@@ -38,6 +35,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -88,7 +86,10 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     TileGraphics tiling;
     
     public final Vector2 mousePosition = new Vector2();
-    
+
+
+
+
 
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
@@ -96,17 +97,9 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         eagui = new EvolutionaryAlgorithmGUI(this,simulationManager.ea);
         setup();
         setupUI();
-        
-        
-        //Test
-//        EnvironmentLoader.loadMaps(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        byte[][] imgArray = EnvironmentLoader.getLayer_values("InitialGrass_Map");
-//        for(int x = 0; x < imgArray.length; x++){
-//        	for(int y = 0; y < imgArray[x].length; y++){
-//        		System.out.print(imgArray[x][y] + " : ");
-//        	}
-//        	System.out.println();
-//        }
+
+
+
 
     }
 
@@ -140,8 +133,8 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
             renderUIBatch(render);
 //            simBatch.end();
     	}
-     
-    	
+
+
 //        simBatch.flush();
 //        simBatch.end();
 //        Gdx.gl.glFlush();
