@@ -36,7 +36,7 @@ public class BoidManager extends Manager {
     public EA2 ea;
 
 
-    private boolean removeBoids = false;
+//    private boolean removeBoids = false;
     
 
     public BoidManager(SimulationManager parent, EA2 ea) {
@@ -252,9 +252,17 @@ public class BoidManager extends Manager {
      * and clears the boids list.
      */
     public void clearBoidList() {
+
+  //    for(Boid b : boids){
+  //      stateMachine.removeBoid(b);
+    //    boidGrid.removeBoid(b);
+   //   }
+        
+
         setBoidGrid(new BoidGrid(80, Constants.mapWidth, Constants.mapHeight));
         System.out.println("clearing list. ea " + ea);
         stateMachine = new StateMachine(this, ea);
+
         boids.clear();
     }
 
