@@ -12,6 +12,8 @@ import javax.xml.stream.events.XMLEvent;
 
 
 
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -56,14 +58,35 @@ public class StaXParserLoad {
     private String states ;
     public Float[] fltArray = new Float[3] ;
     public Float[] fltArray2 = new Float[3];
+    private InputStream in;
     @SuppressWarnings({ })
-    public void readConfig(String configFile) {
+    
+    public void readConfig(File configFile){
+    	try{
+	    	in = new FileInputStream(configFile);
+	    	readConfig();
+    	}
+    	catch(FileNotFoundException e){
+    		
+    	}
+    }
+    
+    public void readConfig(String configFile) throws FileNotFoundException {
+    	try{
+	    	in = new FileInputStream(configFile);
+	    	readConfig();
+    	}
+    	catch(FileNotFoundException e){
+    		
+    	}
+    }
+    public void readConfig() {
     
         try {
             // First, create a new XMLInputFactory
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
             // Setup a new eventReader
-            InputStream in = new FileInputStream(configFile);
+            
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
             // read the XML document
 
@@ -322,8 +345,6 @@ public class StaXParserLoad {
                 }
 
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (XMLStreamException e) {
             e.printStackTrace();
         }
