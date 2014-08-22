@@ -268,13 +268,19 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			
 			for(int i = 0 ; i < labels.size(); i++ ){
 			 if(checkBoxes.get(i).isChecked()){
-				 
-				 if(!textField.get(i).getText().isEmpty()){
-					 System.out.println("I am not empty");
-					newheldvalues[i] =  Float.parseFloat(textField.get(i).getText());
-					  	 
-				 } 
-				 else{
+				try{
+					if(!textField.get(i).getText().isEmpty() ){
+						System.out.println("I am not empty"); 
+						newheldvalues[i] = Float.parseFloat(textField.get(i).getText());
+					
+					
+					 
+					} 
+					else{
+						newheldvalues[i] = null;
+					}
+				}
+				 catch(NumberFormatException e){
 					 newheldvalues[i] = null;
 				 }
 			 }
@@ -331,7 +337,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			String val = null;
 			
 			for(int i = 0 ; i < labels.size();i++){
-				if(currentVals[i]!=null){
+				if(currentVals[i]!=null && !currentVals[i].isNaN()){
 					
 					 val = Float.toString(currentVals[i]);
 				}

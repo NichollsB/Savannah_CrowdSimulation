@@ -16,10 +16,6 @@ public class Boid extends Entity {
     private Vector3 acceleration = new Vector3();
     private float sprintThreshold = maxSpeed*0.7f;
 
-    public float size = 16;
-    public Rectangle bounds = new Rectangle();
-
-
     public float maxStamina = 60;
     public float stamina = maxStamina;
 
@@ -39,7 +35,7 @@ public class Boid extends Entity {
     public String state = "default";
 
     public int age = 0;
-
+    public float numberOfOffspring = 0;
 
 //    public byte tertiaryType = 0; //family group of boid.
 
@@ -105,7 +101,7 @@ public class Boid extends Entity {
         setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius, maxStamina,  panicLevel, hungerLevel , thirstLevel);
 
         size = species.getMaxSize();
-        bounds.set(position.x, position.y, size*1.5f, size*1.5f);
+        bounds.set(position.x, position.y, size*2f, size*2f);
     }
 
     /**
@@ -318,7 +314,8 @@ public class Boid extends Entity {
     public String toString() {
         String string = "";
 
-        string += "BOID: " + "\t" + "\t position: \n \t" + (int)position.x + "/" + (int)position.y;
+        string += "type: \t" + SimulationManager.speciesData.get(getSpecies()).getName();
+        string += "\t position: \t" + (int)position.x + "/" + (int)position.y;
         string += "\n\t group:" + tertiaryType;
         string += "\n\t hunger:" + (int)hunger;
         string += "\n\t thirst:" + (int)thirst;
@@ -335,6 +332,11 @@ public class Boid extends Entity {
         string += "\n\t separation:" + separation;
         string += "\n\t alignment:" + alignment;
         string += "\n\t wander:" + wander;
+
+
+        string += "\n";
+        string += "\n\t bounds pos:" + (int)bounds.x + "," + (int)bounds.y + "," + (int)bounds.width + "," + (int)bounds.height + ",";
+        ;
 
         return string;
     }
@@ -493,5 +495,11 @@ public class Boid extends Entity {
     }
     public float getFertility(){
     	return fertility;
+    }
+    public void setNumberOfOffspring(float numberOfOffspring){
+    	this.numberOfOffspring=numberOfOffspring;
+    }
+    public float getNumberOfOffspring(){
+    	return numberOfOffspring;
     }
 }

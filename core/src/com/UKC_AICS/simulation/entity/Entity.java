@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.entity;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 /**
@@ -17,6 +18,9 @@ public class Entity {
     //Added to check if boid info is being displayed or not - for highlighting in graphics
   	public boolean tracked = false;
   	public boolean toDelete = false;
+    public Rectangle bounds = new Rectangle();
+    public float size = 16;
+
     /**
      *
      * @return the position of the object as a Vector3 for its map location.

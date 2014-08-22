@@ -237,7 +237,7 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 				path = path.replace("./bin", "./");
 				fileField.setText(currentDir.getName());
 			}
-			return true;
+//			return true;
 		}
 		else if (!dir.isDirectory() && !dir.equals(currentDir)){
 //			lastDir = currentDir;
@@ -251,7 +251,8 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		pathFromTextField = false;
         pathField.setDisabled(false);
         pathField.setText(currentDir.getPath());
-        pathField.setDisabled(true);
+        System.out.println("Current dir " + currentDir.getPath());
+//        pathField.setDisabled(true);
 		return false;
 	}
 	

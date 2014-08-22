@@ -40,7 +40,7 @@ public class BoidManager extends Manager {
     
 
     public BoidManager(SimulationManager parent, EA2 ea) {
-
+    	this.ea = ea;
         this.parent = parent;
         setBoidGrid(new BoidGrid(80, Constants.mapWidth, Constants.mapHeight));
 //        quadtree = new QuadTree(0, new Rectangle(0, 0, Constants.mapWidth, Constants.mapHeight));
@@ -253,6 +253,7 @@ public class BoidManager extends Manager {
      */
     public void clearBoidList() {
         setBoidGrid(new BoidGrid(80, Constants.mapWidth, Constants.mapHeight));
+        System.out.println("clearing list. ea " + ea);
         stateMachine = new StateMachine(this, ea);
         boids.clear();
     }

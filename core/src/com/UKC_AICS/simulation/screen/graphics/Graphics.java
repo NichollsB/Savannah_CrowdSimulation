@@ -42,7 +42,7 @@ public class Graphics {
 //	private Texture altTexture = new Texture(Gdx.files.internal("triangle3.png"));
 	private Sprite altSprite;
 
-	private SpriteManager spriteManager = new SpriteManager();
+	public SpriteManager spriteManager = new SpriteManager();
 
 	private HashMap<String, byte[][]> tileMap;
 
@@ -63,10 +63,10 @@ public class Graphics {
 	SpriteCache backgroundCache = new SpriteCache(20000, false);
 	private TileGraphics dynamicTiles;
 
-	private final TileMesh grassMesh = new TileMesh(0f, 1f, 0f, 1f, 128);
-    private final TileMesh waterMesh = new TileMesh(0.3f, 0.8f, 0f, 0.8f, 128);
-    private final TileMesh groundMesh = new TileMesh(0f, 1f, 0f, 1f, 128);
-    private final TileMesh meshes[] = new TileMesh[]{groundMesh, grassMesh, waterMesh};
+	private TileMesh grassMesh = new TileMesh(0f, 1f, 0f, 1f, 128);
+    private TileMesh waterMesh = new TileMesh(0.3f, 0.8f, 0f, 0.8f, 128);
+    private TileMesh groundMesh = new TileMesh(0f, 1f, 0f, 1f, 128);
+    private TileMesh meshes[] = new TileMesh[]{groundMesh, grassMesh, waterMesh};
 	private static enum DynamicRenderOption{
 		TILED, MESH;
 	}
@@ -100,8 +100,8 @@ public class Graphics {
 	 * @param batch is the SpriteBatch to render the boid sprites in
 	 * @param viewRect
 	 */
-	public void update(SpriteBatch batch, Rectangle viewRect){
-			if(spriteManager.update()){
+	public boolean update(SpriteBatch batch, Rectangle viewRect){
+			if(spriteManager.update() && !RenderState.TILESTATE.equals(RenderState.State.OFF)){
                 Gdx.gl.glDepthMask(false);
                 //enable blending, for alpha
                 Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -242,8 +242,9 @@ public class Graphics {
 //                //////////////////////////////////
 
 				ScissorStack.popScissors();
+                return true;
 			}
-
+            return false;
 
 //        Gdx.gl.glFinish();
 
@@ -290,14 +291,11 @@ public class Graphics {
 	}
 	
 	public void initGrassMesh(byte[][] bs, int tileSize){
-//        grassMesh.createMesh(tileMap.get("grass"), 0, 0, 16, 16, Color.WHITE);
-//        meshRenderer.addMesh(grassMesh);
-		AtlasRegion region = spriteManager.getTileRegion("grass", 100);
-		if(region != null){
-//			grassMesh.createMesh(bs, 0, 0, tileSize, tileSize, region.originalWidth, region.originalHeight, false, 0, 0);
-//			meshRenderer.addMesh(grassMesh);
-
-		}
+        grassMesh = new TileMesh(0f, 1f, 0f, 1f, 128);
+        waterMesh = new TileMesh(0.3f, 0.8f, 0f, 0.8f, 128);
+        groundMesh = new TileMesh(0f, 1f, 0f, 1f, 128);
+        meshes = new TileMesh[]{groundMesh, grassMesh, waterMesh};
+        created = false;
 
 	}
 	public void initTileSprites(HashMap<String, byte[][]> tileLayers){

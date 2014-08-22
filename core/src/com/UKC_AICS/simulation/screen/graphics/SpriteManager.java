@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteCache;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
@@ -58,7 +59,6 @@ public class SpriteManager {
 			}};
     private final ObjectMap<Integer, String> objectNames = new ObjectMap<Integer, String>(){{
         put(0, "corpse");
-        put(1, "corpse");
         put(2, "A");
         put(3, "R");
         put(4, "tree");
@@ -105,48 +105,48 @@ public class SpriteManager {
 		Sprite sprite;
 		Texture spriteTexture;
 		tileTextures = new ObjectMap<String, Sprite>(tileFiles.size);
-		
-		for(String tile : tileFiles.keys()){
-			if(assetManager.isLoaded(tileFiles.get(tile))){
-				spriteTexture = assetManager.get(tileFiles.get(tile), Texture.class);
-				tileTextures.put(tile, new Sprite(spriteTexture));
-				tilesLoaded = true;
-			}
-		}
-			
-		for(byte entity: boidsFiles.keySet()){
-			if(assetManager.isLoaded(boidsFiles.get(entity))){
-				spriteTexture = assetManager.get(boidsFiles.get(entity), Texture.class);
-				sprite = new Sprite(spriteTexture);
-				sprite.setOrigin((spriteTexture.getWidth()/2), spriteTexture.getHeight()/2);
-				boidSprites.put(entity, sprite);
-			}
-//			else
-//				created = false;
-		}
-		objectSprites = new ObjectMap<Byte, Sprite>(objectsFiles.size);
-		for(Byte entity: objectsFiles.keys()){
-			if(assetManager.isLoaded(objectsFiles.get(entity))){
-				spriteTexture = assetManager.get(objectsFiles.get(entity), Texture.class);
-				sprite = new Sprite(spriteTexture);
-				sprite.setOrigin((spriteTexture.getWidth()/2), spriteTexture.getHeight()/2);
-				objectSprites.put(entity, sprite);
-			}
-			
-		}
-		if(assetManager.isLoaded(defaultBoid_path)){
-			spriteTexture = assetManager.get(defaultBoid_path, Texture.class);
-			sprite = new Sprite(spriteTexture);
-			defaultBoid = sprite;
-			for(byte b : boidColors.keySet()){
-				if(!boidSprites.containsKey(b)){
-//					defaultBoid = new Sprite(spriteTexture);
-					float[] color = boidColors.get(b);
-					sprite.setColor(color[0], color[1], color[2], 1);
-					boidSprites.put(b, sprite);
-				}
-			}
-		}
+//
+//		for(String tile : tileFiles.keys()){
+//			if(assetManager.isLoaded(tileFiles.get(tile))){
+//				spriteTexture = assetManager.get(tileFiles.get(tile), Texture.class);
+//				tileTextures.put(tile, new Sprite(spriteTexture));
+//				tilesLoaded = true;
+//			}
+//		}
+//
+//		for(byte entity: boidsFiles.keySet()){
+//			if(assetManager.isLoaded(boidsFiles.get(entity))){
+//				spriteTexture = assetManager.get(boidsFiles.get(entity), Texture.class);
+//				sprite = new Sprite(spriteTexture);
+//				sprite.setOrigin((spriteTexture.getWidth()/2), spriteTexture.getHeight()/2);
+//				boidSprites.put(entity, sprite);
+//			}
+////			else
+////				created = false;
+//		}
+//		objectSprites = new ObjectMap<Byte, Sprite>(objectsFiles.size);
+//		for(Byte entity: objectsFiles.keys()){
+//			if(assetManager.isLoaded(objectsFiles.get(entity))){
+//				spriteTexture = assetManager.get(objectsFiles.get(entity), Texture.class);
+//				sprite = new Sprite(spriteTexture);
+//				sprite.setOrigin((spriteTexture.getWidth()/2), spriteTexture.getHeight()/2);
+//				objectSprites.put(entity, sprite);
+//			}
+//
+//		}
+//		if(assetManager.isLoaded(defaultBoid_path)){
+//			spriteTexture = assetManager.get(defaultBoid_path, Texture.class);
+//			sprite = new Sprite(spriteTexture);
+//			defaultBoid = sprite;
+//			for(byte b : boidColors.keySet()){
+//				if(!boidSprites.containsKey(b)){
+////					defaultBoid = new Sprite(spriteTexture);
+//					float[] color = boidColors.get(b);
+//					sprite.setColor(color[0], color[1], color[2], 1);
+//					boidSprites.put(b, sprite);
+//				}
+//			}
+//		}
 		if(assetManager.isLoaded(defaultBoid_selected_path)){
 			spriteTexture = assetManager.get(defaultBoid_selected_path, Texture.class);
 			defaultBoid_selected = new Sprite(spriteTexture);
@@ -376,5 +376,26 @@ public class SpriteManager {
     public Sprite getObject_highlight(byte type){
         return objectSprites_Selected.get(type);
     }
-	
+
+
+    public HashMap<Byte, Image> getBoidImages(){
+        HashMap<Byte, Image> boidImages = new HashMap<Byte, Image>();
+        for(byte b : boidSprites.keys()){
+            Image i = new Image(boidSprites.get(b));
+            i.setScale(0.8f, 0.8f);
+            i.setColor(boidSprites.get(b).getColor());
+            boidImages.put(b, i);
+        }
+        return boidImages;
+    }
+
+    public HashMap<Byte, Image> getObjectImages(){
+        HashMap<Byte, Image> objImages = new HashMap<Byte, Image>();
+        for(byte b : objectSprites.keys()){
+            Image i = new Image(objectSprites.get(b));
+            i.setScale(0.8f, 0.8f);
+            objImages.put(b, i);
+        }
+        return objImages;
+    }
 }

@@ -28,7 +28,7 @@ public class HerbDefault extends State {
     public HerbDefault(StateMachine parent, BoidManager bm ,EA2 ea) {
         super(parent, bm);
        this.ea=ea;
-        
+      
     }
 
 

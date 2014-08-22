@@ -46,7 +46,8 @@ public class SimulationManager extends Manager {
     static public int hours = 0;
     static public int days = 0;
     static public int weeks = 0;
-
+    static public int frames = 0;
+    StateMachine stateMachine;
     //monstrous things.
     static final HashMap<String, HashMap<String, Float>> tempSpeciesData = new HashMap<String, HashMap<String, Float>>();
     static final HashMap<Byte, String> speciesByte = new HashMap<Byte, String>();
@@ -71,7 +72,6 @@ public class SimulationManager extends Manager {
      */
     public SimulationManager(SimulationScreen parent) {
         this.parent = parent;
-//        this.stateMachine= boidManager.stateMachine;
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
         objectData = staXParser.readObjectFile("../core/assets/data/objects.xml");
         for (Species species : speciesData.values()) {
@@ -86,7 +86,7 @@ public class SimulationManager extends Manager {
         }
         boidManager = new BoidManager(this, ea);
         worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
-
+        this.stateMachine= boidManager.stateMachine;
         generateBoids();
 
 
@@ -239,6 +239,18 @@ public class SimulationManager extends Manager {
         dayIncrement = tick();
         boidManager.update(dayIncrement);
         worldManager.update(dayIncrement);
+
+        if(recordSimulation && stateMachine!= null){
+            try{
+                simRecorder.recordSim(frames, stateMachine);
+            }
+            catch (Exception e){
+                System.out.println("Could not record simulation" + e.toString() );
+                e.printStackTrace();
+                stopSimRecording();
+            }
+
+        }
     }
 
     /**
@@ -247,6 +259,7 @@ public class SimulationManager extends Manager {
      */
     private boolean tick() {
         boolean increment = false;
+        frames++;
         if (minutes < 59) {
             minutes += 1;
         } else if (hours < 23) {
@@ -357,14 +370,14 @@ public class SimulationManager extends Manager {
     }
     
     public void loadSpecies(File file){
-    	
+
     }
     public void saveSpecies(File file){
-    	
+
     }
 
     public void saveEnvironment(File file){
-    	
+
     }
 
     public void loadEnvironment(File file){
@@ -374,14 +387,15 @@ public class SimulationManager extends Manager {
     public void hardReset(){
         worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
         boidManager = new BoidManager(this, ea);
+        parent.resetGraphics();
         reset();
     }
 
     public void loadSaveCall(String command, String identifier, HashMap<String, File> file){
         System.out.println("Load call ");
-        for(String s : file.keySet()){
-            System.out.println("name " + s + " file " + file.get(s).getPath());
-        }
+//        for(String s : file.keySet()){
+//            System.out.println("name " + s + " file " + file.get(s).getPath());
+//        }
         if(command.equalsIgnoreCase("load")){
             if(identifier.equalsIgnoreCase("envpack")){
                 if(!file.containsKey("packfile") || !file.containsKey("packatlas")) {
@@ -393,12 +407,25 @@ public class SimulationManager extends Manager {
                 return;
             }
             if(identifier.equalsIgnoreCase("envatlas")){
+                System.out.println("Num files " + file.size());
                 for(String s : file.keySet()){
-                    EnvironmentLoader.loadMap(file.get(s), s);
+                    System.out.println(file.get(s));
+                    if(file.get(s) != null)
+                        EnvironmentLoader.loadMap(file.get(s), s);
                 }
                 hardReset();
                 return;
             }
+//            if(file.containsKey("water")) {
+//                EnvironmentLoader.loadMap(file.get("water"), "water");
+//            }
+//            if(file.containsKey("grass")) {
+//                EnvironmentLoader.loadMap(file.get("grass"), "grass");
+//            }
+//            if(file.containsKey("terrain")) {
+//                EnvironmentLoader.loadMap(file.get("terrain"), "terrain");
+//            }
+            hardReset();
         }
     }
     public void loadSaveCall(String command, String identifier, File file){
@@ -423,9 +450,42 @@ public class SimulationManager extends Manager {
     		if(identifier.equalsIgnoreCase("eafile")){
     			
     		}
+            if(identifier.equalsIgnoreCase("record")){
+                simRecorder.setFile(file);
+            }
 		}
+    }
+    public void commandCall(String command, String identifier){
+        if(command.equalsIgnoreCase("record")){
+            if(identifier.equalsIgnoreCase("start")){
+                recordSimulation();
+            }
+            if(identifier.equalsIgnoreCase("stop")){
+                stopSimRecording();
+            }
+        }
     }
     public Entity getObjectAt(int x, int y){
         return worldManager.getObjectAt(x,y);
+    }
+    private boolean recordSimulation = false;
+    private final StaxWriter simRecorder = new StaxWriter();
+    public void recordSimulation(){
+        try {
+            if (simRecorder.startRecordingSim(stateMachine)) {
+                recordSimulation = true;
+            }
+        }
+        catch (Exception e){
+            System.out.println("Sim recording exception");
+        }
+    }
+    public void stopSimRecording(){
+        try {
+            simRecorder.endRecordingSim();
+        }
+        catch (Exception e){
+            System.out.println("Could not stop recording...");
+        }
     }
 }
