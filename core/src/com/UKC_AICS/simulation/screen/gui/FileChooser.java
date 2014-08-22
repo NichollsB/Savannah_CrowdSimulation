@@ -153,24 +153,10 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		});
 		fileBar.add(upBtn);
 		content.add(fileBar).expandX().fillX();
-//		dirSelectLabels.put(new Label(startDir.name(), skin), startDir);
-//		for(File handle : startDir.list()){
-//			if(handle.isDirectory()){
-//				label = new Label(("\t"+handle.name()), skin);
-//				dirSelectLabels.put(label, handle);
-//			}
-//		}
-		
-		
-		this.internal = internal;
-		
+
 		System.out.println("Try to open " + startDir.getPath());
 		openDir(startDir);
-		
-//		stage.addActor(this);
-//		this.pack();
 
-		
 	}
 	
 	
@@ -326,16 +312,6 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		filePath = filePath + File.separator+ targetPath.getName();
 				
 		selectedFile = new File(filePath);
-//		if(targetPath.exists())
-//			selectedFile = targetPath;
-//		else 
-//			selectedFile = currentDir.
-//		if(path.contains(currentDir.getAbsolutePath())){
-//			selectedFile = Gdx.files.internal(path);
-//		}
-//		else {
-//			selectedFile = Gdx.files.internal(currentDir.path()+path);
-//		}
 	}
 	
 	/**

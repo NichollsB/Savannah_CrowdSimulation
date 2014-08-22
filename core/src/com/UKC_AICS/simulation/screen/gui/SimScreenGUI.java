@@ -4,10 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 
 import com.UKC_AICS.simulation.entity.*;
-import com.UKC_AICS.simulation.gui.controlutils.DialogueWindowHandler;
 import com.UKC_AICS.simulation.gui.controlutils.HoverListener;
 import com.UKC_AICS.simulation.gui.controlutils.MenuSelectListener;
-import com.UKC_AICS.simulation.gui.controlutils.MenuSelectEvent;
 import com.UKC_AICS.simulation.gui.controlutils.RenderState;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Gdx;
@@ -19,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -54,54 +51,43 @@ public class SimScreenGUI extends Stage implements HoverListener {
 
     //east
 	 private Label boidInfo;
-	 private boolean showBoidInfo = false;
-	 private boolean showSpeciesInfo = false;
 	 private Boid boidDisplaying;
-	 private byte speciesDisplaying;
-    
-    
+
     //South
     public Label fps;
 
-
-    //Centre
-    private Table viewArea;
-    
     //West
     private Array<Entity> boids;
     private Array<Entity> objects;
-    private final BoidListWindow boidTree = new BoidListWindow("Boids", skin, this, true, (byte)1);
-    private final BoidListWindow objectTree = new BoidListWindow("Objects", skin, this, false, (byte)1);
+    private final EntityTreeTable boidTree = new EntityTreeTable("Boids", skin, this, true, (byte)1);
+    private final EntityTreeTable objectTree = new EntityTreeTable("Objects", skin, this, false, (byte)1);
     
 	//Hovering popup
-	private final Window hoverWindow = new Window("", skin);
 	private final Label hoverLabel = new Label("", skin);
-	private Actor hoverTip;
-	
+
 	//SplitPane's
-	private SplitPane north_1;
-	private SplitPane south_2;
-	private SplitPane east_3;
-	private SplitPane west_4;
+	private SplitPane eastSplit;
+	private SplitPane westSplit;
 	
 	//Table areas
 	private Table west = new Table();
 	private Table east = new Table();
 	private Table north = new Table();
 	private Table south = new Table();
-	private Table bottom = new Table();
-    
+
 	
 	//File Choosers
 	private FileChooser fileChooser;
 	private final ObjectMap<Button, FileChooser> fileChoosers = new ObjectMap<Button, FileChooser>();
 
     private Actor infoItemSelected;
-	
+
 	private RenderOptionsWindow renderOptions;
     private EnvironmentFileWindow environmentOptions;
 
     private final Table legend = new Table();
+
+    private ObjectMap<Button, FileChooser> chooserMap = new ObjectMap<Button, FileChooser>();
 	
     /**
      *
@@ -129,15 +115,10 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	
         table = new Table();
         table.setSize(width, height);
-//        table.setPosition(0, 0);
-       
-//        table.pack();
-//        table.debug();
         fileChooser = new FileChooser("Load", skin, "Load", "Species", ".", "Confirm", "Cancel", this);
         fileChooser.addSelectionListener(new MenuSelectListener(){
 			public void selectionMade(java.lang.Object menu, java.lang.Object object) {
 				FileChooser chooser = (FileChooser) menu;
-                simScreen.loadSaveCall(chooser.getCommand(), chooser.getIdentifier(), (File)object);
 				simScreen.simulationManager.loadSaveCall(chooser.getCommand(), chooser.getIdentifier(), (File)object);
 			}
 		});
@@ -173,51 +154,32 @@ public class SimScreenGUI extends Stage implements HoverListener {
 //        fileChooser.hide();
 //        fileChooser.open(this);
         stage.addActor(table);
-
-        
-        
         table.setFillParent(true);
-
-        //
         console = new TextArea("console log",skin);
-        
         north = createNorth(table);
-        
         table.add(north).top().height(NORTH_HEIGHT).expandX().fillX();
         table.row();
-        
-    	
+
         west = createWest(table);
-//        table.add(west).left().width(WEST_WIDTH).fillY().expandY();
-        viewArea = createCentre(table);
-//        table.add(viewArea).center().fill().expand();
         east = createEast(table);
-//        this.bottom = createLower();
-//        table.add(east).left().width(EAST_WIDTH).fillY().expandY();
-//        table.row();
         float splitwidth = (float)width/2;
 //        float maxsplit = (1f/width)*splitwidth;
         float split;
         split = ((1f/splitwidth) * (float)WEST_WIDTH);
-        west_4 = new SplitPane(west, null, false, skin);
-        west_4.setSplitAmount(split);
-        west_4.setMaxSplitAmount(1f);
-        west_4.setMinSplitAmount(0.01f);
-        east_3 = new SplitPane(null, east, false, skin);
+        westSplit = new SplitPane(west, null, false, skin);
+        westSplit.setSplitAmount(split);
+        westSplit.setMaxSplitAmount(1f);
+        westSplit.setMinSplitAmount(0.01f);
+        eastSplit = new SplitPane(null, east, false, skin);
         split = 1 - ((1f/splitwidth) * (float)WEST_WIDTH);
-        east_3.setSplitAmount(split);
-        east_3.setMinSplitAmount(0f);
-        east_3.setMaxSplitAmount(0.99f);
-        
-        
-        
-        
-//      pane
+        eastSplit.setSplitAmount(split);
+        eastSplit.setMinSplitAmount(0f);
+        eastSplit.setMaxSplitAmount(0.99f);
 
         Table splitPanes = new Table();
-//        splitPanes.add(west_4).left().width(width).fill().expand();
-        splitPanes.add(west_4).left().width(width).fill().expand();//fillY().expandY();
-        splitPanes.add(east_3).left().width(width).fill().expand();//fillY().expandY();
+//        splitPanes.add(westSplit).left().width(width).fill().expand();
+        splitPanes.add(westSplit).left().width(width).fill().expand();//fillY().expandY();
+        splitPanes.add(eastSplit).left().width(width).fill().expand();//fillY().expandY();
         
         Table bottom = new Table();
 
@@ -231,35 +193,21 @@ public class SimScreenGUI extends Stage implements HoverListener {
         table.add(south).bottom().height(SOUTH_HEIGHT).expandX().fillX();
         table.pack();
         setViewRect(north, south, east, west);
-        
+
 //        SplitPane pane4 = new SplitPane(west, viewArea, false, skin);
 //        pane4.setSplitAmount(EAST_WIDTH + screenRect.width);
-        
+
 //        SplitPane pane3 = new SplitPane(east, pane4, false, skin);
 //        pane3.setMinSplitAmount(EAST_WIDTH);
 //        pane3.setMaxSplitAmount(EAST_WIDTH + screenRect.width);
 //        pane3.setSplitAmount(EAST_WIDTH);
-       
 
-        
+
+
 //        table.add(pane1).top().expandX().fillX();
 //        screenRect.set(0, 0, width, height);
-    }    
+    }
     
-//    private Table createLower(){
-//       	Table lowerTable = new Table(skin);
-////    	t.add(eastTable).left().width(EAST_WIDTH).fillY().expandY();
-//    	boidInfo = new Label("some stuff ", skin);
-//    	boidInfo.setAlignment(Align.left);
-//
-//    	lowerTable.add(createScrollPane(boidInfo, false, true, true, false)).left().top().fill().expand();
-//		lowerTable.pack();
-//		lowerTable.pack();
-//    	return lowerTable;
-//    }
-    
-    
-    private ObjectMap<Button, FileChooser> chooserMap = new ObjectMap<Button, FileChooser>();
 
 	private Table createNorth(Actor a){
     	Table menuTable = new Table(skin);
@@ -270,7 +218,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	final MenuDropdown menu = createFileMenu(new String[]{"load", "save"}, new String[]{"Load", "Save"}, "Species Settings",
     			"SPECIES");
     	menuTable.add(menu).padLeft(5);
-
 
         TextButton button;
         //SET EA DIRECTORY
@@ -407,16 +354,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	return t;
     }
         
-	
-	private Table createMenuBar(){
-		return table;
 
-	}
-	private Table createOptionsMenu(){
-		return table;
-		
-	}
-	
     private Table createSouth(Actor a){
     	Table southTable = new Table(skin);
 //    	t.add(southTable).bottom().height(SOUTH_HEIGHT).expandX().fillX().colspan(3);
@@ -525,12 +463,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
         southTable.padTop(20);
 		return southTable;
     }
-    private Table createCentre(Actor a){
-    	Table centreTable = new Table(skin);
-//    	t.add(centreTable).center().fill().expand();
-    	return centreTable;
-    }
-    
+
     private Table createEast(Actor a){
     	Table eastTable = new Table(skin);
 //    	t.add(eastTable).left().width(EAST_WIDTH).fillY().expandY();
@@ -548,16 +481,8 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	Table westTable = new Table(skin);
     	SplitPane pane = new SplitPane(boidTree, objectTree, true, skin);
     	westTable.add(pane).fill().expand();
-//    	t.add(westTable).left().width(WEST_WIDTH).fillY().expandY();
-//    	westTable.add(new Label("Boids", skin));
-//    	westTable.row();
-//   	 	westTable.add(boidTree).top().fill().expand();
-//   	 	westTable.row();
-//   	 	westTable.add(objectTree).top().fill().expand();
-//   	 	westTable.pack();
     	return westTable;
     }
-
 
     public void createBoidTree(HashMap<Byte, Species> species, Array boids){
     	try{
@@ -590,14 +515,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	else
     		console.setText("");
     }
-    
-    public void resize(int width, int height){
-    	setViewRect(width, height);
-    	boidTree.resize();
-    	
-//    	objectTree.resize();
-    }
-    
+
     private void setviewRect(int left, int right, int top, int bottom){
     	if(screenRect!=null){
     		screenRect.setSize(right-left, top-bottom);
@@ -611,13 +529,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
     		screenRect.setPosition(WEST_WIDTH, SOUTH_HEIGHT);
     	}
     }
-    
-    private void setViewRect(){
-    	if(viewArea != null){
-	        screenRect.setSize(viewArea.getWidth(), viewArea.getHeight());
-	        screenRect.setPosition(viewArea.getX(), viewArea.getY());
-    	}
-    }
+
     private void setViewRect(Table north, Table south, Table east, Table west) {
 //    	float width = Gdx.graphics.getWidth() - (east.getWidth() + west.getWidth())-(screenOffset*2);
 //    	float height = Gdx.graphics.getHeight() - (north.getHeight() + south.getHeight())-(screenOffset*2);
@@ -629,7 +541,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
     }
     
     public Rectangle getViewArea(){
-        //setViewRect();
     	return screenRect;
     }
 
@@ -648,13 +559,13 @@ public class SimScreenGUI extends Stage implements HoverListener {
                 if(infoItemSelected.equals(boidTree)) {
                     if (boids != null) {
                         boidInfo.setText(boidTree.update(boids, true));
-                        objectTree.selectNodeByBoid(null, false);
+                        objectTree.selectNodeByEntity(null, false);
                     }
                 }
                 else if(infoItemSelected.equals(objectTree)) {
                     if (objects != null) {
                         boidInfo.setText(objectTree.update(objects, true));
-                        boidTree.selectNodeByBoid(null, false);
+                        boidTree.selectNodeByEntity(null, false);
                     }
                 }
             }
@@ -709,18 +620,10 @@ public class SimScreenGUI extends Stage implements HoverListener {
 	public void showBoidInfo(Boid boid, boolean show){
 		if(boidDisplaying!= null)boidDisplaying.setTracked(false);
 		if(!show){
-			showBoidInfo= false;
 			return;
 		}
-		showBoidInfo = true;
 		boidDisplaying = boid;
 		boidDisplaying.setTracked(true);
-	}
-	
-
-	
-	public void toggleButton(boolean toggled, Button btn){
-		btn.setChecked(toggled);
 	}
 	
 	private Actor createScrollPane(Actor content, boolean showX, boolean showY, boolean bottomBar, boolean rightBar){
@@ -752,11 +655,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
 	}
 	
 	public void selectEntity(Entity entity){
-		System.out.println("Selecting " + entity);
-		boolean select = false; 
-		select = (entity == null) ? false : true;
-		boidTree.selectNodeByBoid(entity, select);
-//		objectTree.selectNodeByBoid(entity, select);
+		boidTree.selectNodeByEntity(entity, (entity == null) ? false : true);
 	}
 
 
@@ -784,10 +683,10 @@ public class SimScreenGUI extends Stage implements HoverListener {
 //		hoverWindow.remove();
 	}
 
-    public void setSelctedInfoItem(Actor item){
+    public void setSelectedInfoItem(Actor item){
         infoItemSelected = item;
 
     }
-    
+
  
 }

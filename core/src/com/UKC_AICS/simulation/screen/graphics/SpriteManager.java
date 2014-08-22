@@ -105,48 +105,6 @@ public class SpriteManager {
 		Sprite sprite;
 		Texture spriteTexture;
 		tileTextures = new ObjectMap<String, Sprite>(tileFiles.size);
-//
-//		for(String tile : tileFiles.keys()){
-//			if(assetManager.isLoaded(tileFiles.get(tile))){
-//				spriteTexture = assetManager.get(tileFiles.get(tile), Texture.class);
-//				tileTextures.put(tile, new Sprite(spriteTexture));
-//				tilesLoaded = true;
-//			}
-//		}
-//
-//		for(byte entity: boidsFiles.keySet()){
-//			if(assetManager.isLoaded(boidsFiles.get(entity))){
-//				spriteTexture = assetManager.get(boidsFiles.get(entity), Texture.class);
-//				sprite = new Sprite(spriteTexture);
-//				sprite.setOrigin((spriteTexture.getWidth()/2), spriteTexture.getHeight()/2);
-//				boidSprites.put(entity, sprite);
-//			}
-////			else
-////				created = false;
-//		}
-//		objectSprites = new ObjectMap<Byte, Sprite>(objectsFiles.size);
-//		for(Byte entity: objectsFiles.keys()){
-//			if(assetManager.isLoaded(objectsFiles.get(entity))){
-//				spriteTexture = assetManager.get(objectsFiles.get(entity), Texture.class);
-//				sprite = new Sprite(spriteTexture);
-//				sprite.setOrigin((spriteTexture.getWidth()/2), spriteTexture.getHeight()/2);
-//				objectSprites.put(entity, sprite);
-//			}
-//
-//		}
-//		if(assetManager.isLoaded(defaultBoid_path)){
-//			spriteTexture = assetManager.get(defaultBoid_path, Texture.class);
-//			sprite = new Sprite(spriteTexture);
-//			defaultBoid = sprite;
-//			for(byte b : boidColors.keySet()){
-//				if(!boidSprites.containsKey(b)){
-////					defaultBoid = new Sprite(spriteTexture);
-//					float[] color = boidColors.get(b);
-//					sprite.setColor(color[0], color[1], color[2], 1);
-//					boidSprites.put(b, sprite);
-//				}
-//			}
-//		}
 		if(assetManager.isLoaded(defaultBoid_selected_path)){
 			spriteTexture = assetManager.get(defaultBoid_selected_path, Texture.class);
 			defaultBoid_selected = new Sprite(spriteTexture);
@@ -162,6 +120,7 @@ public class SpriteManager {
                 if(s!=null){
                     objectSprites.put(i.byteValue(), s);
                 }
+                //Create a highligght sprite for each objects selected mode
                 s = entitySheet.createSprite((objectNames.get(i)+"_highlight"));
                 s.setScale(0.5f);//.setSize(s.getWidth()/2, s.getWidth()/2);
                 if(s!=null){
@@ -183,9 +142,10 @@ public class SpriteManager {
                     s.setColor(color[0], color[1], color[2], 1);
                     boidSprites.put(b, s);
                 }
+                //Generate corpse for each boid
                 if(!corpseSprites.containsKey(b)){
                     s = entitySheet.createSprite("corpse");
-                    s.setScale(0.5f);//.setSize(s.getWidth()/2, s.getWidth()/2);
+                    s.setScale(0.4f);//.setSize(s.getWidth()/2, s.getWidth()/2);
                     float[] color = boidColors.get(b);
                     s.setColor(color[0], color[1], color[2], 1);
                     corpseSprites.put(b, s);
@@ -349,10 +309,6 @@ public class SpriteManager {
     public AtlasSprite getTileSprite(String layer){ return getTileSprite(layer, 100);}
 	public AtlasSprite getTileSprite(String layer, float amount){
 		String l = layer;
-//		if(l == "water")return null;
-//		if(l == "terrain")
-//			l = "water";
-		
 		if(!environmentTiles_sprites.containsKey(l)) return null;
 		if(!environmentTiles_sprites.get(l).containsKey(amount)) return null;
 			

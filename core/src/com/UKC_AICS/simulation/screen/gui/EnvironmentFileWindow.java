@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
 import java.io.File;
-import java.util.HashMap;
 
 /**
  * Created by Ben on 19/08/2014.
@@ -18,11 +17,11 @@ import java.util.HashMap;
 public class EnvironmentFileWindow extends Dialog implements MenuSelectEvent {
 
     private Table packFileTable = new Table();
-    private Table seperateFileTable = new Table();
+    private Table separateFileTable = new Table();
     private Table variableTable = new Table();
     private boolean fromPackFile;
     private final ObjectMap<String, File> packFiles = new ObjectMap<String, File>();
-    private final ObjectMap<String, File> seperateFiles = new ObjectMap<String, File>();
+    private final ObjectMap<String, File> separateFiles = new ObjectMap<String, File>();
 
     private FileChooser fileChooser;
 
@@ -78,12 +77,12 @@ public class EnvironmentFileWindow extends Dialog implements MenuSelectEvent {
         packFileTable.row();
 
         //SEPARATE FILES
-        seperateFileTable.add(new Label("Load environment settings from several images /n" +
+        separateFileTable.add(new Label("Load environment settings from several images /n" +
                 "Select image files for each of the following environment layers", skin)).fillX().expandX().colspan(2);
-        seperateFileTable.row();
+        separateFileTable.row();
         final TextField waterField = new TextField("Select water layer image file", skin);
-        seperateFileTable.add(new Label("Water file ", skin)).padLeft(5);
-        seperateFileTable.add(waterField).padLeft(5).fillX().expandX();
+        separateFileTable.add(new Label("Water file ", skin)).padLeft(5);
+        separateFileTable.add(waterField).padLeft(5).fillX().expandX();
         TextButton waterFileBtn = new TextButton("Load", skin);
         waterFileBtn.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
@@ -91,12 +90,12 @@ public class EnvironmentFileWindow extends Dialog implements MenuSelectEvent {
                 fileChooser.open(stage);
             }
         });
-        seperateFileTable.add(waterFileBtn).padLeft(5).padRight(5);
-        seperateFileTable.row();
+        separateFileTable.add(waterFileBtn).padLeft(5).padRight(5);
+        separateFileTable.row();
 
         final TextField grassField = new TextField("Select grass layer image file", skin);
-        seperateFileTable.add(new Label("Grass file ", skin)).padLeft(5);
-        seperateFileTable.add(grassField).padLeft(5).fillX().expandX();
+        separateFileTable.add(new Label("Grass file ", skin)).padLeft(5);
+        separateFileTable.add(grassField).padLeft(5).fillX().expandX();
         TextButton grassFileBtn = new TextButton("Load", skin);
         grassFileBtn.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
@@ -104,12 +103,12 @@ public class EnvironmentFileWindow extends Dialog implements MenuSelectEvent {
                 fileChooser.open(stage);
             }
         });
-        seperateFileTable.add(grassFileBtn).padLeft(5).padRight(5);
-        seperateFileTable.row();
+        separateFileTable.add(grassFileBtn).padLeft(5).padRight(5);
+        separateFileTable.row();
 
         final TextField terrainField = new TextField("Select terrain image file", skin);
-        seperateFileTable.add(new Label("Terrain file ", skin)).padLeft(5);
-        seperateFileTable.add(terrainField).padLeft(5).fillX().expandX();
+        separateFileTable.add(new Label("Terrain file ", skin)).padLeft(5);
+        separateFileTable.add(terrainField).padLeft(5).fillX().expandX();
         TextButton terrainFileBtn = new TextButton("Load", skin);
         terrainFileBtn.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
@@ -117,8 +116,8 @@ public class EnvironmentFileWindow extends Dialog implements MenuSelectEvent {
                 fileChooser.open(stage);
             }
         });
-        seperateFileTable.add(terrainFileBtn).padLeft(5).padRight(5);
-        seperateFileTable.row();
+        separateFileTable.add(terrainFileBtn).padLeft(5).padRight(5);
+        separateFileTable.row();
 
         fileChooser.addSelectionListener(new MenuSelectListener(){
             public void selectionMade(java.lang.Object menu, java.lang.Object object) {
@@ -138,17 +137,17 @@ public class EnvironmentFileWindow extends Dialog implements MenuSelectEvent {
                         return;
                     }
                     if (chooser.getIdentifier().equals("water")) {
-                        seperateFiles.put("water", file);
+                        separateFiles.put("water", file);
                         waterField.setText(file.getPath());
                         return;
                     }
                     if (chooser.getIdentifier().equals("grass")) {
-                        seperateFiles.put("grass", file);
+                        separateFiles.put("grass", file);
                         grassField.setText(file.getPath());
                         return;
                     }
                     if (chooser.getIdentifier().equals("terrain")) {
-                        seperateFiles.put("terrain", file);
+                        separateFiles.put("terrain", file);
                         terrainField.setText(file.getPath());
                         return;
                     }
@@ -176,13 +175,13 @@ public class EnvironmentFileWindow extends Dialog implements MenuSelectEvent {
 //        packFileTable
     }
 
-    private void showFileSelection(boolean packfile){
-        fromPackFile = packfile;
+    private void showFileSelection(boolean packFile){
+        fromPackFile = packFile;
         variableTable.clear();
-        if(packfile)
+        if(packFile)
             variableTable.add(packFileTable).fill().expand();
         else
-            variableTable.add(seperateFileTable).fill().expand();
+            variableTable.add(separateFileTable).fill().expand();
         pack();
     }
     /**
@@ -206,7 +205,7 @@ public class EnvironmentFileWindow extends Dialog implements MenuSelectEvent {
         return fromPackFile;
     }
     public ObjectMap<String, File> getFiles(){
-        return seperateFiles;
+        return separateFiles;
     }
     public ObjectMap<String, File> getPackFiles(){
         return packFiles;

@@ -200,9 +200,15 @@ public class Graphics {
 					Byte boidSelection = null;
 					for(Boid boid : boidsArray){
 
+                        size = boid.getSize()/30;
+                        if(size>0.5)
+                            size = (0.5f + (size/5f));
+                        else if(size<0.5)
+                            size = (0.25f + (size/5f));
 						if(boid.tracked){
 							altSprite = spriteManager.getBoid_HighlightSprite();
 							updateSpritePosition(boid, altSprite);
+                            altSprite.setScale(size);
 							altSprite.draw(batch);
 						}
 
@@ -216,12 +222,7 @@ public class Graphics {
                             colour[2] = (colour[2] > 0f) ? (colour[2] + ((float) boid.tertiaryType * 0.03f)) : colour[2];
 
 							sprite.setColor(colour[0], colour[1], colour[2], 1f);
-							
-							size = boid.getSize()/30;
-							if(size>0.5)
-								size = (0.5f + (size/4f));
-							else if(size<0.5)
-								size = (0.25f + (size/4f));
+
 							sprite.setScale(size);
 						}
 						else{
@@ -252,9 +253,10 @@ public class Graphics {
 				ScissorStack.popScissors();
                 return true;
 			}
+             Gdx.gl.glFinish();
             return false;
 
-//        Gdx.gl.glFinish();
+
 
 		}
 	ShapeRenderer r = new ShapeRenderer();
@@ -277,7 +279,6 @@ public class Graphics {
 
 		spriteManager.loadAssets_Boids(fileLocations, true);
         spriteManager.loadAssets_Entities();
-
 	}
 	public void setBoidSprite_Colours(HashMap<Byte, float[]> rgbValues) {
 		boidColours = rgbValues;
@@ -298,7 +299,7 @@ public class Graphics {
 		spriteManager.loadAssets_Objects(types);
 	}
 	
-	public void initGrassMesh(byte[][] bs, int tileSize){
+	public void initEnvironmentMeshes(byte[][] bs, int tileSize){
         grassMesh = new TileMesh(0f, 1f, 0f, 1f, 128);
         waterMesh = new TileMesh(0.3f, 0.8f, 0f, 0.8f, 128);
         groundMesh = new TileMesh(0f, 1f, 0f, 1f, 128);
@@ -306,7 +307,7 @@ public class Graphics {
         created = false;
 
 	}
-	public void initTileSprites(HashMap<String, byte[][]> tileLayers){
+	public void initEnvironmentTiling(HashMap<String, byte[][]> tileLayers){
 		this.tileMap = tileLayers;
 		spriteManager.loadAssets_Tiles(null);
 		dynamicTiles = new TileGraphics(tileLayers, spriteManager, backgroundCache);
@@ -338,9 +339,5 @@ public class Graphics {
 	public Camera getCamera(){
 		return camera;
 	}
-
-
-	
-	
 
 }
