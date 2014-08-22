@@ -202,24 +202,28 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			setCrossButton.addListener(new ClickListener(){
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+				try{
 					if(!crossTextfield.getText().isEmpty()){
 						double newCross = Double.parseDouble(crossTextfield.getText());
-						
-							ea.setCrossRate(newCross);
-							setTableInfo(ea);
-						
+						ea.setCrossRate(newCross);
+						setTableInfo(ea);
 					}
+				}
+				catch(NumberFormatException e){}		
 				}
 			});
 			final TextButton setMuteButton = new TextButton("Set Mutation Rate", skin,"default");
 			setMuteButton.addListener(new ClickListener(){
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+				try{	
 					if(!muteTextfield.getText().isEmpty()){
 						double newMute = Double.parseDouble(muteTextfield.getText());
 						ea.setMuteRate(newMute);
 						setTableInfo(ea);
 					}
+				}
+				catch(NumberFormatException e){}		
 				}
 			});
 			// sets the values that will be added to the table
@@ -272,9 +276,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 					if(!textField.get(i).getText().isEmpty() ){
 						System.out.println("I am not empty"); 
 						newheldvalues[i] = Float.parseFloat(textField.get(i).getText());
-					
-					
-					 
+									
 					} 
 					else{
 						newheldvalues[i] = null;
