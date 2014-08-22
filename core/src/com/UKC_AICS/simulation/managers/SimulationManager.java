@@ -72,7 +72,6 @@ public class SimulationManager extends Manager {
      */
     public SimulationManager(SimulationScreen parent) {
         this.parent = parent;
-
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
         objectData = staXParser.readObjectFile("../core/assets/data/objects.xml");
         for (Species species : speciesData.values()) {
@@ -186,7 +185,7 @@ public class SimulationManager extends Manager {
         configFile.setFile("config2.xml");
         try {
           
-		configFile.saveConfig(stateMachine);
+		configFile.saveConfig(boidManager.stateMachine);
         } catch (Exception e) {
           e.printStackTrace();
         }
