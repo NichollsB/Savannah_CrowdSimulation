@@ -129,6 +129,7 @@ public class TileGraphics extends SpriteCache {
 //                }
                 if((layer.equals("water")) || layer.equals("grass")){
                     amount = (byte) (Math.round((amount+5)/10)*10);
+                    if(amount>100) amount = 100;
                     if(layer.equals("grass") || amount >30)
                         nextSprite = manager.getTileSprite(layer, amount);
                     else
