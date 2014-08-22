@@ -46,7 +46,7 @@ public class SimulationManager extends Manager {
     static public int hours = 0;
     static public int days = 0;
     static public int weeks = 0;
-    StateMachine stateMachine;
+
     //monstrous things.
     static final HashMap<String, HashMap<String, Float>> tempSpeciesData = new HashMap<String, HashMap<String, Float>>();
     static final HashMap<Byte, String> speciesByte = new HashMap<Byte, String>();
@@ -71,7 +71,7 @@ public class SimulationManager extends Manager {
      */
     public SimulationManager(SimulationScreen parent) {
         this.parent = parent;
-        this.stateMachine= boidManager.stateMachine;
+//        this.stateMachine= boidManager.stateMachine;
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
         objectData = staXParser.readObjectFile("../core/assets/data/objects.xml");
         for (Species species : speciesData.values()) {
@@ -185,7 +185,7 @@ public class SimulationManager extends Manager {
         configFile.setFile("config2.xml");
         try {
           
-		configFile.saveConfig(stateMachine);
+		configFile.saveConfig(boidManager.stateMachine);
         } catch (Exception e) {
           e.printStackTrace();
         }

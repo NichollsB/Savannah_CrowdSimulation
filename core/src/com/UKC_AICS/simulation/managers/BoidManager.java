@@ -36,7 +36,7 @@ public class BoidManager extends Manager {
     public EA2 ea;
 
 
-    private boolean removeBoids = false;
+//    private boolean removeBoids = false;
     
 
     public BoidManager(SimulationManager parent, EA2 ea) {
