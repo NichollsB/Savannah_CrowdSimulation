@@ -104,14 +104,20 @@ public class Hungry extends State {
             float sep = SimulationManager.speciesData.get(boid.getSpecies()).getSeparation();
 
             steering.set(0f, 0f, 0f);
-
-            steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
-            steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
-//            steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
-
             //Add collision avoidance
-            steering.add(Collision.act(collisionObjects, boid));
-            steering.add(Collision.act(boid));
+            Vector3 tempVec = new Vector3(0f,0f,0f);
+            tempVec.add(Collision.act(collisionObjects, boid));
+            tempVec.add(Collision.act(boid));
+
+            if(steering.equals(tempVec)) {
+                steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
+                steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
+//            steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
+            }
+            else {
+                steering.set(tempVec);
+            }
+
 
             steering.nor().scl(boid.maxSpeed / 2);
             steering.sub(boid.getVelocity());
