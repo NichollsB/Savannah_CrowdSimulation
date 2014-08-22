@@ -48,18 +48,26 @@ public class GoForKill extends State {
 
                 } //check target is still within sight range
                 else if (distance < boid.sightRadius * boid.sightRadius) {
+
                     Array<Boid> nearBoids = BoidManager.getBoidGrid().findInSight(boid);
                     Array<Entity> collisionObjects = new Array<Entity>(bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y)));
                     collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
                     collisionObjects.removeValue(target,false);   //remove target from collision avoidance
 
-                    //pursue prey
+                    Vector3 tempVec = new Vector3(0f,0f,0f);
+                    tempVec.add(Collision.act(collisionObjects, boid));
+                    tempVec.add(Collision.act(boid));
+                            //pursue prey
                     steering.set(0f, 0f, 0f);
-                    steering.add(Pursuit.act(boid, target));
-
+                    if(tempVec.equals(steering)) {
+                        steering.add(Pursuit.act(boid, target));
+                    }
+                    else {
+                        steering.set(tempVec);
+                    }
                     //Add collision avoidance
-                    steering.add(Collision.act(collisionObjects, boid));
-                    steering.add(Collision.act(boid));
+//                    steering.add(Collision.act(collisionObjects, boid));
+//                    steering.add(Collision.act(boid));
 
                     boid.setAcceleration(steering);
 
