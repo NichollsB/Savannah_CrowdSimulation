@@ -207,6 +207,7 @@ public class SimulationManager extends Manager {
       }
     //Change this see tutorial
     public void load() {
+//    	hardReset();
     	StaXParserLoad load = new StaXParserLoad();
         load.readConfig(eaFile);
       }

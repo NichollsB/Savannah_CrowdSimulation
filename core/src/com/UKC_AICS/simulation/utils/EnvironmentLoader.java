@@ -180,6 +180,7 @@ public abstract class EnvironmentLoader {
 			layerVals = new byte[gridWidth][gridHeight];
 			float color=0f;
 			Color c = new Color();
+//			int yMax = 
             int x = 0, y = 0;
             for(int gridX = 0; gridX < gridWidth; gridX++){
                 for(int gridY = 0; gridY < gridHeight; gridY++){

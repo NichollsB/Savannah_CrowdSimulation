@@ -110,7 +110,6 @@ public class Graphics {
                     if(!created){
 
                         if(texture!=null) {
-                            System.out.println("creating");
                             grassMesh.createMesh(tileMap.get("grass"), 0, 0, Constants.TILE_SIZE, Constants.TILE_SIZE,
                                     texture, true, 10, 10, new Color(0.55f, 0.7f, 0.41f, 1f));
                             waterMesh.createMesh(tileMap.get("water"), 0, 0, Constants.TILE_SIZE, Constants.TILE_SIZE, Color.TEAL);
@@ -195,6 +194,8 @@ public class Graphics {
 					}
 
 				}
+				float optimumSize = 0.5f;
+				float size = 0f;
 				if(boidsArray.size>0){
 					Byte boidSelection = null;
 					for(Boid boid : boidsArray){
@@ -215,6 +216,13 @@ public class Graphics {
                             colour[2] = (colour[2] > 0f) ? (colour[2] + ((float) boid.tertiaryType * 0.03f)) : colour[2];
 
 							sprite.setColor(colour[0], colour[1], colour[2], 1f);
+							
+							size = boid.getSize()/30;
+							if(size>0.5)
+								size = (0.5f + (size/4f));
+							else if(size<0.5)
+								size = (0.25f + (size/4f));
+							sprite.setScale(size);
 						}
 						else{
 							sprite.setColor(Color.WHITE);
