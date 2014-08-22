@@ -46,24 +46,18 @@ import java.util.Stack;
 	        "", "boidlist");
 	    eventWriter.add(configStartElement);
 	    eventWriter.add(end);
-	 
+	    
 	    	for(Boid b : BoidManager.boids) {
 	 
+	    		System.out.println("boid stack " +stateMachine.getStack(b) );
 	    		
-				Stack<State> stateStore = stateMachine.boidStates.get(b);
+				Stack<State> stateStore = stateMachine.getStack(b);
 				
-						System.out.println("STATESTORE" + stateStore);
+				System.out.println("STATESTORE" + stateStore);
 						
-				//String[] strArray = new String[stateStore.size()]	;
+				
 				String states = stateStore.toString();
-				
-				
-				
-			//	for( int i = 0; i < stateStore.size() ; i ++){
-				//	State state = stateStore.pop();
-				//	strArray[i] = state.getClass().getSimpleName().toString();
-				//}
-				//System.out.println("String array " + strArray);
+			
 				System.out.println("boid stack " +stateMachine.boidStates.get(b) );
 	    	
 				

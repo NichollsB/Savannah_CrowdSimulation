@@ -44,7 +44,7 @@ public class StateMachine {
 //        this.currentState = initialState;
     	this.ea=ea;
         this.boidManager = bm;
-  
+        System.out.print("EA ss" + ea.getEaOn());
         behaviours.put("separation", new Separation());
         behaviours.put("alignment", new Alignment());
         behaviours.put("cohesion", new Cohesion());
@@ -244,7 +244,7 @@ public class StateMachine {
     	System.out.println("FINAL " + boidStates.get(boid));
     	System.out.println("------------------------------------------------------------------------");
     }
-    public Stack<State> getStack(Boid b){
-    	return boidStates.get(b);
+    public Stack<State> getStack(Boid boid){
+    	return boidStates.get(boid);
     }
 }
