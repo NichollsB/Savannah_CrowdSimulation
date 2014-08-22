@@ -39,7 +39,7 @@ public class Boid extends Entity {
     public String state = "default";
 
     public int age = 0;
-
+    public float numberOfOffspring = 0;
 
 //    public byte tertiaryType = 0; //family group of boid.
 
@@ -502,5 +502,11 @@ public class Boid extends Entity {
     }
     public float getFertility(){
     	return fertility;
+    }
+    public void setNumberOfOffspring(float numberOfOffspring){
+    	this.numberOfOffspring=numberOfOffspring;
+    }
+    public float getNumberOfOffspring(){
+    	return numberOfOffspring;
     }
 }

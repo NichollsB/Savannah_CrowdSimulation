@@ -66,6 +66,8 @@ public class EA2 {
 			System.out.println("Species "+ currentSpecies);
 			
 			validCheck();
+			
+			if(1<popNum){
 			calculateFitness();
 			calculateProbabilty();
 			
@@ -75,19 +77,20 @@ public class EA2 {
 				System.arraycopy(selection(),0 ,tmp , 0, geneLength);	
 				newGeneList.add(tmp);
 			}
-			System.out.println("Held Values " + Arrays.toString(heldValues.get(currentSpecies)));
+				System.out.println("Held Values " + Arrays.toString(heldValues.get(currentSpecies)));
 			
 			for(Float[] gene : newGeneList) {
-			System.out.println("NEW GENE " + Arrays.toString(gene));
+				System.out.println("NEW GENE " + Arrays.toString(gene));
 			}
 			
 				
 				for(int j = 0; j<popNum ; j++){
 					population.get(j).setGene(newGeneList.get(j));
 				}
-				
+			}	
 				reset();
 			}
+		
 			
 		}
 	
@@ -182,7 +185,7 @@ public class EA2 {
 				//System.out.println("1");
 				float m = (float) Math.pow(x/2,y);	
 				//System.out.println("m "+ m);
-				fitness=m*age;
+				fitness=m*age+b.getNumberOfOffspring();
 				//System.out.println("fitness "+ fitness);
 			}
 			else if (age>(lifespan/2)){
@@ -191,7 +194,7 @@ public class EA2 {
 				//System.out.println("m "+ m);
 				m=m*-1f;
 				//System.out.println("m "+ m);
-				fitness=m*age;
+				fitness=m*age+b.getNumberOfOffspring();
 				//System.out.println("fitness "+ fitness);
 			
 			} else{
@@ -251,6 +254,9 @@ public class EA2 {
 		
 				if(probabilityList.get(i) <=randomValue && randomValue<probabilityList.get(i+1)){	
 					geneList.add(population.get(i).getGene());
+					float newNumberOfOffspring = population.get(i).getNumberOfOffspring();
+					newNumberOfOffspring = newNumberOfOffspring + 1f;
+					population.get(i).setNumberOfOffspring(newNumberOfOffspring);
 					//System.out.println("Selected = " + i);
 					//System.out.println("POPNUM "+ popNum);
 					//System.out.println("GENE LIST "+ geneList);

@@ -27,7 +27,7 @@ public class CarnReproduce extends State {
     private EA2 ea;
     public CarnReproduce(StateMachine parent, BoidManager bm, EA2 ea) {
         super(parent, bm);
-        this.ea=ea;
+        this.ea = ea;
     }
 
     @Override
