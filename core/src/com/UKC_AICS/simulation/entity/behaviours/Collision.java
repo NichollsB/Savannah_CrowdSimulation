@@ -23,7 +23,7 @@ public class Collision extends Behaviour {
     private static Vector3 tmpVec = new Vector3(0f,0f,0f);
     private static Vector3 tmpVec2 = new Vector3(0f,0f,0f);
 
-    static float MAX_AVOID_FORCE = 0.15f;
+    static float MAX_AVOID_FORCE = 0.05f;
     static float LOOK_AHEAD = 20f;
     static float HALF_LOOK_AHEAD = LOOK_AHEAD/2f;
     static int tileSize = Constants.TILE_SIZE;
@@ -33,44 +33,7 @@ public class Collision extends Behaviour {
         throw new Error("Collision is not to be used in this manner. Try static access Collision.act(Array<Entity> targets, Boid boid)");
     }
 
-    /**
-     * Finds the first cell along the boids trajectory
-     * @param x0
-     * @param y0
-     * @param dx_dt
-     * @param dy_dt
-     * @return
-     */
-    private static ArrayList<Integer> cellInPath(float x0, float y0, float dx_dt, float dy_dt) {
-        ArrayList<Integer> cell = null;
-        for(int i = 0; i < stepsAhead; i++){
-            int posX = (int)(x0 + i * dx_dt);
-            int posY = (int)(y0 + i * dy_dt);
-            int posToCheckX = posX;
-            int posToCheckY = posY;
-            //TODO export to a static map wrapping function for X and Y?
-            if(posX >= Constants.mapWidth) {
-                posToCheckX = posX - Constants.mapWidth;
-            }
-            else if(posX < 0) {
-                posToCheckX = Constants.mapWidth + posX;
-            }
-            if(posY >= Constants.mapHeight) {
-                posToCheckY = posY - Constants.mapHeight;
-            }
-            else if(posY < 0) {
-                posToCheckY = Constants.mapHeight + posY;
-            }
 
-            //TODO need a check for outofbounds, wrap check for blocked, but steer from extended map coords
-            if(WorldManager.getTileInfoAt(posToCheckX, posToCheckY).get("blocked") == 1) {
-                cell = new ArrayList<Integer>();
-                cell.add(posX);
-                cell.add(posY);
-            }
-        }
-        return cell;
-    }
 
     /**
      * For collision avoidance with terrain along boid trajectory
@@ -191,7 +154,44 @@ public class Collision extends Behaviour {
         return tmpVec;
     }
 
+    /**
+     * Finds the first cell along the boids trajectory
+     * @param x0
+     * @param y0
+     * @param dx_dt
+     * @param dy_dt
+     * @return
+     */
+    private static ArrayList<Integer> cellInPath(float x0, float y0, float dx_dt, float dy_dt) {
+        ArrayList<Integer> cell = null;
+        for(int i = 0; i < stepsAhead; i++){
+            int posX = (int)(x0 + i * dx_dt);
+            int posY = (int)(y0 + i * dy_dt);
+            int posToCheckX = posX;
+            int posToCheckY = posY;
+            //TODO export to a static map wrapping function for X and Y?
+            if(posX >= Constants.mapWidth) {
+                posToCheckX = posX - Constants.mapWidth;
+            }
+            else if(posX < 0) {
+                posToCheckX = Constants.mapWidth + posX;
+            }
+            if(posY >= Constants.mapHeight) {
+                posToCheckY = posY - Constants.mapHeight;
+            }
+            else if(posY < 0) {
+                posToCheckY = Constants.mapHeight + posY;
+            }
 
+            //TODO need a check for outofbounds, wrap check for blocked, but steer from extended map coords
+            if(WorldManager.getTileInfoAt(posToCheckX, posToCheckY).get("blocked") == 1) {
+                cell = new ArrayList<Integer>();
+                cell.add(posX);
+                cell.add(posY);
+            }
+        }
+        return cell;
+    }
 
 
     /**
