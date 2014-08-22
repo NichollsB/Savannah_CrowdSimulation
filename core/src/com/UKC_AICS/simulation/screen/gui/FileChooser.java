@@ -28,7 +28,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.OrderedMap;
 
 public class FileChooser extends Dialog implements MenuSelectEvent{
-	private static final File defaultDir = new File("./");
+	private static final File defaultDir = new File(".");
 	private File startDir = defaultDir;
 	private File currentDir;
 	private File selectedFile;
@@ -323,7 +323,7 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		String filePath = currentDir.getPath();
 //		if(!filePath.endsWith("/")&&!targetPath.getName().startsWith("/"))
 //			filePath += "/";
-		filePath = filePath + targetPath.getName();
+		filePath = filePath + File.separator+ targetPath.getName();
 				
 		selectedFile = new File(filePath);
 //		if(targetPath.exists())

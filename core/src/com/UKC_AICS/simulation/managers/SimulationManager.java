@@ -3,6 +3,9 @@ package com.UKC_AICS.simulation.managers;
 import EvolutionaryAlgorithm.EA2;
 
 
+
+
+
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
@@ -11,6 +14,7 @@ import com.UKC_AICS.simulation.entity.ObjectData;
 import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.UKC_AICS.simulation.utils.EnvironmentLoader;
+import com.UKC_AICS.simulation.utils.Outputter;
 import com.UKC_AICS.simulation.utils.StaXParser;
 import com.UKC_AICS.simulation.utils.StaXParserLoad;
 import com.UKC_AICS.simulation.utils.StaxWriter;
@@ -21,6 +25,8 @@ import com.badlogic.gdx.utils.Array;
 import com.sun.corba.se.impl.orbutil.closure.Constant;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
@@ -37,6 +43,8 @@ public class SimulationManager extends Manager {
 //    BoidManagerThreadedThree boidManager = new BoidManagerThreadedThree(this);
 //    BoidManagerOld boidManager = new BoidManagerOld(this);
     public EA2 ea = new EA2();
+    private File eaFile  = new File("config2.xml");
+    
     BoidManager boidManager; //= new BoidManager(this, ea);
     WorldManager worldManager;// = new WorldManager(Constants.mapWidth, Constants.mapHeight);
 
@@ -58,6 +66,8 @@ public class SimulationManager extends Manager {
     HashMap<Byte, String> fileLocations;
     HashMap<Byte, float[]> speciesRGB = new HashMap<Byte, float[]>(); 
     
+    private Outputter recorder = new Outputter();
+    
     /**
      * Added by ben nicholls - for the creation of objects from ObjectData type/ creation of ObjectData types...
      */
@@ -71,7 +81,15 @@ public class SimulationManager extends Manager {
      * Possibly store the data lookup tables here? like subType data for example
      */
     public SimulationManager(SimulationScreen parent) {
+    	
         this.parent = parent;
+
+        try {
+			eaFile.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
         speciesData = staXParser.readConfig("../core/assets/data/species.xml");
         objectData = staXParser.readObjectFile("../core/assets/data/objects.xml");
         for (Species species : speciesData.values()) {
@@ -95,9 +113,6 @@ public class SimulationManager extends Manager {
 //        objectData.put((byte)1, new ObjectData((byte)1, (byte)1, "Corpse"));
 //        objectData.put((byte)2, new ObjectData((byte)2, (byte)1, "Attractor"));
 //        objectData.put((byte)3, new ObjectData((byte)3, (byte)1, "Repeller"));
-
-
-      
 
          ea.setup(this);
 
@@ -182,7 +197,7 @@ public class SimulationManager extends Manager {
     public void save() {
     	
     	StaxWriter configFile = new StaxWriter();
-        configFile.setFile("config2.xml");
+        configFile.setFile(eaFile);
         try {
           
 		configFile.saveConfig(boidManager.stateMachine);
@@ -193,7 +208,7 @@ public class SimulationManager extends Manager {
     //Change this see tutorial
     public void load() {
     	StaXParserLoad load = new StaXParserLoad();
-        load.readConfig("config2.xml");
+        load.readConfig(eaFile);
       }
 
     public void generateBoids(){
@@ -240,9 +255,11 @@ public class SimulationManager extends Manager {
         boidManager.update(dayIncrement);
         worldManager.update(dayIncrement);
 
-        if(recordSimulation && stateMachine!= null){
+        if(recordSimulation ){
             try{
-                simRecorder.recordSim(frames, stateMachine);
+//                simRecorder.recordSim(frames, stateMachine);
+            	System.out.println("Appending record");
+            	recorder.appendOutput(frames, new File("testxml.xml"));
             }
             catch (Exception e){
                 System.out.println("Could not record simulation" + e.toString() );
@@ -448,10 +465,26 @@ public class SimulationManager extends Manager {
     		}
     		
     		if(identifier.equalsIgnoreCase("eafile")){
-    			
+    				eaFile = file;
+    				try {
+						eaFile.createNewFile();
+						System.out.println("EA exists " + eaFile.exists() + " is file " + eaFile.isFile() + " path " + eaFile.getPath()
+								+" abs " + eaFile.getAbsolutePath());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     		}
             if(identifier.equalsIgnoreCase("record")){
-                simRecorder.setFile(file);
+					simRecordFile = file;
+					try {
+						simRecordFile.createNewFile();
+						System.out.println("Record exists " + simRecordFile.exists() + " is file " + simRecordFile.isFile() + " path " + simRecordFile.getPath()
+								+" abs " + simRecordFile.getAbsolutePath());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
             }
 		}
     }
@@ -470,11 +503,15 @@ public class SimulationManager extends Manager {
     }
     private boolean recordSimulation = false;
     private final StaxWriter simRecorder = new StaxWriter();
+    private File simRecordFile;
     public void recordSimulation(){
         try {
-            if (simRecorder.startRecordingSim(stateMachine)) {
-                recordSimulation = true;
-            }
+//        	simRecorder.setRecordFile(simRecordFile);
+//            if (simRecorder.startRecordingSim(stateMachine)) {
+//                recordSimulation = true;
+//            }
+//        	recorder.setFile(simRecordFile);
+        	recordSimulation = true;
         }
         catch (Exception e){
             System.out.println("Sim recording exception");
@@ -482,7 +519,8 @@ public class SimulationManager extends Manager {
     }
     public void stopSimRecording(){
         try {
-            simRecorder.endRecordingSim();
+//            simRecorder.endRecordingSim();
+        	recordSimulation = false;
         }
         catch (Exception e){
             System.out.println("Could not stop recording...");

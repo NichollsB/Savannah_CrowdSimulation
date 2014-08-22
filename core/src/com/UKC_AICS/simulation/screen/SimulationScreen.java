@@ -261,6 +261,8 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     public void resetGraphics(){
         boidGraphics.initTileSprites(simulationManager.getFullInfo());
         boidGraphics.initGrassMesh((byte[][])simulationManager.getFullInfo().get("grass"), Constants.TILE_SIZE);
+        
+        boidGraphics.setBoids(simulationManager.getBoids());
     }
 
     /**
