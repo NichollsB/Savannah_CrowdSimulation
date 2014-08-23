@@ -263,7 +263,7 @@ public class BoidManager extends Manager {
         System.out.println("clearing list. ea " + ea);
         stateMachine = new StateMachine(this, ea);
 
-        boids.clear();
+        boids = new Array<Boid>();
     }
 
     private Vector3 randomVel() {

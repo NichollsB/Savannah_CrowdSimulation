@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Stack;
 
 /**
- * Created by Emily on 09/07/2014.
+ * Created by Emily.
  */
 public class StateMachine {
 
@@ -36,7 +36,9 @@ public class StateMachine {
     public HashMap<Boid,Stack<State>> boidStates;
 
     /**
-     * first implementation of a stack finite state machine.
+     * Stack Based Finite State Machine
+     *
+     * takes a reference to the boidmanager to be able to access and make adjustments to the lists of boids.
      *
      */
     public StateMachine(BoidManager bm, EA2 ea) {
@@ -62,6 +64,9 @@ public class StateMachine {
         boidStates = new HashMap<Boid, Stack<State>>();
     }
 
+    /**
+     * this will cycle through every boid and call update on it's active state.
+     */
     public void update() {
         boolean poppable = false;
         for (Boid boid : boidStates.keySet()) {
@@ -74,6 +79,10 @@ public class StateMachine {
 //        states.peek().update(owner);
     }
 
+    /**
+     * this will call update on the specific boid's active state.
+     * @param boid - boid to update.
+     */
     public void update(Boid boid) {
         boolean poppable = boidStates.get(boid).peek().update(boid);
         if(poppable) {
@@ -81,6 +90,10 @@ public class StateMachine {
         }
     }
 
+    /**
+     * adds the boid to the stack with a default state.
+     * @param boid
+     */
     public void addBoid(Boid boid) {
         if( ! boidStates.containsKey(boid)) {
             Stack<State> stack = new Stack<State>();
@@ -89,6 +102,12 @@ public class StateMachine {
         }
     }
 
+    /**
+     * Adds a boid with both a default state and another state that's provided.
+     *
+     * @param boid
+     * @param initialState
+     */
     public void addBoid(Boid boid, State initialState) {
         if( ! boidStates.containsKey(boid)) {
             Stack<State> stack = new Stack<State>();
@@ -98,6 +117,12 @@ public class StateMachine {
         }
     }
 
+    /**
+     * adds the boid without a base state.
+     *
+     * @param boid - boid to add
+     * @param noUse - dummy parameter so that it has a different method signature
+     */
     public void addBoid(Boid boid, boolean noUse) {
         if( ! boidStates.containsKey(boid)) {
             Stack<State> stack = new Stack<State>();

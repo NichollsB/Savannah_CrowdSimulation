@@ -101,7 +101,7 @@ public class Boid extends Entity {
         setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius, maxStamina,  panicLevel, hungerLevel , thirstLevel);
 
         size = species.getMaxSize();
-        bounds.set(position.x, position.y, size*2f, size*2f);
+        bounds.set(position.x, position.y, size, size);//*1.5f, size*1.5f);
     }
 
     /**
@@ -180,6 +180,7 @@ public class Boid extends Entity {
 
         fertility += 0.1/60;
 
+//        bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
     }
 
