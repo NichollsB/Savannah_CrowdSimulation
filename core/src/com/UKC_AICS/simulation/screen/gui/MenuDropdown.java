@@ -1,13 +1,11 @@
 package com.UKC_AICS.simulation.screen.gui;
 
-import com.UKC_AICS.simulation.gui.controlutils.MenuSelectListener;
-import com.UKC_AICS.simulation.gui.controlutils.MenuSelectEvent;
+import com.UKC_AICS.simulation.screen.controlutils.MenuSelectListener;
+import com.UKC_AICS.simulation.screen.controlutils.MenuSelectEvent;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Array;
 
 public class MenuDropdown extends SelectBox implements MenuSelectEvent{	

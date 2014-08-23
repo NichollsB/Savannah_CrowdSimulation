@@ -2,9 +2,8 @@ package com.UKC_AICS.simulation.screen.gui;
 
 import java.io.File;
 
-import com.UKC_AICS.simulation.entity.Entity;
-import com.UKC_AICS.simulation.gui.controlutils.MenuSelectEvent;
-import com.UKC_AICS.simulation.gui.controlutils.MenuSelectListener;
+import com.UKC_AICS.simulation.screen.controlutils.MenuSelectEvent;
+import com.UKC_AICS.simulation.screen.controlutils.MenuSelectListener;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -13,22 +12,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.OrderedMap;
 
 public class FileChooser extends Dialog implements MenuSelectEvent{
-	private static final File defaultDir = new File("./");
+	private static final File defaultDir = new File(".");
 	private File startDir = defaultDir;
 	private File currentDir;
 	private File selectedFile;
@@ -153,24 +148,10 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		});
 		fileBar.add(upBtn);
 		content.add(fileBar).expandX().fillX();
-//		dirSelectLabels.put(new Label(startDir.name(), skin), startDir);
-//		for(File handle : startDir.list()){
-//			if(handle.isDirectory()){
-//				label = new Label(("\t"+handle.name()), skin);
-//				dirSelectLabels.put(label, handle);
-//			}
-//		}
-		
-		
-		this.internal = internal;
-		
+
 		System.out.println("Try to open " + startDir.getPath());
 		openDir(startDir);
-		
-//		stage.addActor(this);
-//		this.pack();
 
-		
 	}
 	
 	
@@ -323,19 +304,9 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		String filePath = currentDir.getPath();
 //		if(!filePath.endsWith("/")&&!targetPath.getName().startsWith("/"))
 //			filePath += "/";
-		filePath = filePath + targetPath.getName();
+		filePath = filePath + File.separator+ targetPath.getName();
 				
 		selectedFile = new File(filePath);
-//		if(targetPath.exists())
-//			selectedFile = targetPath;
-//		else 
-//			selectedFile = currentDir.
-//		if(path.contains(currentDir.getAbsolutePath())){
-//			selectedFile = Gdx.files.internal(path);
-//		}
-//		else {
-//			selectedFile = Gdx.files.internal(currentDir.path()+path);
-//		}
 	}
 	
 	/**

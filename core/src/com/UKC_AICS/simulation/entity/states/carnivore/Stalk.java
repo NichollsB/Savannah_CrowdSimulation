@@ -39,20 +39,29 @@ public class Stalk extends State {
                     collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
                     collisionObjects.removeValue(target,false); //remove target from collision avoidance
 
-                    Vector3 tv = new Vector3(0f, 0f, 0f);
-                    Vector3 targetPos = new Vector3(0f, 0f, 0f);
-                    targetPos.set(target.getPosition().cpy());
-                    tv.set(target.getVelocity().cpy());
-                    tv.scl(-1f);
-                    tv.nor().scl(10f);
-                    targetPos.add(tv);
+                    Vector3 tempVec = new Vector3(0f,0f,0f);
+                    tempVec.add(Collision.act(collisionObjects, boid));
+                    tempVec.add(Collision.act(boid));
 
-                    steering.set(Seek.act(boid, targetPos));
+                    steering.set(0f,0f,0f);
+                    if(steering.equals(tempVec)) {
+
+                        Vector3 tv = new Vector3(0f, 0f, 0f);
+                        Vector3 targetPos = new Vector3(0f, 0f, 0f);
+                        targetPos.set(target.getPosition().cpy());
+                        tv.set(target.getVelocity().cpy());
+                        tv.scl(-1f);
+                        tv.nor().scl(10f);
+                        targetPos.add(tv);
+
+                        steering.set(Seek.act(boid, targetPos));
 //                    System.out.println("Target stalked: " + target.getSpecies() + " species, " + target.position.x + ", " + target.position.y);
-
+                    } else {
+                        steering.set(tempVec);
+                    }
                     //Add collision avoidance
-                    steering.add(Collision.act(collisionObjects, boid));
-                    steering.add(Collision.act(boid));
+//                    steering.add(Collision.act(collisionObjects, boid));
+//                    steering.add(Collision.act(boid));
 
                     boid.setAcceleration(steering);
                     //Check is boid is still in list.  If not pop to hunt (for corpse)

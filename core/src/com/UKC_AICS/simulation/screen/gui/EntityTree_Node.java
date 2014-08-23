@@ -1,19 +1,16 @@
 package com.UKC_AICS.simulation.screen.gui;
 
-import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
-import com.UKC_AICS.simulation.entity.Species;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree;
-import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
-public class BoidTree_Node extends Tree.Node{
-	private Entity boid;
-	private boolean hasBoid = false;
+public class EntityTree_Node extends Tree.Node{
+	private Entity entity;
+	private boolean hasEntity = false;
 	
 	private String name = "";
 	private byte id;
@@ -22,20 +19,20 @@ public class BoidTree_Node extends Tree.Node{
 	private boolean root;
 	private String text;
 	private int numChildren = 0;
-	private ObjectMap<Byte, BoidTree_Node> childNodes = new ObjectMap<Byte, BoidTree_Node>();
-	private BoidTree_Node parent;
+	private ObjectMap<Byte, EntityTree_Node> childNodes = new ObjectMap<Byte, EntityTree_Node>();
+	private EntityTree_Node parent;
 	
 	private Label label;
 	
-	public BoidTree_Node(Actor actor) {
+	public EntityTree_Node(Actor actor) {
 		super(actor);
 	}
-	public BoidTree_Node(Actor actor, String name){
+	public EntityTree_Node(Actor actor, String name){
 		super(actor);
 		this.name = name;
 		this.label = (Label)this.getActor();
 	}
-    public BoidTree_Node(Label actor, Table content, String name, String info, byte id, Entity entity, boolean root) {
+    public EntityTree_Node(Label actor, Table content, String name, String info, byte id, Entity entity, boolean root) {
         super(content);
 //		this.species = species;
 //		isSpecies = true;
@@ -45,12 +42,12 @@ public class BoidTree_Node extends Tree.Node{
         this.id = id;
         this.root = root;
         if(entity != null){
-            this.boid = entity;
-            hasBoid = true;
+            this.entity = entity;
+            hasEntity = true;
         }
         this.label = actor;
     }
-	public BoidTree_Node(Label actor, String name, String info, byte id, Entity entity, boolean root) {
+	public EntityTree_Node(Label actor, String name, String info, byte id, Entity entity, boolean root) {
 		super(actor);
 //		this.species = species;
 //		isSpecies = true;
@@ -60,8 +57,8 @@ public class BoidTree_Node extends Tree.Node{
 		this.id = id;
 		this.root = root;
 		if(entity != null){
-			this.boid = entity;
-			hasBoid = true;
+			this.entity = entity;
+			hasEntity = true;
 		}
 		this.label =  actor;
 	}
@@ -74,8 +71,8 @@ public class BoidTree_Node extends Tree.Node{
 		this.label.setText(text);
 	}
 	
-	public Entity getBoid(){
-		return boid;
+	public Entity getEntity(){
+		return entity;
 	}
 	
 	public byte getID(){
@@ -91,18 +88,18 @@ public class BoidTree_Node extends Tree.Node{
 		return info;
 	}
 	
-	public boolean hasBoid(){
-		return hasBoid;
+	public boolean hasEntity(){
+		return hasEntity;
 	}
 	
 	public void setInfo(String info){
 		this.info = info;
 	}
-//	public BoidTree_Node(Actor actor, Boid boid) {
+//	public EntityTree_Node(Actor actor, Entity entity) {
 //		super(actor);
-//		this.boid = boid;
+//		this.entity = entity;
 //		isSpecies = false;
-//		spcByte = boid.getSpecies();
+//		spcByte = entity.getSpecies();
 //	}
 //	public byte getSpeciesVyte(){
 //		return spcByte;
@@ -111,9 +108,9 @@ public class BoidTree_Node extends Tree.Node{
 //		if(isSpecies) return species;
 //		return null;
 //	}
-//	public Boid getBoid(){
+//	public Entity getEntity(){
 //		if(isSpecies) return null;
-//		return boid;
+//		return entity;
 //	}
 	public boolean isRoot() {
 		return root;
@@ -136,15 +133,15 @@ public class BoidTree_Node extends Tree.Node{
 		return numChildren;
 	}
 	
-	public BoidTree_Node addNode(BoidTree_Node node, byte id){
-		BoidTree_Node child;
+	public EntityTree_Node addNode(EntityTree_Node node, byte id){
+		EntityTree_Node child;
 		if(!childNodes.containsKey(id)){
 //			child = childNodes.get(id);
 			String name = this.getName() + " " + id;
 			Label groupLabel = (Label)node.getActor();
 			groupLabel = new Label(name, groupLabel.getStyle());
 			String groupInfo = name + "/n" + "/t" + "Population: " + 0;
-			BoidTree_Node newNode = new BoidTree_Node(groupLabel, name, groupInfo, id, null, false);
+			EntityTree_Node newNode = new EntityTree_Node(groupLabel, name, groupInfo, id, null, false);
 			childNodes.put(id, newNode);
 			newNode.setParent(this);
 			this.add(newNode);
@@ -160,10 +157,10 @@ public class BoidTree_Node extends Tree.Node{
 		return child;
 	}
 	
-	public void setParent(BoidTree_Node parent){
+	public void setParent(EntityTree_Node parent){
 		this.parent = parent;
 	}
-	public void removeNode(BoidTree_Node node){
+	public void removeNode(EntityTree_Node node){
 		
 		if(parent != null)
 			parent.removeNode(node);
@@ -177,7 +174,7 @@ public class BoidTree_Node extends Tree.Node{
 			incrementNumChildren(-1);
 	}
 	
-	public Array<BoidTree_Node> getNodeChildren(){
+	public Array<EntityTree_Node> getNodeChildren(){
 		return childNodes.values().toArray();
 	}
 }

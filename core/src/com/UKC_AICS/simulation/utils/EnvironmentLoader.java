@@ -3,16 +3,12 @@ package com.UKC_AICS.simulation.utils;
 import java.io.File;
 import java.util.HashMap;
 
-import com.UKC_AICS.simulation.Constants;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 
 import static com.UKC_AICS.simulation.Constants.*;
 
@@ -37,7 +33,7 @@ public abstract class EnvironmentLoader {
             put(layer.toString(), layer);
         }
     }};
-	private static final HashMap<String, Pixmap> environmentLayers_pixmap = new HashMap<String, Pixmap>();
+	private static final HashMap<String, Pixmap> environmentLayers_Pixmap = new HashMap<String, Pixmap>();
 	private static final HashMap<String, AtlasRegion> environmentLayers_atlasRegion = new HashMap<String, AtlasRegion>();
 	
 	/**
@@ -87,7 +83,7 @@ public abstract class EnvironmentLoader {
         System.out.println(layer + " contained "+ environmentLayers.containsKey(layer));
         if(environmentLayers.containsKey(layer)){
             Pixmap pixLayer = new Pixmap(filePath);
-            environmentLayers_pixmap.put(layer, pixLayer);
+            environmentLayers_Pixmap.put(layer, pixLayer);
         }
     }
 
@@ -97,15 +93,15 @@ public abstract class EnvironmentLoader {
 	/**
 	 * Load maps into a TextureAtlas via the pack file and the packed map sheet as a Pixmap. Retrieve regions from the 
 	 * pack file that match the EnvironmentLayer layerMap Strings and store Pixmaps for each region.
-	 * @param packfile_path String path for the pack file of the texture sheet to load
-	 * @param packsheet_path String path for the texture sheet to load
+	 * @param packFile String path for the pack file of the texture sheet to load
+	 * @param packsheetFile String path for the texture sheet to load
 	 */
-	public static void loadMaps(FileHandle packfile_path, FileHandle packsheet_path){
+	public static void loadMaps(FileHandle packFile, FileHandle packsheetFile){
 //		environments.put(name,
 //				new TextureAtlas(defaultEnvAtlas_path));
-		FileHandle handle = packfile_path;
+		FileHandle handle = packFile;
 		environmentAtlas = new TextureAtlas(handle);
-		handle = packsheet_path;
+		handle = packsheetFile;
 		environmentAtlas_pixmap = new Pixmap(handle);
 		for(EnvironmentLayer layer : EnvironmentLayer.values()){
 			AtlasRegion region = environmentAtlas.findRegion(layer.mapName());
@@ -113,52 +109,24 @@ public abstract class EnvironmentLoader {
                 System.out.println("region name " + region.name + " layer to string " + layer.toString());
 				Pixmap pixLayer = new Pixmap(region.originalWidth, region.originalHeight, environmentAtlas_pixmap.getFormat());
 				pixLayer.drawPixmap(environmentAtlas_pixmap, (int)region.offsetX, (int)region.offsetY, region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight());
-				environmentLayers_pixmap.put(layer.toString(), pixLayer);
-                System.out.println(" added as " + layer.toString() + environmentLayers_pixmap.containsKey(layer.toString()));
+				environmentLayers_Pixmap.put(layer.toString(), pixLayer);
+                System.out.println(" added as " + layer.toString() + environmentLayers_Pixmap.containsKey(layer.toString()));
 				environmentLayers_atlasRegion.put(layer.toString(), region);
 			}
 			catch(NullPointerException e){
 				System.out.println("Cannot find environment layer named " + layer.toString() + " in Map packfile");
 			}
 		}
-//		for(AtlasRegion region : environmentAtlas.getRegions()){
-//			Pixmap layer = new Pixmap(region.originalWidth, region.originalHeight, environmentAtlas_pixmap.getFormat());
-//			layer.drawPixmap(environmentAtlas_pixmap, (int)region.offsetX, (int)region.offsetY, region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight());
-//			environmentLayers.put(region.name, layer);
-//		}
 	}
 
-	
-	/**
-	 * Return the specified environment layer as an AtlasSprite
-	 * @param name String name of the layer to be retrieved (set by the name of the original image packed into the environment pack file
-	 * @return Texture form of the image layer
-	 */
-	public static AtlasSprite getLayer_sprite(String name){
-		try{
-			return new AtlasSprite(environmentLayers_atlasRegion.get(name));
-		} catch(NullPointerException e){
-			return null;
-		}
-	}
-	
-	/**
-	 * Return the specified environment layer as an AtlasSprite
-	 * @param name The EnvironmentLayer enum associated with the map layer (region) to load
-	 * @return AtlasSprite of the map layer region retrieved
-	 */
-	public static AtlasSprite getLayer_sprite(EnvironmentLayer name){
-		return getLayer_sprite(name.toString());
-	}
-	
 	/**
 	 * Retrieve the specified environment layer as a Pixmap
 	 * @param name String name of the layer to be retrieved (set by the name of the original image packed into the environment pack file
 	 * @return Pixmap of the map layer region retrieved
 	 */
 	public static Pixmap getLayer_pixmap(String name){
-		if(environmentLayers_pixmap.containsKey(name))
-			return environmentLayers_pixmap.get(name);
+		if(environmentLayers_Pixmap.containsKey(name))
+			return environmentLayers_Pixmap.get(name);
 		return null;
 	}
 	
@@ -173,13 +141,15 @@ public abstract class EnvironmentLoader {
 	public static byte[][] getLayer_values(String name, boolean alphaChannel){
 		byte[][] layerVals = null;
         System.out.println("Getting values for " + name + environmentLayers.containsKey(name));
-		if(environmentLayers_pixmap.containsKey(name)){
-			Pixmap layer = environmentLayers_pixmap.get(name);
+		if(environmentLayers_Pixmap.containsKey(name)){
+			Pixmap layer = environmentLayers_Pixmap.get(name);
             int gridWidth = layer.getWidth()/TILE_SIZE;
             int gridHeight = layer.getHeight()/TILE_SIZE;
+            int height = TILE_SIZE*gridHeight;
 			layerVals = new byte[gridWidth][gridHeight];
 			float color=0f;
 			Color c = new Color();
+//			int yMax = 
             int x = 0, y = 0;
             for(int gridX = 0; gridX < gridWidth; gridX++){
                 for(int gridY = 0; gridY < gridHeight; gridY++){
@@ -188,7 +158,7 @@ public abstract class EnvironmentLoader {
                         if(x >= layer.getWidth()) break;
                         for(y = gridY*TILE_SIZE; y<((gridY*TILE_SIZE)+TILE_SIZE); y++){
                             if(y >= layer.getHeight()) break;
-                            Color.rgb888ToColor(c, layer.getPixel(x, y));
+                            Color.rgb888ToColor(c, layer.getPixel(x, height-y));
 //							color += (layer.getPixel(pixX, pixY) & 0x000000ff) / 255f;
                             if(alphaChannel)
                                 color+= c.a;
@@ -209,38 +179,16 @@ public abstract class EnvironmentLoader {
                     color = 0;
                 }
             }
-//			for(int xGrid = 0, j = 0, i = 0; xGrid < layer.getWidth(); xGrid+=TILE_SIZE, j++, i = 0){
-//				for( int yGrid = 0; yGrid < layer.getHeight(); yGrid+=TILE_SIZE, i++){
-//					for(int pixX = xGrid; pixX<(xGrid+TILE_SIZE); pixX++){
-//						for(int pixY = yGrid; pixY<(yGrid+TILE_SIZE); pixY++){
-//							Color.rgb888ToColor(c, layer.getPixel(pixX, pixY));
-////							color += (layer.getPixel(pixX, pixY) & 0x000000ff) / 255f;
-//							if(alphaChannel)
-//								color+= c.a;
-//							else
-//								color+= c.r;
-//
-//						}
-//					}
-//					color = (color/(TILE_SIZE*TILE_SIZE))*100;
-//					layerVals[i][j] = (byte)color;
-//					color = 0;
-//				}
-//			}
 		}
 		return layerVals;
 	}
 
     public static int[] getDimensions(){
-//        int i[] = getGridDimensions();
-//        for(int j = 0; j < i.length; j++){
-//            i[j] = i[j]*Constants.TILE_SIZE;
-//        }
 
-        if(environmentLayers_pixmap.size()>0){
+        if(environmentLayers_Pixmap.size()>0){
             int size[] = new int[]{0,0};
             boolean first = true;
-            for(Pixmap s : environmentLayers_pixmap.values()){
+            for(Pixmap s : environmentLayers_Pixmap.values()){
                 if(s.getWidth() < size[0] || first);
                     size[0]=s.getWidth();
                 if(s.getHeight()<size[1] || first)
@@ -253,7 +201,7 @@ public abstract class EnvironmentLoader {
     }
 
     public static int[] getGridDimensions(){
-        if(environmentLayers_pixmap.size()>0){
+        if(environmentLayers_Pixmap.size()>0){
             int size[] = new int[]{0,0};
             boolean first = true;
             for(String s : environmentLayers.keySet()){

@@ -13,38 +13,38 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
+/**
+ * Used to draw tiles representing dynamic layers of the simulation environment.
+ * Caches the tiles into rows, re-drawing these rows on each update, re-constructing the
+ * rows cache when a change in the layers values is detected on that row.
+ *
+ * @author Ben Nicholls bn65@kent.ac.uk
+ */
 public class TileGraphics extends SpriteCache {
 
 	private HashMap<String, byte[][]> infoLayers = new HashMap<String, byte[][]>();
 	
 	private SpriteManager manager;
-	private byte[][] grassAmounts;
-	private byte[][][][] tileGrass;//tileX, tileY, then 
-	private Sprite sprite;
-	
+
 	private byte mapElementsX = 0, mapElementsY = 0;
-	
-	//SpriteCache attempt
-	
 	int cacheCount = 0;
-	private Array<Byte> cacheRows;
 	private ObjectMap<Integer, Integer> cacheRow_Map = new ObjectMap<Integer, Integer>();
 	private Array<Integer> cacheRow_Count = new Array<Integer>();
-//	private int[][] 
-	
+
 	private final static int MAXCACHE = 100000;
-	private static SpriteCache tileCache = new SpriteCache(MAXCACHE, false);
-	private int cacheableLayers = 0;
-	
+
 	AtlasRegion lastRegion = null;
     AtlasSprite lastSprite = null;
-	private boolean firstUpdate = true;
-	
-	public TileGraphics(HashMap<String, byte[][]> infoLayers, SpriteManager manager, SpriteCache cache){
-//		this.infoLayers = infoLayers;
+
+
+    /**
+     * Initialise this cache
+     * @param infoLayers The Map of layer Strings to byte[][] value array
+     * @param manager SpriteManager used to retrieve sprites representing each layer
+     */
+	public TileGraphics(HashMap<String, byte[][]> infoLayers, SpriteManager manager){
 		super(MAXCACHE, false);
-		tileCache = cache;
-		
+
 		this.manager = manager;
 		this.infoLayers = new HashMap<String, byte[][]>();
 
@@ -53,7 +53,6 @@ public class TileGraphics extends SpriteCache {
 		for(String s : infoLayers.keySet()){
 			byte[][] f = infoLayers.get(s);
 			copyInformationLayer(s, infoLayers.get(s), this.infoLayers);
-//			layermap = f;
 			if(mapElementsX < f.length)
 				mapElementsX = (byte) f.length;
 			for(int i = 0; i < f.length; i++){
@@ -76,28 +75,25 @@ public class TileGraphics extends SpriteCache {
 		}
 		
 	}
-	
-	public boolean createCache(int y, HashMap<String, byte[][]> infoLayers){
-//		System.out.println("Starting CACHE" + y);
+
+    /**
+     * Create, or re-create, the cache for a row of the simulation environment.
+     * @param y int index of the row cache to be created
+     * @param infoLayers The Map of layers, needed to find the value on each layer for each element in the
+     *                   row.
+     */
+	public void createCache(int y, HashMap<String, byte[][]> infoLayers){
 		byte[][] layermap;
 		byte amount;
-		int cacheLimit = mapElementsX * infoLayers.size();
 		AtlasRegion nextRegion = lastRegion;
         AtlasSprite nextSprite = lastSprite;
-		int count=0;
 		int xPos = 0;
-		int numCachedLayers=0;
-		boolean recreate = false;
-		boolean copyMap = false;
 		int id = 0;
 		int n=0;
 		int loopCheck = 0;
 		if(cacheRow_Map.containsKey(y)){
-//			System.out.println("RECREATING CACHE LINE " + y);
-			recreate = true;
 			id = cacheRow_Map.get(y);
 			this.beginCache(id);
-//			System.out.println("RECREATING" + id);
 		}
 		else
 			this.beginCache();
@@ -105,28 +101,15 @@ public class TileGraphics extends SpriteCache {
 		for(int x = 0; x<mapElementsX; x++)
 		{
 			if(x!= 0 && x!= loopCheck + 1){
-//				System.out.println("RANDOM SKIP. x " + x + " should be " + loopCheck);
 				x = loopCheck +1;
 			}
 			loopCheck = x;
 			n = 1;
 			for(String layer : infoLayers.keySet())
 			{
-                nextSprite = null;
-//				if(numCachedLayers+1 > cacheLimit){
-//					System.out.println("Exceding Cache Limit!");
-//					break outer;
-//				}
-//				System.out.println("count " + count + " cache count? " + numCachedLayers);
-				
+
 				layermap = infoLayers.get(layer);
 				amount = layermap[x][y];
-//                if((!layer.equals("water") || amount > 30)){
-//                    amount = (byte) (Math.round((amount+5)/10)*10);
-////				}
-////					nextRegion = manager.getTileRegion(layer, amount);
-//                    nextSprite = manager.getTileSprite(layer, amount);
-//                }
                 if((layer.equals("water")) || layer.equals("grass")){
                     amount = (byte) (Math.round((amount+5)/10)*10);
                     if(amount>100) amount = 100;
@@ -138,17 +121,11 @@ public class TileGraphics extends SpriteCache {
                         nextSprite = manager.getEmptySprite();
                         lastSprite = nextSprite;
                         this.add(lastSprite, xPos, y*lastSprite.getWidth(), lastSprite.getWidth()+1, lastSprite.getHeight()+1);
-                        numCachedLayers++;
-                        count++;
-//                        break;
                     }
                     else{
                         lastSprite = nextSprite;
                         this.add(lastSprite, xPos, y*lastSprite.getWidth(), lastSprite.getWidth()+1, lastSprite.getHeight()+1);
                         cacheCount ++;
-                        numCachedLayers++;
-                        count++;
-//                        break;
                     }
 //                    if(nextSprite != null){
 //                        lastSprite = nextSprite;
@@ -203,29 +180,27 @@ public class TileGraphics extends SpriteCache {
                 xPos += lastSprite.getWidth();
 //				xPos += lastRegion.originalWidth;
 		}
-//		if(recreate){
-//			System.out.println("Row " + y + "Recreate id " + id + " layers " + numCachedLayers);
-//		}
 		id = this.endCache();
-//		if(!recreate) System.out.println("Row " + y + "Initial id " + id + " layers " + numCachedLayers);
 		if(!cacheRow_Map.containsKey(y))
 			cacheRow_Map.put(y, id);
 		if(!cacheRow_Count.contains(y, true)){
 			cacheRow_Count.add(y);
-//			cacheRow_Count.put(id, numCachedLayers);
-//			cacheableLayers = numCachedLayers;
 		}
-		return copyMap;
 	}
 	
 	boolean copyLayers = false;
 	Array<String> layersToCopy = new Array<String>();
-	
+
+    /**
+     * Called to update and render the cache. Checks every row of the environment and, if a
+     * change is detected, calls the {@link #createCache(int, java.util.HashMap) createCache()} method
+     * to re-create the row. Then draws each cached row.
+     * @param batch Used to set the projectionmatrix of the spritecache
+     * @param update Boolean indicating whether or not to force the cache to update
+     * @param infoLayers The map of environment layer values
+     */
 	public void updateTiles(Batch batch, boolean update, HashMap<String, byte[][]> infoLayers){
 		this.setProjectionMatrix(batch.getProjectionMatrix());
-		
-
-		
 		if(manager.update()){
 		
 			//CACHE METHOD
@@ -403,26 +378,15 @@ public class TileGraphics extends SpriteCache {
 //			batch.end();
 		}
 	}
-	
-	public void updateGrass(byte[][] grass){
-		
-		for(int i = 0; i<grassAmounts.length; i++){
-			for(int j = 0; j < grassAmounts[i].length; j++){
-//				for(int n = 0; n < tileGrass[i][j].length; n++){
-					if(grassAmounts[i][j] < tileGrass[i][j].length){
-						createTileCache(i, j, grassAmounts[i][j]);
-					}
-					else if(grassAmounts[i][j] > tileGrass[i][j].length){
-//						addToCache()
-					}
-//				}
-				
-			}
-		}
-		
-		
-	}
-	
+
+
+    /**
+     * Creates a deep copy of the passed in byte[][] array of map values, and places it in the
+     * target map with the specified String key
+     * @param sourceKey String key to add to the target map
+     * @param sourceValue byte[][] source array to copy to the target map
+     * @param targetMap Map to copy the value array to.
+     */
 	private void copyInformationLayer(String sourceKey, byte[][] sourceValue, HashMap<String, byte[][]> targetMap){
 		byte[][] targetValue = new byte[sourceValue.length][sourceValue[0].length];
 		for(int i = 0; i < sourceValue.length; i++){
@@ -433,9 +397,5 @@ public class TileGraphics extends SpriteCache {
 		targetMap.put(sourceKey, targetValue);
 	}
 
-	private void createTileCache(int tileX, int tileY, byte amount) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+
 }

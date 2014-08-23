@@ -1,58 +1,37 @@
 package com.UKC_AICS.simulation.screen;
 
-import static com.UKC_AICS.simulation.Constants.TILE_SIZE;
 import EvolutionaryAlgorithm.EvolutionaryAlgorithmGUI;
 
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
-import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Species;
-import com.UKC_AICS.simulation.gui.controlutils.ControlState;
-import com.UKC_AICS.simulation.gui.controlutils.ControlState.State;
-import com.UKC_AICS.simulation.gui.controlutils.RenderState;
-import com.UKC_AICS.simulation.gui.controlutils.SelectedEntity;
-import com.UKC_AICS.simulation.gui.controlutils.TreeOptionsListener;
+import com.UKC_AICS.simulation.screen.controlutils.ControlState;
+import com.UKC_AICS.simulation.screen.controlutils.SelectedEntity;
 import com.UKC_AICS.simulation.screen.graphics.Graphics;
 import com.UKC_AICS.simulation.screen.graphics.TileGraphics;
-import com.UKC_AICS.simulation.screen.graphics.TileMesh;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
 import com.UKC_AICS.simulation.screen.gui.SimViewport;
-import com.UKC_AICS.simulation.utils.EnvironmentLoader;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.SpriteCache;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 
-import java.io.File;
 import java.util.HashMap;
 
 
 /**
  * @author Emily
  */
-public class SimulationScreen implements Screen, TreeOptionsListener {
+public class SimulationScreen implements Screen{
 
     private boolean render = true;   // for render pausing
     private boolean update = false;
@@ -115,6 +94,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
 //        Rectangle rect = gui.getViewArea();
         scissorRect = gui.getViewArea();
         inputManager.setViewportRect(scissorRect);
+        clearOpenGL();
         if (render) {
     		 try {
                  long number = (long) (1000 / 60 - Gdx.graphics.getDeltaTime());
@@ -124,20 +104,9 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
                  System.out.print("Error...");
                  e.printStackTrace();
              }
-    	
-//            simBatch.disableBlending();
-            clearOpenGL();
-//            simBatch.begin();
             renderSpriteBatches(render);
-            renderUIBatch(render);
-//            simBatch.end();
     	}
-
-
-//        simBatch.flush();
-//        simBatch.end();
-//        Gdx.gl.glFlush();
-//        Gdx.gl.glFinish();
+        renderUIBatch(true);
     }
 
     private void renderUIBatch(boolean render){
@@ -189,7 +158,6 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     public void resize(int width, int height) {
     	//Call the gui resize method and retrieve the viewRect specifying the provided area in which the
     	//simulation will be viewed - also update and center the viewports with the resize dimensions
-    	gui.resize(width, height);
 //        scissorRect = gui.getViewArea();
         inputManager.resize(scissorRect);
         
@@ -214,7 +182,7 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         simViewcamera = (OrthographicCamera) boidGraphics.getCamera();
         simViewport = new SimViewport(Scaling.none, width, height, simViewcamera);
 
-    	inputManager = new InputManager(this, (int)width, (int)height, simViewcamera, simViewport);
+    	inputManager = new InputManager(this, simViewcamera, simViewport);
     	input = new InputMultiplexer();
     	
     	input.addProcessor(eagui);
@@ -224,10 +192,6 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     	
     	
     	simViewport.update(width, height, true);
-    	
-        
-        //sets up GUI
-        
 
         Gdx.input.setInputProcessor(input);
         resize(width, height);
@@ -248,19 +212,19 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         setupCameraController();
         initialiseCameras(Constants.mapWidth, Constants.mapHeight); //changed these from gdx.graphics.getWidth to this. -Em
         //Graphics components
-        boidGraphics.initBackground();
         boidGraphics.setBoids(simulationManager.getBoids());
         boidGraphics.initBoidSprites(simulationManager.getTextureLocations());
         boidGraphics.setBoidSprite_Colours(simulationManager.getRGBValues());
         boidGraphics.initObjSprites(simulationManager.getObjects());
-        boidGraphics.initTileSprites(simulationManager.getFullInfo());
-        //boidGraphics.initTileSprites(simulationManager.getMapTiles());
-        boidGraphics.initGrassMesh((byte[][])simulationManager.getFullInfo().get("grass"), Constants.TILE_SIZE);
+        boidGraphics.initEnvironmentTiling(simulationManager.getFullInfo());
+        //boidGraphics.initEnvironmentTiling(simulationManager.getMapTiles());
+        boidGraphics.initEnvironmentMeshes(simulationManager.getFullInfo());
     }
 
     public void resetGraphics(){
-        boidGraphics.initTileSprites(simulationManager.getFullInfo());
-        boidGraphics.initGrassMesh((byte[][])simulationManager.getFullInfo().get("grass"), Constants.TILE_SIZE);
+        boidGraphics.initEnvironmentTiling(simulationManager.getFullInfo());
+        boidGraphics.initEnvironmentMeshes(simulationManager.getFullInfo());
+        boidGraphics.setBoids(simulationManager.getBoids());
     }
 
     /**
@@ -299,10 +263,6 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         
     }
     
-    public boolean getRender(){
-    	return render;
-    }
-    
     public void flipEARender() {
     	eagui.toggleWindowVisible();
         if (eaRender)
@@ -328,7 +288,6 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
 
     @Override
     public void pause() {
-        //when the program is not "selected" or "active"
     }
 
     @Override
@@ -341,11 +300,6 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
         eagui.stage.dispose();
     }
 
-    private void tickPhysics(float delta) {
-        //send delta to camera controller using its update.
-        //send delta to camera using its update
-    }
-    
     /**
      * Reacts to clicking on the simulations viewport - called by InputManagers touchDown method
      */
@@ -370,48 +324,14 @@ public class SimulationScreen implements Screen, TreeOptionsListener {
     		}
 			return;
     	}
-//        if (boid == null) {
-
     }
     public void setMousePosition(int x, int y){
     	mousePosition.x = x;
     	mousePosition.y = y;
-    	
     }
-
-	@Override
-	public void onAdd(byte type, byte subtype, Object object) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onRemove(byte type, byte subtype, Object object) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onCheck(byte type, byte subtype, Object object,
-			boolean isChecked, State stateChanged) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public void setMouseWorldPosition(int x, int y) {
-		Vector2 mouseWorldPosition = new Vector2(x,y);
 		HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(x, y);
     	gui.setConsole("x: " + x + " y: " + y + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
 	}
-
-    public void loadSaveCall(String command, String identifier, File file) {
-        System.out.println("Load/save call. Command " + command + " id " + identifier + " file " + file.getPath());
-        if(command.equalsIgnoreCase("load")){
-            if(identifier.equalsIgnoreCase("eafile")){
-
-            }
-        }
-    }
-    
 }
 

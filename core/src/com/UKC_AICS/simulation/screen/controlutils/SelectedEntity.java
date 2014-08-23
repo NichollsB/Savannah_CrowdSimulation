@@ -1,7 +1,4 @@
-package com.UKC_AICS.simulation.gui.controlutils;
-
-import java.util.Observable;
-import java.util.Observer;
+package com.UKC_AICS.simulation.screen.controlutils;
 
 import com.UKC_AICS.simulation.entity.Entity;
 

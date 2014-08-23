@@ -1,4 +1,4 @@
-package com.UKC_AICS.simulation.gui.controlutils;
+package com.UKC_AICS.simulation.screen.controlutils;
 
 public abstract class ControlState {
 	
