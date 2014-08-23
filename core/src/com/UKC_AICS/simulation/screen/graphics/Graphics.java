@@ -9,8 +9,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -332,7 +330,7 @@ public class Graphics {
 	public void initEnvironmentTiling(HashMap<String, byte[][]> tileLayers){
 		this.tileMap = tileLayers;
 		spriteManager.loadAssets_Tiles(null);
-		dynamicTiles = new TileGraphics(tileLayers, spriteManager, backgroundCache);
+		dynamicTiles = new TileGraphics(tileLayers, spriteManager);
 	}
 
 	/**
