@@ -64,6 +64,9 @@ public class Collision extends Behaviour {
         //get tile info at position tile
         //ray cast to check when tile changes along velocity and retrieve tile info of new tiles
 
+        if(!tmpVec.equals(new Vector3(0f,0f,0f))) {
+            boid.setAvoidance();
+        }
         return tmpVec;
     }
 
@@ -194,6 +197,9 @@ public class Collision extends Behaviour {
                     }
 //                }
             }
+        }
+        if(!adjustment.equals(new Vector3(0f,0f,0f))) {
+            boid.setAvoidance();
         }
         return adjustment;
     }

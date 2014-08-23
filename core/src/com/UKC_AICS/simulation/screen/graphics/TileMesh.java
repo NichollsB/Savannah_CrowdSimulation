@@ -16,20 +16,9 @@ public class TileMesh {
 	    //contains x,y position of each cell adjaxcent to corresponding corner
 	    //Key corresponds to corner in gridCorners, int[][] array holds x,y positions of cells in the grid array
 	    private ObjectMap<Integer, int[][]> cornersCells = new ObjectMap<Integer, int[][]>();
-	    
-	    private int[][] gridCorners;//contains the vertices within each corner - first value is color?
-	    private int cornerCount = 0;
-	    
-	    private int[] verticesOffsets;//linear list of vertexes with component offsets?
-	    private int vertOffsetsCount = 0;//current count of vertex when adding to vertOffsets
-	    
-	    private final Array<Integer> gridIndices = new Array<Integer>();
-	    private short[] indices;
-	    
+
 	    private float[] verts;
-	    private float[] vertsComps;
-	    private int vertCompCount = 0;
-	    
+
 	    private int vertexComponents;
 	    private int idx = 0;
 	    
@@ -40,7 +29,7 @@ public class TileMesh {
 	    
 	    private static final int cellSize = 16;
 	    private static final int vertComponents = 3;
-	    
+
 	    private boolean updateMesh = false;
 	    
 	    public Mesh mesh;
@@ -51,8 +40,6 @@ public class TileMesh {
 	    private int textureComponents = 2;
 	    
 	    private byte updateTally[][];
-	    
-	    private int texRepeatX, texRepeatY;
 	    
 	    private float texIncrementX;
 	    private float texIncrementY;
@@ -68,17 +55,18 @@ public class TileMesh {
     private float upperAlpha = 1;
     private float lowerAlpha = 0;
     private int gridRange = 100;
+    private boolean created = false;
 
-    public TileMesh(float lowerCutoff, float upperCutoff, float alphaMin, float alphaMax, int valueRange){
+         public TileMesh(float lowerCutoff, float upperCutoff, float alphaMin, float alphaMax, int valueRange){
             this.lowerAlphaCutoff = lowerCutoff;
-        this.upperAlphaCutoff = upperCutoff;
-        this.lowerAlpha = alphaMin;
+            this.upperAlphaCutoff = upperCutoff;
+            this.lowerAlpha = alphaMin;
             this.upperAlpha = alphaMax;
             this.gridRange = valueRange;
         }
         public TileMesh(){}
-	    
-	    private boolean created = false;
+
+
 
         public void createMesh(int startX, int startY, int width, int height, Color c){
 
@@ -167,51 +155,7 @@ public class TileMesh {
 	        }
 	        
 	    }
-	    /*
-	    public void createMesh(int[][] grid, int startX, int startY, int width, int height,
-	            Texture texture, int texRepeat, boolean repeatTexX){
-	        createMesh(grid, startX, startY, width, height, true, texture, texRepeat, repeatTexX);
-	    }
-	    
-	     public void createMesh(int[][] grid, int startX, int startY, int width, int height,
-	            boolean fixedCellDimensions, Texture texture, int texRepeat, boolean repeatTexX){
-	        this.texRepeatX = texRepeat;
-	        this.texRepeatY = texRepeat;
-	        this.repeatTexX = repeatTexX;
-	        createMesh(grid, startX, startY, width, height, fixedCellDimensions, texture);
-	    }
-	     
-	    public void createMesh(int[][] grid, int startX, int startY, int width, int height,
-	            Texture texture){
-	        createMesh(grid, startX, startY, width, height, true, texture);
-	    }
-	    
-	    public void createMesh(int[][] grid, int startX, int startY, int width, int height, 
-	            boolean fixedCellDimensions, Texture texture){
-	        meshTexture = texture;
-	        usesTexture = true;
-	        createMesh(grid, startX, startY, width, height, fixedCellDimensions, defaultCol);
-	    }
-	    
-	    public void createMesh(int[][] grid, int startX, int startY, int width, int height,
-	            Color color){
-	        createMesh(grid, startX, startY, width, height, true, color);
-	    }
-	    
-	    public void createMesh(int[][] grid, int startX, int startY, int width, int height, 
-	            boolean fixedCellDimensions, Color color){
-	        if(fixedCellDimensions){
-	            createMesh(grid, startX, startY, width, height);
-	        }
-	        else {
-	            //createMesh(grid, startX, startY, width/grid[0].length, height/grid.length);
-	            createMesh(grid, startX, startY, width, height);
-	        }
-	        col = color;
-	        usesTexture = false;
-	    }
-	    */
-	    
+
 	    private byte[][] deepCopyArray(byte[][] grid){
 	    	byte array[][] = new byte[grid.length][grid[0].length];
 	    	for(int i = 0; i < grid.length; i ++){
@@ -348,10 +292,10 @@ public class TileMesh {
 	    /////////////////////////////////////////////////////////////////////
 	    // ADJUSTED DRAW METHOD///////////////////////////
 	    /////////////////////////////////////////
-	    int vertCount = 0;
+	    private int vertCount = 0;
 	    //void drawTrianglePair(int cellX, int cellY, float x, float y, float width, float height, float texX, float texY, float texWidth, float texHeight, Color color1) {
 	    //renamed variable texWidth and texHeight as they are misleading - they are not the height and width of the texture.
-	    void drawTrianglePair(int cellX, int cellY, float x, float y, float width, float height, float texX, float texY, float texStepX, float texStepY, Color color1) {
+	    private void drawTrianglePair(int cellX, int cellY, float x, float y, float width, float height, float texX, float texY, float texStepX, float texStepY, Color color1) {
 	        //Index of the initial alpha component
 	        int aInitial = 5;
 	        int aIndex;
@@ -442,7 +386,7 @@ public class TileMesh {
 	        
 	        vertCount = n;
 	    }
-	    void drawTrianglePair(int cellX, int cellY, float x, float y, float width, float height, Color color1) {
+	    private void drawTrianglePair(int cellX, int cellY, float x, float y, float width, float height, Color color1) {
 	        //Index of the initial alpha component
 	        int aInitial = 5;
 	        int aIndex;
@@ -523,7 +467,7 @@ public class TileMesh {
 	        
 	        vertCount = n;
 	    }
-	    public void addCornersVert(int cornerX, int cornerY, int aIndex){
+	    private void addCornersVert(int cornerX, int cornerY, int aIndex){
 	        int verts[] = cornersVerts[cornerX][cornerY];
 	        for(int i = 0; i < 6; i++){
 	            if(verts[i] == aIndex) return; //If the vert index is already in this corner, ignore
@@ -645,7 +589,7 @@ public class TileMesh {
 
 	        }
 	    }
-	    public void updateCorner(int cornerX, int cornerY, byte[][] grid){
+	    private void updateCorner(int cornerX, int cornerY, byte[][] grid){
 	        int count = 0;
 	        float average = 0;
 	        int aIndex = 0;
@@ -686,11 +630,11 @@ public class TileMesh {
 	    ///////////////////////////////////////////////////////
 	    ////////////////////////////////////////////////////////
 
-	    int getIndex() {
+	    private int getIndex() {
 	        return verts.length;
 	    }
 
-	    int getNumVertexComponents() {
+	    private int getNumVertexComponents() {
 	       return vertComponents;
 	    }
 	    public int getVertexCount(){

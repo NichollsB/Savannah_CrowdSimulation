@@ -50,6 +50,7 @@ public class Boid extends Entity {
     public int geneSize = 11;		
     public Float[] gene= new Float[geneSize];
 
+    private int avoidance = 0;
 
     // no longer used or relevant
     public Boid(byte spec, Vector3 pos, Vector3 vel) {
@@ -157,11 +158,14 @@ public class Boid extends Entity {
     public void update() {
         //TODO: Add in better limiter for speed. Possibly??
         //move
+        if(avoidance == 0 || avoidance == 5) {
 //        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
-        velocity.add(acceleration).limit(maxSpeed);
-        velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
-        //TODO add method to calc stamina usage -> based on velocity.len % of maxspeed - 0-1
-        //TODO make it so stamina must be above xx amount to move
+            velocity.add(acceleration).limit(maxSpeed);
+            velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
+        }
+        else {
+            avoidance -= 1;
+        }
 
         //Stamina related calcs
         float speed = velocity.len();
@@ -181,6 +185,10 @@ public class Boid extends Entity {
         fertility += 0.1/60;
 
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
+    }
+
+    public void setAvoidance() {
+        avoidance = 5;
     }
 
     /**

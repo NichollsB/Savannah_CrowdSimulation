@@ -387,21 +387,6 @@ public class SimulationManager extends Manager {
     	return objectData;
     }
     
-    public void loadSpecies(File file){
-
-    }
-    public void saveSpecies(File file){
-
-    }
-
-    public void saveEnvironment(File file){
-
-    }
-
-    public void loadEnvironment(File file){
-
-    }
-
     public void hardReset(){
         worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
         boidManager = new BoidManager(this, ea);
@@ -447,23 +432,8 @@ public class SimulationManager extends Manager {
         }
     }
     public void loadSaveCall(String command, String identifier, File file){
-    	System.out.println("Load/save call. Command " + command + " id " + identifier + " file " + file.getPath());
-    	if(command.equalsIgnoreCase("save")){
-    		if(identifier.equalsIgnoreCase("species")){
-    			
-    		}
-    		if(identifier.equalsIgnoreCase("environment")){
-    			
-    		}
-    	}
-    	else 
 		if(command.equalsIgnoreCase("load")){
-			if(identifier.equalsIgnoreCase("species")){
-    			
-    		}
-    		if(identifier.equalsIgnoreCase("environment")){
-//                EnvironmentLoader.lo
-    		}
+
     		
     		if(identifier.equalsIgnoreCase("eafile")){
     				eaFile = file;
@@ -499,11 +469,7 @@ public class SimulationManager extends Manager {
             }
         }
     }
-    public Entity getObjectAt(int x, int y){
-        return worldManager.getObjectAt(x,y);
-    }
     private boolean recordSimulation = false;
-    private final StaxWriter simRecorder = new StaxWriter();
     private File simRecordFile;
     public void recordSimulation(){
         try {
