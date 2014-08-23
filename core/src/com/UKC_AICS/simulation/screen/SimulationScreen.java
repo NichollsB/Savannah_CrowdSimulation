@@ -212,19 +212,18 @@ public class SimulationScreen implements Screen{
         setupCameraController();
         initialiseCameras(Constants.mapWidth, Constants.mapHeight); //changed these from gdx.graphics.getWidth to this. -Em
         //Graphics components
-        boidGraphics.initBackground();
         boidGraphics.setBoids(simulationManager.getBoids());
         boidGraphics.initBoidSprites(simulationManager.getTextureLocations());
         boidGraphics.setBoidSprite_Colours(simulationManager.getRGBValues());
         boidGraphics.initObjSprites(simulationManager.getObjects());
         boidGraphics.initEnvironmentTiling(simulationManager.getFullInfo());
         //boidGraphics.initEnvironmentTiling(simulationManager.getMapTiles());
-        boidGraphics.initEnvironmentMeshes((byte[][]) simulationManager.getFullInfo().get("grass"), Constants.TILE_SIZE);
+        boidGraphics.initEnvironmentMeshes(simulationManager.getFullInfo());
     }
 
     public void resetGraphics(){
         boidGraphics.initEnvironmentTiling(simulationManager.getFullInfo());
-        boidGraphics.initEnvironmentMeshes((byte[][]) simulationManager.getFullInfo().get("grass"), Constants.TILE_SIZE);
+        boidGraphics.initEnvironmentMeshes(simulationManager.getFullInfo());
         boidGraphics.setBoids(simulationManager.getBoids());
     }
 

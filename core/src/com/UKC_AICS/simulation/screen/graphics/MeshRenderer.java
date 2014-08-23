@@ -6,7 +6,15 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
+/**
+ * Class used in order to render the {@link com.UKC_AICS.simulation.screen.graphics.TileMesh meshes}
+ * used to represent variable environment layers.
+ *
+ * @author Ben Nicholls bn65@kent.ac.uk
+ */
 public class MeshRenderer  {
+
+
 	public static final String VERT_SHADER =
 	            "attribute vec2 a_position;\n" +
 	            "attribute vec4 a_color;\n" +

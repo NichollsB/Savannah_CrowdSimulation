@@ -21,7 +21,10 @@ import com.UKC_AICS.simulation.screen.controlutils.RenderState;
 
 /**
  * 
- * Simple 2D rendering of boids within the simulation
+ * Class for managing the rendering of the simulations graphics. Draws sprites corresponding to
+ * all boid and object entities in the simulation. Also renders dynamic layers such as water and grass.
+ * Depending on the render mode, will display dynamic environment by tiling sprites, or by altering the
+ * a mesh according to the environment values.
  * @author Ben Nicholls bn65@kent.ac.uk
  *
  */
@@ -65,24 +68,20 @@ public class Graphics {
     private TileMesh waterMesh = new TileMesh(0.3f, 0.8f, 0f, 0.8f, 128);
     private TileMesh groundMesh = new TileMesh(0f, 1f, 0f, 1f, 128);
     private TileMesh meshes[] = new TileMesh[]{groundMesh, grassMesh, waterMesh};
-	private static enum DynamicRenderOption{
-		TILED, MESH;
-	}
-	private DynamicRenderOption renderMode = DynamicRenderOption.TILED;
+
 	private final MeshRenderer meshRenderer = new MeshRenderer();
 
 
-    TileMesh gridMesh;
-    OrthographicCamera cam;
-    ShaderProgram shader;
-    Rectangle glViewport;
     FileHandle imageFileHandle = Gdx.files.internal("data/EnvironmentTiles/grassSeamless.jpg");
     Texture texture = new Texture(imageFileHandle){{
         setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
     }};
-    //This is how we control the size of the input grid (and the meshgrid)
 
-
+    /**
+     * Graphics constructor. Initialises the width and height of the render area
+     * @param width int width of the render
+     * @param height int height of the render
+     */
 	public Graphics(int width, int height){
 		renderWidth = width;
 		renderHeight = height;
@@ -95,9 +94,13 @@ public class Graphics {
     boolean created = false;
 	/**
 	 * Update and render the entity sprites and background graphics, depending on the
-     * {@link com.UKC_AICS.simulation.screen.controlutils.RenderState RenderState}. If in TILESTATE,
-	 * @param batch is the SpriteBatch to render the boid sprites in
-	 * @param viewRect
+     * {@link com.UKC_AICS.simulation.screen.controlutils.RenderState RenderState}. While in
+     * State.MESH, a {@link com.UKC_AICS.simulation.screen.graphics.TileMesh mesh} is used to
+     * display dynamic environment layers, otherwise the {@link com.UKC_AICS.simulation.screen.graphics.TileGraphics#updateTiles(com.badlogic.gdx.graphics.g2d.Batch, boolean, java.util.HashMap)}  update}
+     * method is called to tile graphics sprites.
+     * Also retrieves and draws object and boid sprites.
+	 * @param batch SpriteBatch used to render the boid and entity sprites
+	 * @param viewRect Rectangle used to specify the graphics scissors. Prevents the rendering beyond the scissor bounds
 	 */
 	public boolean update(SpriteBatch batch, Rectangle viewRect){
 			if(spriteManager.update() && !RenderState.TILESTATE.equals(RenderState.State.OFF)){
@@ -116,14 +119,11 @@ public class Graphics {
                             for(byte b[] : g){
                                 Arrays.fill(b, (byte)100);
                             }
-//                            groundMesh.createMesh(tileMap.get("water"), 0, 0, Constants.TILE_SIZE, Constants.TILE_SIZE, new Color(0.5f, 0.4f, 0.36f, 1f));
                             groundMesh.createMesh(g, 0, 0, Constants.TILE_SIZE, Constants.TILE_SIZE, new Color(0.28f, 0.18f, 0.08f,1f));
                             created = true;
                         }
                     }
                 }
-				AtlasRegion region;
-                AtlasSprite aSprite;
 				ScissorStack.pushScissors(viewRect);
 
                 if(RenderState.TILESTATE.equals(RenderState.State.MESH)){
@@ -149,12 +149,10 @@ public class Graphics {
 
                         for (int i = 0; i < iNum; i++) {
                             for (int j = 0; j < jNum; j++) {
-//                			batch.draw(background, i, j);
                                 batch.draw(background, i * background.originalWidth, j * background.originalHeight,
                                         background.originalWidth + 1, background.originalHeight + 1);
                             }
                         }
-//                    background.draw(batch);
                     } catch (NullPointerException e) {
                         System.out.println("Missing GROUND environment layer");
                     }
@@ -183,13 +181,9 @@ public class Graphics {
 						    sprite = spriteManager.getObjectSprite(entity.getType());
 
                         if(sprite!=null){
-//                            System
                             updateSpritePosition(entity, sprite);
                             sprite.draw(batch);
                         }
-//                        else {
-//                            System.out.println("Null sprite " + entity.getType());
-//                        }
 					}
 
 				}
@@ -258,8 +252,10 @@ public class Graphics {
 
 
 		}
+	/*
+	ShapeRenderer for debugging sprite positions
 	ShapeRenderer r = new ShapeRenderer();
-		/*if(boidMap.size>0){
+		if(boidMap.size>0){
 			 Boid boid;
 			 for(Iterator<Boid> boids = boidMap.keys(); boids.hasNext();){
 				boid = boids.next();
@@ -269,25 +265,42 @@ public class Graphics {
 			}
 		}*/
 
-	
-	
-	/**
-	 * Pass in and store the boids and initialise the boidSprite to a sprite with the default texture
-	 */
+
+    /**
+     * Triggers the loading of boid and entity sprites in the {@link com.UKC_AICS.simulation.screen.graphics.SpriteManager SpriteManager}.
+     * @param fileLocations Map of species byte key and String file locations
+     */
 	public void initBoidSprites(HashMap<Byte, String> fileLocations){
 
 		spriteManager.loadAssets_Boids(fileLocations, true);
         spriteManager.loadAssets_Entities();
 	}
+
+    /**
+     * Called to instigate the creation of boids of differing colours
+     * @param rgbValues Map of species bytes and associated rgb values that should be used to create
+     *                  new boid sprites.
+     */
 	public void setBoidSprite_Colours(HashMap<Byte, float[]> rgbValues) {
 		boidColours = rgbValues;
 		spriteManager.loadAssets_Boids(rgbValues);
 	}
-	
+
+    /**
+     * Passes in the array of {@link com.UKC_AICS.simulation.entity.Boid boids} to the class.
+     * Boids are used when rendering their associated sprites
+     * @param boidArray Array of boids passed in.
+     */
 	public void setBoids(Array<Boid> boidArray){
 		this.boidsArray = boidArray;
 	}
-	
+
+    /**
+     * Passes in the array of {@link com.UKC_AICS.simulation.entity.Object objects}. Used when
+     * rendering associated sprites. Also passes on object types to the
+     * {@link com.UKC_AICS.simulation.screen.graphics.SpriteManager#loadAssets_Objects(com.badlogic.gdx.utils.Array) loadAssets_Objects} method.
+     * @param entityArray Array of Object entities
+     */
 	public void initObjSprites (Array<Entity> entityArray){
 		this.entityArray = entityArray;
 		Array<Byte> types = new Array<Byte>();
@@ -297,8 +310,13 @@ public class Graphics {
 		}
 		spriteManager.loadAssets_Objects(types);
 	}
-	
-	public void initEnvironmentMeshes(byte[][] bs, int tileSize){
+
+    /**
+     * Initialises the {@link com.UKC_AICS.simulation.screen.graphics.TileMesh tile meshes}
+     * used in the rendering of the background dynamic layers
+     */
+	public void initEnvironmentMeshes(HashMap<String, byte[][]> tileLayers){
+        this.tileMap = tileLayers;
         grassMesh = new TileMesh(0f, 1f, 0f, 1f, 128);
         waterMesh = new TileMesh(0.3f, 0.8f, 0f, 0.8f, 128);
         groundMesh = new TileMesh(0f, 1f, 0f, 1f, 128);
@@ -306,20 +324,22 @@ public class Graphics {
         created = false;
 
 	}
+
+    /**
+     * Initialises the tiles for the tiling method of rendering the background dynamic layers
+     * @param tileLayers Map of String layer names to byte[][] map arrays
+     */
 	public void initEnvironmentTiling(HashMap<String, byte[][]> tileLayers){
 		this.tileMap = tileLayers;
 		spriteManager.loadAssets_Tiles(null);
 		dynamicTiles = new TileGraphics(tileLayers, spriteManager, backgroundCache);
 	}
-	public void initBackground(){
-//		background = EnvironmentLoader.getLayer_sprite(EnvironmentLayer.GROUND);
-//		spriteManager.lo
-	}
-	
+
 	/**
-	 * sets the boidSprite to the Boid perameters current position and finds the equivalent rotation of the sprite from
-	 * the boid velcoity vector
-	 * @param entity The Boid that the boidSprite will be postioned to
+	 * sets an entity sprites position and rotation based on the entity
+     * {@link com.UKC_AICS.simulation.entity.Entity#getPosition() position} and
+     * {@link com.UKC_AICS.simulation.entity.Entity#getOrientation() orientation}.
+	 * @param entity The Boid that the boidSprite will be positioned to
 	 */
 	public void updateSpritePosition(Entity entity, Sprite sprite){
 		//for(Iterator<Boid> boids = boidMap.keys(); boids.hasNext();){
@@ -334,7 +354,11 @@ public class Graphics {
 			}
 
 	}
-	
+
+    /**
+     * Retrieve the camera of this class
+     * @return Camera created by this class
+     */
 	public Camera getCamera(){
 		return camera;
 	}

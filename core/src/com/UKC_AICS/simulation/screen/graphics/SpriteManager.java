@@ -194,7 +194,7 @@ public class SpriteManager {
 				}
 			}
 		}
-		
+
 		
 		created = true;
 	}
@@ -353,5 +353,9 @@ public class SpriteManager {
             objImages.put(b, i);
         }
         return objImages;
+    }
+
+    public void loadMeshTextures(){
+        assetManager.load("data/EnvironmentTiles/grassSeamless.jpg", Texture.class);
     }
 }
