@@ -158,7 +158,7 @@ public class Boid extends Entity {
     public void update() {
         //TODO: Add in better limiter for speed. Possibly??
         //move
-        if(avoidance == 0 || avoidance == 5) {
+        if(avoidance == 0 || avoidance == 45) {
 //        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
             velocity.add(acceleration).limit(maxSpeed);
             velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
@@ -188,7 +188,7 @@ public class Boid extends Entity {
     }
 
     public void setAvoidance() {
-        avoidance = 5;
+        avoidance = 45;
     }
 
     /**
