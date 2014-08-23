@@ -32,7 +32,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
 	final private ScreenViewport uiViewport = new ScreenViewport();
 	private SimulationScreen simScreen;
 	public Stage stage;
-	private Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));;
+	private Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 	Table table;
 	//Sizing parameters
 	private final int 
@@ -214,10 +214,10 @@ public class SimScreenGUI extends Stage implements HoverListener {
         final SelectBox renderSelect = new SelectBox(skin);
         renderSelect.setItems(new String[]{"Tiles", "Mesh", "Off"});
         renderSelect.setSelected("Tiles");
-    	//SPECIES LOAD/SAVE
-    	final MenuDropdown menu = createFileMenu(new String[]{"load", "save"}, new String[]{"Load", "Save"}, "Species Settings",
-    			"SPECIES");
-    	menuTable.add(menu).padLeft(5);
+//    	//SPECIES LOAD/SAVE
+//    	final MenuDropdown menu = createFileMenu(new String[]{"load", "save"}, new String[]{"Load", "Save"}, "Species Settings",
+//    			"SPECIES");
+//    	menuTable.add(menu).padLeft(5);
 
         TextButton button;
         //SET EA DIRECTORY
@@ -343,17 +343,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	});
     	return menu;
 	}
-	
 
-    
-    private Table createSplitPane(Table a, Table b, float split, boolean vert){
-    	SplitPane pane = new SplitPane(null, null, vert, skin);
-    	pane.setSplitAmount(split);
-    	Table t = new Table();
-    	t.add(pane).fill().expand();
-    	return t;
-    }
-        
 
     private Table createSouth(Actor a){
     	Table southTable = new Table(skin);
@@ -516,20 +506,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
     		console.setText("");
     }
 
-    private void setviewRect(int left, int right, int top, int bottom){
-    	if(screenRect!=null){
-    		screenRect.setSize(right-left, top-bottom);
-    		screenRect.setPosition(left, bottom);
-    	}
-	}
-    private void setViewRect(int width, int height){
-    	if(screenRect!=null){
-    		screenRect.setSize(width - (EAST_WIDTH + WEST_WIDTH),
-    				height - (NORTH_HEIGHT + SOUTH_HEIGHT));
-    		screenRect.setPosition(WEST_WIDTH, SOUTH_HEIGHT);
-    	}
-    }
-
     private void setViewRect(Table north, Table south, Table east, Table west) {
 //    	float width = Gdx.graphics.getWidth() - (east.getWidth() + west.getWidth())-(screenOffset*2);
 //    	float height = Gdx.graphics.getHeight() - (north.getHeight() + south.getHeight())-(screenOffset*2);
@@ -546,15 +522,8 @@ public class SimScreenGUI extends Stage implements HoverListener {
 
 	public void update(SpriteBatch batch, boolean render) {
 
-//		batch.begin();
         if(render){
-//        	if(showBoidInfo){
-//        		boidInfo.setText(boidDisplaying.toString());
-//        	}
-//        	else
-//        		boidInfo.setText("");
         	setViewRect(north, south, east, west);
-//        	System.out.println(east.getWidth());
             if(infoItemSelected != null) {
                 if(infoItemSelected.equals(boidTree)) {
                     if (boids != null) {
@@ -574,11 +543,8 @@ public class SimScreenGUI extends Stage implements HoverListener {
 	    	stage.draw();  //GUI stuff
 	    	
         }
-//        batch.end();
-//        table.debug();
         Table.drawDebug(stage);  //debug lines for UI
-//        font.draw(spriteBatch, getFPSString(), 0, 20);
-    	
+
 	}
     private Array<String> legendEntries = new Array<String>();
 
@@ -612,20 +578,10 @@ public class SimScreenGUI extends Stage implements HoverListener {
         entry.add(img).top().padBottom(5);
         entry.add(new Label(entity, skin)).padBottom(5);
         legend.add(entry).padLeft(40);
-//        legend.row();
-//        legend.pack();
         return true;
     }
 	
-	public void showBoidInfo(Boid boid, boolean show){
-		if(boidDisplaying!= null)boidDisplaying.setTracked(false);
-		if(!show){
-			return;
-		}
-		boidDisplaying = boid;
-		boidDisplaying.setTracked(true);
-	}
-	
+
 	private Actor createScrollPane(Actor content, boolean showX, boolean showY, boolean bottomBar, boolean rightBar){
     	Table scrollTable = new Table(skin);
 //    	scrollTable.add("east");

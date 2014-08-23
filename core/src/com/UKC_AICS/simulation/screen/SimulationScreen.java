@@ -95,6 +95,7 @@ public class SimulationScreen implements Screen{
 //        Rectangle rect = gui.getViewArea();
         scissorRect = gui.getViewArea();
         inputManager.setViewportRect(scissorRect);
+        clearOpenGL();
         if (render) {
     		 try {
                  long number = (long) (1000 / 60 - Gdx.graphics.getDeltaTime());
@@ -104,20 +105,9 @@ public class SimulationScreen implements Screen{
                  System.out.print("Error...");
                  e.printStackTrace();
              }
-    	
-//            simBatch.disableBlending();
-            clearOpenGL();
-//            simBatch.begin();
             renderSpriteBatches(render);
-            renderUIBatch(render);
-//            simBatch.end();
     	}
-
-
-//        simBatch.flush();
-//        simBatch.end();
-//        Gdx.gl.glFlush();
-//        Gdx.gl.glFinish();
+        renderUIBatch(true);
     }
 
     private void renderUIBatch(boolean render){
