@@ -2,9 +2,9 @@ package com.UKC_AICS.simulation.screen.gui;
 
 import java.io.File;
 
-import com.UKC_AICS.simulation.gui.controlutils.MenuSelectEvent;
-import com.UKC_AICS.simulation.gui.controlutils.MenuSelectListener;
-import com.UKC_AICS.simulation.gui.controlutils.RenderState;
+import com.UKC_AICS.simulation.screen.controlutils.MenuSelectEvent;
+import com.UKC_AICS.simulation.screen.controlutils.MenuSelectListener;
+import com.UKC_AICS.simulation.screen.controlutils.RenderState;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 

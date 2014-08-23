@@ -6,8 +6,8 @@ import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Species;
-import com.UKC_AICS.simulation.gui.controlutils.ControlState;
-import com.UKC_AICS.simulation.gui.controlutils.SelectedEntity;
+import com.UKC_AICS.simulation.screen.controlutils.ControlState;
+import com.UKC_AICS.simulation.screen.controlutils.SelectedEntity;
 import com.UKC_AICS.simulation.screen.graphics.Graphics;
 import com.UKC_AICS.simulation.screen.graphics.TileGraphics;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
@@ -25,7 +25,6 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 
-import java.io.File;
 import java.util.HashMap;
 
 

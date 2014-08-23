@@ -4,9 +4,9 @@ import java.io.File;
 import java.util.HashMap;
 
 import com.UKC_AICS.simulation.entity.*;
-import com.UKC_AICS.simulation.gui.controlutils.HoverListener;
-import com.UKC_AICS.simulation.gui.controlutils.MenuSelectListener;
-import com.UKC_AICS.simulation.gui.controlutils.RenderState;
+import com.UKC_AICS.simulation.screen.controlutils.HoverListener;
+import com.UKC_AICS.simulation.screen.controlutils.MenuSelectListener;
+import com.UKC_AICS.simulation.screen.controlutils.RenderState;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

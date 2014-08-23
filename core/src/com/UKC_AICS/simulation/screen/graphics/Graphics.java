@@ -2,7 +2,6 @@ package com.UKC_AICS.simulation.screen.graphics;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Random;
 
 import com.UKC_AICS.simulation.Constants;
 import com.badlogic.gdx.Gdx;
@@ -17,9 +16,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.UKC_AICS.simulation.entity.*;
-import com.UKC_AICS.simulation.gui.controlutils.RenderState;
+import com.UKC_AICS.simulation.screen.controlutils.RenderState;
 
 /**
  * 
@@ -96,7 +94,8 @@ public class Graphics {
 //	private Texture test = new Texture(Gdx.files.internal("/data/grass_tile_x16.png"));
     boolean created = false;
 	/**
-	 * Update and render the sprites representing the boids. Renders via the SpriteBatch passed in.
+	 * Update and render the entity sprites and background graphics, depending on the
+     * {@link com.UKC_AICS.simulation.screen.controlutils.RenderState RenderState}. If in TILESTATE,
 	 * @param batch is the SpriteBatch to render the boid sprites in
 	 * @param viewRect
 	 */

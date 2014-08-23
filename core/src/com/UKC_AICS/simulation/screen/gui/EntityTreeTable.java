@@ -1,8 +1,8 @@
 package com.UKC_AICS.simulation.screen.gui;
 
-import com.UKC_AICS.simulation.gui.controlutils.ControlState;
-import com.UKC_AICS.simulation.gui.controlutils.HoverListener;
-import com.UKC_AICS.simulation.gui.controlutils.SelectedEntity;
+import com.UKC_AICS.simulation.screen.controlutils.ControlState;
+import com.UKC_AICS.simulation.screen.controlutils.HoverListener;
+import com.UKC_AICS.simulation.screen.controlutils.SelectedEntity;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;

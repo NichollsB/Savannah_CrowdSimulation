@@ -1,6 +1,5 @@
-package com.UKC_AICS.simulation.gui.controlutils;
+package com.UKC_AICS.simulation.screen.controlutils;
 
-import com.UKC_AICS.simulation.gui.controlutils.ControlState.State;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
