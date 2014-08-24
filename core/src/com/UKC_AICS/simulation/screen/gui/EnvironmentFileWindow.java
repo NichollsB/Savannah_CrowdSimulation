@@ -1,7 +1,7 @@
 package com.UKC_AICS.simulation.screen.gui;
 
-import com.UKC_AICS.simulation.gui.controlutils.MenuSelectEvent;
-import com.UKC_AICS.simulation.gui.controlutils.MenuSelectListener;
+import com.UKC_AICS.simulation.screen.controlutils.MenuSelectEvent;
+import com.UKC_AICS.simulation.screen.controlutils.MenuSelectListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;

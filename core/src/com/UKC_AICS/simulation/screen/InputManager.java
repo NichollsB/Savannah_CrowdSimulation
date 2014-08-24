@@ -1,6 +1,6 @@
 package com.UKC_AICS.simulation.screen;
 
-import com.UKC_AICS.simulation.gui.controlutils.ControlState;
+import com.UKC_AICS.simulation.screen.controlutils.ControlState;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;

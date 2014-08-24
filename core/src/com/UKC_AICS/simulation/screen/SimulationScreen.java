@@ -6,8 +6,8 @@ import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Species;
-import com.UKC_AICS.simulation.gui.controlutils.ControlState;
-import com.UKC_AICS.simulation.gui.controlutils.SelectedEntity;
+import com.UKC_AICS.simulation.screen.controlutils.ControlState;
+import com.UKC_AICS.simulation.screen.controlutils.SelectedEntity;
 import com.UKC_AICS.simulation.screen.graphics.Graphics;
 import com.UKC_AICS.simulation.screen.graphics.TileGraphics;
 import com.UKC_AICS.simulation.screen.gui.SimScreenGUI;
@@ -25,7 +25,6 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 
-import java.io.File;
 import java.util.HashMap;
 
 
@@ -213,19 +212,18 @@ public class SimulationScreen implements Screen{
         setupCameraController();
         initialiseCameras(Constants.mapWidth, Constants.mapHeight); //changed these from gdx.graphics.getWidth to this. -Em
         //Graphics components
-        boidGraphics.initBackground();
         boidGraphics.setBoids(simulationManager.getBoids());
         boidGraphics.initBoidSprites(simulationManager.getTextureLocations());
         boidGraphics.setBoidSprite_Colours(simulationManager.getRGBValues());
         boidGraphics.initObjSprites(simulationManager.getObjects());
         boidGraphics.initEnvironmentTiling(simulationManager.getFullInfo());
         //boidGraphics.initEnvironmentTiling(simulationManager.getMapTiles());
-        boidGraphics.initEnvironmentMeshes((byte[][]) simulationManager.getFullInfo().get("grass"), Constants.TILE_SIZE);
+        boidGraphics.initEnvironmentMeshes(simulationManager.getFullInfo());
     }
 
     public void resetGraphics(){
         boidGraphics.initEnvironmentTiling(simulationManager.getFullInfo());
-        boidGraphics.initEnvironmentMeshes((byte[][]) simulationManager.getFullInfo().get("grass"), Constants.TILE_SIZE);
+        boidGraphics.initEnvironmentMeshes(simulationManager.getFullInfo());
         boidGraphics.setBoids(simulationManager.getBoids());
     }
 

@@ -13,18 +13,21 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
+/**
+ * Used to draw tiles representing dynamic layers of the simulation environment.
+ * Caches the tiles into rows, re-drawing these rows on each update, re-constructing the
+ * rows cache when a change in the layers values is detected on that row.
+ *
+ * @author Ben Nicholls bn65@kent.ac.uk
+ */
 public class TileGraphics extends SpriteCache {
 
 	private HashMap<String, byte[][]> infoLayers = new HashMap<String, byte[][]>();
 	
 	private SpriteManager manager;
-	private byte[][] grassAmounts;
-	private byte[][][][] tileGrass;
-	private Sprite sprite;
-	
+
 	private byte mapElementsX = 0, mapElementsY = 0;
 	int cacheCount = 0;
-	private Array<Byte> cacheRows;
 	private ObjectMap<Integer, Integer> cacheRow_Map = new ObjectMap<Integer, Integer>();
 	private Array<Integer> cacheRow_Count = new Array<Integer>();
 
@@ -32,9 +35,14 @@ public class TileGraphics extends SpriteCache {
 
 	AtlasRegion lastRegion = null;
     AtlasSprite lastSprite = null;
-	private boolean firstUpdate = true;
-	
-	public TileGraphics(HashMap<String, byte[][]> infoLayers, SpriteManager manager, SpriteCache cache){
+
+
+    /**
+     * Initialise this cache
+     * @param infoLayers The Map of layer Strings to byte[][] value array
+     * @param manager SpriteManager used to retrieve sprites representing each layer
+     */
+	public TileGraphics(HashMap<String, byte[][]> infoLayers, SpriteManager manager){
 		super(MAXCACHE, false);
 
 		this.manager = manager;
@@ -67,7 +75,13 @@ public class TileGraphics extends SpriteCache {
 		}
 		
 	}
-	
+
+    /**
+     * Create, or re-create, the cache for a row of the simulation environment.
+     * @param y int index of the row cache to be created
+     * @param infoLayers The Map of layers, needed to find the value on each layer for each element in the
+     *                   row.
+     */
 	public void createCache(int y, HashMap<String, byte[][]> infoLayers){
 		byte[][] layermap;
 		byte amount;
@@ -80,7 +94,6 @@ public class TileGraphics extends SpriteCache {
 		if(cacheRow_Map.containsKey(y)){
 			id = cacheRow_Map.get(y);
 			this.beginCache(id);
-//			System.out.println("RECREATING" + id);
 		}
 		else
 			this.beginCache();
@@ -167,28 +180,27 @@ public class TileGraphics extends SpriteCache {
                 xPos += lastSprite.getWidth();
 //				xPos += lastRegion.originalWidth;
 		}
-//		if(recreate){
-//			System.out.println("Row " + y + "Recreate id " + id + " layers " + numCachedLayers);
-//		}
 		id = this.endCache();
-//		if(!recreate) System.out.println("Row " + y + "Initial id " + id + " layers " + numCachedLayers);
 		if(!cacheRow_Map.containsKey(y))
 			cacheRow_Map.put(y, id);
 		if(!cacheRow_Count.contains(y, true)){
 			cacheRow_Count.add(y);
-//			cacheRow_Count.put(id, numCachedLayers);
-//			cacheableLayers = numCachedLayers;
 		}
 	}
 	
 	boolean copyLayers = false;
 	Array<String> layersToCopy = new Array<String>();
-	
+
+    /**
+     * Called to update and render the cache. Checks every row of the environment and, if a
+     * change is detected, calls the {@link #createCache(int, java.util.HashMap) createCache()} method
+     * to re-create the row. Then draws each cached row.
+     * @param batch Used to set the projectionmatrix of the spritecache
+     * @param update Boolean indicating whether or not to force the cache to update
+     * @param infoLayers The map of environment layer values
+     */
 	public void updateTiles(Batch batch, boolean update, HashMap<String, byte[][]> infoLayers){
 		this.setProjectionMatrix(batch.getProjectionMatrix());
-		
-
-		
 		if(manager.update()){
 		
 			//CACHE METHOD
@@ -367,6 +379,14 @@ public class TileGraphics extends SpriteCache {
 		}
 	}
 
+
+    /**
+     * Creates a deep copy of the passed in byte[][] array of map values, and places it in the
+     * target map with the specified String key
+     * @param sourceKey String key to add to the target map
+     * @param sourceValue byte[][] source array to copy to the target map
+     * @param targetMap Map to copy the value array to.
+     */
 	private void copyInformationLayer(String sourceKey, byte[][] sourceValue, HashMap<String, byte[][]> targetMap){
 		byte[][] targetValue = new byte[sourceValue.length][sourceValue[0].length];
 		for(int i = 0; i < sourceValue.length; i++){
