@@ -88,6 +88,11 @@ public class TileMesh {
         this.upperAlpha = alphaMax;
         this.gridRange = valueRange;
     }
+
+
+    /**
+     * Default constructor for creating the class with default values
+     */
     public TileMesh(){}
 
 
@@ -782,7 +787,10 @@ public class TileMesh {
                count++;
             }
         }
-        average = (average / count)/gridRange;
+        if(gridRange > 0)
+            average = (average / count)/gridRange;
+        else
+            average /= count;
         if(average < lowerAlphaCutoff)
             average = lowerAlpha;
         if (average > upperAlphaCutoff)

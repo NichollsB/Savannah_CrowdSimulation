@@ -22,6 +22,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
+/**
+ * Simple FileChooser type dialog for selecting files to be loaded into the simulation.
+ * Consists of a tex field displaying the directory being navigated through, a ScrollPane displaying
+ * a list of directories and files within the current directory which may be selected, and
+ * a text field displaying the name of the currently selected document, or may be used to enter a new name
+ * to create a document to save to.
+ *
+ * @author Ben Nicholls bn65@kent.ac.uk
+ */
 public class FileChooser extends Dialog implements MenuSelectEvent{
 	private static final File defaultDir = new File(".");
 	private File startDir = defaultDir;
@@ -58,6 +67,19 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		put("cancel", null);
 	}};
 
+    /**
+     * Construct the file chooser with a title, a particular command string ("load" or "save") indicating
+     * the action that should be performed with the file produced by this chooser, and id string,
+     * a starting directory string, the text for confirmation or cancellation, and the stage to add the dialog to
+     * @param title Title of the dialog
+     * @param skin
+     * @param command ("load" or "save") Identifier of the command that should be carried out with the selected files
+     * @param id Id of the dialog
+     * @param dir Starting directory path
+     * @param confirmText Text to display in the confirm button
+     * @param cancelText Text to display in the cancel button
+     * @param stage Stage to add this dialog to
+     */
 	public FileChooser(String title, Skin skin, String command, String id, String dir, String confirmText, String cancelText, Stage stage) {
 		super(title, skin);
 		this.command = command;
@@ -72,6 +94,18 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		
 		create(confirmText, cancelText, stage);
 	}
+
+    /**
+     *  See {@link #FileChooser(String, com.badlogic.gdx.scenes.scene2d.ui.Skin, String, String, java.io.File, String, String, com.badlogic.gdx.scenes.scene2d.Stage)}
+     * @param title
+     * @param skin
+     * @param command
+     * @param id
+     * @param dir
+     * @param confirmText
+     * @param cancelText
+     * @param stage
+     */
 	public FileChooser(String title, Skin skin, String command, String id, File dir, String confirmText, String cancelText, Stage stage) {
 		super(title, skin);
 		this.command = command;
@@ -85,7 +119,16 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		create(confirmText, cancelText, stage);
 		
 	}
-	
+
+    /**
+     * Set up the dialog with the specified confirmation and cancellation button text, and add to the stage.
+     * Initialises the dialog content with a text field for displaying the current directory, a scroll pane
+     * for displaying teh directory content, and a text field for displaying the selected file name, or entering
+     * your own
+     * @param confirmText
+     * @param cancelText
+     * @param stage
+     */
 	private void create(String confirmText, String cancelText, Stage stage){
 //		this.hide();
 		this.setWidth(400);
@@ -156,24 +199,26 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 	
 	
 	/**
-	 * Should be called upon dialog button selection
+	 * Called on selection of one of the dialogs buttons (confirm or cancel). If the selected buttons
+     * String object equals "confirm" it will notify any listeners implementing {@link com.UKC_AICS.simulation.screen.controlutils.MenuSelectListener}
 	 */
 	protected void result (Object object){
 		String btn;
-		
-		for(String button : buttons.keys()){
-			btn = (String)object;
-//			System.out.println(buttons.get(button).getText());
+        btn = (String)object;
+//		for(String button : buttons.keys()){
+//			btn = (String)object;
+////			System.out.println(buttons.get(button).getText());
 			if(btn.equals("confirm")){
 				if(pathFromTextField){
 					updateSelectedFile(fileField.getText());
 				}
-					
-				for(MenuSelectListener l : listeners){
-					l.selectionMade(this, selectedFile);
-				}
+                if(selectedFile != null) {
+                    for (MenuSelectListener l : listeners) {
+                        l.selectionMade(this, selectedFile);
+                    }
+                }
 			}
-		}
+//		}
 		
 	}
 
@@ -298,7 +343,12 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 		fileField.setText(handle.getName());
 		pathFromTextField = false;
 	}
-	
+
+    /**
+     * Update the selected file with the given String file path. Creates a file with a file path
+     * consisting of the current directory path + the input path name
+     * @param path The name of the file to be created
+     */
 	private void updateSelectedFile(String path){
 		File targetPath = new File(path);
 		String filePath = currentDir.getPath();
@@ -368,7 +418,11 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 	    scroll.setFadeScrollBars(false);
 		return scroll;
 	}
-	
+
+    /**
+     * Gets the current selected file
+     * @return {@link #selectedFile}
+     */
 	public File getSelected(){
 		return selectedFile;
 	}
@@ -376,13 +430,28 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 	public void setCommand(String command){
 		this.command = command;
 	}
+
+    /**
+     * Get the command string of this dialog
+     * @return {@link #command}
+     */
 	public String getCommand(){
 		return command;
 	}
+
+    /**
+     * Set the dialogs {@link #identifier id}, and {@link #setTitle(String) title}
+     * @param id
+     */
 	public void setIdentifier(String id){
 		identifier = id;
 		setTitle(id);
 	}
+
+    /**
+     * Get the dialog identifier
+     * @return
+     */
 	public String getIdentifier(){
 		return identifier;
 	}
@@ -400,7 +469,11 @@ public class FileChooser extends Dialog implements MenuSelectEvent{
 			buttons.get("cancel").setText(cancel);
 		}
 	}
-	
+
+    /**
+     * Open the dialog in the specified stage
+     * @param stage
+     */
 	public void open(Stage stage){
 //		stage.addActor(this);
 		selectedFile = null;

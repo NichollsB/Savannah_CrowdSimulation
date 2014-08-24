@@ -16,6 +16,13 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.UKC_AICS.simulation.entity.*;
 
 
+/**
+ * GUI component for displaying a scrollable tree style list of {@link com.UKC_AICS.simulation.entity.Entity entities}.
+ * Allows the selection of boids, acquisition of information for display elsewhere, and removable of entities and explicit
+ * placement in the simulation environment
+ *
+ * @author Ben Nicholls bn65@kent.ac.uk
+ */
 public class EntityTreeTable extends Table {
 	//Entitys
 	private final ObjectMap<Byte, EntityTree_Node> entityRoots = new ObjectMap<Byte, EntityTree_Node>();
@@ -48,14 +55,18 @@ public class EntityTreeTable extends Table {
 	private ObjectMap<String, Button> buttons;
 	private ObjectMap<Button, String> buttonsInfo;
 	
-	private boolean fixedType = false;
-	private byte fixedTypeValue = 0;
-	
+
 	private ScrollPane scrollPane;
 	private Stage stage;
 
-    private final ObjectMap<Byte, Image> nodeImages = new ObjectMap<Byte, Image>();
-	
+    private byte treeEntityType;
+
+    /**
+     * Initialise the buttons for the window table with a given skin. Creates a remove and checked button,
+     * that is, a button for deleting the selected entity, and one for the explicit placement of entities in the
+     * simulation environment
+     * @param skin To apply to buttons, etc
+     */
 	public void initButtons(Skin skin){
 		final Skin s = skin;
 		buttons = new ObjectMap<String, Button>(){{
@@ -71,13 +82,14 @@ public class EntityTreeTable extends Table {
 		
 	}
 
-//    public
-	public EntityTreeTable(String title, Skin skin, SimScreenGUI gui, boolean fixedType, byte fixedTypeValue) {
+    /**
+     * Constructor for the table
+     * @param title To apply to the table
+     * @param skin
+     * @param gui The parent {@link com.UKC_AICS.simulation.screen.gui.SimScreenGUI gui}.
+     */
+	public EntityTreeTable(String title, Skin skin, SimScreenGUI gui) {
 		super(skin);
-		
-		this.fixedType = fixedType;
-		this.fixedTypeValue = (fixedType) ? fixedTypeValue : -1;
-		
 		this.skin = skin;
 		initButtons(skin);
 	
@@ -107,7 +119,20 @@ public class EntityTreeTable extends Table {
 		//Listener Test
 //		registerListener(listener);
         tree.getSelection().clear();
+
+        final SimScreenGUI g = gui;
+        final EntityTreeTable t = this;
+        this.addListener(new ClickListener(){
+            public void clicked (InputEvent event, float x, float y) {
+                g.deselectTree(t);
+            }
+        });
 	}
+
+    /**
+     * Add the tables buttons to a table
+     * @return Table of buttons
+     */
 	private Table buttons(){
 		Table btnGrp = new Table();
 
@@ -149,6 +174,7 @@ public class EntityTreeTable extends Table {
 //		entityNode.setParent(node);
 		entityNodes_num++;
 		root.setNumChildren(entityNodes_num);
+        treeEntityType = entity.getType();
 //			entityNodes.put()
 //		System.out.println("entityNode added." +  " type " + entityNode.getName() + " subtype " + entity.getTertiaryType());
 		return entityNode;
@@ -305,7 +331,7 @@ public class EntityTreeTable extends Table {
 			tree.getSelection().choose(entityNodes.get(entity));
 		}
 	}
-	
+
 	/**
 	 * Called by SelectNodeListener. Will carry out the behaviour associated with selecting the specified node. Expanding table
 	 * to the node and expanding children. If the node, or its children have associated entitys it will set them as tracked, so that
@@ -322,7 +348,7 @@ public class EntityTreeTable extends Table {
 			selectedNode = node;
 			actor = root.getActor();
 			scrollPane.scrollToCenter(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
-			return;
+            return;
 		} else if(node.equals(selectedNode)){
 			deselectNodes();
 			node.expandTo();
@@ -366,8 +392,15 @@ public class EntityTreeTable extends Table {
 				selectedNode = node;
 			}
 			else{
+                groupSelected = true;
 				selectedType = node.getID();
-				selectedGroup = -1;
+                Array<EntityTree_Node> array = node.getNodeChildren();
+                byte j = 0;
+                for(EntityTree_Node n : array){
+                    if(n.getID() == j)
+                        j++;
+                }
+				selectedGroup = j;
 			}
 			selectedInfo = node.getInfo();
 		}
@@ -376,7 +409,7 @@ public class EntityTreeTable extends Table {
 		selectedNode = node;
 		actor = node.getActor();
 		scrollPane.scrollToCenter(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
-		SelectedEntity.set((byte)1, selectedType, selectedGroup);
+		SelectedEntity.set(treeEntityType, selectedType, selectedGroup);
         gui.setSelectedInfoItem(this);
         selected = true;
 	}
@@ -428,7 +461,7 @@ public class EntityTreeTable extends Table {
 		if(updateNodes){
 			compareAndUpdateNodes(entitys);
 			if(groupSelected){
-				selectedNode.setInfo(selectedNode.getName() + "/n" + "/t" + "Population: " + selectedNode.getChildren().size);
+				selectedNode.setInfo(selectedNode.getName() + "\n" + "\t" + "Population: " + selectedNode.numChildren());
 				selectedInfo = selectedNode.getInfo();
 			}
 		}
@@ -438,7 +471,12 @@ public class EntityTreeTable extends Table {
 		}
 		return selectedInfo;
 	}
-	
+
+    /**
+     * Creates a scroll pane type actor for the table content
+     * @param content Content to add to the scroll pane. Usually a table
+     * @return Scroll pane actor
+     */
 	private Actor createScrollPane(Actor content){
     	Table scrollTable = new Table(skin);
 //    	scrollTable.add("east");
@@ -474,7 +512,9 @@ public class EntityTreeTable extends Table {
 		return scroll;
 	}
 
-	
+    /**
+     * Listener for the selection of a tree node. Calls the method {@link #nodeSelected(EntityTree_Node) nodeSelected}.
+     */
 	class SelectNodeListener extends ChangeListener{
 		Tree tree;
 		
@@ -499,14 +539,25 @@ public class EntityTreeTable extends Table {
 
 	private boolean clicked = false;
 
+    /**
+     * Method called when a button is selected. Changes the the {@link com.UKC_AICS.simulation.screen.controlutils.ControlState control state}
+     * based on the input button string and sets the {@link com.UKC_AICS.simulation.screen.controlutils.SelectedEntity selected entity},
+     * or indicates an entity should be deleted
+     * @param button If "CHECKED" sets the control state to the checked state, for the explicit placement
+     *               of entities (of the type of the entity selected) . If "REMOVE", then will mark the
+     *               entity for {@link #markForDeletion(EntityTree_Node) deletion}.
+     */
 	public void buttonSelected(String button) {
 		tree.getSelection().choose(selectedNode);
 		if(button == "CHECKED"){
 			ControlState.changeState(buttons.get(button).isChecked(), ControlState.State.PLACEMENT);
 			if(selectedNode.equals(root))
 				SelectedEntity.set(false);
-			else
-				SelectedEntity.set((byte)1, selectedType, selectedGroup);
+            else if(!selectedNode.hasEntity()){
+            }
+			else {
+                SelectedEntity.set((byte) 1, selectedType, selectedGroup);
+            }
 		}
 		if(button == "REMOVE"){
 			markForDeletion(selectedNode);
@@ -514,17 +565,15 @@ public class EntityTreeTable extends Table {
 //			selectedNode.remove();
 		}
 		clicked = false;
-		
+
 
 	}
-//	@Override
-//	public void showButtonHelper(boolean showHelper, String helper) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-	
-	
 
+
+    /**
+     * Listener for the windows buttons. Calls the {@link #buttonSelected(String)} method on click,
+     * or triggers the hovering behaviour {@link com.UKC_AICS.simulation.screen.controlutils.HoverListener} of the listeners
+     */
 	class SelectOptionsListener extends ClickListener {
 		private String btn;
 		private String btnInfo;
@@ -547,7 +596,13 @@ public class EntityTreeTable extends Table {
 			}
 		}
 	}
-	
+
+    /**
+     * Mark a given node for deletion. Results in any entity assigned to the node being deleted, or entities assigned
+     * to all child nodes being removed. Calls {@link com.UKC_AICS.simulation.entity.Entity#delete()} on any entities
+     * found
+     * @param node Node to mark for deletion.
+     */
 	private void markForDeletion(EntityTree_Node node){
 		if(node.hasEntity()){
 			node.getEntity().delete();

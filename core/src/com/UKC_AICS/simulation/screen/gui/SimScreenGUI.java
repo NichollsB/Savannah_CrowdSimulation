@@ -27,6 +27,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 /**
  * Created by James on 02/07/2014.
  * Class for the creation of gui for simulationScreen
+ * @author ben Nicholls bn65@kent.ac.uk
+ * @author James Young
  */
 public class SimScreenGUI extends Stage implements HoverListener {
 	final private ScreenViewport uiViewport = new ScreenViewport();
@@ -39,7 +41,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
 			NORTH_HEIGHT = 50,
 			EAST_WIDTH = 200,
 			WEST_WIDTH = 200,
-			SOUTH_HEIGHT = 80,
+			SOUTH_HEIGHT = 120,
 			BOTTOM_HEIGHT = 200;
 	
 	private final int screenOffset = 6;
@@ -59,8 +61,8 @@ public class SimScreenGUI extends Stage implements HoverListener {
     //West
     private Array<Entity> boids;
     private Array<Entity> objects;
-    private final EntityTreeTable boidTree = new EntityTreeTable("Boids", skin, this, true, (byte)1);
-    private final EntityTreeTable objectTree = new EntityTreeTable("Objects", skin, this, false, (byte)1);
+    private final EntityTreeTable boidTree = new EntityTreeTable("Boids", skin, this);
+    private final EntityTreeTable objectTree = new EntityTreeTable("Objects", skin, this);
     
 	//Hovering popup
 	private final Label hoverLabel = new Label("", skin);
@@ -103,7 +105,12 @@ public class SimScreenGUI extends Stage implements HoverListener {
 
 
     /**
-     * setups up the UI.
+     * setups up the UI. Initialises file choosers and applies the north, south, east, and west tables to the stage
+     *
+     * @see #createNorth(com.badlogic.gdx.scenes.scene2d.Actor)
+     * @see #createSouth(com.badlogic.gdx.scenes.scene2d.Actor)
+     * @see #createEast(com.badlogic.gdx.scenes.scene2d.Actor)
+     * @see #createSouth(com.badlogic.gdx.scenes.scene2d.Actor)
      */
     public void setStage(int width, int height) {
 
@@ -207,8 +214,24 @@ public class SimScreenGUI extends Stage implements HoverListener {
 //        table.add(pane1).top().expandX().fillX();
 //        screenRect.set(0, 0, width, height);
     }
-    
 
+    /**
+     * Create the north table of the gui. A menu of sorts, contains options to load environment files and
+     * and set EA config files, and allows the user to set the render mode via a dropdown menu
+     *<ul>
+     *
+     * <li>Selecting a render mode allows the user to choose between the default {@link com.UKC_AICS.simulation.screen.graphics.TileGraphics sprite cache}
+     * for rendering the simulation environment, and the {@link com.UKC_AICS.simulation.screen.graphics.TileMesh mesh}.
+     * Selecting mode sets the appropriate {@link com.UKC_AICS.simulation.screen.controlutils.RenderState render state}</li>
+     * <li>Loading a file finds a texture sheet image and packfile .txt document pair and passes them to
+     * be loaded via the {@link com.UKC_AICS.simulation.utils.EnvironmentLoader}</li>
+     * </ul>
+     *
+     * @see com.UKC_AICS.simulation.screen.gui.FileChooser
+     * @see com.UKC_AICS.simulation.screen.gui.EnvironmentFileWindow
+     * @param a deprecated
+     * @return Table containing this menu
+     */
 	private Table createNorth(Actor a){
     	Table menuTable = new Table(skin);
         final SelectBox renderSelect = new SelectBox(skin);
@@ -231,34 +254,34 @@ public class SimScreenGUI extends Stage implements HoverListener {
                 fileChooser.open(stage);
             }
         });
-        menuTable.add(button).padLeft(5);
+        menuTable.add(button).padLeft(20);
 //
-       button = new TextButton("Sim Record Location", skin);
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                fileChooser.setOptionsText("Set Record Location", "Cancel");
-                fileChooser.setCommand("load");
-                fileChooser.setIdentifier("record");
-                fileChooser.open(stage);
-            }
-        });
-        menuTable.add(button).padLeft(5);
+//       button = new TextButton("Sim Record Location", skin);
+//        button.addListener(new ClickListener() {
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                fileChooser.setOptionsText("Set Record Location", "Cancel");
+//                fileChooser.setCommand("load");
+//                fileChooser.setIdentifier("record");
+//                fileChooser.open(stage);
+//            }
+//        });
+//        menuTable.add(button).padLeft(5);
 
-        final CheckBox recordCheck = new CheckBox("Record Simulation", skin);
-        recordCheck.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if(recordCheck.isChecked()){
-                    RenderState.changeTileState("off");
-                    renderSelect.setSelected("Off");
-                    simScreen.simulationManager.commandCall("record", "start");
-                }
-                else if(!recordCheck.isChecked())
-                    simScreen.simulationManager.commandCall("record", "stop");
-            }
-        });
-        menuTable.add(recordCheck).padLeft(5);
+//        final CheckBox recordCheck = new CheckBox("Record Simulation", skin);
+//        recordCheck.addListener(new ClickListener() {
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                if(recordCheck.isChecked()){
+//                    RenderState.changeTileState("off");
+//                    renderSelect.setSelected("Off");
+//                    simScreen.simulationManager.commandCall("record", "start");
+//                }
+//                else if(!recordCheck.isChecked())
+//                    simScreen.simulationManager.commandCall("record", "stop");
+//            }
+//        });
+//        menuTable.add(recordCheck).padLeft(5);
 
         //ENVIRONMENT OPTIONS
         menuTable.add(new Table()).fillX().expandX();
@@ -344,7 +367,16 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	return menu;
 	}
 
-
+    /**
+     * Create the south Table. Consists of buttons for controlling the simulation, including: a play/pause button that will
+     * notify the simulation to {@link com.UKC_AICS.simulation.screen.SimulationScreen#flipRunning() pause},
+     * a reset button which {@link com.UKC_AICS.simulation.managers.SimulationManager#reset() restores} the simulation
+     * to its initial state, a save and load button that may be used to {@link com.UKC_AICS.simulation.managers.SimulationManager#save() save}
+     * the simulation at a given point and to {@link com.UKC_AICS.simulation.managers.SimulationManager#load() re-load}
+     * it to that point. Also contains an fps label and a textfield displaying environment map tile information
+     * @param a
+     * @return Table containing the south content
+     */
     private Table createSouth(Actor a){
     	Table southTable = new Table(skin);
 //    	t.add(southTable).bottom().height(SOUTH_HEIGHT).expandX().fillX().colspan(3);
@@ -431,29 +463,50 @@ public class SimScreenGUI extends Stage implements HoverListener {
 //        fps.setWidth(500f);
 //        southTable.addActor(playButton);
 //        playButton.setSize(100f, 30f);
+//        southTable.add(new Table()).fill().expand();
+        southTable.row();
         Table legendTable = new Table();
         legendTable.add(fps).bottom().left().padLeft(20f).padBottom(10f);
-        legendTable.add(legend).fillX().expandX();
+        final ScrollPane pane = (ScrollPane)createScrollPane(legend, true, false, true, false);
+        pane.setScrollX(2f);
+        pane.addListener(new ClickListener(){
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                setScrollFocus(pane);
+            }
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor){
+                setScrollFocus(null);
+            }
+        });
+        legendTable.add(pane).fillX().expandX().height(65).padLeft(10);
+        legend.add(new Table()).fillX().expandX();
 //        southTable.add(fps).bottom().left().padLeft(20f).padBottom(10f).fillX().expandX();
 //        southTable.add(new Table()).fillX().expandX().colspan(6);
-        southTable.add(legendTable).fillX().expandX();
+        southTable.add(legendTable).fill().expand();
         southTable.row();
         Table btnTable = new Table();
-        btnTable.add(playButton).bottom().left().padLeft(20f).padBottom(10f);
-        btnTable.add(resetButton).bottom().left().padLeft(20f).padBottom(10f);
-        btnTable.add(EAButton).bottom().left().padLeft(20f).padBottom(10f);
-        btnTable.add(switchButton).bottom().left().padLeft(20f).padBottom(10f);
-        btnTable.add(saveButton).bottom().left().padLeft(20f).padBottom(10f);
-        btnTable.add(loadButton).bottom().left().padLeft(20f).padBottom(10f);
+        btnTable.add(playButton).bottom().left().padLeft(20f);
+        btnTable.add(resetButton).bottom().left().padLeft(20f);
+        btnTable.add(EAButton).bottom().left().padLeft(20f);
+        btnTable.add(switchButton).bottom().left().padLeft(20f);
+        btnTable.add(saveButton).bottom().left().padLeft(20f);
+        btnTable.add(loadButton).bottom().left().padLeft(20f);
        
         //table.add(graphicsWindow).size(500f,500f);
         btnTable.add(new Table()).expandX().fillX();
         btnTable.add(console).bottom().width(400).padLeft(20).padRight(10);
-        southTable.add(btnTable).fillX().expandX().padBottom(20);
-        southTable.padTop(20);
+        southTable.add(btnTable).fillX().expandX().padBottom(5).padTop(5);
+//        southTable.padTop(20);
 		return southTable;
     }
 
+    /**
+     * Create the east table content. Contains the {@link #boidInfo info lable} displaying entity information
+     * depending on the entity selected.
+     * @see com.UKC_AICS.simulation.entity.Entity#toString()
+     * @see com.UKC_AICS.simulation.screen.gui.EntityTreeTable
+     * @param a
+     * @return The table containng the south content
+     */
     private Table createEast(Actor a){
     	Table eastTable = new Table(skin);
 //    	t.add(eastTable).left().width(EAST_WIDTH).fillY().expandY();
@@ -461,12 +514,28 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	boidInfo.setAlignment(Align.left);
         eastTable.add(new Label("Information Display", skin)).center().pad(5).fillX().expandX();
         eastTable.row();
-    	eastTable.add(createScrollPane(boidInfo, false, true, true, true)).top().fill().expand();
+        final ScrollPane pane = (ScrollPane) createScrollPane(boidInfo, false, true, true, true);
+    	pane.addListener(new ClickListener(){
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+                setScrollFocus(pane);
+            }
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor){
+                setScrollFocus(null);
+            }
+        });
+        eastTable.add(pane).top().fill().expand();
 		eastTable.pack();
 		
 		
     	return eastTable;
     }
+
+    /**
+     * Create the content of the west table area. Contains {@link com.UKC_AICS.simulation.screen.gui.EntityTreeTable tables}
+     * displaying lists of entities in the simulation
+     * @param a deprecated
+     * @return Table containing the west table content
+     */
     private Table createWest(Actor a){
     	Table westTable = new Table(skin);
     	SplitPane pane = new SplitPane(boidTree, objectTree, true, skin);
@@ -474,6 +543,12 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	return westTable;
     }
 
+    /**
+     * Create the {@link #boidTree boid tree} table from the input map of byte types to {@link com.UKC_AICS.simulation.entity.Species species}
+     * and an array of {@link com.UKC_AICS.simulation.entity.Entity boids}
+     * @param species Specifies the root nodes of the tree
+     * @param boids Specifies the boids to display in the tree
+     */
     public void createBoidTree(HashMap<Byte, Species> species, Array boids){
     	try{
 	    	this.boids = boids;
@@ -486,6 +561,13 @@ public class SimScreenGUI extends Stage implements HoverListener {
     		System.out.println(this.getClass() + " failed to create EntityListWindow - ");
     	}
     }
+
+    /**
+     * Create the {@link #objectTree object tree} table from the input map of byte types to {@link com.UKC_AICS.simulation.entity.ObjectData object data types}
+     * and an array of {@link com.UKC_AICS.simulation.entity.Entity objects}
+     * @param objData Specifies the root nodes of the tree
+     * @param objects Specifies the objects to display in the tree
+     */
     public void createObjectTree(HashMap<Byte, ObjectData> objData, Array objects){
 //    	System.out.println("creating objectree datamap = " + objData + " objects = " + objects);
     	try{
@@ -498,7 +580,11 @@ public class SimScreenGUI extends Stage implements HoverListener {
 			System.out.println(this.getClass() + "failed to create EntityListWindow - ");
 		}
     }
-    
+
+    /**
+     * Set the the text of the {@link #console}
+     * @param log Text to apply to the console
+     */
     public void setConsole(String log){
     	if(log != null)
     		console.setText(log);
@@ -506,6 +592,14 @@ public class SimScreenGUI extends Stage implements HoverListener {
     		console.setText("");
     }
 
+    /**
+     * Set the simulation graphical representation bounding rectangle from the input tables areas. Rectangle
+     * represents the center area
+     * @param north
+     * @param south
+     * @param east
+     * @param west
+     */
     private void setViewRect(Table north, Table south, Table east, Table west) {
 //    	float width = Gdx.graphics.getWidth() - (east.getWidth() + west.getWidth())-(screenOffset*2);
 //    	float height = Gdx.graphics.getHeight() - (north.getHeight() + south.getHeight())-(screenOffset*2);
@@ -515,11 +609,23 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	float height = Gdx.graphics.getHeight() - (north.getHeight() + south.getHeight()) - (screenOffset*2);
   		screenRect.set(west.getWidth()+screenOffset, south.getHeight()+(screenOffset), width, height);
     }
-    
+
+    /**
+     * Get the simulation graphical representation bounding rectangle. Used in {@link com.UKC_AICS.simulation.screen.InputManager}
+     * and for scissors of the {@link com.UKC_AICS.simulation.screen.graphics.Graphics}.
+     * @see #setViewRect(com.badlogic.gdx.scenes.scene2d.ui.Table, com.badlogic.gdx.scenes.scene2d.ui.Table, com.badlogic.gdx.scenes.scene2d.ui.Table, com.badlogic.gdx.scenes.scene2d.ui.Table)
+     * @return {@link #screenRect}
+     */
     public Rectangle getViewArea(){
     	return screenRect;
     }
 
+    /**
+     * Update the gui. Deselect the {@link #boidTree} and/or {@link #objectTree} if necessary insuring that
+     * only one is selected, or neither if the user is not using the trees
+     * @param batch unused
+     * @param render If true will render the gui
+     */
 	public void update(SpriteBatch batch, boolean render) {
 
         if(render){
@@ -543,11 +649,16 @@ public class SimScreenGUI extends Stage implements HoverListener {
 	    	stage.draw();  //GUI stuff
 	    	
         }
-        Table.drawDebug(stage);  //debug lines for UI
 
 	}
     private Array<String> legendEntries = new Array<String>();
 
+    /**
+     * Add Images to the tables {@link #legend} representing the simulation {@link com.UKC_AICS.simulation.entity.Object objects}
+     * @param map Map of object types
+     * @param images map of type to images retrieved from {@link com.UKC_AICS.simulation.screen.graphics.SpriteManager#getObjectImages()}
+     * @return true if the objects were added
+     */
     public boolean addObjectsToLegend(HashMap<Byte, ObjectData> map, HashMap<Byte, Image> images){
         boolean added = false;
         boolean corpseAdded = false;
@@ -561,6 +672,13 @@ public class SimScreenGUI extends Stage implements HoverListener {
         }
         return added;
     }
+
+    /**
+     * Add Images to the tables {@link #legend} representing the simulation {@link com.UKC_AICS.simulation.entity.Boid boids}
+     * @param map Map of object types
+     * @param images map of type to images retrieved from {@link com.UKC_AICS.simulation.screen.graphics.SpriteManager#getBoidImages()}
+     * @return true if the boid images were added
+     */
     public boolean addBoidsToLegend(HashMap<Byte, Species> map, HashMap<Byte, Image> images){
         boolean added = false;
         for(byte b : map.keySet()){
@@ -570,18 +688,39 @@ public class SimScreenGUI extends Stage implements HoverListener {
         }
         return added;
     }
+
+    /**
+     * Add an image representing a given {@link com.UKC_AICS.simulation.entity.Entity} to the
+     * gui {@link #legend}
+     * @see #addObjectsToLegend(java.util.HashMap, java.util.HashMap)
+     * @see #addBoidsToLegend(java.util.HashMap, java.util.HashMap)
+     * @param entity The entity to show in the legend
+     * @param img The image that represents the given entity
+     * @return true if the item was selected
+     */
     public boolean addToLegend(String entity, Image img){
         if(entity == null || img == null) return false;
         if(legendEntries.contains(entity, false)) return true;
         Table entry = new Table();
-        img.setScale(0.8f, 0.8f);
-        entry.add(img).top().padBottom(5);
-        entry.add(new Label(entity, skin)).padBottom(5);
-        legend.add(entry).padLeft(40);
+        img.setScale(0.6f, 0.6f);
+        entry.add(img).top().padBottom(10);
+        entry.add(new Label(entity, skin));
+        if(legend.getChildren().size < 1)
+            legend.add(entry).padLeft(10);
+        else
+            legend.add(entry).padLeft(20);
         return true;
     }
-	
 
+    /**
+     * Create a ScrollPane actor with the given content
+     * @param content The content to add to the scroll pane - usually a Table
+     * @param showX True to show the horizontal scroll bar permanently
+     * @param showY True to show the vertical scroll bar permanently
+     * @param bottomBar True to display the horizontal bar at the bottom of the pane, false to show at the top
+     * @param rightBar True to display the vertical var on the right of the pane, false to show on the left
+     * @return The ScrollPane actor created
+     */
 	private Actor createScrollPane(Actor content, boolean showX, boolean showY, boolean bottomBar, boolean rightBar){
     	Table scrollTable = new Table(skin);
 //    	scrollTable.add("east");
@@ -609,10 +748,25 @@ public class SimScreenGUI extends Stage implements HoverListener {
 	    scroll.setFadeScrollBars(false);
 		return scroll;
 	}
-	
-	public void selectEntity(Entity entity){
-		boidTree.selectNodeByEntity(entity, (entity == null) ? false : true);
+
+    /**
+     * Select an entity in the {@link #objectTree}, or {@link #boidTree}.
+     * Used when selecting a boid by selecting it in the sim environment view.
+     * @see com.UKC_AICS.simulation.screen.gui.EntityTreeTable#selectNodeByEntity(com.UKC_AICS.simulation.entity.Entity, boolean)
+     * @param boid true if selecting a boid, false if selecting an object
+     * @param entity The entity to select
+     */
+	public void selectEntity(Entity entity, boolean boid){
+//        if(entity == null){
+//                boidTree.selectNodeByEntity(entity, (entity == null) ? false : true);
+//                objectTree.selectNodeByEntity(entity, (entity == null) ? false : true);
+//        }
+        if(boid)
+		    boidTree.selectNodeByEntity(entity, (entity == null) ? false : true);
+        else
+            objectTree.selectNodeByEntity(entity, (entity == null) ? false : true);
 	}
+
 
 
 	
@@ -642,6 +796,12 @@ public class SimScreenGUI extends Stage implements HoverListener {
     public void setSelectedInfoItem(Actor item){
         infoItemSelected = item;
 
+    }
+    public void deselectTree(EntityTreeTable t){
+        if(t.equals(boidTree))
+            selectEntity(null, false);
+        else
+            selectEntity(null, true);
     }
 
  

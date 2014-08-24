@@ -7,6 +7,7 @@ import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.screen.controlutils.ControlState;
+import com.UKC_AICS.simulation.screen.controlutils.RenderState;
 import com.UKC_AICS.simulation.screen.controlutils.SelectedEntity;
 import com.UKC_AICS.simulation.screen.graphics.Graphics;
 import com.UKC_AICS.simulation.screen.graphics.TileGraphics;
@@ -95,7 +96,7 @@ public class SimulationScreen implements Screen{
         scissorRect = gui.getViewArea();
         inputManager.setViewportRect(scissorRect);
         clearOpenGL();
-        if (render) {
+        if (render && !RenderState.TILESTATE.equals(RenderState.State.OFF)) {
     		 try {
                  long number = (long) (1000 / 60 - Gdx.graphics.getDeltaTime());
                  if(number < 0) number = 0;//fixed?
@@ -301,18 +302,25 @@ public class SimulationScreen implements Screen{
     }
 
     /**
-     * Reacts to clicking on the simulations viewport - called by InputManagers touchDown method
+     * Reacts to clicking on the simulations viewport - called by InputManagers {@link com.UKC_AICS.simulation.screen.InputManager#touchDown(int, int, int, int) touchDown} method
+     * If the {@link com.UKC_AICS.simulation.screen.controlutils.ControlState control state} is set to navigate
+     * allows entities to be {@link com.UKC_AICS.simulation.managers.SimulationManager#getBoidAt(int, int) selected}
+     * and passed to the {@link com.UKC_AICS.simulation.screen.gui.SimScreenGUI#selectEntity(com.UKC_AICS.simulation.entity.Entity, boolean) gui}.
+     * If the control state is set to placement, it will allow the placement of an entity via {@link com.UKC_AICS.simulation.managers.SimulationManager#generateObject(byte, byte, int, int) generate object},
+     * or {@link com.UKC_AICS.simulation.managers.SimulationManager#generateBoid(byte, byte, int, int)} generate boid} methods
+     * @param screenX
      */
     public void pickPoint(int screenX, int screenY) {
     	HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
-        gui.setConsole("x: " + screenX + " y: " + screenY + "\tt:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass") + " w:" + tileInfo.get("water"));
         //What should happen when clicking on the screen
     	if(ControlState.STATE == ControlState.State.NAVIGATE){
-	        Entity boid = simulationManager.getBoidAt(screenX,screenY);
-//            if(boid == null){
-//                boid = simulationManager.getObjectAt(screenX, screenY);
-//            }
-	        if(scissorRect.contains(screenX, screenY)) gui.selectEntity(boid);
+	        Entity entity = simulationManager.getBoidAt(screenX,screenY);
+            if(entity != null) {
+                if (scissorRect.contains(screenX, screenY)) gui.selectEntity(entity, true);
+                return;
+            }
+//            else
+//                gui.selectEntity(null, true);
 	        return;
     	}
     	if(ControlState.STATE == ControlState.State.PLACEMENT){
@@ -320,18 +328,37 @@ public class SimulationScreen implements Screen{
     			if(SelectedEntity.boid())
     				simulationManager.generateBoid(SelectedEntity.subType(), SelectedEntity.group(), screenX, screenY);
     			else
-    				simulationManager.generateBoid(SelectedEntity.type(), SelectedEntity.subType(), screenY, screenY);
+    				simulationManager.generateObject(SelectedEntity.type(), SelectedEntity.subType(), screenY, screenY);
     		}
+
 			return;
     	}
     }
+
+    /**
+     * Sets the mouse position {@link #mousePosition vector}
+     * @param x
+     * @param y
+     */
     public void setMousePosition(int x, int y){
     	mousePosition.x = x;
     	mousePosition.y = y;
     }
+
+    /**
+     * Displays information concerning the cursor position in world coordinates and info about the simulation environment cell that
+     * corresponds to that position.
+     * @see com.UKC_AICS.simulation.managers.SimulationManager#getTileInfo(int, int)
+     * @param x
+     * @param y
+     */
 	public void setMouseWorldPosition(int x, int y) {
+
 		HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(x, y);
-    	gui.setConsole("x: " + x + " y: " + y + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
+        gui.setConsole("x: " + x + " y: " + y + "\tt:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass") + " w:" + tileInfo.get("water"));
+//    	gui.setConsole("x: " + x + " y: " + y + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
 	}
+
+
 }
 

@@ -17,6 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
+/**
+ * Class for loading graphical assets via an {@link com.badlogic.gdx.assets.AssetManager AssetManager} object.
+ *
+ * @author Ben Nicholls bn65@kent.ac.uk
+ */
 public class SpriteManager {
 	
 	//Environment
@@ -46,10 +51,6 @@ public class SpriteManager {
 	;
 	
 	private HashMap<Byte, String> boidsFiles = new HashMap<Byte, String>();//{{
-//		put(0, "data/triangle2.png");
-//		put(1, "data/triangle3.png");
-//        put(2, "data/triangle3.png");
-//	}};
 	private String defaultBoidTextureFile = "data/EntitySprites/triangle2.png";
 	private ObjectMap<Byte, String> objectsFiles = new ObjectMap<Byte, String>(){{
 				put((byte)0, "data/EntitySprites/corpse_object_x16.png");
@@ -71,17 +72,16 @@ public class SpriteManager {
 	private Array<Array<Sprite>> entitySprites;
 	
 	private ObjectMap<String, Sprite> tileTextures;
-	private SpriteCache tileCache = new SpriteCache();
-	private int tile;
-	private boolean tilesLoaded = false, tilesCreated = false;
-	private byte[][] tilesMap;
-	
+
 	private AssetManager assetManager = new AssetManager();
 	
 	private boolean created = true;
 	
 	private static final TextureAtlas blankAtlas = new TextureAtlas();
-	
+
+    /**
+     * Initialise some default textures
+     */
 	public SpriteManager(){
 		//loadAssets();
 		assetManager.load(defaultBoid_path, Texture.class);
@@ -92,14 +92,22 @@ public class SpriteManager {
 		blankImage.fillRectangle(0, 0, 16, 16);
 		blankAtlas.addRegion("0", new Texture(blankImage), 0, 0, 0, 0);
 	}
-	
+
+    /**
+     * Called every update, attempts to finish creation of sprites, etc
+     * @return True if creation was completed
+     */
 	public boolean update(){
 		if(assetManager.update() && !created){
 			createSprites();
 		}
 		return created;
 	}
-	
+
+    /**
+     * Once the assetManager has finished loading assets, attempts to finish creation of sprites and other assets
+     * used in graphics
+     */
 	private void createSprites(){
 		created = false;
 		Sprite sprite;
@@ -198,8 +206,12 @@ public class SpriteManager {
 		
 		created = true;
 	}
-	
 
+    /**
+     * Retrieve a sprite for an object with particular type byte
+     * @param subtype Identifier type byte of the object to retrieve
+     * @return The Sprite retrieved
+     */
 	public Sprite getObjectSprite(Byte subtype){
 //        System.out.println("Getting sprite " + subtype + " " + objectNames.get((int)subtype));
 		if(objectSprites.containsKey(subtype)){
@@ -209,6 +221,12 @@ public class SpriteManager {
 		return null;
 	}
 
+    /**
+     * Attempt to load a particular file
+     * @param fileLocation File path of the file to load
+     * @param atlas True if this file should be loaded as an atlas, false if a texture
+     * @return True if AssetManager has started loading the file
+     */
 	private boolean loadAsset(String fileLocation, boolean atlas){
 		try {
             if(atlas) {
@@ -248,6 +266,9 @@ public class SpriteManager {
 		}
 	}
 
+    /**
+     * Set the AssetManager to loading the default set of entities textures (for creation of sprites)
+     */
     public void loadAssets_Entities(){
         loadAsset(entitySheet_Path, true);
     }
@@ -258,7 +279,11 @@ public class SpriteManager {
 			boidColors.put(b, spriteColors.get(b));
 		}
 	}
-	
+
+    /**
+     * Load assets for particular object identifier type bytes
+     * @param objs Array of identifier type bytes to load
+     */
 	public void loadAssets_Objects(Array<Byte> objs){
 		created = false;
 		String filename = "data/corpse_object_x16.png";
@@ -269,13 +294,28 @@ public class SpriteManager {
 
 		}
 	}
-	
+
+    /**
+     * Load an tile atlas, from a given file path
+     * @param path String file path of the TextureAtlas to load
+     */
 	public void loadAssets_Tiles(String path){
 		if(path != null)
 			environmentTiles_path = path;
 		assetManager.load(environmentTiles_path, TextureAtlas.class);
 	}
 
+    /**
+     * Retrieve an {@link com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion AtlasRegion}
+     * with a given String layer name and a specific opacity value from those that have been loaded via a TextureAtlas file.
+     * The texture sheet must contain a region with a name in the format layer+"#"+amount in order to load
+     * @param layer Name of the tile layer to load. Texture sheet must contain a region containing
+     *              this String in order to load
+     * @param amount The opacity value of the tile layer AtlasRegion to load. The texture sheet must
+     *               contain a region containing ths amount in its name in order to retrieve
+     * @return AtlasRegion retrieved, or null. The {@link #environmentTiles_Atlas atlas map} must contain a key matching
+     * layer, and then its map value must contain a key matching amount, in order to retrieve.
+     */
 	public AtlasRegion getTileRegion(String layer, int amount){
 		
 		try{
@@ -294,46 +334,88 @@ public class SpriteManager {
 			return null;
 		}
 	}
+
+    /**
+     * Return a region with the given layer name from the {@link #environmentTiles_Atlas tile atlas}.
+     * @param layer Name of the region to find
+     * @return The AtlasRegion if found, otherwise null
+     */
 	public AtlasRegion getTileRegion(String layer){
 		return environmentTiles_Atlas.findRegion(layer);
 	}
-	
+
+
 	public AtlasRegion getEmptyRegion(){
-		return environmentTiles_Atlas.findRegion("0"); 
+		return environmentTiles_Atlas.findRegion("0");
 	}
+
+    /**
+     * Retrieve an empty sprite from the {@link #environmentTiles_sprites sprite map}.
+     * @return An empty or transparent atlas sprite
+     */
     public AtlasSprite getEmptySprite(){ return  environmentTiles_sprites.get("0").get(0f); }
-	public int getNumTileRegions(){
-		
-		return environmentTiles_Atlas.getRegions().size;
-	}
-    public AtlasSprite getTileSprite(String layer){ return getTileSprite(layer, 100);}
+
+    /**
+     * Retrieve an {@link com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite AtlasSprite} from the
+     * {@link #environmentTiles_sprites tile sprite map}.
+     * @param layer The layer String key to search for in the map
+     * @param amount The float amount to find corresponding to the layer
+     * @return AtlasSprite, or null if no value is found.
+     */
 	public AtlasSprite getTileSprite(String layer, float amount){
 		String l = layer;
 		if(!environmentTiles_sprites.containsKey(l)) return null;
 		if(!environmentTiles_sprites.get(l).containsKey(amount)) return null;
-			
-//			
-			return environmentTiles_sprites.get(l).get(amount);
+        return environmentTiles_sprites.get(l).get(amount);
 		
 	}
+
+    /**
+     * Get the boid highlight {@link #defaultBoid_selected sprite}.
+     * @return Sprite
+     */
 	public Sprite getBoid_HighlightSprite(){
 		return defaultBoid_selected;
 	}
+
+    /**
+     * Get the boid sprite associated with the given species sprite from {@link #boidSprites boidSprites}.
+     * @param species byte type of the boid sprite to retrieve
+     * @return Sprite of the boid
+     */
 	public Sprite getBoid_Sprite(byte species){
 		return boidSprites.get(species);
 	}
-	
+
+    /**
+     * Get the default (uncolored) generic boid sprite
+     * @return {@link #defaultBoid default boid};
+     */
 	public Sprite getBoid_DefaultSprite(){
 		return defaultBoid;
 	}
 
+    /**
+     * Get a corpse type object associated with a particular type. This will correspond to a species type
+     * @param species byte type of the corpse object
+     * @return sprite of species type retrieved from the corpse sprite {@link #corpseSprites map}.
+     */
     public Sprite getCorpse_Sprite(byte species){ return corpseSprites.get(species); }
 
+    /**
+     * Get the selected highlight sprite for a given object type
+     * @param type byte type to retrieve the highlight for
+     * @return Sprite from the highlighted object sprites {@link #objectSprites_Selected map}.
+     */
     public Sprite getObject_highlight(byte type){
         return objectSprites_Selected.get(type);
     }
 
 
+    /**
+     * Retrieve a HashMap of all boid sprites as images.
+     * @return Map of boid species types to {@link com.badlogic.gdx.scenes.scene2d.ui.Image images} of their associated sprites
+     */
     public HashMap<Byte, Image> getBoidImages(){
         HashMap<Byte, Image> boidImages = new HashMap<Byte, Image>();
         for(byte b : boidSprites.keys()){
@@ -345,6 +427,10 @@ public class SpriteManager {
         return boidImages;
     }
 
+    /**
+     * Retrieve a HashMap of all object sprites as images.
+     * @return Map of object types to {@link com.badlogic.gdx.scenes.scene2d.ui.Image images} of their associated sprites
+     */
     public HashMap<Byte, Image> getObjectImages(){
         HashMap<Byte, Image> objImages = new HashMap<Byte, Image>();
         for(byte b : objectSprites.keys()){
@@ -353,9 +439,5 @@ public class SpriteManager {
             objImages.put(b, i);
         }
         return objImages;
-    }
-
-    public void loadMeshTextures(){
-        assetManager.load("data/EnvironmentTiles/grassSeamless.jpg", Texture.class);
     }
 }
