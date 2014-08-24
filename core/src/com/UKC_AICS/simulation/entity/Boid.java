@@ -154,7 +154,10 @@ public class Boid extends Entity {
         this.acceleration.set(acceleration);
     }
 
-
+    /**
+     * Main update for boid, updates the movement/position using velocity and acceleration.
+     * Also increments stamina, hunger, thirst and fertility levels.
+     */
     public void update() {
         //TODO: Add in better limiter for speed. Possibly??
         //move
@@ -167,7 +170,7 @@ public class Boid extends Entity {
             avoidance -= 1;
         }
 
-        //Stamina related calcs
+        //Stamina related calcs, used or recovered based on velocity length
         float speed = velocity.len();
         if(speed > sprintThreshold)
             useStamina(speed);
@@ -178,10 +181,9 @@ public class Boid extends Entity {
         checkInBounds();
 
 //        bounds.setPosition(position.x, position.y);
-        //TODO: potentially have different species "degrade" at different rates
+        //parameters incremented
         hunger += (float) 0.5 /60;
         thirst += (float) 1 /60;
-
         fertility += 0.1/60;
 
         bounds.setPosition(position.x - bounds.width/2, position.y - bounds.height/2);
@@ -192,7 +194,7 @@ public class Boid extends Entity {
     }
 
     /**
-     * Should be called when boid is moving over the "sprintThreshold" 70% of maxSpeed
+     * Should be called in boid update(), when boid is moving over the "sprintThreshold" 70% of maxSpeed
      * @param speed current speed, length of boids velocity
      * @return  true if stamina is used // this may be redundant now.
      */

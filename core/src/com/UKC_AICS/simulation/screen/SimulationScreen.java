@@ -307,7 +307,7 @@ public class SimulationScreen implements Screen{
      */
     public void pickPoint(int screenX, int screenY) {
     	HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(screenX, screenY);
-        gui.setConsole("x: " + screenX + " y: " + screenY + "\tt:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass") + " w:" + tileInfo.get("water"));
+        gui.setConsole("x: " + screenX + " y: " + screenY + "\tt:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass") + " w:" + tileInfo.get("water") + " b:" + tileInfo.get("blocked"));
         //What should happen when clicking on the screen
     	if(ControlState.STATE == ControlState.State.NAVIGATE){
 	        Entity boid = simulationManager.getBoidAt(screenX,screenY);
@@ -333,7 +333,7 @@ public class SimulationScreen implements Screen{
     }
 	public void setMouseWorldPosition(int x, int y) {
 		HashMap<String, Byte> tileInfo = simulationManager.getTileInfo(x, y);
-    	gui.setConsole("x: " + x + " y: " + y + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass"));
+    	gui.setConsole("x: " + x + " y: " + y + " t:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass") + " b:" + tileInfo.get("blocked"));
 	}
 }
 
