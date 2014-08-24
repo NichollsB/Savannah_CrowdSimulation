@@ -3,7 +3,7 @@
 <!--xml file for species based information-->
 <settings>
     <species name="zebra">
-        <number>50</number> <!-- the quantity of this species you want. -->
+        <number>30</number> <!-- the quantity of this species you want. -->
         <byte>0</byte>  <!-- this is the sub-type -->
 
         <spritergb r = "0" g="0" b="0.6"/> <!-- the colour of the sprite -->
@@ -33,7 +33,7 @@
     </species>
 
     <species name="wildebeest">
-        <number>0</number>
+        <number>20</number>
         <byte>1</byte>  <!-- this is the sub-type -->
 
         <spritergb r = "0.6" g="0" b="0"/>
@@ -62,7 +62,7 @@
     </species>
 
     <species name="gazelle">
-        <number>0</number>
+        <number>20</number>
         <byte>2</byte>  <!-- this is the sub-type -->
         <spritergb r = "0" g="0.6" b="0"/>
 
@@ -92,7 +92,7 @@
 
 <!-- Carnivores -->
     <species name="lion">
-        <number>0</number>
+        <number>8</number>
         <byte>3</byte>  <!-- this is the sub-type -->
         <spritergb r = "0.6" g="0" b="0.6"/>
         <diet>carnivore</diet>
@@ -120,7 +120,7 @@
     </species>
 
     <species name="hyena">
-        <number>0</number>
+        <number>10</number>
         <byte>4</byte>  <!-- this is the sub-type -->
         <spritergb r = "0" g="0.6" b="0.6"/>
         <diet>carnivore</diet>
