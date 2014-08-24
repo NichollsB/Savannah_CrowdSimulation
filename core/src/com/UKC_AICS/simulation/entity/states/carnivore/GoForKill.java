@@ -64,6 +64,7 @@ public class GoForKill extends State {
                     }
                     else {
                         steering.set(tempVec);
+                        return true;
                     }
                     //Add collision avoidance
 //                    steering.add(Collision.act(collisionObjects, boid));

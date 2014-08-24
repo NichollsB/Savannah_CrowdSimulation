@@ -48,6 +48,7 @@ public class ApproachCorpse extends State {
                         }
                         else {
                             steering.set(tempVec);
+                            return true;
                         }
 //                        steering.add(Collision.act(nearEntities, boid));
 //                        steering.add(Collision.act(boid));
