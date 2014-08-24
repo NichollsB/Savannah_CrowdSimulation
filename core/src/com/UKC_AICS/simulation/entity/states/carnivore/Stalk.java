@@ -58,6 +58,7 @@ public class Stalk extends State {
 //                    System.out.println("Target stalked: " + target.getSpecies() + " species, " + target.position.x + ", " + target.position.y);
                     } else {
                         steering.set(tempVec);
+                        return true;
                     }
                     //Add collision avoidance
 //                    steering.add(Collision.act(collisionObjects, boid));
