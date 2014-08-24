@@ -84,9 +84,9 @@ public class HerbDefault extends State {
                         smallerPredators.add(predator);
                     }
                 }
-                boid.panic +=  smallerPredators.size * 5; //smaller predators add less threat
+                boid.panic +=  smallerPredators.size * 2; //smaller predators add less threat
 
-                boid.panic += biggerPredators.size * 10; //larger predators add more threat.
+                boid.panic += biggerPredators.size * 4; //larger predators add more threat.
 
                 if (boid.panic > boid.panicLevel) {
                     parent.pushState(boid, new Panic(parent, bm));
@@ -96,7 +96,6 @@ public class HerbDefault extends State {
             }
 
             //store the steering movement
-            boid.setAcceleration(steering);  //Resets acceleration to 0f,0f,0f
             Array<Entity> dummyObjects = bm.parent.getObjectsNearby(new Vector2(boid.getPosition().x, boid.getPosition().y));
 
             //Collision avoidance arrays
@@ -141,11 +140,10 @@ public class HerbDefault extends State {
 //                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
 //                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
 
-                boid.setAcceleration(steering);
-
             } else {
-                boid.setAcceleration(tempVec);
+                steering.set(tempVec);
             }
+            boid.setAcceleration(steering);
         }
         return false; //base state so no popping.
     }

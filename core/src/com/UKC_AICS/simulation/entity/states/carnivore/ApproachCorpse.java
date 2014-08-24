@@ -8,6 +8,7 @@ import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.StateMachine;
 import com.UKC_AICS.simulation.managers.WorldManager;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Random;
@@ -37,10 +38,19 @@ public class ApproachCorpse extends State {
                 float distance = boid.getPosition().cpy().sub(food.getPosition()).len2();
                 if (distance < boid.sightRadius * boid.sightRadius) {
                     if (distance > 16f * 16f) {
+                        steering.set(0f,0f,0f);
                         // Use arrive to get to corpse
-                        steering.set(Arrive.act(boid, food.getPosition()));
-                        steering.add(Collision.act(nearEntities, boid));
-                        steering.add(Collision.act(boid));
+                        Vector3 tempVec = new Vector3(0f,0f,0f);
+                        tempVec.add(Collision.act(nearEntities, boid));
+                        tempVec.add(Collision.act(boid));
+                        if(steering.equals(tempVec)) {
+                            steering.set(Arrive.act(boid, food.getPosition()));
+                        }
+                        else {
+                            steering.set(tempVec);
+                        }
+//                        steering.add(Collision.act(nearEntities, boid));
+//                        steering.add(Collision.act(boid));
                         boid.setAcceleration(steering);
                     } else {
                         //collision/proximity check with corpse then push to Eat

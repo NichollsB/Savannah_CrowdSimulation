@@ -15,7 +15,7 @@ public class Avoid extends Behaviour {
         throw new Error("Arrive is not to be used in this manner. Try static access Arrive.act(Boid boid, Vector3 target)");
     }
 
-    static Vector3 act(Boid boid, Vector3 target) {
+    public static Vector3 act(Boid boid, Vector3 target) {
         Vector3 vec = new Vector3(boid.position).sub(target);
         vec.nor().scl(boid.maxSpeed);
         vec.sub(boid.velocity);
