@@ -36,19 +36,11 @@ public class Panic extends State {
         steering.set(0f,0f,0f);
         if(predators.size > 0) {
             for(Boid predator : predators) {
-                Vector3 tempVec = new Vector3(0f,0f,0f);
-                tempVec.add(Collision.act(nearEntities, boid));
-                tempVec.add(Collision.act(boid));
-                if(steering.equals(tempVec)) {
-                    steering.add(Avoid.act(boid, predator.getPosition()));//.scl(predator.size/boid.size));
-                }
-                else {
-                    steering.set(tempVec);
-                }
-//                steering.add(Collision.act(nearEntities, boid));
-//                steering.add(Collision.act(boid));
+                steering.add(Avoid.act(boid, predator.getPosition()));//.scl(predator.size/boid.size));
             }
 
+            steering.add(Collision.act(nearEntities, boid));
+            steering.add(Collision.act(boid));
         } else {
             boid.panic -= 10;
         }
