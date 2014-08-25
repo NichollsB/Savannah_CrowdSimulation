@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import static com.UKC_AICS.simulation.Constants.*;
 
@@ -16,7 +17,7 @@ import static com.UKC_AICS.simulation.Constants.*;
  * Class for the loading of external texture sheets that may be used as large graphics layers or for initialising simulation world values
  * Any packfile for environment layers must be packed such that no rotation has been performed to the original textures
  * 
- * @author Ben Nicholls
+ * @author Ben Nicholls bn65@kent.ac.uk
  *
  */
 public abstract class EnvironmentLoader {
@@ -87,6 +88,12 @@ public abstract class EnvironmentLoader {
         }
     }
 
+    /**
+     * Load a given file using the {@link #loadMap(com.badlogic.gdx.files.FileHandle, String) loadMap} method for
+     * File types
+     * @param packfile texture sheet pack File to load
+     * @param packsheet texture sheet image File to load
+     */
     public static void loadMaps(File packfile, File packsheet){
         loadMaps(new FileHandle(packfile), new FileHandle(packsheet));
     }
@@ -99,24 +106,28 @@ public abstract class EnvironmentLoader {
 	public static void loadMaps(FileHandle packFile, FileHandle packsheetFile){
 //		environments.put(name,
 //				new TextureAtlas(defaultEnvAtlas_path));
-		FileHandle handle = packFile;
-		environmentAtlas = new TextureAtlas(handle);
-		handle = packsheetFile;
-		environmentAtlas_pixmap = new Pixmap(handle);
-		for(EnvironmentLayer layer : EnvironmentLayer.values()){
-			AtlasRegion region = environmentAtlas.findRegion(layer.mapName());
-			try{
-                System.out.println("region name " + region.name + " layer to string " + layer.toString());
-				Pixmap pixLayer = new Pixmap(region.originalWidth, region.originalHeight, environmentAtlas_pixmap.getFormat());
-				pixLayer.drawPixmap(environmentAtlas_pixmap, (int)region.offsetX, (int)region.offsetY, region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight());
-				environmentLayers_Pixmap.put(layer.toString(), pixLayer);
-                System.out.println(" added as " + layer.toString() + environmentLayers_Pixmap.containsKey(layer.toString()));
-				environmentLayers_atlasRegion.put(layer.toString(), region);
-			}
-			catch(NullPointerException e){
-				System.out.println("Cannot find environment layer named " + layer.toString() + " in Map packfile");
-			}
-		}
+        try {
+            FileHandle handle = packFile;
+            environmentAtlas = new TextureAtlas(handle);
+            handle = packsheetFile;
+            environmentAtlas_pixmap = new Pixmap(handle);
+            for (EnvironmentLayer layer : EnvironmentLayer.values()) {
+                AtlasRegion region = environmentAtlas.findRegion(layer.mapName());
+                try {
+                    System.out.println("region name " + region.name + " layer to string " + layer.toString());
+                    Pixmap pixLayer = new Pixmap(region.originalWidth, region.originalHeight, environmentAtlas_pixmap.getFormat());
+                    pixLayer.drawPixmap(environmentAtlas_pixmap, (int) region.offsetX, (int) region.offsetY, region.getRegionX(), region.getRegionY(), region.getRegionWidth(), region.getRegionHeight());
+                    environmentLayers_Pixmap.put(layer.toString(), pixLayer);
+                    System.out.println(" added as " + layer.toString() + environmentLayers_Pixmap.containsKey(layer.toString()));
+                    environmentLayers_atlasRegion.put(layer.toString(), region);
+                } catch (NullPointerException e) {
+                    System.out.println("Cannot find environment layer named " + layer.toString() + " in Map packfile");
+                }
+            }
+        }
+        catch(GdxRuntimeException e){
+            System.out.println("Files not suitable to be loaded");
+        }
 	}
 
 	/**
@@ -183,6 +194,10 @@ public abstract class EnvironmentLoader {
 		return layerVals;
 	}
 
+    /**
+     * Get the dimensions of the maps loaded. Finds the smallest map loaded.
+     * @return 2 value array with {width, height}.
+     */
     public static int[] getDimensions(){
 
         if(environmentLayers_Pixmap.size()>0){
@@ -200,6 +215,10 @@ public abstract class EnvironmentLoader {
         return null;
     }
 
+    /**
+     * return the dimension of the grid of values found from the loaded map files
+     * @return 2 value array of the grid size with {width, height}.
+     */
     public static int[] getGridDimensions(){
         if(environmentLayers_Pixmap.size()>0){
             int size[] = new int[]{0,0};

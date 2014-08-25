@@ -117,6 +117,8 @@ public class SimulationManager extends Manager {
          ea.setup(this);
 
         addTestObjects();
+
+        save();
     }
 
         

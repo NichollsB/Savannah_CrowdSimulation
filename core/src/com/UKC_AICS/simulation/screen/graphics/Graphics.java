@@ -204,7 +204,7 @@ public class Graphics {
 						}
 
 						//SETTING COLOUR METHOD
-						sprite = spriteManager.getBoid_DefaultSprite();
+						sprite = spriteManager.getBoid_Sprite(boid.getSpecies());//.getBoid_DefaultSprite();
 						if(boidColours.containsKey(boid.getSpecies())){
 							float colour[] = boidColours.get(boid.getSpecies()).clone();
 

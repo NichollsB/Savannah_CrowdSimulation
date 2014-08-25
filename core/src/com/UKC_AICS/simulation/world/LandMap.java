@@ -23,6 +23,9 @@ public class LandMap {
      * This class is a data structure to hold the map information - could be done in layers.
      * <p/>
      * Info layer ideas - Height, Moisture/Humidity, Grass(Herbivore Food) levels
+     *
+     * Added by Ben Nicholls - minor adjustments to allow the environment to be set up according to
+     * values loaded from external files by the {@link com.UKC_AICS.simulation.utils.EnvironmentLoader}
      */
     public LandMap(int width, int height) {
         create(width, height);
