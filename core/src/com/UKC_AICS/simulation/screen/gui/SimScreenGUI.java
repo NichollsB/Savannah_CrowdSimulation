@@ -124,7 +124,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	
         table = new Table();
         table.setSize(width, height);
-        fileChooser = new FileChooser("Load", skin, "Load", "Species", ".", "Confirm", "Cancel", this);
+        fileChooser = new FileChooser("Load", skin, "Load", "Species", "../", "Confirm", "Cancel", this);
         fileChooser.addSelectionListener(new MenuSelectListener(){
 			public void selectionMade(java.lang.Object menu, java.lang.Object object) {
 				FileChooser chooser = (FileChooser) menu;
