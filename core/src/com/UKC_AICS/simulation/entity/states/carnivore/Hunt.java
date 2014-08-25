@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.entity.states.carnivore;
 
+import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.entity.behaviours.Behaviour;
@@ -83,17 +84,23 @@ public class Hunt extends State {
                 steering.set(0f, 0f, 0f);
 
                 //eat or add seek steering to get to corpse
+                Entity closestCorpse = null;
+                float distanceCorpse = Float.MAX_VALUE;
                 for(Entity food : foodCorpse) {
                     if(food.getType() == 0 ){ //&& food.getSubType() == 0) {
                         float distance = boid.getPosition().cpy().sub(food.getPosition()).len2();
-                        if(distance < 16f * 16f) {
-                            parent.pushState(boid, new Eat(parent, bm, (Object) food));
-                            return false;
-                        } else if (distance < boid.sightRadius * boid.sightRadius) {
-                            parent.pushState(boid, new ApproachCorpse(parent, bm, (Object) food));
-                            return false;
+                        if(distance < distanceCorpse) {
+                            closestCorpse = food;
+                            distanceCorpse = distance;
                         }
                     }
+                }
+                if(distanceCorpse < 16f * 16f) {
+                    parent.pushState(boid, new Eat(parent, bm, (Object) closestCorpse));
+                    return false;
+                } else if (distanceCorpse < boid.sightRadius * boid.sightRadius) {
+                    parent.pushState(boid, new ApproachCorpse(parent, bm, (Object) closestCorpse));
+                    return false;
                 }
 
                 float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
@@ -119,7 +126,7 @@ public class Hunt extends State {
             Array<Boid> rmList = new Array<Boid>();
             int sameSpecies = 0;
             for (Boid target : closeBoids) {
-                if (boid.getSpecies() == target.getSpecies()) {
+                if (SimulationManager.speciesData.get(boid.getSpecies()).getDiet().equals("carnivore")) {
                     sameSpecies++;
                     rmList.add(target);
                 }
