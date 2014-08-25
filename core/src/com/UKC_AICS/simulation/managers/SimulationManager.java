@@ -173,6 +173,7 @@ public class SimulationManager extends Manager {
         addTestObjects();
     	generateBoids();
     	resetTime();
+        save();
     }
 
     public void save() {
