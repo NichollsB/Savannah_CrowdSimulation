@@ -404,7 +404,9 @@ public class SimScreenGUI extends Stage implements HoverListener {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 simScreen.simulationManager.reset();
+                simScreen.resetGUI();
                 simScreen.setup();
+                simScreen.setupUI();
                 simScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             }
         });
@@ -808,6 +810,11 @@ public class SimScreenGUI extends Stage implements HoverListener {
             selectEntity(null, false);
         else
             selectEntity(null, true);
+    }
+    
+    public void resetGUI(){
+    	boidTree.clearAll();
+    	objectTree.clearAll();
     }
 
  

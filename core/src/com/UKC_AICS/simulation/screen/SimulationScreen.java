@@ -227,6 +227,10 @@ public class SimulationScreen implements Screen{
         boidGraphics.initEnvironmentMeshes(simulationManager.getFullInfo());
         boidGraphics.setBoids(simulationManager.getBoids());
     }
+    public void resetGUI(){
+    	gui.resetGUI();
+    	setupUI();
+    }
 
     /**
      * @return gives the current fps and current time count
@@ -329,7 +333,7 @@ public class SimulationScreen implements Screen{
     			if(SelectedEntity.boid())
     				simulationManager.generateBoid(SelectedEntity.subType(), SelectedEntity.group(), screenX, screenY);
     			else
-    				simulationManager.generateObject(SelectedEntity.type(), SelectedEntity.subType(), screenY, screenY);
+    				simulationManager.generateObject(SelectedEntity.subType(), SelectedEntity.group(), screenX, screenY);
     		}
 
 			return;
@@ -360,6 +364,7 @@ public class SimulationScreen implements Screen{
         gui.setConsole("x: " + x + " y: " + y + "\tt:" + tileInfo.get("terrain") + " g:" + tileInfo.get("grass") + " w:" + tileInfo.get("water") + " b:" + tileInfo.get("blocked"));
 
 	}
+	
 
 
 }

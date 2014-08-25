@@ -96,8 +96,9 @@ public class EntityTreeTable extends Table {
 		
 		this.gui = gui;
 		this.tree = new Tree(skin);
-		createScrollPane(tree);
 		hoverListeners.add(gui);
+		createScrollPane(tree);
+		
 		
 		root = new EntityTree_Node(new Label(title, skin), title);
 		
@@ -553,10 +554,8 @@ public class EntityTreeTable extends Table {
 			ControlState.changeState(buttons.get(button).isChecked(), ControlState.State.PLACEMENT);
 			if(selectedNode.equals(root))
 				SelectedEntity.set(false);
-            else if(!selectedNode.hasEntity()){
-            }
 			else {
-                SelectedEntity.set((byte) 1, selectedType, selectedGroup);
+                SelectedEntity.set(treeEntityType, selectedType, selectedGroup);
             }
 		}
 		if(button == "REMOVE"){
@@ -615,7 +614,16 @@ public class EntityTreeTable extends Table {
 		}
 	}
 
-	
+	public void clearAll(){
+		tree.clear();
+		
+		tree.add(root);
+		root.setExpanded(true);
+		tree.getSelection().clear();
+		entityNodes.clear();
+		entityRoots.clear();
+		rootGroups.clear();
+	}
 	
 
 	

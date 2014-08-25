@@ -183,6 +183,10 @@ public class WorldManager extends Manager {
     	obj.setSubType(subtype);
     	putObject(obj);
     }
+    public void createObject(ObjectData objData, int x, int y){
+    	com.UKC_AICS.simulation.entity.Object obj = new com.UKC_AICS.simulation.entity.Object(objData, x, y);
+    	putObject(obj);
+    }
 
     public static boolean checkObject(Entity object) {
         return objects.contains(object, false);

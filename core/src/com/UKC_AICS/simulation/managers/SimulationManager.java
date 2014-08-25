@@ -357,9 +357,17 @@ public class SimulationManager extends Manager {
     }
     public void generateObject(byte type, byte subType, int x, int y){
     	ObjectData obj;
+//    	worldManager.getObjects()
+    	System.out.println("Placing " + subType);
     	if(objectData.containsKey(type)){
     		obj = objectData.get(type);
-    		worldManager.createObject(obj, subType, x, y);
+			if(type == 0){
+				worldManager.createObject(obj, subType, x, y);
+        	}
+			else{
+				worldManager.createObject(obj, x, y);
+			}
+    		
     		return;
     	}
     }
