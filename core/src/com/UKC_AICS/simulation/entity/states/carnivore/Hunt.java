@@ -132,6 +132,10 @@ public class Hunt extends State {
                     sameSpecies++;
                     rmList.add(target);
                 }
+//                else if(!Collision.checkVision(boid, new Vector3(target.getPosition().x, target.getPosition().y, 0f))){
+//                    rmList.add(target);
+//                }
+
             }
             //remove all same species/byte boids from possible target array
             closeBoids.removeAll(rmList, false);
