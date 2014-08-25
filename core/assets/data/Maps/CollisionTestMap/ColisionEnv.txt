@@ -1,0 +1,25 @@
+ColisionEnv.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+grass
+  rotate: false
+  xy: 0, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+terrain
+  rotate: false
+  xy: 256, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+water
+  rotate: false
+  xy: 512, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1

@@ -3,6 +3,7 @@ package com.UKC_AICS.simulation.screen.graphics;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import com.UKC_AICS.simulation.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -33,9 +34,9 @@ public class TileGraphics extends SpriteCache {
 
 	private final static int MAXCACHE = 100000;
 
-	AtlasRegion lastRegion = null;
-    AtlasSprite lastSprite = null;
-
+	private AtlasRegion lastRegion = null;
+    private AtlasSprite lastSprite = null;
+    private AtlasSprite ground;
 
     /**
      * Initialise this cache
@@ -85,6 +86,7 @@ public class TileGraphics extends SpriteCache {
 	public void createCache(int y, HashMap<String, byte[][]> infoLayers){
 		byte[][] layermap;
 		byte amount;
+		
 		AtlasRegion nextRegion = lastRegion;
         AtlasSprite nextSprite = lastSprite;
 		int xPos = 0;
@@ -105,6 +107,7 @@ public class TileGraphics extends SpriteCache {
 			}
 			loopCheck = x;
 			n = 1;
+			this.add(ground, xPos, y*ground.getWidth(), ground.getWidth()+1, ground.getHeight()+1);
 			for(String layer : infoLayers.keySet())
 			{
 
@@ -202,7 +205,10 @@ public class TileGraphics extends SpriteCache {
 	public void updateTiles(Batch batch, boolean update, HashMap<String, byte[][]> infoLayers){
 		this.setProjectionMatrix(batch.getProjectionMatrix());
 		if(manager.update()){
-		
+			if(ground == null){
+				ground = manager.getGroundTile();
+				ground.setSize(Constants.TILE_SIZE, Constants.TILE_SIZE);
+			}
 			//CACHE METHOD
 			
 //			if(infoLayers.equals(this.infoLayers)) return;
