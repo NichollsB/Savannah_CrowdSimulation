@@ -9,6 +9,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -57,7 +58,7 @@ public class Graphics {
 	private HashMap<Byte, float[]> boidColours = new HashMap<Byte, float[]>();
 
 //	private AtlasRegion background;
-	private Pixmap background;
+	private AtlasSprite ground;
 
 	SpriteCache backgroundCache = new SpriteCache(20000, false);
 	private TileGraphics dynamicTiles;
@@ -108,7 +109,12 @@ public class Graphics {
                 if(tileMap == null || tileMap.size()<1 || !created){
 //                    System.out.println("Trying to create mesh");
                     if(!created){
-
+                    	
+                    	if(ground == null){
+            				ground = spriteManager.getGroundTile();
+            				ground.setSize(Constants.mapWidth, Constants.mapHeight);
+            				ground.setPosition(0, 0);
+            			}
                         if(texture!=null) {
                             grassMesh.createMesh(tileMap.get("grass"), 0, 0, Constants.TILE_SIZE, Constants.TILE_SIZE,
                                     texture, true, 10, 10, new Color(0.55f, 0.7f, 0.41f, 1f));
@@ -156,15 +162,23 @@ public class Graphics {
 //                    }
 //                    batch.end();
 //                }
-
+                
+                
 				if(RenderState.TILESTATE.equals(RenderState.State.TILED) && dynamicTiles != null){
-                    Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
+					batch.begin();
+	                if(ground != null)
+						ground.draw(batch);
+	                batch.end();
 					dynamicTiles.updateTiles(batch, true, tileMap);
+					
+                    Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
+                   
 				}
 
 		    	batch.begin();
                 Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
 				byte b = 0;
+				
 				if(entityArray.size>0){
 					for(Entity entity : entityArray){
                         if(entity.tracked){

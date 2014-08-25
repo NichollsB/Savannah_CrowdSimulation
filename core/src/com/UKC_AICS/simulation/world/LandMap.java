@@ -74,8 +74,18 @@ public class LandMap {
         for (int i = 0; i < waterInfo.length; i++) {
             for (int j = 0; j < waterInfo[i].length; j++) {
                 if(loadedLayer){
+//                	if(waterInfo[i][j] > 30)
+//                    	System.out.println("water " + waterInfo[i][j]);
                     value = ((((float)waterInfo[i][j])/100)*128);
+//                    if(waterInfo[i][j] > 30)
+//                    	System.out.println("rounded to " + waterInfo[i][j]);
                     waterInfo[i][j] = (byte)Math.round(value);
+                    if((i < 1 || i == waterInfo.length-1)
+                    		|| (j < 1 || j == waterInfo[i].length-1)){
+                    	if(waterInfo[i][j] > 30 && waterInfo[i][j] < 80)
+                    		waterInfo[i][j] = 25;
+                    }
+                    
                 }
                 else
                     waterInfo[i][j] = (byte) rand.nextInt(128);
@@ -87,8 +97,8 @@ public class LandMap {
 //                }
 //                else
                 if (waterInfo[i][j] > 70) {
-                	System.out.println("water tile " + i + " " + j + " terrain size " + terrain[0].length + " " + terrain.length + 
-                			" size " + width + " " + height);
+//                	System.out.println("water tile " + i + " " + j + " terrain size " + terrain[0].length + " " + terrain.length + 
+//                			" size " + width + " " + height);
                     terrain[i][j] = 1; //change terrain type to water.
                     if(grassInfo.length > i )
                         if(grassInfo[i].length > j)

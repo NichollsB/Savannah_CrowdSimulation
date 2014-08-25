@@ -2,24 +2,24 @@ EnvSettings.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-water
-  rotate: false
-  xy: 4, 4
-  size: 1024, 1024
-  orig: 1024, 1024
-  offset: 0, 0
-  index: -1
 grass
   rotate: false
-  xy: 1032, 4
-  size: 1024, 1024
-  orig: 1024, 1024
+  xy: 2, 2
+  size: 2048, 2048
+  orig: 2048, 2048
   offset: 0, 0
   index: -1
 terrain
   rotate: false
-  xy: 2062, 4
-  size: 1024, 1024
-  orig: 1024, 1024
+  xy: 2052, 2
+  size: 2048, 2048
+  orig: 2048, 2048
+  offset: 0, 0
+  index: -1
+water
+  rotate: false
+  xy: 4102, 2
+  size: 2048, 2048
+  orig: 2048, 2048
   offset: 0, 0
   index: -1

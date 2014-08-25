@@ -634,14 +634,20 @@ public class SimScreenGUI extends Stage implements HoverListener {
                 if(infoItemSelected.equals(boidTree)) {
                     if (boids != null) {
                         boidInfo.setText(boidTree.update(boids, true));
+                        objectTree.update(objects, true);
                         objectTree.selectNodeByEntity(null, false);
                     }
                 }
                 else if(infoItemSelected.equals(objectTree)) {
                     if (objects != null) {
                         boidInfo.setText(objectTree.update(objects, true));
+                        boidTree.update(boids, true);
                         boidTree.selectNodeByEntity(null, false);
                     }
+                }
+                else{
+                	objectTree.update(objects, true);
+                	boidTree.update(boids, true);
                 }
             }
 	        stage.act();

@@ -190,7 +190,6 @@ public class SimulationManager extends Manager {
     	StaXParserLoad load = new StaXParserLoad();
         load.readConfig(eaFile,boidManager);
         parent.resetGraphics();
-        
       }
 
     public void generateBoids(){

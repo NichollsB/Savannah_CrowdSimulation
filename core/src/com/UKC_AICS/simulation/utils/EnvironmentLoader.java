@@ -153,7 +153,9 @@ public abstract class EnvironmentLoader {
 	 */
 	public static byte[][] getLayer_values(String name, boolean alphaChannel){
 		byte[][] layerVals = null;
+		
 		if(environmentLayers_Pixmap.containsKey(name)){
+//			System.out.println("Layer loading " + name);
 			Pixmap layer = environmentLayers_Pixmap.get(name);
             int gridWidth = layer.getWidth()/TILE_SIZE;
             int gridHeight = layer.getHeight()/TILE_SIZE;
@@ -171,7 +173,6 @@ public abstract class EnvironmentLoader {
                         for(y = gridY*TILE_SIZE; y<((gridY*TILE_SIZE)+TILE_SIZE); y++){
                             if(y >= layer.getHeight()) break;
                             Color.rgb888ToColor(c, layer.getPixel(x, height-y));
-//							color += (layer.getPixel(pixX, pixY) & 0x000000ff) / 255f;
                             if(alphaChannel)
                                 color+= c.a;
                             else
@@ -179,13 +180,17 @@ public abstract class EnvironmentLoader {
 
                         }
                     }
-
-                    color = (color/(TILE_SIZE*TILE_SIZE));
 //                    if(name.equals("water"))
-//                        System.out.println("Average " + color);
+//                    	System.out.println("High value " + name + " " + color + " divide by " + (TILE_SIZE*TILE_SIZE));
+                    color = (color/((float)TILE_SIZE*(float)TILE_SIZE));
+                    
+                    
                     color *= 100;
+                    	
 //                    if(name.equals("water"))
                     layerVals[gridX][gridY] = (byte)color;
+//                    if(layerVals[gridX][gridY] > 30)
+//                    	System.out.println(name + " " + layerVals[gridX][gridY]);
 //                    if(name.equals("water"))
 //                        System.out.println("in grid " + layerVals[gridX][gridY]);
                     color = 0;
