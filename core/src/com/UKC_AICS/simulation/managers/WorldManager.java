@@ -133,6 +133,7 @@ public class WorldManager extends Manager {
         HashMap<String, Byte> layers = new HashMap<String, Byte>();
         int mapX = x/Constants.TILE_SIZE;
         int mapY = y/Constants.TILE_SIZE;
+//        System.out.println("Select tile " + mapX +" " + mapY);
         if ((mapX < 0 || mapX >= tileSize.x) ||
                 (mapY < 0 || mapY >= tileSize.y)) {
             return layers;

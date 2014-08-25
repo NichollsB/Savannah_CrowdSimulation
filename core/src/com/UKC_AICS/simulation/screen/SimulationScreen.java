@@ -317,11 +317,11 @@ public class SimulationScreen implements Screen{
     	if(ControlState.STATE == ControlState.State.NAVIGATE){
 	        Entity entity = simulationManager.getBoidAt(screenX,screenY);
             if(entity != null) {
-                if (scissorRect.contains(screenX, screenY)) gui.selectEntity(entity, true);
-                return;
+                if (scissorRect.contains(mousePosition.x, mousePosition.y)) gui.selectEntity(entity, true);
+                	return;
             }
-//            else
-//                gui.selectEntity(null, true);
+            else
+                gui.selectEntity(null, true);
 	        return;
     	}
     	if(ControlState.STATE == ControlState.State.PLACEMENT){

@@ -56,8 +56,8 @@ public class Graphics {
 	ShapeRenderer back = new ShapeRenderer();
 	private HashMap<Byte, float[]> boidColours = new HashMap<Byte, float[]>();
 
-	private AtlasRegion background;
-
+//	private AtlasRegion background;
+	private Pixmap background;
 
 	SpriteCache backgroundCache = new SpriteCache(20000, false);
 	private TileGraphics dynamicTiles;
@@ -135,27 +135,27 @@ public class Graphics {
 
                 }
 
-                if(!RenderState.TILESTATE.equals(RenderState.State.MESH)) {
-                    batch.begin();
-                    Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
-                    if (background == null) {
-                        background = spriteManager.getTileRegion("ground");
-                    }
-                    try {
-                        int iNum = renderWidth / background.originalWidth;
-                        int jNum = renderHeight / background.originalHeight;
-
-                        for (int i = 0; i < iNum; i++) {
-                            for (int j = 0; j < jNum; j++) {
-                                batch.draw(background, i * background.originalWidth, j * background.originalHeight,
-                                        background.originalWidth + 1, background.originalHeight + 1);
-                            }
-                        }
-                    } catch (NullPointerException e) {
-                        System.out.println("Missing GROUND environment layer");
-                    }
-                    batch.end();
-                }
+//                if(!RenderState.TILESTATE.equals(RenderState.State.MESH)) {
+//                    batch.begin();
+//                    Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
+//                    if (background == null) {
+//                        background = spriteManager.getTileRegion("ground");
+//                    }
+//                    try {
+//                        int iNum = renderWidth / background.originalWidth;
+//                        int jNum = renderHeight / background.originalHeight;
+//
+//                        for (int i = 0; i < iNum; i++) {
+//                            for (int j = 0; j < jNum; j++) {
+//                                batch.draw(background, i * background.originalWidth, j * background.originalHeight,
+//                                        background.originalWidth + 1, background.originalHeight + 1);
+//                            }
+//                        }
+//                    } catch (NullPointerException e) {
+//                        System.out.println("Missing GROUND environment layer");
+//                    }
+//                    batch.end();
+//                }
 
 				if(RenderState.TILESTATE.equals(RenderState.State.TILED) && dynamicTiles != null){
                     Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
@@ -331,6 +331,8 @@ public class Graphics {
 		this.tileMap = tileLayers;
 		spriteManager.loadAssets_Tiles(null);
 		dynamicTiles = new TileGraphics(tileLayers, spriteManager);
+		renderWidth = Constants.mapHeight;
+		renderHeight = Constants.mapWidth;
 	}
 
 	/**
