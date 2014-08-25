@@ -15,7 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-
+/**
+ * Created by Matt *.
+ */
 public class EvolutionaryAlgorithmGUI extends Stage {
 	private SimulationScreen simScreen;
 	public Stage stage;
@@ -31,6 +33,9 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 	private ArrayList<TextField> textField = new ArrayList<TextField>();
 	private ArrayList<String> values = new ArrayList<String>();
 	private ArrayList<CheckBox> checkBoxes = new ArrayList<CheckBox>();
+	
+	//Any pieces of the GUI that are not related to the chromosome are created here.
+	
 	Window window = new Window("EA Settings", skin);
 	
 	Label onOffLabel = new Label("Switch EA on or off: ", skin);
@@ -50,14 +55,22 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 	CheckBox checkBoxHoldAll = new CheckBox("Hold All", skin);
 	CheckBox checkBoxOnOff = new CheckBox("EA ON", skin);
 
-	
+	/**
+	 * Constructor
+	 * @param ss
+	 * @param ea
+	 */
 	public EvolutionaryAlgorithmGUI(SimulationScreen ss, EA2 ea){
 			simScreen = ss; //In case needed later.
 			setup();
 			setStage(ea);
 		}
 		
-		//Creates the window and its contents
+		
+	/**
+	 * Creates the window and its contents
+	 * @param ea
+	 */
 		public void setStage(EA2 ea) {
 			
 			for(Byte i = 0 ; i< 4; i++){
@@ -81,11 +94,14 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			window.pack();
 			stage.addActor(window);		
 		}
-			
+		
+		/**
+		 * Called by the constructor when the menu is created
+		 */
+		
 		private void setup(){
 			
-			
-			
+			//Any chromosome related labels added here
 			Label cohLabel = new Label("Cohesion", skin);
 			Label sepLabel = new Label("Separation", skin);
 			Label alignLabel = new Label("Alignment", skin);
@@ -98,6 +114,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			Label ThirstLevelLabel = new Label("Thirst Level", skin);
 			Label PanicLevelLabel = new Label("Panic Level", skin);
 			
+			//Above added to labels
 			labels.add(cohLabel);
 			labels.add(sepLabel);
 			labels.add(alignLabel);
@@ -110,6 +127,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			labels.add(ThirstLevelLabel);
 			labels.add(PanicLevelLabel);
 			
+			//Rest of GUI should auto generate from here from the list labels
 			for(int i = 0 ; i<labels.size() ;i++){
 				Label valuelabel = new Label("0", skin);
 				TextField textfield = new TextField("", skin);		
@@ -122,8 +140,15 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				values.add(i,value);
 			}
 		}
+		
+		/**
+		 * Creates the actual settings table for the UI components to be placed in
+		 * @param t2
+		 * @param ea
+		 * @return
+		 */
 		private Table createSettingsTable(Table t2, final EA2 ea) {
-			final String[] options = {"Species 1", "Species 2", "Species 3", "Species 4,", "Species 5" };
+			final String[] options = {"Zebra", "Wildebeast", "Gazelle", "Lion,", "Hyena" };
 	    	final SelectBox<String> dropdown = new SelectBox<String>(skin);
 			dropdown.setItems(options);
 			
@@ -144,6 +169,8 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 					
 				}
 			});
+			
+			//Turns the EA on or off
 			checkBoxOnOff.addListener(new ChangeListener(){
 				public void changed(ChangeEvent event, Actor actor) {
 					if(checkBoxOnOff.isChecked()){
@@ -157,38 +184,33 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				
 			});
 			
-		
+			// Allows all checkboxes marked hold to be checked or unchecked
 			checkBoxHoldAll.addListener(new ChangeListener(){
-
-				@Override
 				public void changed(ChangeEvent event, Actor actor) {
 					if(checkBoxHoldAll.isChecked()){
 						for(CheckBox cb : checkBoxes){
 							cb.setChecked(true);
 						}
-					
 					}
 					else{
 						for(CheckBox cb : checkBoxes){
 							cb.setChecked(false);
 						}
-						
 					}
-					
 				}
-				
 			});
+			
 			// EA close settings menu.
 			final TextButton closeButton = new TextButton("Close", skin,"default");
 			closeButton.addListener(new ClickListener(){
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					//EA Settings menu disappears
-//					window.setVisible(false);
 					simScreen.flipEARender();               
 					
 				}
 			});
+			
 			// Apply changes
 			final TextButton applyButton = new TextButton("Apply", skin,"default");
 			applyButton.addListener(new ClickListener(){
@@ -198,6 +220,8 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 					applyChanges(ea);
 				}
 			});
+			
+			//Sets the crossover rate
 			final TextButton setCrossButton = new TextButton("Set Crossover Rate", skin,"default");
 			setCrossButton.addListener(new ClickListener(){
 				@Override
@@ -212,6 +236,8 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				catch(NumberFormatException e){}		
 				}
 			});
+			
+			//Sets the mutation rate
 			final TextButton setMuteButton = new TextButton("Set Mutation Rate", skin,"default");
 			setMuteButton.addListener(new ClickListener(){
 				@Override
@@ -226,11 +252,12 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				catch(NumberFormatException e){}		
 				}
 			});
+			
 			// sets the values that will be added to the table
 			setTableInfo(ea);
 			
 			
-			
+			//Adds the non chromosome related items to the table
 			t2.add(onOffLabel).height(20).expandX().fillX();
 			t2.add(checkBoxOnOff).height(20).expandX().fillX();
 			t2.row();
@@ -248,6 +275,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			t2.add(checkBoxHoldAll).top().expandX().fillX();
 			t2.row();
 			
+			//Adds the chromosome related items to the table
 			for(int i = 0 ; i< labels.size() ; i++){
 				t2.add(labels.get(i)).height(20).expandX().fillX();
 				t2.add(labelVals.get(i)).height(20).expandX().fillX();
@@ -255,18 +283,16 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				t2.add(checkBoxes.get(i)).height(20).expandX().fillX();
 				t2.row();
 			}
-			
-		
-			
-			
-			
-			
+
 			t2.add(closeButton).top().height(20).expandX().fillX();
 			t2.add(applyButton).top().height(20).expandX().fillX();
 			return t2;
 		}
 		
-		
+		/**
+		 * Applies the changes to the held value list if any.
+		 * @param ea
+		 */
 		public void applyChanges(EA2 ea) {
 			Float[] newheldvalues = new Float[EA2.getGeneLength()];
 			
@@ -274,7 +300,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			 if(checkBoxes.get(i).isChecked()){
 				try{
 					if(!textField.get(i).getText().isEmpty() ){
-						System.out.println("I am not empty"); 
+					//	System.out.println("I am not empty"); 
 						newheldvalues[i] = Float.parseFloat(textField.get(i).getText());
 									
 					} 
@@ -290,16 +316,13 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			}
 			 System.arraycopy(newheldvalues, 0, currentVals ,0 , geneLength);
 			 
-			 //ps
 			 	System.out.println("Before");
 			 	for(byte b = 0 ; b<totalSpecies; b++){
 			 		System.out.println(Arrays.toString(ea.heldValues.get(b))); 
 			 	}
 			 	
-			 	
 			 	ea.heldValues.put(b ,newheldvalues);
 			 	
-			 	//ps
 			 	 System.out.println("After");
 			 	for(byte b = 0 ; b<totalSpecies; b++){
 			 		System.out.println(Arrays.toString(ea.heldValues.get(b))); 
@@ -308,7 +331,13 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 				setTableInfo(ea);	       		        
 		}
 	
-		
+		/**
+		 * Sets the species info to the correct values so it can be displayed by the value labels in the table
+		 * @param dropdown
+		 * @param newSelection
+		 * @param options
+		 * @param ea
+		 */
 		public void setSpeciesInfo(SelectBox<String> dropdown,String newSelection,String[] options, EA2 ea) {
 			System.out.println("SET SPECIES INFO CALLED");
 			int j =0;
@@ -333,6 +362,10 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			j=0;
 		}
 		
+		/**
+		 * Set the current values of the labels to the correct species values
+		 * @param ea
+		 */
 		public void setTableInfo(EA2 ea) {
 			System.out.println("Currentvals"+Arrays.toString(currentVals));
 			System.out.println("Before changes");	
@@ -357,11 +390,13 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			
 			crossValLabel.setText(crossValue);
 			muteValLabel.setText(muteValue);
-		
-		
+
 		}
 		
-		
+		/**
+		 * Renders the table if eaRender true
+		 * @param eaRender
+		 */
 		public void update(Boolean eaRender) {
 			if(eaRender){
 				stage.act();

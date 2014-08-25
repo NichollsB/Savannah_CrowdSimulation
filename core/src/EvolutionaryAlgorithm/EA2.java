@@ -12,6 +12,9 @@ import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * Created by Matt *
+ */
 
 public class EA2 {
     
@@ -41,8 +44,11 @@ public class EA2 {
 	private Byte currentSpecies = 0;
 	public static Byte totalSpecies = 5;
 	 
-
-	 
+	 /**
+	  * Called after creation in SimulationManager to create the heldValue constructs
+	  * @param sm
+	  */
+	
 	 public void setup(SimulationManager sm) {
 		this.sm=sm;
 		 
@@ -54,8 +60,9 @@ public class EA2 {
 		
 	 }
 	 
-	
-	 
+	 /**
+	  * Evolves a whole species at a time for all species
+	  */
 	 
 	public void Evolve() {	
 		System.out.println("------------------------------------------------------------------------------------------------------------");
@@ -70,8 +77,7 @@ public class EA2 {
 			if(1<popNum){
 			calculateFitness();
 			calculateProbabilty();
-			
-			
+			//Generates new chromosome
 			for(int num = 0; num <popNum; num++){
 				Float[] tmp = new Float[geneLength];
 				System.arraycopy(selection(),0 ,tmp , 0, geneLength);	
@@ -82,22 +88,21 @@ public class EA2 {
 			for(Float[] gene : newGeneList) {
 				System.out.println("NEW GENE " + Arrays.toString(gene));
 			}
-			
-				
+			// Replaces the old chromosome with the new
 				for(int j = 0; j<popNum ; j++){
 					population.get(j).setGene(newGeneList.get(j));
 				}
 			}	
 				reset();
-			}
-		
-			
+			}	
 		}
 	
-	
-
-	
-	
+	/**
+	 * Creates the chromosome for the new boid made through the reproduction states
+	 * @param parent
+	 * @param potentialMates
+	 * @return
+	 */
 	
 	public Float[] createBaby(Boid parent, Array<Boid> potentialMates) {
 		//System.out.println("Baby being created");
@@ -121,13 +126,10 @@ public class EA2 {
 			return tmp;
 	}
 	
-	
-	
-	
-	
-	
-	
-		
+	/**
+	 * Fully resets the EA called after each species has been run through or after every new boid
+	 */
+
 	private void reset(){
 		System.out.println("Resetting EA parameters");
 		population.clear();
@@ -138,7 +140,10 @@ public class EA2 {
 		popNum = 0;
 	}
 	
-	//Check for valid population members
+	/**
+	 * Check for valid population members for Evolve() method
+	 */
+	
 	private  void validCheck() {
 		for(Boid b : BoidManager.boids){
 			if(b.getAge() >= breedingAge && b.getSpecies()==currentSpecies){
@@ -159,10 +164,10 @@ public class EA2 {
 		System.out.println("popnum " + popNum);
 	}
 
+	/**
+	 * Calculate fitness values
+	 */
 	
-	
-	
-	//Calculate fitness
 	private  void calculateFitness() {
 		fitnessList.clear();
 		float fitness = 0f;
@@ -209,6 +214,10 @@ public class EA2 {
 		//System.out.println("Fitnesslist size" + fitnessList.size());
 	}
 	
+	/**
+	 * Calculates the probability values from the fitness list
+	 */
+	
 	private  void calculateProbabilty() {
 		probabilityList.clear();
 		float totalFitness = 0f;
@@ -229,9 +238,10 @@ public class EA2 {
 		//System.out.println("problist size" + probabilityList.size());
 	}
 	
-
-	
-	//Selection
+	/**
+	 * Selection selects the boids to reproduce through the roulette wheel method of selection
+	 * @return the new Chromosome
+	 */
 	private  Float[] selection() {
 		//System.out.println();
 		//System.out.println("-------------------------------------------------------------------------------------------------------------------");
@@ -242,7 +252,6 @@ public class EA2 {
 		Boid parent = null;
 		int parentPos = 0;
 		
-		//TODO issue here with popnumber
 		for(int pairRun = 0 ; pairRun <2 ; pairRun++){
 			System.out.println("Run=" + pairRun);
 			
@@ -269,48 +278,48 @@ public class EA2 {
 					//	System.out.println("Parent" + parent);
 					//	System.out.println("ParentPos" + parentPos);
 						population.remove(i);	
-
+						// Calculates new values with missing boid
 						calculateFitness();
 						calculateProbabilty();
-						
+						//Corrected popNum
 						popNum=popNum-1;
 					//	System.out.println("New POPNUM "+ popNum);
 					//	System.out.println("Population size" + population.size());
 					}
-					
-				}
-				
-				
-				
-				
+				}	
 			}
 		}		
-		
+		//Replaces boid for next use of selection
 		population.add(parentPos, parent);
 		//System.out.println("Add Population size" + population.size());
 		calculateFitness();
 		calculateProbabilty();
+		
+		//Corrected popNum
 		popNum=popNum + 1;
 		//System.out.println("popnumber after "+ popNum);		
 		
 		gene1 = geneList.get(0);
 		gene2 = geneList.get(1);
 		
-		
-		
+		// Passes parents chromosomes to the crossover() method
 		System.out.println("Gene 1 " + Arrays.toString(geneList.get(0)));
 		System.out.println("Gene 2 " + Arrays.toString(geneList.get(1)));
 		crossover(gene1 , gene2);
 		
 		geneList.clear();
-		
+		// pass back finished new chromosome
 		return newGene;
 		
 	}
 	
+	/**
+	 * Crosses the chromosomes of the parents to form a new chromosome
+	 * @param gene1
+	 * @param gene2
+	 * @return
+	 */
 	
-	
-	//Crossover
 	private Float[] crossover(Float[] gene1, Float[] gene2) {
 		System.out.println();
 		System.out.println("CROSSOVER");
@@ -330,53 +339,64 @@ public class EA2 {
 	             newGene[i] = gene2[i];
 	            }
 	        }
-	        
+	        //Passes new chromosome to the mutation() method
 	      //  System.out.println("BEFORE " +Arrays.toString( newGene));
 	        mutation(newGene);
 	      //  System.out.println("AFTER " +Arrays.toString( newGene));
+	       // pass back finished new chromosome
 	        return newGene;
         
 	}
 	
-
-	//Mutation
+	/**
+	 * Mutates the new chromosome and passes back up the change
+	 * @param newGene
+	 * @return
+	 */
+	
 	private Float[] mutation(Float[] newGene) {
 		System.out.println();
 		System.out.println("MUTATION");
 		double rangeMax = 0;
 		double rangeMin = 1;
 		float muteValMin = 0;
-		//TODO get original species value
 		float muteValMax = 0;
 		
+		// for each gene if the random number is greater than the mutation rate replace with random value
 		for(int j =0 ; j < geneLength ; j++) {
 			System.out.println("Current "+newGene[j]);
-			muteValMin = 0.5f*newGene[j];
-			muteValMax = 1.5f*newGene[j];
+			muteValMin = 0.7f*newGene[j];
+			muteValMax = 1.3f*newGene[j];
 			System.out.println("Max Value "+muteValMax);
 			
 			double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
 			float muteValue = muteValMin + ((muteValMax) - muteValMin) * r.nextFloat();
-			
-			
 
 				if (randomValue <= muteRate){ 
 					newGene[j]= muteValue;
 				}
 			}
-		overwriteHeldValues(newGene);
+			//Passes to the overwriteHeldValues to keep held values the same
+			overwriteHeldValues(newGene);
 			return newGene;	
 	}
 	
+	/**
+	 * Overwrites the values in the mutation to held values
+	 * @param newGene
+	 * @return
+	 */
+	
 	private Float[] overwriteHeldValues(Float[] newGene) {
+		//Get array for current species
 		Float[] tmp = heldValues.get(currentSpecies);
-		
+		// Replaces the values if present in Array
 		for(int i = 0 ; i<geneLength ; i++){
 			if(tmp[i] != null){
 				newGene[i]=tmp[i];
 			}
 		}
-		
+		// pass back finished new chromosome
 		return newGene;
 	}
 	

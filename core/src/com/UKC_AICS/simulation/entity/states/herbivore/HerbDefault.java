@@ -92,7 +92,7 @@ public class HerbDefault extends State {
                     parent.pushState(boid, new Panic(parent, bm));
                 }
             } else if (boid.panic > 0 && predators.size == 0) {
-                boid.panic -= 0.5f;
+                boid.panic -= 1.5f;
             }
 
             //store the steering movement

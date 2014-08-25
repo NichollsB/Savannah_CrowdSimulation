@@ -78,6 +78,8 @@ public class SpriteManager {
 	private boolean created = true;
 	
 	private static final TextureAtlas blankAtlas = new TextureAtlas();
+	
+	private AtlasSprite groundTile;
 
     /**
      * Initialise some default textures
@@ -188,6 +190,9 @@ public class SpriteManager {
 //					continue;
 //				}
 //				else
+				if(region.name.equalsIgnoreCase("ground")){
+					groundTile = atSprite;
+				}
                 if (region.name.contains("#")){
 					parts = region.name.split("#");
 					if(!environmentTiles_sprites.containsKey(parts[0])){
@@ -367,6 +372,10 @@ public class SpriteManager {
 		if(!environmentTiles_sprites.containsKey(l)) return null;
 		if(!environmentTiles_sprites.get(l).containsKey(amount)) return null;
         return environmentTiles_sprites.get(l).get(amount);
+		
+	}
+	public AtlasSprite getGroundTile(){
+		return groundTile;
 		
 	}
 
