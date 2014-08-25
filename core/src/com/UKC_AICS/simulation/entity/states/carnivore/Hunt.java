@@ -136,7 +136,7 @@ public class Hunt extends State {
             while (closeBoids.size > 0) {
                 //TODO change this to pick closest none same species boid/ weak/ injured
                 target = closeBoids.pop();
-                if(target.size > boid.size) {
+                if(target.size > boid.size*1.3) {
                     if(boid.size + (sameSpecies * boid.size/3) > target.size) {
                         parent.pushState(boid, new Stalk(parent, bm, target));
                         return false;//Pushs to stalk mode on prey target
