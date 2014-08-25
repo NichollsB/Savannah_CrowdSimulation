@@ -21,8 +21,9 @@ import java.io.InputStream;
 /**
  * Created by Matt on 08/07/2014.
  */
-public class StaXParserLoad {
 
+public class StaXParserLoad {
+//String variable used to identify each piece of stored info
 	private String BOID = "boid";
 	private String AGE = "age";
     private String BIRTHDAY = "birthday";
@@ -49,6 +50,7 @@ public class StaXParserLoad {
     private String STATE = "state";
     private String FERTILITY = "fertility";
     private String STATES = "states";
+  // Variables used to store the info for the creation of the boid  
     private int age = 0;
     private int bDay = 0;
     private float cohesion, separation,  alignment, wander ,hunger ,thirst, panic, sightRadius, nearRadius, flockRadius, stamina, maxStamina, hungerLevel, thirstLevel, panicLevel, size, fertility;
@@ -60,7 +62,10 @@ public class StaXParserLoad {
     public Float[] fltArray2 = new Float[3];
     private InputStream in;
     @SuppressWarnings({ })
-    
+    /**
+     * Parses over the file and assigns each piece of information to its relevant variable
+     * @param configFile
+     */
     public void readConfig(File configFile){
     	try{
 	    	in = new FileInputStream(configFile);
@@ -335,7 +340,7 @@ public class StaXParserLoad {
                     }
                     
                 }
-                // If we reach the end of an item element, we add it to the list
+                // If we reach the end of the boid. All of its info should have been collected and can be used with the appropriate method in BoidManager
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
                     if (endElement.getName().getLocalPart() == (BOID)) {

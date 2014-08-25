@@ -26,7 +26,10 @@ import java.util.Stack;
 	  private String configFile;
 	  
 	  private File file;
-	  
+	  /**
+	   * This creates the file which the class will write the boid information to
+	   * @param configFile
+	   */
 	  public void setFile(File configFile){
 		  try {
 			  if(file == null || !file.exists()){
@@ -43,7 +46,11 @@ import java.util.Stack;
 	  public void setFile(String configFile) {
 	    this.configFile = configFile;
 	  }
-
+	  /**
+	   * Stores each piece of information in sequence in the XML file
+	   * @param stateMachine
+	   * @throws Exception
+	   */
 	  public void saveConfig(StateMachine stateMachine) throws Exception {
 		 this.stateMachine=stateMachine;
 	    // create an XMLOutputFactory
@@ -63,7 +70,7 @@ import java.util.Stack;
 	        "", "boidlist");
 	    eventWriter.add(configStartElement);
 	    eventWriter.add(end);
-	    
+	    //All information stored in the boid must be converted to string before it can be written to the file
 	    	for(Boid b : BoidManager.boids) {
 	 
 	    		System.out.println("boid stack " +stateMachine.getStack(b) );
@@ -114,7 +121,6 @@ import java.util.Stack;
 	    		float sightRadiusVal = b.getSightRadius();
 	    		String sightRadius = "" + sightRadiusVal;
 	    		
-	    		//TODO size
 	    		float sizeVal = b.getSize();
 	    		String size = "" + sizeVal;
 	    		

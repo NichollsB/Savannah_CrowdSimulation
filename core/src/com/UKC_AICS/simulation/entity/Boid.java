@@ -497,8 +497,8 @@ public class Boid extends Entity {
     public float getPanicLevel() {
         return panicLevel;
     }
-    public void setSize( float newSize) {
-    	size = newSize;
+    public void setSize( float size) {
+    	this.size = size;
     }
     public float getSize() {
     	return size;
