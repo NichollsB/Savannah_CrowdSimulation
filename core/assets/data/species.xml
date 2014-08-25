@@ -9,8 +9,8 @@
         <spritergb r = "0" g="0" b="0.6"/> <!-- the colour of the sprite -->
         <diet>herbivore</diet> <!-- carnivore or herbivore -->
 
-        <sightRadius>180f</sightRadius> <!-- the distance they can see -->
-        <flockRadius>120f</flockRadius> <!-- the distance they will try and flock within -->
+        <sightRadius>160f</sightRadius> <!-- the distance they can see -->
+        <flockRadius>100f</flockRadius> <!-- the distance they will try and flock within -->
         <nearRadius>40f</nearRadius> <!-- the distance within which they will try to avoid others-->
         <maxSpeed>1.5f</maxSpeed> <!-- max speed per tick -->
         <maxForce>0.04f</maxForce> <!-- max force applied per turn.-->
@@ -33,13 +33,13 @@
     </species>
 
     <species name="wildebeest">
-        <number>20</number>
+        <number>60</number>
         <byte>1</byte>  <!-- this is the sub-type -->
 
         <spritergb r = "0.6" g="0" b="0"/>
         <diet>herbivore</diet>
-        <sightRadius>180f</sightRadius>
-        <flockRadius>120f</flockRadius>
+        <sightRadius>160f</sightRadius>
+        <flockRadius>100f</flockRadius>
         <nearRadius>40f</nearRadius>
         <maxSpeed>2f</maxSpeed>
         <maxForce>0.04f</maxForce>
@@ -67,7 +67,7 @@
         <spritergb r = "0" g="0.6" b="0"/>
 
         <diet>herbivore</diet>
-        <sightRadius>250f</sightRadius>
+        <sightRadius>150f</sightRadius>
         <flockRadius>80f</flockRadius>
         <nearRadius>10</nearRadius>
         <maxSpeed>3.4f</maxSpeed>
