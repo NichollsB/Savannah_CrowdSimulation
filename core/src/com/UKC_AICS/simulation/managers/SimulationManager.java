@@ -116,7 +116,7 @@ public class SimulationManager extends Manager {
 
          ea.setup(this);
 
-        addTestObjects();
+//        addTestObjects();
 
         save();
     }
@@ -172,20 +172,6 @@ public class SimulationManager extends Manager {
             obj = new Object(objectData.get((byte)1),xPos,yPos);
             WorldManager.putObject(obj);
         }
-//        obj = new Object(objectData.get((byte)1),400,600);
-//        WorldManager.putObject(obj);
-//        obj = new Object(objectData.get((byte)1),160,200);
-//        WorldManager.putObject(obj);
-//        obj = new Object(objectData.get((byte)1),160,400);
-//        WorldManager.putObject(obj);
-//        obj = new Object(objectData.get((byte)1),180,600);
-//        WorldManager.putObject(obj);
-//        obj = new Object(objectData.get((byte)1),1100,200);
-//        WorldManager.putObject(obj);
-//        obj = new Object(objectData.get((byte)1),1100,400);
-//        WorldManager.putObject(obj);
-//        obj = new Object(objectData.get((byte)1),1100,600);
-//        WorldManager.putObject(obj);
     }
 
     public void reset(){
