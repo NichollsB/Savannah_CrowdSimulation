@@ -127,7 +127,6 @@ public class BoidGrid {
         if (cellX >= 0 && cellX < grid.length && cellY >= 0 && cellY < grid[cellX].length) {
             if (!grid[cellX][cellY].contains(boid, true)) {
 
-
                 grid[cellX][cellY].add(boid);
                 grid[oldCellX][oldCellY].removeValue(boid, true);
 
@@ -166,6 +165,7 @@ public class BoidGrid {
                 cellY < 0 || cellY >= grid[0].length) {
             System.out.println("out of bounds  \t"   + cellX + "/" + grid.length + "\t" + cellY  + "/" + grid.length);
         }
+
         findBoidsInCell(nearby, cellX,        cellY);
         findBoidsInCell(nearby, cellX + 1,    cellY);
         findBoidsInCell(nearby, cellX + 1,    cellY + 1);
@@ -207,19 +207,7 @@ public class BoidGrid {
             for (int j = startCellY; j < endCellY; j++) {
                 findBoidsInCellNew(nearby, i, j);
             }
-//            for (int j = startCellY - sightRadLengthInCells; j < startCellY; j++) {
-//                findBoidsInCell(nearby, i, j);
-//            }
         }
-//        for(int i = startCellX - sightRadLengthInCells; i < startCellX; i++) {
-//            for (int j = startCellY; j < endCellY; j++) {
-//                findBoidsInCell(nearby, i, j);
-//            }
-//            for (int j = startCellY - sightRadLengthInCells; j < startCellY; j++) {
-//                findBoidsInCell(nearby, i, j);
-//            }
-//        }
-
 
         return nearby;
     }
@@ -235,21 +223,27 @@ public class BoidGrid {
     private Array<Boid> findBoidsInCellNew(Array<Boid> bnearby, int inCellX, int inCellY) {
         int cellX = inCellX, cellY = inCellY;
 
-        //do wrap arounds
-        if ( inCellX < 0) {
-            cellX = cellX + grid.length;
-        } else if ( cellX >= grid.length) {
-            cellX = cellX - grid.length;
-        }
+        //if past an edge ignore
+        if ( cellX < 0 || cellX >= grid.length || cellY < 0 || cellY >= grid[cellX].length) {
+            return bnearby;
+        } else {
 
-        if(cellX > grid.length || cellX < 0) {
-            System.out.println("cellx for boid grid find new cell is out");
-        }
-        if ( inCellY < 0) {
-            cellY = cellY  + grid[cellX].length;
-        } else if ( cellY >= grid[cellX].length) {
-            cellY = cellY - grid[cellX].length;
-        }
+
+            // OLD WRAP AROUND
+//        if ( inCellX < 0) {
+//            cellX = cellX + grid.length;
+//        } else if ( cellX >= grid.length) {
+//            cellX = cellX - grid.length;
+//        }
+//
+//        if(cellX > grid.length || cellX < 0) {
+//            System.out.println("cellx for boid grid find new cell is out");
+//        }
+//        if ( inCellY < 0) {
+//            cellY = cellY  + grid[cellX].length;
+//        } else if ( cellY >= grid[cellX].length) {
+//            cellY = cellY - grid[cellX].length;
+//        }
 
 
 //        try {
@@ -262,7 +256,8 @@ public class BoidGrid {
 //            e.printStackTrace();
 //        }
 
-        return bnearby;
+            return bnearby;
+        }
     }
 
     /**

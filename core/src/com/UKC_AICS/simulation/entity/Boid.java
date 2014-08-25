@@ -233,14 +233,14 @@ public class Boid extends Entity {
      * checks the boids position against the mapwidth held in constants. Adjusts position to within bounds (Wraps around)
      */
     private void checkInBounds() {
-        if(position.x > Constants.mapWidth - bounds.height/2) {
+        if(position.x > Constants.mapWidth - bounds.width/2) {
             position.x = position.x - Constants.mapWidth + bounds.height;
         } else if(position.x < + bounds.width/2) {
             position.x = position.x + Constants.mapWidth - bounds.height;
         }
-        if(position.y > Constants.mapHeight - bounds.width/2) {
+        if(position.y > Constants.mapHeight - bounds.height/2) {
             position.y = position.y - Constants.mapHeight + bounds.width;
-        } else if(position.y < bounds.width/2) {
+        } else if(position.y < bounds.height/2) {
             position.y = position.y + Constants.mapHeight - bounds.width;
         }
     }
