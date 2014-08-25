@@ -35,15 +35,18 @@ public class LandMap {
         size = new Vector3(width / TILE_SIZE, height / TILE_SIZE, 1);
         Random rand = new Random();//for randomly assigning values to tiles
 
-        byte[][] terrain = null; //
+        byte[][] terrain = EnvironmentLoader.getLayer_values("terrain", false);
         boolean loadedLayer = true;
 //        byte[][] border = EnvironmentLoader.getLayer_values("terrain", false);
         if(terrain == null) {
             terrain = new byte[width / TILE_SIZE][height / TILE_SIZE];
-            for (int i = 0; i < terrain.length; i++) {
-                for (int j = 0; j < terrain[i].length; j++) {
-                    terrain[i][j] = 0; //terrain type is land.
-                }
+        }
+        for (int i = 0; i < terrain.length; i++) {
+            for (int j = 0; j < terrain[i].length; j++) {
+            	if(terrain[i][j]>0)
+            		terrain[i][j] = 1;
+            	else
+            		terrain[i][j] = 0; //terrain type is land.
             }
         }
         loadedLayer = true;
@@ -84,6 +87,8 @@ public class LandMap {
 //                }
 //                else
                 if (waterInfo[i][j] > 70) {
+                	System.out.println("water tile " + i + " " + j + " terrain size " + terrain[0].length + " " + terrain.length + 
+                			" size " + width + " " + height);
                     terrain[i][j] = 1; //change terrain type to water.
                     if(grassInfo.length > i )
                         if(grassInfo[i].length > j)

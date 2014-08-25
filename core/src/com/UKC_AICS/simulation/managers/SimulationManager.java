@@ -210,6 +210,7 @@ public class SimulationManager extends Manager {
     //Change this see tutorial
     public void load() {
 //    	hardReset();
+    	parent.resetGraphics();
     	StaXParserLoad load = new StaXParserLoad();
         load.readConfig(eaFile);
       }
@@ -390,10 +391,12 @@ public class SimulationManager extends Manager {
     }
     
     public void hardReset(){
+    	Constants.mapWidth = EnvironmentLoader.getDimensions()[0];
+    	Constants.mapHeight = EnvironmentLoader.getDimensions()[1];
         worldManager = new WorldManager(Constants.mapWidth, Constants.mapHeight);
         boidManager = new BoidManager(this, ea);
-        parent.resetGraphics();
         reset();
+        parent.resetGraphics();
     }
 
     public void loadSaveCall(String command, String identifier, HashMap<String, File> file){

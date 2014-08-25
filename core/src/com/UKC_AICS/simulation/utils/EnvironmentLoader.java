@@ -107,6 +107,8 @@ public abstract class EnvironmentLoader {
 //		environments.put(name,
 //				new TextureAtlas(defaultEnvAtlas_path));
         try {
+        	environmentLayers_Pixmap.clear();
+        	environmentLayers_atlasRegion.clear();
             FileHandle handle = packFile;
             environmentAtlas = new TextureAtlas(handle);
             handle = packsheetFile;
@@ -151,7 +153,6 @@ public abstract class EnvironmentLoader {
 	 */
 	public static byte[][] getLayer_values(String name, boolean alphaChannel){
 		byte[][] layerVals = null;
-        System.out.println("Getting values for " + name + environmentLayers.containsKey(name));
 		if(environmentLayers_Pixmap.containsKey(name)){
 			Pixmap layer = environmentLayers_Pixmap.get(name);
             int gridWidth = layer.getWidth()/TILE_SIZE;
@@ -201,7 +202,7 @@ public abstract class EnvironmentLoader {
     public static int[] getDimensions(){
 
         if(environmentLayers_Pixmap.size()>0){
-            int size[] = new int[]{0,0};
+            int size[] = new int[2];
             boolean first = true;
             for(Pixmap s : environmentLayers_Pixmap.values()){
                 if(s.getWidth() < size[0] || first);

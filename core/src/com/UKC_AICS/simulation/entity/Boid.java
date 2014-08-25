@@ -161,14 +161,15 @@ public class Boid extends Entity {
     public void update() {
         //TODO: Add in better limiter for speed. Possibly??
         //move
-        if(avoidance == 0 || avoidance == 45) {
+//        if(avoidance == 0 || avoidance == 2) {
 //        velocity.sub(acceleration.set(velocity).scl(0.08f));  //drag??
             velocity.add(acceleration).limit(maxSpeed);
             velocity.sub(acceleration.set(velocity).scl(0.04f)); //drag
-        }
-        else {
-            avoidance -= 1;
-        }
+//            if(avoidance != 0)avoidance -= 1;
+//        }
+//        else {
+//            if(avoidance > 1)avoidance -= 1;
+//        }
 
         //Stamina related calcs, used or recovered based on velocity length
         float speed = velocity.len();
@@ -191,7 +192,7 @@ public class Boid extends Entity {
     }
 
     public void setAvoidance() {
-        avoidance = 45;
+//        avoidance = 2;
     }
 
     /**
