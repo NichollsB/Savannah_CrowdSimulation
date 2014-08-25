@@ -90,8 +90,8 @@ public class SimulationManager extends Manager {
 			e.printStackTrace();
 		}
 
-        speciesData = staXParser.readConfig("../core/assets/data/species.xml");
-        objectData = staXParser.readObjectFile("../core/assets/data/objects.xml");
+        speciesData = staXParser.readConfig("data/species.xml");
+        objectData = staXParser.readObjectFile("data/objects.xml");
         for (Species species : speciesData.values()) {
             species.setGrowthPerDay((species.getMaxSize() - species.getNewbornSize()) / species.getMaturity());
         }
