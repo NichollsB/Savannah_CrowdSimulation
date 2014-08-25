@@ -234,14 +234,14 @@ public class Boid extends Entity {
      */
     private void checkInBounds() {
         if(position.x > Constants.mapWidth - bounds.width/2) {
-            position.x = position.x - Constants.mapWidth + bounds.height;
-        } else if(position.x < + bounds.width/2) {
-            position.x = position.x + Constants.mapWidth - bounds.height;
+            position.x = Constants.mapWidth - bounds.width;
+        } else if(position.x < bounds.width/2) {
+            position.x =  bounds.width;
         }
         if(position.y > Constants.mapHeight - bounds.height/2) {
-            position.y = position.y - Constants.mapHeight + bounds.width;
+            position.y = Constants.mapHeight - bounds.width;
         } else if(position.y < bounds.height/2) {
-            position.y = position.y + Constants.mapHeight - bounds.width;
+            position.y = bounds.width;
         }
     }
 
