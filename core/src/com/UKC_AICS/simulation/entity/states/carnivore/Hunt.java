@@ -99,8 +99,10 @@ public class Hunt extends State {
                     parent.pushState(boid, new Eat(parent, bm, (Object) closestCorpse));
                     return false;
                 } else if (distanceCorpse < boid.sightRadius * boid.sightRadius) {
-                    parent.pushState(boid, new ApproachCorpse(parent, bm, (Object) closestCorpse));
-                    return false;
+                    if(!Collision.checkVision(boid, new Vector3(closestCorpse.getPosition().x, closestCorpse.getPosition().y, 0f))) {
+                        parent.pushState(boid, new ApproachCorpse(parent, bm, (Object) closestCorpse));
+                        return false;
+                    }
                 }
 
                 float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
@@ -126,10 +128,14 @@ public class Hunt extends State {
             Array<Boid> rmList = new Array<Boid>();
             int sameSpecies = 0;
             for (Boid target : closeBoids) {
-                if (SimulationManager.speciesData.get(boid.getSpecies()).getDiet().equals("carnivore")) {
+                if (SimulationManager.speciesData.get(target.getSpecies()).getDiet().equals("carnivore")) {
                     sameSpecies++;
                     rmList.add(target);
                 }
+//                else if(!Collision.checkVision(boid, new Vector3(target.getPosition().x, target.getPosition().y, 0f))){
+//                    rmList.add(target);
+//                }
+
             }
             //remove all same species/byte boids from possible target array
             closeBoids.removeAll(rmList, false);

@@ -326,14 +326,14 @@ public class BoidManager extends Manager {
 		}
         float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
         if (boid.hunger >= boid.hungerLevel*2) {
-            Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f), boid.size);
+            Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f), boid.size*4);
             WorldManager.putObject(food);
             removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of hunger :( ");
             return true;
         }
         else if( boid.thirst >= boid.thirstLevel*2) {
-            Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f), boid.size);
+            Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f), boid.size*4);
             WorldManager.putObject(food);
             boids.removeValue(boid, false);
             getBoidGrid().removeBoid(boid);

@@ -2,6 +2,7 @@ package com.UKC_AICS.simulation.entity.states.herbivore;
 
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.behaviours.Avoid;
 import com.UKC_AICS.simulation.entity.behaviours.Collision;
 import com.UKC_AICS.simulation.entity.behaviours.Evade;
 import com.UKC_AICS.simulation.entity.states.State;
@@ -33,25 +34,32 @@ public class Panic extends State {
             }
         }
         steering.set(0f,0f,0f);
-//        Vector3 tempVec = new Vector3(0f,0f,0f);
-//        tempVec.add(Collision.act(nearEntities, boid));
-//        tempVec.add(Collision.act(boid));
-//        // if no collision avoidance
-//        if(steering.equals(tempVec)) {
-            if (predators.size > 0) {
-                for (Boid predator : predators) {
-                    steering.add(Evade.act(boid, predator));
+        if(predators.size > 0) {
+            for(Boid predator : predators) {
+                Vector3 tempVec = new Vector3(0f,0f,0f);
+                tempVec.add(Collision.act(nearEntities, boid));
+                tempVec.add(Collision.act(boid));
+                if(steering.equals(tempVec)) {
+                    steering.add(Avoid.act(boid, predator.getPosition()));//.scl(predator.size/boid.size));
                 }
-            } else {
-                boid.panic -= 10;
+                else {
+                    steering.set(tempVec);
+                }
+//                steering.add(Collision.act(nearEntities, boid));
+//                steering.add(Collision.act(boid));
             }
-//        }
-//        else {
-//            steering.set(tempVec);
-//        }
-        steering.add(Collision.act(nearEntities, boid));
-        steering.add(Collision.act(boid));
-        boid.setAcceleration(steering);
+
+        } else {
+            boid.panic -= 10;
+        }
+
+        steering.nor().limit(boid.maxForce).scl(boid.maxSpeed);
+//        steering.add(parent.behaviours.get("wander").act(nearBoids, new Array<Entity>(), boid)).scl(boid.wander);
+        if (steering.isZero()) {
+            boid.setAcceleration(boid.velocity);
+        } else {
+            boid.setAcceleration(steering);
+        }
 
 
         //popping decisions.

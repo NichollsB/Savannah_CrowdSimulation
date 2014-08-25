@@ -107,16 +107,9 @@ public class SimulationManager extends Manager {
         this.stateMachine= boidManager.stateMachine;
         generateBoids();
 
-
-        //TODO make a staxparser for objects.xml to objectData class
-//        objectData.put((byte)0, new ObjectData((byte)0, (byte)1, "Corpse"));
-//        objectData.put((byte)1, new ObjectData((byte)1, (byte)1, "Corpse"));
-//        objectData.put((byte)2, new ObjectData((byte)2, (byte)1, "Attractor"));
-//        objectData.put((byte)3, new ObjectData((byte)3, (byte)1, "Repeller"));
-
          ea.setup(this);
 
-        addTestObjects();
+//        addTestObjects();
 
         save();
     }
@@ -172,20 +165,6 @@ public class SimulationManager extends Manager {
             obj = new Object(objectData.get((byte)1),xPos,yPos);
             WorldManager.putObject(obj);
         }
-//        obj = new Object(objectData.get((byte)1),400,600);
-//        WorldManager.putObject(obj);
-//        obj = new Object(objectData.get((byte)1),160,200);
-//        WorldManager.putObject(obj);
-//        obj = new Object(objectData.get((byte)1),160,400);
-//        WorldManager.putObject(obj);
-//        obj = new Object(objectData.get((byte)1),180,600);
-//        WorldManager.putObject(obj);
-//        obj = new Object(objectData.get((byte)1),1100,200);
-//        WorldManager.putObject(obj);
-//        obj = new Object(objectData.get((byte)1),1100,400);
-//        WorldManager.putObject(obj);
-//        obj = new Object(objectData.get((byte)1),1100,600);
-//        WorldManager.putObject(obj);
     }
 
     public void reset(){
