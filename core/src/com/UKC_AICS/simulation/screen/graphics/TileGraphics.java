@@ -27,7 +27,7 @@ public class TileGraphics extends SpriteCache {
 	
 	private SpriteManager manager;
 
-	private byte mapElementsX = 0, mapElementsY = 0;
+	private int mapElementsX = 0, mapElementsY = 0;
 	int cacheCount = 0;
 	private ObjectMap<Integer, Integer> cacheRow_Map = new ObjectMap<Integer, Integer>();
 	private Array<Integer> cacheRow_Count = new Array<Integer>();
@@ -53,13 +53,15 @@ public class TileGraphics extends SpriteCache {
 		
 		for(String s : infoLayers.keySet()){
 			byte[][] f = infoLayers.get(s);
-			copyInformationLayer(s, infoLayers.get(s), this.infoLayers);
+			copyInformationLayer(s, f, this.infoLayers);
 			if(mapElementsX < f.length)
-				mapElementsX = (byte) f.length;
+				mapElementsX = f.length;
+			if(mapElementsY < f[0].length)
+				mapElementsY =  f[0].length;
 			for(int i = 0; i < f.length; i++){
-				if(mapElementsY < f[i].length){
-					mapElementsY = (byte) f[i].length;
-				}
+//				if(mapElementsY < f[i].length){
+//					mapElementsY = (byte) f[i].length;
+//				}
 				if(lastRegion == null){
 					outerloop:
 					for(int j = 0 ; j < f[i].length; j++){
@@ -107,7 +109,7 @@ public class TileGraphics extends SpriteCache {
 			}
 			loopCheck = x;
 			n = 1;
-			this.add(ground, xPos, y*ground.getWidth(), ground.getWidth()+1, ground.getHeight()+1);
+//			this.add(ground, xPos, y*ground.getWidth(), ground.getWidth()+1, ground.getHeight()+1);
 			for(String layer : infoLayers.keySet())
 			{
 
@@ -116,10 +118,12 @@ public class TileGraphics extends SpriteCache {
                 if((layer.equals("water")) || layer.equals("grass")){
                     amount = (byte) (Math.round((amount+5)/10)*10);
                     if(amount>100) amount = 100;
-                    if(layer.equals("grass") || amount >30)
+                    if(layer.equals("grass") || amount >30){
                         nextSprite = manager.getTileSprite(layer, amount);
-                    else
+                    }
+                    else{
                         nextSprite=null;
+                    }
                     if(nextSprite == null){
                         nextSprite = manager.getEmptySprite();
                         lastSprite = nextSprite;
@@ -205,19 +209,18 @@ public class TileGraphics extends SpriteCache {
 	public void updateTiles(Batch batch, boolean update, HashMap<String, byte[][]> infoLayers){
 		this.setProjectionMatrix(batch.getProjectionMatrix());
 		if(manager.update()){
-			if(ground == null){
-				ground = manager.getGroundTile();
-				ground.setSize(Constants.TILE_SIZE, Constants.TILE_SIZE);
-			}
+//			System.out.println("Updating tiles " + mapElementsY + " " + mapElementsX);
+//			if(ground == null){
+//				ground = manager.getGroundTile();
+//				ground.setSize(Constants.TILE_SIZE, Constants.TILE_SIZE);
+//			}
 			//CACHE METHOD
 			
 //			if(infoLayers.equals(this.infoLayers)) return;
 //			else{
 //			if(update){
 				for(int y = 0; y<mapElementsY; y++){
-//					if(y > infoLayers.get("grass").length/2) break;
 					if(!cacheRow_Map.containsKey(y)){
-						
 						createCache(y, infoLayers);
 						continue;
 					}
