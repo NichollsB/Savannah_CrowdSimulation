@@ -10,6 +10,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+/**
+ * {@link com.badlogic.gdx.InputProcessor InputProcessor} for implementing some controls for the simulation
+ * Allows clicking, scroll zoom, and panning (right or left click and drag) around the graphical representation of the environment
+ * @author Ben Nicholls bn65@kent.ac.uk
+ */
 public class InputManager implements InputProcessor{
 	
 	private Boolean lClick = false, rClick = false;
@@ -23,7 +28,13 @@ public class InputManager implements InputProcessor{
 	private Viewport view;
     private boolean dragging;
     private int dragX = 0, dragY = 0;
-	
+
+    /**
+     * Initialises the input manager for a given {}screen, camera, and viewport.
+     * @param screen
+     * @param camera
+     * @param view
+     */
 	public InputManager(SimulationScreen screen, OrthographicCamera camera, Viewport view){
 		this.screen = screen;
 		this.camera = camera;
@@ -144,14 +155,32 @@ public class InputManager implements InputProcessor{
         }
         return true;
 	}
-	
+
+    /**
+     * Called on resizing the simulation screen. Alters the bounding rectangle used in some of the
+     * controls. Named resize for convenience - calls {@link #setViewportRect(com.badlogic.gdx.math.Rectangle) setViewPort}
+     * method.
+     * @param viewRect Bounding rectangle object to use
+     */
 	public void resize(Rectangle viewRect){
 		setViewportRect(viewRect);
 	}
+
+    /**
+     *  Called to set the bounding rectangle for the {@link #inBounds(int, int) inBounds} method.
+     * @param rect Rectangle to set as the bounding rectangle
+     */
 	public void setViewportRect(Rectangle rect){
 		viewportRectangle = rect;
 	}
-	
+
+    /**
+     * Checks if a given coordinate is within the bounding {@link #viewportRectangle rectangle} for some of the
+     * click events. Inverts the y coordinate to match the simulation coordinates.
+     * @param x X coordinate to check
+     * @param y Y coordinate to check
+     * @return True if the bounding rectangle contains the coordinates, otherwise false.
+     */
 	private boolean inBounds(int x, int y){
 		int inverseY = Gdx.graphics.getHeight() - y;
 		if(viewportRectangle.contains(x, inverseY)) return true;
