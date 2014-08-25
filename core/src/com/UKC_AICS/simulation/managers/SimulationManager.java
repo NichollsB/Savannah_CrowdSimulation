@@ -176,7 +176,6 @@ public class SimulationManager extends Manager {
     }
 
     public void save() {
-    	
     	StaxWriter configFile = new StaxWriter();
         configFile.setFile(eaFile);
         try {
@@ -188,10 +187,10 @@ public class SimulationManager extends Manager {
       }
     //Change this see tutorial
     public void load() {
-//    	hardReset();
-    	parent.resetGraphics();
     	StaXParserLoad load = new StaXParserLoad();
-        load.readConfig(eaFile);
+        load.readConfig(eaFile,boidManager);
+        parent.resetGraphics();
+        
       }
 
     public void generateBoids(){
