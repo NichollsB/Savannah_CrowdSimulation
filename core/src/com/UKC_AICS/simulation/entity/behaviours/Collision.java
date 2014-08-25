@@ -123,7 +123,7 @@ public class Collision extends Behaviour {
      * @param dy_dt
      * @return
      */
-    private static ArrayList<Integer> cellInPath(float x0, float y0, float dx_dt, float dy_dt) {
+    public static ArrayList<Integer> cellInPath(float x0, float y0, float dx_dt, float dy_dt) {
         ArrayList<Integer> cell = null;
         for(int i = 0; i < stepsAhead; i++){
             int posX = (int)(x0 + i * dx_dt);
@@ -155,6 +155,25 @@ public class Collision extends Behaviour {
             }
         }
         return cell;
+    }
+
+    public static boolean checkVision(Boid boid, Vector3 targetLocation) {
+        boolean blockedView = false;
+        tmpVec.set(boid.getPosition());
+        tmpVec2.set(tmpVec);
+        tmpVec.sub(targetLocation);
+        int inc = (int)tmpVec.len2();
+        tmpVec.scl(1/inc);
+        for(int i = 0; i < inc; i++) {
+            //current cell
+            tmpVec2.add(tmpVec);
+            if(WorldManager.getTileInfoAt((int)tmpVec2.x,(int)tmpVec2.y).get("blocked") == 1) {
+                blockedView = true;
+                break;
+            }
+        }
+
+        return blockedView;
     }
 
 

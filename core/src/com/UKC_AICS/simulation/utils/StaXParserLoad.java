@@ -50,10 +50,11 @@ public class StaXParserLoad {
     private String STATE = "state";
     private String FERTILITY = "fertility";
     private String STATES = "states";
+    private String OFFSPRING = "offspring";
   // Variables used to store the info for the creation of the boid  
     private int age = 0;
     private int bDay = 0;
-    private float cohesion, separation,  alignment, wander ,hunger ,thirst, panic, sightRadius, nearRadius, flockRadius, stamina, maxStamina, hungerLevel, thirstLevel, panicLevel, size, fertility;
+    private float cohesion, separation,  alignment, wander ,hunger ,thirst, panic, sightRadius, nearRadius, flockRadius, stamina, maxStamina, hungerLevel, thirstLevel, panicLevel, size, fertility, offspring;
     private byte spec = 0; 
     private byte group = 0;
     private String currentState = null;
@@ -61,12 +62,14 @@ public class StaXParserLoad {
     public Float[] fltArray = new Float[3] ;
     public Float[] fltArray2 = new Float[3];
     private InputStream in;
-    @SuppressWarnings({ })
+    BoidManager bm;
+    //@SuppressWarnings({ })
     /**
      * Parses over the file and assigns each piece of information to its relevant variable
      * @param configFile
      */
-    public void readConfig(File configFile){
+    public void readConfig(File configFile, BoidManager bm){
+    	this.bm=bm;
     	try{
 	    	in = new FileInputStream(configFile);
 	    	readConfig();
@@ -76,7 +79,8 @@ public class StaXParserLoad {
     	}
     }
     
-    public void readConfig(String configFile) throws FileNotFoundException {
+    public void readConfig(String configFile, BoidManager bm) throws FileNotFoundException {
+    	this.bm=bm;
     	try{
 	    	in = new FileInputStream(configFile);
 	    	readConfig();
@@ -200,6 +204,8 @@ public class StaXParserLoad {
                                 .equals(SIZE)) {
                             event = eventReader.nextEvent();
                             size = Float.valueOf(event.asCharacters().getData());
+                            System.out.println("--------------------------LOOK AT ME!!!!!---------------------------------------");
+                            System.out.println("SIZE PARSER LOAD " + size);
                             continue;
                         }
                     }
@@ -339,13 +345,22 @@ public class StaXParserLoad {
                         }
                     }
                     
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(OFFSPRING)) {
+                            event = eventReader.nextEvent();
+                            offspring= Float.parseFloat(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
                 }
                 // If we reach the end of the boid. All of its info should have been collected and can be used with the appropriate method in BoidManager
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
                     if (endElement.getName().getLocalPart() == (BOID)) {
-                        BoidManager.createBoid(spec, group, age, bDay, fltArray[0], fltArray[1], fltArray[2], fltArray2[0], fltArray2[1], fltArray2[2], cohesion, separation, alignment, wander,
-                        		sightRadius, nearRadius, flockRadius, size, hunger, thirst, panic, stamina, maxStamina, hungerLevel, thirstLevel, panicLevel, currentState, fertility, states);
+                        
+						bm.createBoid(spec, group, age, bDay, fltArray[0], fltArray[1], fltArray[2], fltArray2[0], fltArray2[1], fltArray2[2],cohesion, separation, alignment, wander,
+                        		sightRadius, nearRadius, flockRadius, size, hunger, thirst, panic, stamina, maxStamina, hungerLevel, thirstLevel, panicLevel, currentState, fertility, states,offspring);
                     }
                 }
 

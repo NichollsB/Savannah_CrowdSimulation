@@ -43,24 +43,26 @@ public class WorldManager extends Manager {
     @Override
     public void update(boolean dayIncrement) {
 
-//        if(rand.nextInt(100) > 50) {
-//            byte[][] grassGrowth = map.information_layers.get("grassGrowth");
-//            byte[][] grass = map.information_layers.get("grass");
-//
-//            for (int i = 0; i < grassGrowth.length; i++) {
-//                for (int j = 0; j < grassGrowth[i].length; j++) {
-//                    if(rand.nextInt(100) > 50) {
-//                        grassGrowth[i][j] += 1;
-//                        if (grassGrowth[i][j] == 127 && grass[i][j] < 127) {
-//                            grass[i][j] += 1;
-//                            if (grass[i][j] < 0) {
-//
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        if(rand.nextInt(1000) < 50) {
+            byte[][] grassGrowth = map.information_layers.get("grassGrowth");
+            byte[][] grass = map.information_layers.get("grass");
+
+            for (int i = 0; i < grassGrowth.length; i++) {
+                for (int j = 0; j < grassGrowth[i].length; j++) {
+                    if(rand.nextInt(10000) < 50) {
+                        grassGrowth[i][j] += 1;
+                        if (grassGrowth[i][j] > 127) {
+                            grassGrowth[i][j] = -127;
+                            grass[i][j] += 1;
+                        }
+
+                        if (grass[i][j] > 127) {
+                            grass[i][j] = 100;
+                        }
+                    }
+                }
+            }
+        }
         
         for(int i = 0 ; i < objects.size ; i++){
             if(objects.get(i).toDelete){

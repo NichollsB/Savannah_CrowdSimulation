@@ -63,39 +63,43 @@ public class BoidManager extends Manager {
      * @param separation 
      * @param cohesion 
      */
-    public static void createBoid(byte species, byte group, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ,
-    		float cohesion, float separation, float alignment, float wander, float flockRadius, float sightRadius, float nearRadius,
-    		float hunger, float thirst, float panic, float stamina, float maxStamina, float hungerLevel, float thirstLevel, float panicLevel,
-    		float size, String currentState, float fertility, String states) {
-        Boid boid = new Boid(species);
-
+    public void createBoid(byte spec, byte group, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ,float cohesion, float separation, float alignment, float wander,
+    		float sightRadius, float nearRadius, float flockRadius, float size, float hunger, float thirst, float panic, float stamina, float maxStamina, float hungerLevel, float thirstLevel, float panicLevel, String currentState, float fertility, String states, float offspring){
+      
+    	Boid boid = new Boid(spec);
+        boid.setGroup(group);
         boid.setAge(age);
-        boid.setPosition(pX, pY, pZ);
+  
+        boid.setPosition(pX, pY, pZ); 
         boid.setVelocity(vX, vY, vZ);
+        
         boid.setCohesion(cohesion);
         boid.setAlignment(alignment);
         boid.setSpearation(separation);
         boid.setWander(wander);
-        boid.setGene(cohesion, separation, alignment, wander,flockRadius, nearRadius, sightRadius, maxStamina, hungerLevel, thirstLevel, panicLevel);
-        boid.setGroup(group);
-
+       
         boid.setFlockRadius(flockRadius);
         boid.setSightRadius(sightRadius);
         boid.setNearRadius(nearRadius);
-
-        boid.setStamina(stamina);
-        boid.setMaxStamina(maxStamina);
-
+     
+        boid.setSize(size);
+        
         boid.setHunger(hunger);
         boid.setPanic(panic);
         boid.setThirst(thirst);
+        
+        boid.setStamina(stamina);
+        boid.setMaxStamina(maxStamina);
 
         boid.setHungerLevel(hungerLevel);
         boid.setPanicLevel(panicLevel);
         boid.setThirstLevel(thirstLevel);
-        boid.setSize(size);
+        
+        boid.setGene(cohesion, separation, alignment, wander,flockRadius, nearRadius, sightRadius, maxStamina, hungerLevel, thirstLevel, panicLevel);
+        
         boid.setState(currentState);
         boid.setFertility(fertility);
+        boid.setNumberOfOffspring(offspring);
         
         System.out.println("Statestring" +states);
         states.replaceAll("[^a-zA-Z0-9]","");
@@ -322,14 +326,14 @@ public class BoidManager extends Manager {
 		}
         float lifespan = SimulationManager.speciesData.get(boid.getSpecies()).getLifespan() + MathsUtils.randomNumber(-10, 10);
         if (boid.hunger >= boid.hungerLevel*2) {
-            Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f), boid.size);
+            Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f), boid.size*4);
             WorldManager.putObject(food);
             removeBoid(boid);
             parent.parent.gui.setConsole(" A boid just died of hunger :( ");
             return true;
         }
         else if( boid.thirst >= boid.thirstLevel*2) {
-            Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f), boid.size);
+            Object food = new Object((byte) 0, (byte) 0, new Vector3(boid.position.x, boid.position.y, 0f), boid.size*4);
             WorldManager.putObject(food);
             boids.removeValue(boid, false);
             getBoidGrid().removeBoid(boid);
