@@ -152,6 +152,9 @@ import java.util.Stack;
 	    		
 	    		float fertilityVal = b.getFertility();
 	    		String fertility = "" + fertilityVal;
+	    		
+	    		float offspringVal = b.getNumberOfOffspring();
+	    		String offspring = "" + offspringVal;
 	    	
 	    		StartElement configElement = eventFactory.createStartElement("",
 	    				"", "boid");
@@ -182,6 +185,7 @@ import java.util.Stack;
 	    		createNode(eventWriter, "state", state);
 	    		createNode(eventWriter, "fertility", fertility);
 	    		createNode(eventWriter, "states", states);
+	    		createNode(eventWriter, "offspring", offspring);
 	    		eventWriter.add(eventFactory.createEndElement("", "", "boid"));
 	    		eventWriter.add(end);
 	  

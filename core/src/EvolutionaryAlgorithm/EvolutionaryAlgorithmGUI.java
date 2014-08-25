@@ -148,7 +148,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 		 * @return
 		 */
 		private Table createSettingsTable(Table t2, final EA2 ea) {
-			final String[] options = {"Species 1", "Species 2", "Species 3", "Species 4,", "Species 5" };
+			final String[] options = {"Zebra", "Wildebeast", "Gazelle", "Lion,", "Hyena" };
 	    	final SelectBox<String> dropdown = new SelectBox<String>(skin);
 			dropdown.setItems(options);
 			

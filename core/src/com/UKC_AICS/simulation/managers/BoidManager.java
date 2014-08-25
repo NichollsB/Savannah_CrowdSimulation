@@ -66,7 +66,7 @@ public class BoidManager extends Manager {
     public static void createBoid(byte species, byte group, int age, int bDay, float pX, float pY, float pZ, float vX, float vY, float vZ,
     		float cohesion, float separation, float alignment, float wander, float flockRadius, float sightRadius, float nearRadius,
     		float hunger, float thirst, float panic, float stamina, float maxStamina, float hungerLevel, float thirstLevel, float panicLevel,
-    		float size, String currentState, float fertility, String states) {
+    		float size, String currentState, float fertility, String states, float offspring) {
         Boid boid = new Boid(species);
 
         boid.setAge(age);
@@ -96,6 +96,7 @@ public class BoidManager extends Manager {
         boid.setSize(size);
         boid.setState(currentState);
         boid.setFertility(fertility);
+        boid.setNumberOfOffspring(offspring);
         
         System.out.println("Statestring" +states);
         states.replaceAll("[^a-zA-Z0-9]","");
