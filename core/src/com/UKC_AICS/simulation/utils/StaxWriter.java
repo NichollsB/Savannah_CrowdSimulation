@@ -122,6 +122,7 @@ import java.util.Stack;
 	    		String sightRadius = "" + sightRadiusVal;
 	    		
 	    		float sizeVal = b.getSize();
+	    		System.out.println("SIZE SAVE " + sizeVal);
 	    		String size = "" + sizeVal;
 	    		
 	    		float staminaVal = b.getStamina();
