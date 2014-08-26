@@ -9,7 +9,6 @@ import com.UKC_AICS.simulation.screen.controlutils.MenuSelectListener;
 import com.UKC_AICS.simulation.screen.controlutils.RenderState;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -131,7 +130,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
 				simScreen.simulationManager.loadSaveCall(chooser.getCommand(), chooser.getIdentifier(), (File)object);
 			}
 		});
-        
+
         renderOptions = new RenderOptionsWindow("Render Options", skin, null, null, null, stage);
         renderOptions.addSelectionListener(new MenuSelectListener(){
         	public void selectionMade(java.lang.Object menu, java.lang.Object object) {
@@ -189,16 +188,16 @@ public class SimScreenGUI extends Stage implements HoverListener {
 //        splitPanes.add(westSplit).left().width(width).fill().expand();
         splitPanes.add(westSplit).left().width(width).fill().expand();//fillY().expandY();
         splitPanes.add(eastSplit).left().width(width).fill().expand();//fillY().expandY();
-        
+
         Table bottom = new Table();
 
         table.add(splitPanes).fill().expand();
 //        table.add(splitPanes).fill().expand();
         table.row();
-        
+
         south = createSouth(table);
-      
-        
+
+
         table.add(south).bottom().height(SOUTH_HEIGHT).expandX().fillX();
         table.pack();
         setViewRect(north, south, east, west);
@@ -627,12 +626,11 @@ public class SimScreenGUI extends Stage implements HoverListener {
     /**
      * Update the gui. Deselect the {@link #boidTree} and/or {@link #objectTree} if necessary insuring that
      * only one is selected, or neither if the user is not using the trees
-     * @param batch unused
-     * @param render If true will render the gui
+     * @param update If true will render the gui
      */
-	public void update(SpriteBatch batch, boolean render) {
+	public void update(boolean update) {
 
-        if(render){
+        if(update){
         	setViewRect(north, south, east, west);
             if(infoItemSelected != null) {
                 if(infoItemSelected.equals(boidTree)) {
@@ -658,13 +656,19 @@ public class SimScreenGUI extends Stage implements HoverListener {
                 objectTree.update(objects, true);
                 boidTree.update(boids, true);
             }
-	        stage.act();
-	    
-	    	stage.draw();  //GUI stuff
-	    	
+//	        stage.act();
+//
+//	    	stage.draw();  //GUI stuff
         }
 
 	}
+
+    public void render(boolean render){
+        if(render){
+            stage.act();
+            stage.draw();  //GUI stuff
+        }
+    }
     private Array<String> legendEntries = new Array<String>();
 
     /**

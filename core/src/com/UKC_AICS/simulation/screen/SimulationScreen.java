@@ -82,8 +82,8 @@ public class SimulationScreen implements Screen{
 
     }
 
-    private long time = 0;
-    private long nextRender = 0;
+    private float time = 0;
+    private float increment = 0.25f;
     @Override
     public void render(float delta) {
         //kind of the update loop.
@@ -91,12 +91,17 @@ public class SimulationScreen implements Screen{
             simulationManager.update(false); //this is false here because all managers need to take a boolean. Actual decideing is done in SimulationManager.
         }
         simBatch.enableBlending();
-//    	simBatch.begin();
-//        Rectangle rect = gui.getViewArea();
+        boolean update = false;
         scissorRect = gui.getViewArea();
         inputManager.setViewportRect(scissorRect);
         clearOpenGL();
         if (render && !RenderState.TILESTATE.equals(RenderState.State.OFF)) {
+            time += delta;
+            if (time >= increment) {
+                update = true;
+                time -= increment;
+            }
+
     		 try {
                  long number = (long) (1000 / 60 - Gdx.graphics.getDeltaTime());
                  if(number < 0) number = 0;//fixed?
@@ -105,18 +110,18 @@ public class SimulationScreen implements Screen{
                  System.out.print("Error...");
                  e.printStackTrace();
              }
-            renderSpriteBatches(render);
+            renderSpriteBatches(render, update);
     	}
-        renderUIBatch(true);
+        renderUIBatch(true, update);
     }
 
-    private void renderUIBatch(boolean render){
+    private void renderUIBatch(boolean render, boolean update){
     	simBatch.begin();
     	gui.fps.setText(getFPSString() + simulationManager.getTime());
     	uiViewport.update();
         simBatch.setProjectionMatrix(uiCamera.combined);
-        gui.update(simBatch, render);
-        
+        gui.update(update);
+        gui.render(render);
         simBatch.end();
         eagui.getBatch().setProjectionMatrix(eagui.getCamera().combined);
         eagui.getViewport().update();
@@ -127,7 +132,7 @@ public class SimulationScreen implements Screen{
     /**
      * Calls the update method to trigger the rendering calls in the gui and simulation view
      */
-    private void renderSpriteBatches(boolean render) {
+    private void renderSpriteBatches(boolean render, boolean update) {
     	//Update the simulation view and render, clipping to the scissor rectangle provided by the specified gui
     	//area for the view
     	if(render){
@@ -135,8 +140,7 @@ public class SimulationScreen implements Screen{
 	    	simBatch.setProjectionMatrix(simViewcamera.combined);
 //	        ScissorStack.pushScissors(viewRect);
 //	    	simBatch.begin();
-	    	if(boidGraphics.update(simBatch, scissorRect) && !uiComplete){
-                HashMap<Byte, Species> map = simulationManager.getSpeciesInfo();
+	    	if(boidGraphics.update(simBatch, scissorRect, update) && !uiComplete){
                 gui.addBoidsToLegend(simulationManager.getSpeciesInfo(), boidGraphics.spriteManager.getBoidImages());
                 gui.addObjectsToLegend(simulationManager.getObjectDataInfo(), boidGraphics.spriteManager.getObjectImages());
                 uiComplete = true;

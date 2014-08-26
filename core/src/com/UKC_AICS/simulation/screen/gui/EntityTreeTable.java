@@ -255,13 +255,13 @@ public class EntityTreeTable extends Table {
 	/**
 	 * Cycle through entity array and create new nodes for each and assign to a root node and group node. If no root node matching
 	 * the entity type (species) exists then a node will not be created for that entity.
-	 * @param entitys Array of Entitys to create nodes for.
+	 * @param entities Array of Entitys to create nodes for.
 	 */
-	public void compareAndUpdateNodes(Array<Entity> entitys){
+	public void compareAndUpdateNodes(Array<Entity> entities){
 		boolean change = false;
 
 		nodeComparison = entityNodes.keys().toArray();
-		for(Entity b : entitys){
+		for(Entity b : entities){
 			if(!entityNodes.containsKey(b) && entityRoots.containsKey(b.getSubType())){
 				entityNodes.put(b, addEntityNode(b.getSubType(), null, b.toString(), b));
 			}
@@ -287,11 +287,16 @@ public class EntityTreeTable extends Table {
         int n = entityNodes.size;
         int removed = 0;
         for(Entity b : entityNodes.keys()){
-            if(!entitys.contains(b, true)){
+            if(!entities.contains(b, true)){
                 removed++;
                 entityNodes.get(b).removeNode(entityNodes.get(b));
                 entityNodes.remove(b);
                 entityNodes_num--;
+                if(b.equals(selectedEntity)){
+                    selectedEntity = null;
+                    entitySelected = false;
+                }
+
             }
         }
         if(entityNodes.size != n)
@@ -466,10 +471,11 @@ public class EntityTreeTable extends Table {
 				selectedInfo = selectedNode.getInfo();
 			}
 		}
-		if(entitySelected){
-			selectedInfo = selectedEntity.toString();
-			
+		if(entitySelected ){
+            selectedInfo = selectedEntity.toString();
 		}
+        else if(!groupSelected)
+            selectedInfo = "";
 		return selectedInfo;
 	}
 
