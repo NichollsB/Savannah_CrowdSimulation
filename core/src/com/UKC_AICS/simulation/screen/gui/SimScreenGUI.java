@@ -90,6 +90,8 @@ public class SimScreenGUI extends Stage implements HoverListener {
     private final Table legend = new Table();
 
     private ObjectMap<Button, FileChooser> chooserMap = new ObjectMap<Button, FileChooser>();
+
+    TextButton playButton;
 	
     /**
      *
@@ -122,7 +124,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	
         table = new Table();
         table.setSize(width, height);
-        fileChooser = new FileChooser("Load", skin, "Load", "Species", ".", "Confirm", "Cancel", this);
+        fileChooser = new FileChooser("Load", skin, "Load", "Species", "../", "Confirm", "Cancel", this);
         fileChooser.addSelectionListener(new MenuSelectListener(){
 			public void selectionMade(java.lang.Object menu, java.lang.Object object) {
 				FileChooser chooser = (FileChooser) menu;
@@ -382,17 +384,17 @@ public class SimScreenGUI extends Stage implements HoverListener {
 //    	t.add(southTable).bottom().height(SOUTH_HEIGHT).expandX().fillX().colspan(3);
 //    	southTable.add("south");
         // play/pause button
-        final TextButton playButton = new TextButton("Play", skin);
+        playButton = new TextButton("Play", skin);
         playButton.pad(5);
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(simScreen.getRunning()){
-                    playButton.setText("Play");
-                }
-                else {
-                    playButton.setText("Pause");
-                }
+//                if(simScreen.getRunning()){
+//                    playButton.setText("Play");
+//                }
+//                else {
+//                    playButton.setText("Pause");
+//                }
                 simScreen.flipRunning();
             }
         });
@@ -652,6 +654,10 @@ public class SimScreenGUI extends Stage implements HoverListener {
                 	boidTree.update(boids, true);
                 }
             }
+            else{
+                objectTree.update(objects, true);
+                boidTree.update(boids, true);
+            }
 	        stage.act();
 	    
 	    	stage.draw();  //GUI stuff
@@ -817,5 +823,10 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	objectTree.clearAll();
     }
 
- 
+    public void setRunning(){
+        if(simScreen.getRunning())
+            playButton.setText("Pause");
+        else
+            playButton.setText("Play");
+    }
 }

@@ -228,8 +228,8 @@ public class SimulationScreen implements Screen{
         boidGraphics.setBoids(simulationManager.getBoids());
     }
     public void resetGUI(){
-    	gui.resetGUI();
-    	setupUI();
+//    	gui.resetGUI();
+//    	setupUI();
     }
 
     /**
@@ -248,6 +248,7 @@ public class SimulationScreen implements Screen{
             running = false;
         else
             running = true;
+        gui.setRunning();
     }
 
     /**

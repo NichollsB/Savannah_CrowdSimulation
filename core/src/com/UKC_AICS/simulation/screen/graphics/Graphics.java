@@ -199,21 +199,20 @@ public class Graphics {
 					}
 
 				}
-				float optimumSize = 0.5f;
 				float size = 0f;
 				if(boidsArray.size>0){
 					Byte boidSelection = null;
 					for(Boid boid : boidsArray){
 
                         size = boid.getSize()/30;
-                        if(size>0.5)
-                            size = (0.5f + (size/5f));
-                        else if(size<0.5)
-                            size = (0.25f + (size/5f));
+                        if(size>0.6)
+                            size = (0.6f + (size/5f));
+                        else if(size<0.6)
+                            size = (0.4f + (size/5f));
 						if(boid.tracked){
 							altSprite = spriteManager.getBoid_HighlightSprite();
 							updateSpritePosition(boid, altSprite);
-                            altSprite.setScale(size);
+                            altSprite.setScale(size+0.15f);
 							altSprite.draw(batch);
 						}
 

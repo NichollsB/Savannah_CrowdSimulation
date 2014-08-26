@@ -20,7 +20,7 @@ public class InputManager implements InputProcessor{
 	private Boolean lClick = false, rClick = false;
 	private SimulationScreen screen;
 	private OrthographicCamera camera;
-	private float maxZoom = 3f;
+	private float maxZoom = 4f;
 
 	private boolean inBounds = false;
 
@@ -38,7 +38,7 @@ public class InputManager implements InputProcessor{
 	public InputManager(SimulationScreen screen, OrthographicCamera camera, Viewport view){
 		this.screen = screen;
 		this.camera = camera;
-		camera.zoom = 1.2f;
+		camera.zoom = 3f;
 		this.view = view;
 	}
 	

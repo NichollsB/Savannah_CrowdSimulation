@@ -137,8 +137,8 @@ public class HerbDefault extends State {
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
                 steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
-//                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
-//                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
+                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.2f));
+                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.2f));
 
             } else {
                 steering.set(tempVec);
