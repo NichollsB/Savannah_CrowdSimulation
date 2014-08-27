@@ -82,7 +82,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
 
     private Actor infoItemSelected;
 
-	private RenderOptionsWindow renderOptions;
     private EnvironmentFileWindow environmentOptions;
 
     private final Table legend = new Table();
@@ -130,18 +129,10 @@ public class SimScreenGUI extends Stage implements HoverListener {
 			}
 		});
 
-        renderOptions = new RenderOptionsWindow("Render Options", skin, null, null, null, stage);
-        renderOptions.addSelectionListener(new MenuSelectListener(){
-        	public void selectionMade(java.lang.Object menu, java.lang.Object object) {
-//        		System.out.println();
-        		RenderOptionsWindow window = (RenderOptionsWindow) menu;
-        		RenderState.changeTileState(RenderState.TILESTATE.stateName, window.getRenderType());
-        	}
-        });
+
         environmentOptions = new EnvironmentFileWindow("Environment Options", skin, stage);
         environmentOptions.addSelectionListener(new MenuSelectListener(){
             public void selectionMade(java.lang.Object menu, java.lang.Object object) {
-        		System.out.println("istener triggered");
                EnvironmentFileWindow window = (EnvironmentFileWindow) menu;
                 HashMap<String, File> files = new HashMap<String, File>();
                 if(window.fromPackFile()) {
@@ -295,15 +286,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
         });
         menuTable.add(button).padLeft(5);
 
-        //RENDER OPTIONS
-//        button = new TextButton("Render Options", skin);
-//    	button.addListener(new ClickListener() {
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                renderOptions.open(stage);
-//            }
-//        });
-//    	menuTable.add(button).padLeft(5);
 
         //Render type
 //        MenuDropdown renderSelection = new MenuDropdown(skin, "Environment Render Type", "rendertype");
@@ -345,27 +327,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	return menuTable;
     }
 	
-	private MenuDropdown createFileMenu(final String options[], final String optionsText[], String name, final String identifier){
-    	final MenuDropdown menu = new MenuDropdown(skin, name, identifier);  
-//    	String items[] = {"Load", "Save"};
-    	menu.addItems(optionsText, true);
-    	
-    	menu.addSelectionListener(new MenuSelectListener(){
-    		@Override
-    		public void selectionMade(java.lang.Object menu, java.lang.Object object){
-    			for(int i = 0; i < options.length; i ++){
-    				String option = options[i];
-    				if(option.equalsIgnoreCase((String)object)){
-    					fileChooser.setOptionsText(optionsText[i], "Cancel");
-    					fileChooser.setCommand(option);
-    					fileChooser.setIdentifier(identifier);
-    					fileChooser.open(stage);
-    				}
-    			}
-    		}
-    	});
-    	return menu;
-	}
+	
 
     /**
      * Create the south Table. Consists of buttons for controlling the simulation, including: a play/pause button that will

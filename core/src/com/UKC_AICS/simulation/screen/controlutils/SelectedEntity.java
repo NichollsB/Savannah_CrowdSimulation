@@ -2,6 +2,12 @@ package com.UKC_AICS.simulation.screen.controlutils;
 
 import com.UKC_AICS.simulation.entity.Entity;
 
+/**
+ * Used to keep track of the selected entity in the GUI. 
+ * Used primarily to keep track of the types of the entity selected for the explicit creation of new boids
+ * @author Ben Nicholls
+ *
+ */
 public abstract class SelectedEntity{
 	
 //	public static final Byte TYPE = new Byte((byte) 0);
@@ -15,16 +21,20 @@ public abstract class SelectedEntity{
 	private static boolean BOID = false;
 	private static Entity entity;
 	
+	/**
+	 * Set the SELECTED boolean flag
+	 * @param select Applied to SELECTED flag
+	 */
 	public static void set(boolean select){
-//		selected.valueOf(select);
 		SELECTED = select;
-//		System.out.println("set selected " + selected);
 	}
+	/**
+	 * Set the currently selected entity
+	 * @param type byte type of the selected entity
+	 * @param subtype byte subtype of the selected entity
+	 * @param group byte group of the selected entity
+	 */
 	public static void set(byte type, byte subtype, byte group){
-//		TYPE.valueOf(type);
-//		SUBTYPE.valueOf(subtype);
-//		GROUP.valueOf(group);
-//		selected.valueOf(true);
 		if(type == 1){
 			BOID = true;
 		}
@@ -35,10 +45,12 @@ public abstract class SelectedEntity{
 		GROUP = group;
 		SELECTED = true;
 		
-//		System.out.println("selected entity " + SELECTED);
-		
 	}
 	
+	/**
+	 * Set the currently selected entity
+	 * @param selectedEntity Entity that is selected
+	 */
 	public static void set(Entity selectedEntity){
 		if(selectedEntity.getType() == 1){
 			BOID = true;
@@ -50,31 +62,32 @@ public abstract class SelectedEntity{
 		SUBTYPE = entity.getSubType();
 		GROUP = entity.tertiaryType;
 		SELECTED = true;
-//		TYPE.valueOf(selectedEntity.getType());
-//		SUBTYPE.valueOf(selectedEntity.getSubType());
-//		GROUP.valueOf(selectedEntity.tertiaryType);
-//		selected.valueOf(false);
 	}
+	/**
+	 * Get the type
+	 * @return type of the selected entity
+	 */
 	public static byte type(){ byte b = TYPE; return b;}
+	/**
+	 * 
+	 * @return subtype of the selected entity
+	 */
 	public static byte subType(){ byte b = SUBTYPE; return b;}
+	/**
+	 * 
+	 * @return group of the selected entity
+	 */
 	public static byte group(){ byte b = GROUP; return b;}
+	/**
+	 * 
+	 * @return True if SELECTED flag is true
+	 */
 	public static boolean selected(){boolean b = SELECTED; return b;}
+	/**
+	 * 
+	 * @return True if the selected entity is a boid
+	 */
 	public static boolean boid(){boolean b = BOID; return b;}
-//	public byte getType(){
-//		final byte b = entityType;
-//		return b;
-//	}
-//	public byte getSubType(){
-//		final byte b = entitySubtype;
-//		return b;
-//	}
-//	public byte getGroup(){
-//		final byte b = entityGroup;
-//		return b;
-//	}
-//	public Entity getEntity(){
-//		return entity;
-//	}
 	
 
 }
