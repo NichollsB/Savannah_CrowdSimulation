@@ -198,6 +198,10 @@ public class TileGraphics extends SpriteCache {
 	boolean copyLayers = false;
 	Array<String> layersToCopy = new Array<String>();
 
+
+    public void render(){
+
+    }
     /**
      * Called to update and render the cache. Checks every row of the environment and, if a
      * change is detected, calls the {@link #createCache(int, java.util.HashMap) createCache()} method
@@ -218,33 +222,33 @@ public class TileGraphics extends SpriteCache {
 			
 //			if(infoLayers.equals(this.infoLayers)) return;
 //			else{
-//			if(update){
-				for(int y = 0; y<mapElementsY; y++){
-					if(!cacheRow_Map.containsKey(y)){
-						createCache(y, infoLayers);
-						continue;
-					}
-					else if (update){
-						for(String layer : infoLayers.keySet()){
-							if(!Arrays.equals(this.infoLayers.get(layer)[y], infoLayers.get(layer)[y])){
+			if(update) {
+                for (int y = 0; y < mapElementsY; y++) {
+                    if (!cacheRow_Map.containsKey(y)) {
+                        createCache(y, infoLayers);
+                        continue;
+                    } else {
+                        for (String layer : infoLayers.keySet()) {
+                            if (!Arrays.equals(this.infoLayers.get(layer)[y], infoLayers.get(layer)[y])) {
 //								if(createCache(y, infoLayers)){
-									createCache(y, infoLayers);
-									copyLayers = true;
-									layersToCopy.add(layer);
-									break;
+                                createCache(y, infoLayers);
+                                copyLayers = true;
+                                layersToCopy.add(layer);
+                                break;
 //								}
-							}
-						}
-					}
-				}
-				if(copyLayers){
+                            }
+                        }
+                    }
+                }
+                if (copyLayers) {
 //					System.out.println("Copying)");
-					for(String layer : layersToCopy){
-						copyInformationLayer(layer, infoLayers.get(layer), this.infoLayers);
-					}
-					copyLayers = false;
-					layersToCopy.clear();
-				}
+                    for (String layer : layersToCopy) {
+                        copyInformationLayer(layer, infoLayers.get(layer), this.infoLayers);
+                    }
+                    copyLayers = false;
+                    layersToCopy.clear();
+                }
+            }
             Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
             Gdx.gl.glBlendFunc(Gdx.gl.GL_SRC_ALPHA, Gdx.gl.GL_ONE_MINUS_SRC_ALPHA);
 			this.begin();

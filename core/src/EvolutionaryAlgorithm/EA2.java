@@ -25,7 +25,7 @@ public class EA2 {
 	private double crossRate = 0.3;
 	//Mutation rate
 	private double muteRate = 0.02;
-	public static int geneLength = 11;
+	public static int chromosomeLength = 11;
 	public boolean eaON = false;
 	
 	
@@ -36,11 +36,11 @@ public class EA2 {
 	private ArrayList<Float> fitnessList = new ArrayList<Float>();
 	private ArrayList<Float> probabilityList = new ArrayList<Float>();
 	private Random r = new Random();
-	private Float[] newGene = new Float[geneLength];
-	private Float[] gene1 = new Float[geneLength];
-	private Float[] gene2 = new Float[geneLength];
-	private ArrayList<Float[]> geneList = new ArrayList<Float[]>();
-	private ArrayList<Float[]> newGeneList = new ArrayList<Float[]>();
+	private Float[] newChromosome = new Float[chromosomeLength];
+	private Float[] chromosome1 = new Float[chromosomeLength];
+	private Float[] chromosome2 = new Float[chromosomeLength];
+	private ArrayList<Float[]> chromosomeList = new ArrayList<Float[]>();
+	private ArrayList<Float[]> newChromosomeList = new ArrayList<Float[]>();
 	private Byte currentSpecies = 0;
 	public static Byte totalSpecies = 5;
 	 
@@ -52,7 +52,7 @@ public class EA2 {
 	 public void setup(SimulationManager sm) {
 		this.sm=sm;
 		 
-		 Float[] held = new Float[geneLength];
+		 Float[] held = new Float[chromosomeLength];
 		
 		 for(Byte species = 0; species<totalSpecies; species++){
 			 heldValues.put(species,held);
@@ -79,18 +79,18 @@ public class EA2 {
 			calculateProbabilty();
 			//Generates new chromosome
 			for(int num = 0; num <popNum; num++){
-				Float[] tmp = new Float[geneLength];
-				System.arraycopy(selection(),0 ,tmp , 0, geneLength);	
-				newGeneList.add(tmp);
+				Float[] tmp = new Float[chromosomeLength];
+				System.arraycopy(selection(),0 ,tmp , 0, chromosomeLength);	
+				newChromosomeList.add(tmp);
 			}
 				System.out.println("Held Values " + Arrays.toString(heldValues.get(currentSpecies)));
 			
-			for(Float[] gene : newGeneList) {
+			for(Float[] gene : newChromosomeList) {
 				System.out.println("NEW GENE " + Arrays.toString(gene));
 			}
 			// Replaces the old chromosome with the new
 				for(int j = 0; j<popNum ; j++){
-					population.get(j).setGene(newGeneList.get(j));
+					population.get(j).setChromosome(newChromosomeList.get(j));
 				}
 			}	
 				reset();
@@ -120,8 +120,8 @@ public class EA2 {
 		//System.out.println("population "+ population);
 			calculateFitness();
 			calculateProbabilty();
-			Float[] tmp = new Float[geneLength];
-			System.arraycopy(selection(),0 ,tmp , 0, geneLength);
+			Float[] tmp = new Float[chromosomeLength];
+			System.arraycopy(selection(),0 ,tmp , 0, chromosomeLength);
 			reset();
 			return tmp;
 	}
@@ -133,10 +133,10 @@ public class EA2 {
 	private void reset(){
 		System.out.println("Resetting EA parameters");
 		population.clear();
-		newGeneList.clear();
+		newChromosomeList.clear();
 		fitnessList.clear();
 		probabilityList.clear();
-		geneList.clear();
+		chromosomeList.clear();
 		popNum = 0;
 	}
 	
@@ -262,7 +262,7 @@ public class EA2 {
 			for(int i = 0; i<popNum ; i++){	
 		
 				if(probabilityList.get(i) <=randomValue && randomValue<probabilityList.get(i+1)){	
-					geneList.add(population.get(i).getGene());
+					chromosomeList.add(population.get(i).getChromosome());
 					float newNumberOfOffspring = population.get(i).getNumberOfOffspring();
 					newNumberOfOffspring = newNumberOfOffspring + 1f;
 					population.get(i).setNumberOfOffspring(newNumberOfOffspring);
@@ -299,17 +299,17 @@ public class EA2 {
 		popNum=popNum + 1;
 		//System.out.println("popnumber after "+ popNum);		
 		
-		gene1 = geneList.get(0);
-		gene2 = geneList.get(1);
+		chromosome1 = chromosomeList.get(0);
+		chromosome2 = chromosomeList.get(1);
 		
 		// Passes parents chromosomes to the crossover() method
-		System.out.println("Gene 1 " + Arrays.toString(geneList.get(0)));
-		System.out.println("Gene 2 " + Arrays.toString(geneList.get(1)));
-		crossover(gene1 , gene2);
+		System.out.println("Gene 1 " + Arrays.toString(chromosomeList.get(0)));
+		System.out.println("Gene 2 " + Arrays.toString(chromosomeList.get(1)));
+		crossover(chromosome1 , chromosome2);
 		
-		geneList.clear();
+		chromosomeList.clear();
 		// pass back finished new chromosome
-		return newGene;
+		return newChromosome;
 		
 	}
 	
@@ -320,31 +320,31 @@ public class EA2 {
 	 * @return
 	 */
 	
-	private Float[] crossover(Float[] gene1, Float[] gene2) {
+	private Float[] crossover(Float[] chromosome1, Float[] chromosome2) {
 		System.out.println();
 		System.out.println("CROSSOVER");
 		double rangeMax = 0;
 		double rangeMin = 1;
    
-	        for (int i = 0; i < geneLength; i++) {
+	        for (int i = 0; i < chromosomeLength; i++) {
 	            // Crossover
 	        	double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
 	        	//System.out.println("Random" + randomValue);
 	            if (randomValue <= crossRate) {
 	            	
-	             newGene[i] = gene1[i];
+	            	newChromosome[i] = chromosome1[i];
 	            }
 	            else {
 	          //   System.out.println("Cross at pos "+i);
-	             newGene[i] = gene2[i];
+	            	newChromosome[i] = chromosome2[i];
 	            }
 	        }
 	        //Passes new chromosome to the mutation() method
 	      //  System.out.println("BEFORE " +Arrays.toString( newGene));
-	        mutation(newGene);
+	        mutation(newChromosome);
 	      //  System.out.println("AFTER " +Arrays.toString( newGene));
 	       // pass back finished new chromosome
-	        return newGene;
+	        return newChromosome;
         
 	}
 	
@@ -354,7 +354,7 @@ public class EA2 {
 	 * @return
 	 */
 	
-	private Float[] mutation(Float[] newGene) {
+	private Float[] mutation(Float[] newChromosome) {
 		System.out.println();
 		System.out.println("MUTATION");
 		double rangeMax = 0;
@@ -363,22 +363,22 @@ public class EA2 {
 		float muteValMax = 0;
 		
 		// for each gene if the random number is greater than the mutation rate replace with random value
-		for(int j =0 ; j < geneLength ; j++) {
-			System.out.println("Current "+newGene[j]);
-			muteValMin = 0.7f*newGene[j];
-			muteValMax = 1.3f*newGene[j];
+		for(int j =0 ; j < chromosomeLength ; j++) {
+			System.out.println("Current "+newChromosome[j]);
+			muteValMin = 0.7f*newChromosome[j];
+			muteValMax = 1.3f*newChromosome[j];
 			System.out.println("Max Value "+muteValMax);
 			
 			double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
 			float muteValue = muteValMin + ((muteValMax) - muteValMin) * r.nextFloat();
 
 				if (randomValue <= muteRate){ 
-					newGene[j]= muteValue;
+					newChromosome[j]= muteValue;
 				}
 			}
 			//Passes to the overwriteHeldValues to keep held values the same
-			overwriteHeldValues(newGene);
-			return newGene;	
+			overwriteHeldValues(newChromosome);
+			return newChromosome;	
 	}
 	
 	/**
@@ -387,17 +387,17 @@ public class EA2 {
 	 * @return
 	 */
 	
-	private Float[] overwriteHeldValues(Float[] newGene) {
+	private Float[] overwriteHeldValues(Float[] newChromosome) {
 		//Get array for current species
 		Float[] tmp = heldValues.get(currentSpecies);
 		// Replaces the values if present in Array
-		for(int i = 0 ; i<geneLength ; i++){
+		for(int i = 0 ; i<chromosomeLength ; i++){
 			if(tmp[i] != null){
-				newGene[i]=tmp[i];
+				newChromosome[i]=tmp[i];
 			}
 		}
 		// pass back finished new chromosome
-		return newGene;
+		return newChromosome;
 	}
 	
 	public void setEaOn(Boolean set) {
@@ -406,8 +406,8 @@ public class EA2 {
 	public boolean getEaOn() {
 		return eaON;
 	}
-	public static int getGeneLength() {
-		return geneLength; 
+	public static int getChromosomeLength() {
+		return chromosomeLength; 
 	}
 	public static byte getTotalSpecies() {
 		return totalSpecies; 
