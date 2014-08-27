@@ -40,7 +40,7 @@ public class CarnDefault extends State{
             parent.pushState(boid, new Hunt(parent, bm));
         } else if (boid.age > 10 && boid.hunger < boid.hungerLevel/2 && boid.thirst < boid.thirstLevel/2) {
 //            System.out.println(boid + "\nJust posted Reproduce state ");
-        	System.out.println("EA carn" + ea.getEaOn());
+        	//System.out.println("EA carn" + ea.getEaOn());
                 parent.pushState(boid, new CarnReproduce(parent, bm, ea));
         } else {
 
