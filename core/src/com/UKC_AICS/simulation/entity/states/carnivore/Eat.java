@@ -30,7 +30,7 @@ public class Eat extends State {
             //TODO add checks, make sure corpse is next to boid
             if(food.getMass() > 3f) {
                 food.reduceMass(0.5f);
-                boid.hunger -= 0.4f;
+                boid.hunger -= 2f;
                 return false;
             } else {
                 //no food left on corpse
