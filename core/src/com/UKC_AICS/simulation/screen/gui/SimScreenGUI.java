@@ -346,27 +346,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	return menuTable;
     }
 	
-	private MenuDropdown createFileMenu(final String options[], final String optionsText[], String name, final String identifier){
-    	final MenuDropdown menu = new MenuDropdown(skin, name, identifier);  
-//    	String items[] = {"Load", "Save"};
-    	menu.addItems(optionsText, true);
-    	
-    	menu.addSelectionListener(new MenuSelectListener(){
-    		@Override
-    		public void selectionMade(java.lang.Object menu, java.lang.Object object){
-    			for(int i = 0; i < options.length; i ++){
-    				String option = options[i];
-    				if(option.equalsIgnoreCase((String)object)){
-    					fileChooser.setOptionsText(optionsText[i], "Cancel");
-    					fileChooser.setCommand(option);
-    					fileChooser.setIdentifier(identifier);
-    					fileChooser.open(stage);
-    				}
-    			}
-    		}
-    	});
-    	return menu;
-	}
+	
 
     /**
      * Create the south Table. Consists of buttons for controlling the simulation, including: a play/pause button that will

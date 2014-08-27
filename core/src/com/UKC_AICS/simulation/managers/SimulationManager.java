@@ -14,7 +14,6 @@ import com.UKC_AICS.simulation.entity.ObjectData;
 import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.UKC_AICS.simulation.utils.EnvironmentLoader;
-import com.UKC_AICS.simulation.utils.Outputter;
 import com.UKC_AICS.simulation.utils.StaXParser;
 import com.UKC_AICS.simulation.utils.StaXParserLoad;
 import com.UKC_AICS.simulation.utils.StaxWriter;
@@ -66,7 +65,6 @@ public class SimulationManager extends Manager {
     HashMap<Byte, String> fileLocations;
     HashMap<Byte, float[]> speciesRGB = new HashMap<Byte, float[]>(); 
     
-    private Outputter recorder = new Outputter();
     
     /**
      * Added by ben nicholls - for the creation of objects from ObjectData type/ creation of ObjectData types...
@@ -237,19 +235,7 @@ public class SimulationManager extends Manager {
         boidManager.update(dayIncrement);
         worldManager.update(dayIncrement);
 
-        if(recordSimulation ){
-            try{
-//                simRecorder.recordSim(frames, stateMachine);
-            	System.out.println("Appending record");
-            	recorder.appendOutput(frames, new File("testxml.xml"));
-            }
-            catch (Exception e){
-                System.out.println("Could not record simulation" + e.toString() );
-                e.printStackTrace();
-                stopSimRecording();
-            }
-
-        }
+  
     }
 
     /**
