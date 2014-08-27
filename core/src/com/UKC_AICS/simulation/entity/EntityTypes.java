@@ -1,7 +1,5 @@
 package com.UKC_AICS.simulation.entity;
 
-import com.badlogic.gdx.utils.ObjectMap;
-
 public enum EntityTypes {
 	CORPSE((byte)0),
 	BOID((byte)1),

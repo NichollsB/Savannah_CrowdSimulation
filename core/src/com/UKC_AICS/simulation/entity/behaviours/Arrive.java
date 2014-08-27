@@ -7,9 +7,8 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Emily on 15/07/2014.
- *
+ * <p/>
  * Arrive returns the vector for the boid to arrive on a point, so it's speed will slow as it gets closer.
- *
  */
 public class Arrive extends Behaviour {
 
@@ -22,8 +21,8 @@ public class Arrive extends Behaviour {
         Vector3 vec = new Vector3();
         vec.set(target.cpy().sub(boid.getPosition()));
         float dist = vec.len();
-        if(dist > 0 ) {
-            float speed = boid.maxSpeed * (dist / boid.sightRadius*boid.sightRadius);
+        if (dist > 0) {
+            float speed = boid.maxSpeed * (dist / boid.sightRadius * boid.sightRadius);
             speed = Math.min(boid.maxSpeed, speed);
             vec.nor().scl(speed);
             vec.sub(boid.getVelocity());

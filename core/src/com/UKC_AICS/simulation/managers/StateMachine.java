@@ -1,24 +1,13 @@
 package com.UKC_AICS.simulation.managers;
 
 import EvolutionaryAlgorithm.EA2;
-
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.behaviours.*;
 import com.UKC_AICS.simulation.entity.states.Drink;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.entity.states.Thirsty;
-import com.UKC_AICS.simulation.entity.states.carnivore.ApproachCorpse;
-import com.UKC_AICS.simulation.entity.states.carnivore.CarnDefault;
-import com.UKC_AICS.simulation.entity.states.carnivore.CarnReproduce;
-import com.UKC_AICS.simulation.entity.states.carnivore.Eat;
-import com.UKC_AICS.simulation.entity.states.carnivore.GoForKill;
-import com.UKC_AICS.simulation.entity.states.carnivore.Hunt;
-import com.UKC_AICS.simulation.entity.states.carnivore.Stalk;
-import com.UKC_AICS.simulation.entity.states.herbivore.EatGrass;
-import com.UKC_AICS.simulation.entity.states.herbivore.HerbDefault;
-import com.UKC_AICS.simulation.entity.states.herbivore.Hungry;
-import com.UKC_AICS.simulation.entity.states.herbivore.Panic;
-import com.UKC_AICS.simulation.entity.states.herbivore.Reproduce;
+import com.UKC_AICS.simulation.entity.states.carnivore.*;
+import com.UKC_AICS.simulation.entity.states.herbivore.*;
 
 import java.util.HashMap;
 import java.util.Map;

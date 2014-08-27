@@ -3,7 +3,6 @@ package com.UKC_AICS.simulation.utils;
 import com.UKC_AICS.simulation.entity.ObjectData;
 import com.UKC_AICS.simulation.entity.Species;
 
-import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -11,7 +10,6 @@ import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;

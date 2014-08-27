@@ -1,6 +1,7 @@
 package com.UKC_AICS.simulation.entity.states.carnivore;
 
-import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
 import com.UKC_AICS.simulation.entity.behaviours.Arrive;
 import com.UKC_AICS.simulation.entity.behaviours.Collision;

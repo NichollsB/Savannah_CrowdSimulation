@@ -1,17 +1,16 @@
 package com.UKC_AICS.simulation.utils;
 
 import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.StateMachine;
 import com.badlogic.gdx.math.Vector3;
-import com.UKC_AICS.simulation.entity.states.State;
 
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.*;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

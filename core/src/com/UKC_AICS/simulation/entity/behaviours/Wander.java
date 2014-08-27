@@ -15,7 +15,6 @@ public class Wander extends Behaviour {
     Random rand = new Random();
 
     /**
-     *
      * @param boids   : this list will contain relevant(line of sight wise) boids.
      * @param objects : this list will contain relevant(line of sight wise) objects.
      * @param boid    : the boid that the behaviour is being run for.

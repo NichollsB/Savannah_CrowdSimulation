@@ -1,15 +1,14 @@
 package com.UKC_AICS.simulation.managers;
 
 import EvolutionaryAlgorithm.EA2;
-
 import com.UKC_AICS.simulation.Constants;
-import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Object;
+import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.utils.BoidGrid;
 import com.UKC_AICS.simulation.utils.MathsUtils;
 import com.UKC_AICS.simulation.utils.QuadTree;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
@@ -95,7 +94,7 @@ public class BoidManager extends Manager {
         boid.setPanicLevel(panicLevel);
         boid.setThirstLevel(thirstLevel);
         
-        boid.setChromosome(cohesion, separation, alignment, wander,flockRadius, nearRadius, sightRadius, maxStamina, hungerLevel, thirstLevel, panicLevel);
+        boid.setChromosome(cohesion, separation, alignment, wander, flockRadius, nearRadius, sightRadius, maxStamina, hungerLevel, thirstLevel, panicLevel);
         
         boid.setState(currentState);
         boid.setFertility(fertility);
@@ -229,7 +228,7 @@ public class BoidManager extends Manager {
      * create a copy of a boid and add it straight to the lists..
      *
      * @param oldBoid
-     * @return
+     * @return  a boid
      */
     public Boid createBoid(Boid oldBoid) {
         Boid boid = new Boid(oldBoid);

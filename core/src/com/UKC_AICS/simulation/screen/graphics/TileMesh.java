@@ -1,14 +1,10 @@
 package com.UKC_AICS.simulation.screen.graphics;
 
-import java.util.Arrays;
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Mesh;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.VertexAttribute;
-import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.ObjectMap;
+
+import java.util.Arrays;
 
 
 /**

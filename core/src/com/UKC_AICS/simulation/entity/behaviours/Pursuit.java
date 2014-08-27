@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by James on 17/07/2014.
- *
+ * <p/>
  * Pursuit is a seek that will seek the FUTURE position of the boid based on it's current velocity.
  */
 public class Pursuit extends Behaviour {

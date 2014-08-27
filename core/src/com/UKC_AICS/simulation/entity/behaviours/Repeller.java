@@ -8,8 +8,7 @@ import com.badlogic.gdx.utils.Array;
 /**
  * Created by Emily on 06/07/2014.
  */
-public class Repeller extends Behaviour
-{
+public class Repeller extends Behaviour {
     public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
         tmpVec.set(0, 0, 0);
         tmpVec2.set(0, 0, 0);

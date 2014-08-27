@@ -1,20 +1,16 @@
 package com.UKC_AICS.simulation.screen.gui;
 
-import java.io.File;
-import java.util.HashMap;
-
-import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.ObjectData;
+import com.UKC_AICS.simulation.entity.Species;
+import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.UKC_AICS.simulation.screen.controlutils.HoverListener;
 import com.UKC_AICS.simulation.screen.controlutils.MenuSelectListener;
 import com.UKC_AICS.simulation.screen.controlutils.RenderState;
-import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -22,6 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import java.io.File;
+import java.util.HashMap;
 
 /**
  * Created by James on 02/07/2014.

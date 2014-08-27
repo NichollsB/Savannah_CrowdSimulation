@@ -13,8 +13,8 @@ public class Alignment extends Behaviour {
 //    private static Vector3 tmpVec;
 //    private static Vector3 tmpVec2;
 
-//    @Override
-     public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
+    //    @Override
+    public Vector3 act(Array<Boid> boids, Array<Entity> objects, Boid boid) {
         tmpVec.set(0, 0, 0); //will hold returnable
         tmpVec2.set(0, 0, 0); //will hold temporary value for running sum of velocity
 
@@ -24,7 +24,7 @@ public class Alignment extends Behaviour {
             for (int i = 0; i < boids.size; i++) {
                 b = boids.get(i);
 
-                if(b == null || boid == null) {
+                if (b == null || boid == null) {
                     System.out.println("one of the boids is null! " + i);
                 }
 
@@ -41,7 +41,7 @@ public class Alignment extends Behaviour {
                     num++;
                 }
             }
-            if(num > 0) {
+            if (num > 0) {
                 tmpVec.scl(1.0f / num); //do scaling to find average boid velocity
                 tmpVec.nor();
                 tmpVec.scl(boid.maxSpeed);
