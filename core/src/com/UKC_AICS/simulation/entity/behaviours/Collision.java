@@ -35,8 +35,6 @@ public class Collision extends Behaviour {
         throw new Error("Collision is not to be used in this manner. Try static access Collision.act(Array<Entity> targets, Boid boid)");
     }
 
-
-
     /**
      * For collision avoidance with terrain along boid trajectory
      * @param boid that is doing the collision checking
@@ -47,8 +45,6 @@ public class Collision extends Behaviour {
         MAX_AVOID_FORCE = boid.maxForce;
         tmpVec.set(boid.getPosition());
         tmpVec2.set(boid.getVelocity());
-
-
 
         ArrayList<Integer> cell = cellInPath(tmpVec.x, tmpVec.y, tmpVec2.x, tmpVec2.y);
         if(cell!=null)

@@ -91,6 +91,7 @@ public class Graphics {
 
 //	private Texture test = new Texture(Gdx.files.internal("/data/grass_tile_x16.png"));
     boolean created = false;
+
 	/**
 	 * Update and render the entity sprites and background graphics, depending on the
      * {@link com.UKC_AICS.simulation.screen.controlutils.RenderState RenderState}. While in
@@ -101,7 +102,7 @@ public class Graphics {
 	 * @param batch SpriteBatch used to render the boid and entity sprites
 	 * @param viewRect Rectangle used to specify the graphics scissors. Prevents the rendering beyond the scissor bounds
 	 */
-	public boolean update(SpriteBatch batch, Rectangle viewRect){
+	public boolean update(SpriteBatch batch, Rectangle viewRect, boolean update){
 			if(spriteManager.update() && !RenderState.TILESTATE.equals(RenderState.State.OFF)){
                 Gdx.gl.glDepthMask(false);
                 //enable blending, for alpha
@@ -117,13 +118,13 @@ public class Graphics {
             			}
                         if(texture!=null) {
                             grassMesh.createMesh(tileMap.get("grass"), 0, 0, Constants.TILE_SIZE, Constants.TILE_SIZE,
-                                    texture, true, 10, 10, new Color(0.55f, 0.7f, 0.41f, 1f));
+                                    texture, true, 10, 10, new Color(0.7f, 0.95f, 0.56f, 1f));
                             waterMesh.createMesh(tileMap.get("water"), 0, 0, Constants.TILE_SIZE, Constants.TILE_SIZE, Color.TEAL);
                             byte g[][] = new byte[tileMap.get("water").length][tileMap.get("water")[0].length];
                             for(byte b[] : g){
                                 Arrays.fill(b, (byte)100);
                             }
-                            groundMesh.createMesh(g, 0, 0, Constants.TILE_SIZE, Constants.TILE_SIZE, new Color(0.28f, 0.18f, 0.08f,1f));
+                            groundMesh.createMesh(g, 0, 0, Constants.TILE_SIZE, Constants.TILE_SIZE, new Color(0.38f, 0.28f, 0.18f,1f));
                             created = true;
                         }
                     }
@@ -133,46 +134,20 @@ public class Graphics {
                 if(RenderState.TILESTATE.equals(RenderState.State.MESH)){
                     if(created){
                         //update the mesh grid (setVertices again with the new verts)
-                        grassMesh.update(tileMap.get("grass"));
+                        if(update)
+                            grassMesh.update(tileMap.get("grass"));
 //                        waterMesh.update(tileMap.get("water"));
 //                        meshRenderer.renderMesh(groundMesh, camera);
                         meshRenderer.renderMeshes(meshes, camera);
                     }
 
                 }
-
-//                if(!RenderState.TILESTATE.equals(RenderState.State.MESH)) {
-//                    batch.begin();
-//                    Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
-//                    if (background == null) {
-//                        background = spriteManager.getTileRegion("ground");
-//                    }
-//                    try {
-//                        int iNum = renderWidth / background.originalWidth;
-//                        int jNum = renderHeight / background.originalHeight;
-//
-//                        for (int i = 0; i < iNum; i++) {
-//                            for (int j = 0; j < jNum; j++) {
-//                                batch.draw(background, i * background.originalWidth, j * background.originalHeight,
-//                                        background.originalWidth + 1, background.originalHeight + 1);
-//                            }
-//                        }
-//                    } catch (NullPointerException e) {
-//                        System.out.println("Missing GROUND environment layer");
-//                    }
-//                    batch.end();
-//                }
-                
-                
-				if(RenderState.TILESTATE.equals(RenderState.State.TILED) && dynamicTiles != null){
+				else if(RenderState.TILESTATE.equals(RenderState.State.TILED) && dynamicTiles != null){
 					batch.begin();
 	                if(ground != null)
 						ground.draw(batch);
 	                batch.end();
-					dynamicTiles.updateTiles(batch, true, tileMap);
-					
-                    Gdx.gl.glEnable(Gdx.gl.GL_BLEND);
-                   
+					dynamicTiles.updateTiles(batch, update, tileMap);
 				}
 
 		    	batch.begin();
@@ -201,7 +176,6 @@ public class Graphics {
 				}
 				float size = 0f;
 				if(boidsArray.size>0){
-					Byte boidSelection = null;
 					for(Boid boid : boidsArray){
 
                         size = boid.getSize()/30;
@@ -220,19 +194,15 @@ public class Graphics {
 						sprite = spriteManager.getBoid_Sprite(boid.getSpecies());//.getBoid_DefaultSprite();
 						if(boidColours.containsKey(boid.getSpecies())){
 							float colour[] = boidColours.get(boid.getSpecies()).clone();
-
                             colour[0] = (colour[0] > 0f) ? (colour[0] + ((float) boid.tertiaryType * 0.03f)) : colour[0];
                             colour[1] = (colour[1] > 0f) ? (colour[1] + ((float) boid.tertiaryType * 0.03f)) : colour[1];
                             colour[2] = (colour[2] > 0f) ? (colour[2] + ((float) boid.tertiaryType * 0.03f)) : colour[2];
-
 							sprite.setColor(colour[0], colour[1], colour[2], 1f);
-
-							sprite.setScale(size);
 						}
 						else{
 							sprite.setColor(Color.WHITE);
 						}
-
+                        sprite.setScale(size);
 						//USING PRE-DEFINED SPRITES METHOD
 //						sprite = spriteManager.getBoid_Sprite(boid.getSpecies());
 						updateSpritePosition(boid, sprite);
