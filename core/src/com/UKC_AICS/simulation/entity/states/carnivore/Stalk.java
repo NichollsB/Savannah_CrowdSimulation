@@ -55,14 +55,10 @@ public class Stalk extends State {
                         targetPos.add(tv);
 
                         steering.set(Seek.act(boid, targetPos));
-//                    System.out.println("Target stalked: " + target.getSpecies() + " species, " + target.position.x + ", " + target.position.y);
                     } else {
                         steering.set(tempVec);
                         return true;
                     }
-                    //Add collision avoidance
-//                    steering.add(Collision.act(collisionObjects, boid));
-//                    steering.add(Collision.act(boid));
 
                     boid.setAcceleration(steering);
                     //Check is boid is still in list.  If not pop to hunt (for corpse)

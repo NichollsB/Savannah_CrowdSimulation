@@ -57,7 +57,7 @@ public class GoForKill extends State {
                     Vector3 tempVec = new Vector3(0f,0f,0f);
                     tempVec.add(Collision.act(collisionObjects, boid));
                     tempVec.add(Collision.act(boid));
-                            //pursue prey
+                    //pursue prey
                     steering.set(0f, 0f, 0f);
                     if(tempVec.equals(steering)) {
                         steering.add(Pursuit.act(boid, target));
@@ -66,13 +66,8 @@ public class GoForKill extends State {
                         steering.set(tempVec);
                         return true;
                     }
-                    //Add collision avoidance
-//                    steering.add(Collision.act(collisionObjects, boid));
-//                    steering.add(Collision.act(boid));
 
                     boid.setAcceleration(steering);
-
-//                    System.out.println("Kill chase: " + target.getSpecies() + " species, " + target.position.x + ", " + target.position.y);
                     return false;
                 }
                 else {

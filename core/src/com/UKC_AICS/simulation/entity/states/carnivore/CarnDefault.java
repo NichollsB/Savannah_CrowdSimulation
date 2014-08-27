@@ -84,7 +84,6 @@ public class CarnDefault extends State{
                     }
                 }
 
-
                 steering.set(0f, 0f, 0f);
 
                 float coh = SimulationManager.speciesData.get(boid.getSpecies()).getCohesion();
@@ -96,9 +95,6 @@ public class CarnDefault extends State{
                 steering.add(behaviours.get("alignment").act(nearBoids, dummyObjects, boid).scl(ali));
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
                 steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
-
-//                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
-//                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
 
                 boid.setAcceleration(steering);
 
