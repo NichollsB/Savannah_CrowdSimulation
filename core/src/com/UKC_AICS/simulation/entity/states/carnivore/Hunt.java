@@ -59,7 +59,6 @@ public class Hunt extends State {
             collisionObjects.addAll(nearBoids);   //add boids nearby to collision check
 
             tempVec = Collision.act(collisionObjects, boid);
-//            tempVec = behaviours.get("collision").act(collisionObjects, boid);
             tempVec.add(Collision.act(boid));
 
 
@@ -115,9 +114,6 @@ public class Hunt extends State {
                 steering.add(behaviours.get("separation").act(closeBoids, dummyObjects, boid).scl(sep));
                 steering.add(behaviours.get("wander").act(nearBoids, dummyObjects, boid).scl(wan));
 
-//                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
-//                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
-
                 boid.setAcceleration(steering);
 
             } else {
@@ -132,9 +128,6 @@ public class Hunt extends State {
                     sameSpecies++;
                     rmList.add(target);
                 }
-//                else if(!Collision.checkVision(boid, new Vector3(target.getPosition().x, target.getPosition().y, 0f))){
-//                    rmList.add(target);
-//                }
 
             }
             //remove all same species/byte boids from possible target array

@@ -74,7 +74,7 @@ public class CarnReproduce extends State {
                         nearest = other;
                     }
                 }
-                if(tempVec.len2() < 10f){ // && nearest.hunger < nearest.hungerLevel/2 && nearest.thirst < nearest.hungerLevel/2) {
+                if(tempVec.len2() < 10f){
                     Boid baby = new Boid(boid);
                     baby.setAge(0);
                     if(chromosome[0]!=null){
@@ -98,7 +98,6 @@ public class CarnReproduce extends State {
 
                 if(steering.equals(tempVec)) {
                     steering.add(Arrive.act(boid, nearest.getPosition()));
-//                steering.add(Collision.act(boid));
                 }
                 else {
                     steering.set(tempVec);
@@ -139,12 +138,6 @@ public class CarnReproduce extends State {
                 else {
                     steering.set(tempVec);
                 }
-//                steering.add(Collision.act(collisionObjects, boid));
-//                steering.add(Collision.act(boid));
-
-//                steering.add(behaviours.get("repeller").act(nearBoids, dummyObjects, boid).scl(0.5f));
-//                steering.add(behaviours.get("attractor").act(nearBoids, dummyObjects, boid).scl(0.5f));
-
                 boid.setAcceleration(steering);
             }
 

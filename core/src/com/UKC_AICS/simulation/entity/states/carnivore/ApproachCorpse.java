@@ -50,8 +50,6 @@ public class ApproachCorpse extends State {
                             steering.set(tempVec);
                             return true;
                         }
-//                        steering.add(Collision.act(nearEntities, boid));
-//                        steering.add(Collision.act(boid));
                         boid.setAcceleration(steering);
                     } else {
                         //collision/proximity check with corpse then push to Eat
