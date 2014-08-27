@@ -101,21 +101,11 @@ public class BoidManager extends Manager {
         boid.setFertility(fertility);
         boid.setNumberOfOffspring(offspring);
         
-      //  System.out.println("Statestring" +states);
         states.replaceAll("[^a-zA-Z0-9]","");
         states=states.substring(1,states.length()-1);
         String[] strArray = (states.split(", "));
-       // for( String s : strArray){
-        //	System.out.println("bm"+s);
-       // }
-        
-        stateMachine.retriveStates(boid, strArray);
-        
-       
-       // System.out.println("stamina " + stamina);
-       // System.out.println("maxStamina " + maxStamina);
-      //  System.out.println("states " + states);
-        
+
+        stateMachine.retriveStates(boid, strArray);        
         addToLists(boid);
         
         
@@ -187,16 +177,12 @@ public class BoidManager extends Manager {
         float min = 0f;
         float maxStartingHungerLevel = boid.hungerLevel;
         float maxStartingThirstLevel = boid.thirstLevel;
-        System.out.println("maxStartingHungerLevel " + maxStartingHungerLevel);
-        System.out.println("maxStartingThirstLevel " + maxStartingThirstLevel);
         float startHunger = rand.nextFloat() * (maxStartingHungerLevel - min) + min;
         float startThirst = rand.nextFloat() * (maxStartingThirstLevel - min) + min;
-        System.out.println("startHunger " +startHunger);
-        System.out.println("startThirst " +startThirst);
+
         boid.hunger = startHunger;
         boid.thirst = startThirst;
-        System.out.println( "boid.hunger "+boid.hunger);
-        System.out.println( "boid.thirst" + boid.thirst);
+
         
         
 
@@ -255,16 +241,8 @@ public class BoidManager extends Manager {
      * <p/>
      * and clears the boids list.
      */
-    public void clearBoidList() {
-
-  //    for(Boid b : boids){
-  //      stateMachine.removeBoid(b);
-    //    boidGrid.removeBoid(b);
-   //   }
-        
-
+    public void clearBoidList(){
         setBoidGrid(new BoidGrid(80, Constants.mapWidth, Constants.mapHeight));
-        System.out.println("clearing list. ea " + ea);
         stateMachine = new StateMachine(this, ea);
 
         boids = new Array<Boid>();

@@ -69,11 +69,6 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 	 */
 	
 		public void setStage(EA2 ea) {
-			
-			for(Byte i = 0 ; i< 4; i++){
-				//System.out.println("EA stage" + Arrays.toString(ea.heldValues.get(i)));
-			}
-			
 			stage = this;
 			Table t2 = new Table();
 			t2.setSize(100, 200);
@@ -153,15 +148,12 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			//Add dropdown and buttons
 			final String selection= dropdown.getSelected();
 			setSpeciesInfo(dropdown,selection, options, ea);
-			//System.out.println("Selection " + selection);
 			
 			dropdown.addListener(new ChangeListener(){
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
 					//Get table values
 					String newSelection= dropdown.getSelected();
-					
-				//	System.out.println("Selection new " + newSelection);
 					checkBoxHoldAll.setChecked(false);
 					setSpeciesInfo(dropdown,newSelection,options, ea);
 					
@@ -299,9 +291,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			 if(checkBoxes.get(i).isChecked()){
 				try{
 					if(!textField.get(i).getText().isEmpty() ){
-					//	System.out.println("I am not empty"); 
-						newheldvalues[i] = Float.parseFloat(textField.get(i).getText());
-									
+						newheldvalues[i] = Float.parseFloat(textField.get(i).getText());			
 					} 
 					else{
 						newheldvalues[i] = null;
@@ -314,19 +304,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 			 
 			}
 			 System.arraycopy(newheldvalues, 0, currentVals ,0 , geneLength);
-			 
-			 	//System.out.println("Before");
-			 	//for(byte b = 0 ; b<totalSpecies; b++){
-			 	//	System.out.println(Arrays.toString(ea.heldValues.get(b))); 
-			 	//}
-			 	
 			 	ea.heldValues.put(b ,newheldvalues);
-			 	
-			 	// System.out.println("After");
-			 	//for(byte b = 0 ; b<totalSpecies; b++){
-			 		//System.out.println(Arrays.toString(ea.heldValues.get(b))); 
-			 	//}
-			 	
 				setTableInfo(ea);	       		        
 		}
 	
@@ -339,24 +317,14 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 		 */
 		
 		public void setSpeciesInfo(SelectBox<String> dropdown,String newSelection,String[] options, EA2 ea) {
-			//System.out.println("SET SPECIES INFO CALLED");
 			int j =0;
 			
 			for(byte i=0;i<totalSpecies;i++){
 				if(newSelection.equals(options[j])) {
-			//	System.out.println("option "+options[j]);
-				b = i;
-			//	System.out.println("Before");
-			//	System.out.println("TempHeldValues " + Arrays.toString(ea.heldValues.get(b)));
-			//	System.out.println("Current " + Arrays.toString(currentVals));
-				
-				System.arraycopy(ea.heldValues.get(b), 0, currentVals ,0 , geneLength);
-				
-			//	System.out.println("After");
-			///	System.out.println("TempHeldValues " + Arrays.toString(tempHeldValues.get(b)));
-			//	System.out.println("Current " + Arrays.toString(currentVals));
+					b = i;
+					System.arraycopy(ea.heldValues.get(b), 0, currentVals ,0 , geneLength);
 				}
-			j++;
+				j++;
 			}
 			setTableInfo(ea);
 			j=0;
@@ -368,24 +336,16 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 		 */
 		
 		public void setTableInfo(EA2 ea) {
-		//	System.out.println("Currentvals"+Arrays.toString(currentVals));
-		//	System.out.println("Before changes");	
 			String val = null;
-			
 			for(int i = 0 ; i < labels.size();i++){
 				if(currentVals[i]!=null && !currentVals[i].isNaN()){
-					
 					 val = Float.toString(currentVals[i]);
 				}
 				else{
 					 val = "null";
 				}
-				
-				
 				labelVals.get(i).setText(val);
 			}
-			
-			
 			crossValue=""+ ea.getCrossRate();
 			muteValue=""+ ea.getMuteRate();
 			

@@ -73,17 +73,8 @@ import java.util.Stack;
 	    //All information stored in the boid must be converted to string before it can be written to the file
 	    	for(Boid b : BoidManager.boids) {
 	 
-	    	//	System.out.println("boid stack " +stateMachine.getStack(b) );
-	    		
 				Stack<State> stateStore = stateMachine.getStack(b);
-				
-				//System.out.println("STATESTORE" + stateStore);
-						
-				
 				String states = stateStore.toString();
-			
-				//System.out.println("boid stack " +stateMachine.boidStates.get(b) );
-	    	
 				
 	    		int ageInt = b.getAge();
 	    		String age = "" + ageInt;
@@ -122,7 +113,6 @@ import java.util.Stack;
 	    		String sightRadius = "" + sightRadiusVal;
 	    		
 	    		float sizeVal = b.getSize();
-	    		//System.out.println("SIZE SAVE " + sizeVal);
 	    		String size = "" + sizeVal;
 	    		
 	    		float staminaVal = b.getStamina();
