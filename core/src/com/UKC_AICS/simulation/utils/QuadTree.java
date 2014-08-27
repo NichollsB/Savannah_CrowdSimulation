@@ -254,7 +254,7 @@ public class QuadTree {
      *  returns a list of objects from the quadtree division area.
      * @param returnObjects
      * @param point
-     * @return
+     * @return array of entities
      */
     public Array<Entity> retrieveObjects(Array<Entity> returnObjects, Vector2 point) {
         int index = getIndex(point);

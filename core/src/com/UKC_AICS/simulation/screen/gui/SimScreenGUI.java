@@ -25,8 +25,8 @@ import java.util.HashMap;
 /**
  * Created by James on 02/07/2014.
  * Class for the creation of gui for simulationScreen
- * @author ben Nicholls bn65@kent.ac.uk
- * @author James Young
+ * Initially created by James Young, but primarily developed by Ben Nicholls
+ * @author Ben Nicholls bn65@kent.ac.uk
  */
 public class SimScreenGUI extends Stage implements HoverListener {
 	final private ScreenViewport uiViewport = new ScreenViewport();
