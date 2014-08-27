@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 /**
- * Created by Matt on 08/07/2014.
+ * @author M J Odinga
  */
 
 public class StaXParserLoad {
@@ -199,8 +199,8 @@ public class StaXParserLoad {
                                 .equals(SIZE)) {
                             event = eventReader.nextEvent();
                             size = Float.valueOf(event.asCharacters().getData());
-                            System.out.println("--------------------------LOOK AT ME!!!!!---------------------------------------");
-                            System.out.println("SIZE PARSER LOAD " + size);
+                         //   System.out.println("--------------------------LOOK AT ME!!!!!---------------------------------------");
+                         //   System.out.println("SIZE PARSER LOAD " + size);
                             continue;
                         }
                     }
@@ -353,7 +353,6 @@ public class StaXParserLoad {
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
                     if (endElement.getName().getLocalPart() == (BOID)) {
-                        
 						bm.createBoid(spec, group, age, bDay, fltArray[0], fltArray[1], fltArray[2], fltArray2[0], fltArray2[1], fltArray2[2],cohesion, separation, alignment, wander,
                         		sightRadius, nearRadius, flockRadius, size, hunger, thirst, panic, stamina, maxStamina, hungerLevel, thirstLevel, panicLevel, currentState, fertility, states,offspring);
                     }

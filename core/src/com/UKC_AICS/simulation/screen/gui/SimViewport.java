@@ -4,6 +4,12 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
+/**
+ * Viewport class for the simulation cameras
+ * 
+ * @author Ben Nicholls bn65@kent.ac.uk
+ *
+ */
 public class SimViewport extends ScalingViewport {
 
 	public SimViewport(Scaling scaling, float worldWidth, float worldHeight,

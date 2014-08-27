@@ -57,10 +57,10 @@ public class Reproduce extends State {
             if(potentialMates.size > 0  ) {
             	  //TODO CALL EA HERE
                     // POSSIBLE MATES = POPULATION
-                    System.out.print("pm " + potentialMates);
+                    //System.out.print("pm " + potentialMates);
                     if(ea.getEaOn()){
                     	chromosome = ea.createBaby(boid,potentialMates);
-                    	System.out.println("Baby Gene "+Arrays.toString(chromosome));
+                    	//System.out.println("Baby Gene "+Arrays.toString(chromosome));
                     }
                 //pick the closest and go towards it!
                 Boid nearest = potentialMates.pop();
@@ -78,13 +78,13 @@ public class Reproduce extends State {
 
                 }
                 if(tempVec.len2() < 10f) { // && nearest.hunger < 40 && nearest.thirst < 40) {
-                    System.out.println("boid made a baby " + boid.getSpecies());
+                   // System.out.println("boid made a baby " + boid.getSpecies());
 //                    bm.createBoid(boid); //create copy of self.
                     Boid baby = new Boid(boid);
                     baby.setAge(0);
-                    System.out.println(Arrays.toString(chromosome));
+                  //  System.out.println(Arrays.toString(chromosome));
                     if(chromosome[0]!=null){
-                    	System.out.println("not empty");
+                    //	System.out.println("not empty");
                     	baby.setChromosome(chromosome);
                     }
                     bm.storeBoidForAddition(baby);

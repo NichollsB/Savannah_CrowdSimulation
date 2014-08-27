@@ -100,13 +100,13 @@ public class BoidManager extends Manager {
         boid.setFertility(fertility);
         boid.setNumberOfOffspring(offspring);
         
-        System.out.println("Statestring" +states);
+      //  System.out.println("Statestring" +states);
         states.replaceAll("[^a-zA-Z0-9]","");
         states=states.substring(1,states.length()-1);
         String[] strArray = (states.split(", "));
-        for( String s : strArray){
-        	System.out.println("bm"+s);
-        }
+       // for( String s : strArray){
+        //	System.out.println("bm"+s);
+       // }
         
         stateMachine.retriveStates(boid, strArray);
         

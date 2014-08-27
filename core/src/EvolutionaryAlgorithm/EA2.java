@@ -2,10 +2,8 @@ package EvolutionaryAlgorithm;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.HashMap;
-import java.lang.Object;
 import java.lang.Math;
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.managers.BoidManager;
@@ -13,7 +11,7 @@ import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * Created by Matt *
+ * @author M J Odinga
  */
 
 public class EA2 {
@@ -46,7 +44,7 @@ public class EA2 {
 	 
 	 /**
 	  * Called after creation in SimulationManager to create the heldValue constructs
-	  * @param sm
+	  * @param SimulationManager sm
 	  */
 	
 	 public void setup(SimulationManager sm) {
@@ -65,12 +63,12 @@ public class EA2 {
 	  */
 	 
 	public void Evolve() {	
-		System.out.println("------------------------------------------------------------------------------------------------------------");
-		System.out.println("EVOLVE CALLED");
-		System.out.println("------------------------------------------------------------------------------------------------------------");
+	//	System.out.println("------------------------------------------------------------------------------------------------------------");
+	//	System.out.println("EVOLVE CALLED");
+	//	System.out.println("------------------------------------------------------------------------------------------------------------");
 		for(byte i =0 ; i<totalSpecies; i++){
 			currentSpecies = i ;
-			System.out.println("Species "+ currentSpecies);
+			//System.out.println("Species "+ currentSpecies);
 			
 			validCheck();
 			
@@ -83,11 +81,11 @@ public class EA2 {
 				System.arraycopy(selection(),0 ,tmp , 0, chromosomeLength);	
 				newChromosomeList.add(tmp);
 			}
-				System.out.println("Held Values " + Arrays.toString(heldValues.get(currentSpecies)));
+				//System.out.println("Held Values " + Arrays.toString(heldValues.get(currentSpecies)));
 			
-			for(Float[] gene : newChromosomeList) {
-				System.out.println("NEW GENE " + Arrays.toString(gene));
-			}
+			//for(Float[] chomosome : newChromosomeList) {
+				//System.out.println("NEW GENE " + Arrays.toString(gene));
+			//}
 			// Replaces the old chromosome with the new
 				for(int j = 0; j<popNum ; j++){
 					population.get(j).setChromosome(newChromosomeList.get(j));
@@ -101,7 +99,7 @@ public class EA2 {
 	 * Creates the chromosome for the new boid made through the reproduction states
 	 * @param parent
 	 * @param potentialMates
-	 * @return
+	 * @return newChromosome
 	 */
 	
 	public Float[] createBaby(Boid parent, Array<Boid> potentialMates) {
@@ -131,7 +129,7 @@ public class EA2 {
 	 */
 
 	private void reset(){
-		System.out.println("Resetting EA parameters");
+	//	System.out.println("Resetting EA parameters");
 		population.clear();
 		newChromosomeList.clear();
 		fitnessList.clear();
@@ -155,13 +153,13 @@ public class EA2 {
 			}
 		}
 		
-		System.out.println();
+		//System.out.println();
 		
 		for(Boid b : population) {
 		//System.out.println(b.getAge());
 		}
 		
-		System.out.println("popnum " + popNum);
+		//System.out.println("popnum " + popNum);
 	}
 
 	/**
@@ -203,7 +201,7 @@ public class EA2 {
 				//System.out.println("fitness "+ fitness);
 			
 			} else{
-				System.out.println("Error ");
+			//	System.out.println("Error ");
 			}
 							
 			//Add to fitnessList
@@ -240,7 +238,7 @@ public class EA2 {
 	
 	/**
 	 * Selection selects the boids to reproduce through the roulette wheel method of selection
-	 * @return the new Chromosome
+	 * @return newChromosome
 	 */
 	private  Float[] selection() {
 		//System.out.println();
@@ -253,7 +251,7 @@ public class EA2 {
 		int parentPos = 0;
 		
 		for(int pairRun = 0 ; pairRun <2 ; pairRun++){
-			System.out.println("Run=" + pairRun);
+			//System.out.println("Run=" + pairRun);
 			
 			double rangeMax = probabilityList.get(popNum-1);
 			//System.out.println("rangeMax "+ rangeMax);
@@ -303,8 +301,8 @@ public class EA2 {
 		chromosome2 = chromosomeList.get(1);
 		
 		// Passes parents chromosomes to the crossover() method
-		System.out.println("Gene 1 " + Arrays.toString(chromosomeList.get(0)));
-		System.out.println("Gene 2 " + Arrays.toString(chromosomeList.get(1)));
+		//System.out.println("Gene 1 " + Arrays.toString(chromosomeList.get(0)));
+		//System.out.println("Gene 2 " + Arrays.toString(chromosomeList.get(1)));
 		crossover(chromosome1 , chromosome2);
 		
 		chromosomeList.clear();
@@ -317,12 +315,12 @@ public class EA2 {
 	 * Crosses the chromosomes of the parents to form a new chromosome
 	 * @param gene1
 	 * @param gene2
-	 * @return
+	 * @return newChromosome
 	 */
 	
 	private Float[] crossover(Float[] chromosome1, Float[] chromosome2) {
-		System.out.println();
-		System.out.println("CROSSOVER");
+		//System.out.println();
+		//System.out.println("CROSSOVER");
 		double rangeMax = 0;
 		double rangeMin = 1;
    
@@ -350,13 +348,11 @@ public class EA2 {
 	
 	/**
 	 * Mutates the new chromosome and passes back up the change
-	 * @param newGene
-	 * @return
+	 * @param newChromosome
+	 * @return newChromosome
 	 */
 	
 	private Float[] mutation(Float[] newChromosome) {
-		System.out.println();
-		System.out.println("MUTATION");
 		double rangeMax = 0;
 		double rangeMin = 1;
 		float muteValMin = 0;
@@ -364,10 +360,10 @@ public class EA2 {
 		
 		// for each gene if the random number is greater than the mutation rate replace with random value
 		for(int j =0 ; j < chromosomeLength ; j++) {
-			System.out.println("Current "+newChromosome[j]);
+			//System.out.println("Current "+newChromosome[j]);
 			muteValMin = 0.7f*newChromosome[j];
 			muteValMax = 1.3f*newChromosome[j];
-			System.out.println("Max Value "+muteValMax);
+			//System.out.println("Max Value "+muteValMax);
 			
 			double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
 			float muteValue = muteValMin + ((muteValMax) - muteValMin) * r.nextFloat();
@@ -383,8 +379,8 @@ public class EA2 {
 	
 	/**
 	 * Overwrites the values in the mutation to held values
-	 * @param newGene
-	 * @return
+	 * @param newChromosome
+	 * @return newChromosome
 	 */
 	
 	private Float[] overwriteHeldValues(Float[] newChromosome) {
@@ -400,27 +396,72 @@ public class EA2 {
 		return newChromosome;
 	}
 	
+	/**
+	 * Sets the EA status to on or off
+	 * @param set
+	 */
+	
 	public void setEaOn(Boolean set) {
 		eaON = set;
 	}
+	
+	/**
+	 * Returns the current status of the EA on or off corresponding to true and false respectively.
+	 * @return eaON
+	 */
+	
 	public boolean getEaOn() {
 		return eaON;
 	}
+	
+	/**
+	 * Returns the length of the float array which contains values to be evolved
+	 * @return chromosomeLength
+	 */
+	
 	public static int getChromosomeLength() {
 		return chromosomeLength; 
+		
+	/**
+	* Returns the total number of species in the simulation
+	* @return total species
+	*/
+		
 	}
 	public static byte getTotalSpecies() {
 		return totalSpecies; 
+		
+	/**
+	 * Sets the crossover rate for the EA	
+	 */
+		
 	}
 	public void setCrossRate(double newCross){
 		crossRate= newCross;
 	}
+	
+	/**
+	 * Gets the current value of the EA crossover rate
+	 * @return crossRate
+	 */
+	
 	public double getCrossRate(){
 		return crossRate;
 	}
+	
+	/**
+	 * Set the mutation rate for the EA
+	 * @param newMute
+	 */
+	
 	public void setMuteRate(double newMute){
 		muteRate= newMute;
 	}
+	
+	/**
+	 * Returns the current mutation rate
+	 * @return muteRate
+	 */
 	public double getMuteRate(){
 		return muteRate;
 	}

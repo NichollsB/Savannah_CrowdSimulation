@@ -56,13 +56,12 @@ public class CarnReproduce extends State {
             }
             //TODO need steering to find mates
             if(potentialMates.size > 0  ) {
-            	 //TODO CALL EA HERE
                 // POSSIBLE MATES = POPULATION
-                System.out.print("pm " + potentialMates);
-                System.out.print("EA ON" + ea.getEaOn());
+               // System.out.print("pm " + potentialMates);
+               // System.out.print("EA ON" + ea.getEaOn());
                 if(ea.getEaOn()){
                 	chromosome = ea.createBaby(boid,potentialMates);
-                	System.out.println("Baby Gene "+Arrays.toString(chromosome));
+                	//System.out.println("Baby Gene "+Arrays.toString(chromosome));
                 }
                 //pick the closest and go towards it!
                 Boid nearest = potentialMates.pop();
@@ -79,12 +78,12 @@ public class CarnReproduce extends State {
                     }
                 }
                 if(tempVec.len2() < 10f){ // && nearest.hunger < nearest.hungerLevel/2 && nearest.thirst < nearest.hungerLevel/2) {
-                    System.out.println("CARNIVORE boid made a baby " + boid.getSpecies());
+                   // System.out.println("CARNIVORE boid made a baby " + boid.getSpecies());
                     Boid baby = new Boid(boid);
                     baby.setAge(0);
-                    System.out.println(Arrays.toString(chromosome));
+                   // System.out.println(Arrays.toString(chromosome));
                     if(chromosome[0]!=null){
-                    	System.out.println("not empty");
+                    	//System.out.println("not empty");
                     	baby.setChromosome(chromosome);
                     }
                     bm.storeBoidForAddition(baby);
