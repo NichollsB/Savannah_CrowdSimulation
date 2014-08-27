@@ -22,8 +22,8 @@ import static com.UKC_AICS.simulation.Constants.*;
  */
 public abstract class EnvironmentLoader {
 	
-	private static final String defaultPackFile_path = "data/Maps/EnvSettings.txt";
-	private static final String defaultMapSheet_path = "data/Maps/EnvSettings.png";
+	private static final String defaultPackFile_path = "data/Maps/newMap.txt";
+	private static final String defaultMapSheet_path = "data/Maps/newMap.png";
 	private static String atlasPath = defaultPackFile_path;
 	private static String mapPath = defaultMapSheet_path;
 	

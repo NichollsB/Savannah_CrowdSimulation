@@ -3,15 +3,15 @@
 <!--xml file for species based information-->
 <settings>
     <species name="zebra">
-        <number>30</number> <!-- the quantity of this species you want. -->
+        <number>60</number> <!-- the quantity of this species you want. -->
         <byte>0</byte>  <!-- this is the sub-type -->
 
         <spritergb r = "0" g="0" b="0.6"/> <!-- the colour of the sprite -->
         <diet>herbivore</diet> <!-- carnivore or herbivore -->
 
         <sightRadius>160f</sightRadius> <!-- the distance they can see -->
-        <flockRadius>100f</flockRadius> <!-- the distance they will try and flock within -->
-        <nearRadius>40f</nearRadius> <!-- the distance within which they will try to avoid others-->
+        <flockRadius>90f</flockRadius> <!-- the distance they will try and flock within -->
+        <nearRadius>350f</nearRadius> <!-- the distance within which they will try to avoid others-->
         <maxSpeed>1.5f</maxSpeed> <!-- max speed per tick -->
         <maxForce>0.04f</maxForce> <!-- max force applied per turn.-->
 
@@ -27,9 +27,9 @@
         <alignment>0.5f</alignment> <!-- weighting of alignment behaviour -->
         <wander>0.1f</wander> <!-- weighting of wander behaviour-->
 
-        <panicLevel>40</panicLevel>
-        <hungerLevel>65</hungerLevel>
-        <thirstLevel>20</thirstLevel>
+        <panicLevel>40</panicLevel> <!-- The threshold that a boid will be considered as "panicking" -->
+        <hungerLevel>65</hungerLevel> <!-- The threshold that a boid will be considered as "hungry" -->
+        <thirstLevel>30</thirstLevel> <!-- The threshold that a boid will be considered as "thirsty" -->
     </species>
 
     <species name="wildebeest">
@@ -39,7 +39,7 @@
         <spritergb r = "0.6" g="0" b="0"/>
         <diet>herbivore</diet>
         <sightRadius>160f</sightRadius>
-        <flockRadius>100f</flockRadius>
+        <flockRadius>80f</flockRadius>
         <nearRadius>40f</nearRadius>
         <maxSpeed>2f</maxSpeed>
         <maxForce>0.04f</maxForce>
@@ -62,7 +62,7 @@
     </species>
 
     <species name="gazelle">
-        <number>20</number>
+        <number>80</number>
         <byte>2</byte>  <!-- this is the sub-type -->
         <spritergb r = "0" g="0.6" b="0"/>
 
@@ -92,12 +92,12 @@
 
 <!-- Carnivores -->
     <species name="lion">
-        <number>8</number>
+        <number>20</number>
         <byte>3</byte>  <!-- this is the sub-type -->
         <spritergb r = "0.6" g="0" b="0.6"/>
         <diet>carnivore</diet>
         <sightRadius>300f</sightRadius>
-        <flockRadius>150f</flockRadius>
+        <flockRadius>120f</flockRadius>
         <nearRadius>100f</nearRadius>
         <maxSpeed>3.5f</maxSpeed>
         <maxForce>0.2f</maxForce>
@@ -116,17 +116,17 @@
 
         <panicLevel>100</panicLevel>
         <hungerLevel>85</hungerLevel>
-        <thirstLevel>45</thirstLevel>
+        <thirstLevel>70</thirstLevel>
     </species>
 
     <species name="hyena">
-        <number>10</number>
+        <number>20</number>
         <byte>4</byte>  <!-- this is the sub-type -->
         <spritergb r = "0" g="0.6" b="0.6"/>
         <diet>carnivore</diet>
         <sightRadius>200f</sightRadius>
-        <flockRadius>150f</flockRadius>
-        <nearRadius>100f</nearRadius>
+        <flockRadius>110f</flockRadius>
+        <nearRadius>90f</nearRadius>
         <maxSpeed>3.5f</maxSpeed>
         <maxForce>0.2f</maxForce>
 
@@ -144,7 +144,7 @@
 
         <panicLevel>100</panicLevel>
         <hungerLevel>80</hungerLevel>
-        <thirstLevel>50</thirstLevel>
+        <thirstLevel>60</thirstLevel>
     </species>
 </settings>
 
