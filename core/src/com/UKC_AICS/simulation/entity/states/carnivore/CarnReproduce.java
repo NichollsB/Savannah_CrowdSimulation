@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
 
 /**
- * Created by James on 22/07/2014.
+ * @author James
  */
 public class CarnReproduce extends State {
     private Vector3 tempVec = new Vector3();

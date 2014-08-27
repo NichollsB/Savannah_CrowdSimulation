@@ -8,7 +8,7 @@ import com.UKC_AICS.simulation.managers.StateMachine;
 import com.UKC_AICS.simulation.managers.WorldManager;
 
 /**
- * Created by Emily on 16/07/2014.
+ * @author James
  */
 public class Eat extends State {
 

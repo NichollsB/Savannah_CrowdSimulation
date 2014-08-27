@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.Array;
 import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
 
 /**
- * Created by Emily on 16/07/2014.
+ * @author James
  */
 public class Hunt extends State {
 

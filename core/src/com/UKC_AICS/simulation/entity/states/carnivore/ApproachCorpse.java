@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.Array;
 import java.util.Random;
 
 /**
- * Created by James on 28/07/2014.
+ * @author James
  */
 public class ApproachCorpse extends State {
 
