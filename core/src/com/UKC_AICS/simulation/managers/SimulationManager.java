@@ -265,7 +265,7 @@ public class SimulationManager extends Manager {
             minutes = 0;
             hours += 1;
             //TODO work in progress - Matt
-           // boidManager.trackPop();
+       
              
         } else if (days < 6) {
             minutes = 0;
@@ -273,8 +273,7 @@ public class SimulationManager extends Manager {
             days += 1;
             
            if(ea.getEaOn()){
-            	ea.Evolve();  //causes behaviour to go crazy so turned off for now.
-            	
+            	ea.Evolve();  
             }
             increment = true;
         } else {

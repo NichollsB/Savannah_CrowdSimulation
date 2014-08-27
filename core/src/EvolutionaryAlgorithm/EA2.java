@@ -63,12 +63,8 @@ public class EA2 {
 	  */
 	 
 	public void Evolve() {	
-	//	System.out.println("------------------------------------------------------------------------------------------------------------");
-	//	System.out.println("EVOLVE CALLED");
-	//	System.out.println("------------------------------------------------------------------------------------------------------------");
 		for(byte i =0 ; i<totalSpecies; i++){
 			currentSpecies = i ;
-			//System.out.println("Species "+ currentSpecies);
 			
 			validCheck();
 			
@@ -81,11 +77,6 @@ public class EA2 {
 				System.arraycopy(selection(),0 ,tmp , 0, chromosomeLength);	
 				newChromosomeList.add(tmp);
 			}
-				//System.out.println("Held Values " + Arrays.toString(heldValues.get(currentSpecies)));
-			
-			//for(Float[] chomosome : newChromosomeList) {
-				//System.out.println("NEW GENE " + Arrays.toString(gene));
-			//}
 			// Replaces the old chromosome with the new
 				for(int j = 0; j<popNum ; j++){
 					population.get(j).setChromosome(newChromosomeList.get(j));
@@ -103,8 +94,6 @@ public class EA2 {
 	 */
 	
 	public Float[] createBaby(Boid parent, Array<Boid> potentialMates) {
-		//System.out.println("Baby being created");
-		//System.out.println("PotentialMtes "+ potentialMates);
 		population.add(parent);
 		popNum++;
 		
@@ -114,8 +103,6 @@ public class EA2 {
 			popNum++;
 			
 		}
-		//System.out.println("popnum " +popNum);
-		//System.out.println("population "+ population);
 			calculateFitness();
 			calculateProbabilty();
 			Float[] tmp = new Float[chromosomeLength];
@@ -129,7 +116,6 @@ public class EA2 {
 	 */
 
 	private void reset(){
-	//	System.out.println("Resetting EA parameters");
 		population.clear();
 		newChromosomeList.clear();
 		fitnessList.clear();
@@ -149,17 +135,9 @@ public class EA2 {
 				
 				//add to population
 				popNum++;
-				//System.out.print(b.getAge()+" ");	
 			}
 		}
 		
-		//System.out.println();
-		
-		for(Boid b : population) {
-		//System.out.println(b.getAge());
-		}
-		
-		//System.out.println("popnum " + popNum);
 	}
 
 	/**
@@ -177,39 +155,27 @@ public class EA2 {
 		byte species = population.get(0).getSpecies();
 		lifespan = sm.speciesData.get(species).getLifespan();
 		double x = (double) lifespan;
-		//System.out.println("Lifespan "+ lifespan);
-		//System.out.println("x "+ x);
 		
 		for(Boid b : population){
 			float age = (float) b.getAge();
-			//System.out.println("Age "+ age);
-			
+		
 			if(age<=(lifespan/2)){
-				//System.out.println("1");
 				float m = (float) Math.pow(x/2,y);	
-				//System.out.println("m "+ m);
 				fitness=m*age+b.getNumberOfOffspring();
-				//System.out.println("fitness "+ fitness);
+			
 			}
 			else if (age>(lifespan/2)){
-				//System.out.println("2 ");
 				float m = (float) Math.pow(x/2,y);	
-				//System.out.println("m "+ m);
 				m=m*-1f;
-				//System.out.println("m "+ m);
 				fitness=m*age+b.getNumberOfOffspring();
-				//System.out.println("fitness "+ fitness);
+				
 			
 			} else{
-			//	System.out.println("Error ");
 			}
 							
 			//Add to fitnessList
 			fitnessList.add(fitness);	
 		}	
-		
-		//System.out.println("Fitnesslist " + fitnessList);
-		//System.out.println("Fitnesslist size" + fitnessList.size());
 	}
 	
 	/**
@@ -232,8 +198,6 @@ public class EA2 {
 			totalProbability = totalProbability + p;
 			probabilityList.add(totalProbability);
 		}
-		//System.out.println("problist " + probabilityList);
-		//System.out.println("problist size" + probabilityList.size());
 	}
 	
 	/**
@@ -241,22 +205,14 @@ public class EA2 {
 	 * @return newChromosome
 	 */
 	private  Float[] selection() {
-		//System.out.println();
-		//System.out.println("-------------------------------------------------------------------------------------------------------------------");
-		//System.out.println("SELECTION");
-		
 		//Select random number	
 		double rangeMin = probabilityList.get(0);
 		Boid parent = null;
 		int parentPos = 0;
 		
 		for(int pairRun = 0 ; pairRun <2 ; pairRun++){
-			//System.out.println("Run=" + pairRun);
-			
 			double rangeMax = probabilityList.get(popNum-1);
-			//System.out.println("rangeMax "+ rangeMax);
 			double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
-			//System.out.println("ORIGINAL POPNUM "+ popNum);
 			for(int i = 0; i<popNum ; i++){	
 		
 				if(probabilityList.get(i) <=randomValue && randomValue<probabilityList.get(i+1)){	
@@ -264,45 +220,31 @@ public class EA2 {
 					float newNumberOfOffspring = population.get(i).getNumberOfOffspring();
 					newNumberOfOffspring = newNumberOfOffspring + 1f;
 					population.get(i).setNumberOfOffspring(newNumberOfOffspring);
-					//System.out.println("Selected = " + i);
-					//System.out.println("POPNUM "+ popNum);
-					//System.out.println("GENE LIST "+ geneList);
-					
-					
 					if(pairRun==0){
-						//System.out.println("REMOVING IF");
 						parent = population.get(i);
 						parentPos = i;
-					//	System.out.println("Parent" + parent);
-					//	System.out.println("ParentPos" + parentPos);
 						population.remove(i);	
 						// Calculates new values with missing boid
 						calculateFitness();
 						calculateProbabilty();
 						//Corrected popNum
 						popNum=popNum-1;
-					//	System.out.println("New POPNUM "+ popNum);
-					//	System.out.println("Population size" + population.size());
 					}
 				}	
 			}
 		}		
 		//Replaces boid for next use of selection
 		population.add(parentPos, parent);
-		//System.out.println("Add Population size" + population.size());
 		calculateFitness();
 		calculateProbabilty();
 		
 		//Corrected popNum
 		popNum=popNum + 1;
-		//System.out.println("popnumber after "+ popNum);		
-		
+
 		chromosome1 = chromosomeList.get(0);
 		chromosome2 = chromosomeList.get(1);
 		
 		// Passes parents chromosomes to the crossover() method
-		//System.out.println("Gene 1 " + Arrays.toString(chromosomeList.get(0)));
-		//System.out.println("Gene 2 " + Arrays.toString(chromosomeList.get(1)));
 		crossover(chromosome1 , chromosome2);
 		
 		chromosomeList.clear();
@@ -319,28 +261,22 @@ public class EA2 {
 	 */
 	
 	private Float[] crossover(Float[] chromosome1, Float[] chromosome2) {
-		//System.out.println();
-		//System.out.println("CROSSOVER");
 		double rangeMax = 0;
 		double rangeMin = 1;
    
 	        for (int i = 0; i < chromosomeLength; i++) {
 	            // Crossover
 	        	double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
-	        	//System.out.println("Random" + randomValue);
 	            if (randomValue <= crossRate) {
 	            	
 	            	newChromosome[i] = chromosome1[i];
 	            }
 	            else {
-	          //   System.out.println("Cross at pos "+i);
 	            	newChromosome[i] = chromosome2[i];
 	            }
 	        }
 	        //Passes new chromosome to the mutation() method
-	      //  System.out.println("BEFORE " +Arrays.toString( newGene));
 	        mutation(newChromosome);
-	      //  System.out.println("AFTER " +Arrays.toString( newGene));
 	       // pass back finished new chromosome
 	        return newChromosome;
         
@@ -360,10 +296,9 @@ public class EA2 {
 		
 		// for each gene if the random number is greater than the mutation rate replace with random value
 		for(int j =0 ; j < chromosomeLength ; j++) {
-			//System.out.println("Current "+newChromosome[j]);
+	
 			muteValMin = 0.7f*newChromosome[j];
 			muteValMax = 1.3f*newChromosome[j];
-			//System.out.println("Max Value "+muteValMax);
 			
 			double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
 			float muteValue = muteValMin + ((muteValMax) - muteValMin) * r.nextFloat();
