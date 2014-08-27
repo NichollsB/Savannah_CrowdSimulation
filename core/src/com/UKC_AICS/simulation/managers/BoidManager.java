@@ -95,7 +95,7 @@ public class BoidManager extends Manager {
         boid.setPanicLevel(panicLevel);
         boid.setThirstLevel(thirstLevel);
         
-        boid.setGene(cohesion, separation, alignment, wander,flockRadius, nearRadius, sightRadius, maxStamina, hungerLevel, thirstLevel, panicLevel);
+        boid.setChromosome(cohesion, separation, alignment, wander,flockRadius, nearRadius, sightRadius, maxStamina, hungerLevel, thirstLevel, panicLevel);
         
         boid.setState(currentState);
         boid.setFertility(fertility);

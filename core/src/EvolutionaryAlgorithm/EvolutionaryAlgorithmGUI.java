@@ -3,7 +3,6 @@ package EvolutionaryAlgorithm;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.lang.Object;
 import EvolutionaryAlgorithm.EA2;
 
 import com.UKC_AICS.simulation.screen.SimulationScreen;
@@ -22,7 +21,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 	private SimulationScreen simScreen;
 	public Stage stage;
 	Table table;
-	private int geneLength = EA2.getGeneLength();
+	private int geneLength = EA2.getChromosomeLength();
 	private int totalSpecies = EA2.getTotalSpecies();
 	private Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 	private Float[] currentVals= new Float[geneLength];
@@ -294,7 +293,7 @@ public class EvolutionaryAlgorithmGUI extends Stage {
 		 * @param ea
 		 */
 		public void applyChanges(EA2 ea) {
-			Float[] newheldvalues = new Float[EA2.getGeneLength()];
+			Float[] newheldvalues = new Float[EA2.getChromosomeLength()];
 			
 			for(int i = 0 ; i < labels.size(); i++ ){
 			 if(checkBoxes.get(i).isChecked()){

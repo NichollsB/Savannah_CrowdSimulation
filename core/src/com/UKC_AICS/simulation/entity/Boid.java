@@ -47,8 +47,8 @@ public class Boid extends Entity {
 
     //EA variables.
     
-    public int geneSize = 11;		
-    public Float[] gene= new Float[geneSize];
+    public int chromosomeSize = 11;		
+    public Float[] chromosome= new Float[chromosomeSize];
 
     private int avoidance = 0;
 
@@ -99,7 +99,7 @@ public class Boid extends Entity {
         hungerLevel = species.getHungerLevel();
         thirstLevel = species.getThirstLevel();
 
-        setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius, maxStamina,  panicLevel, hungerLevel , thirstLevel);
+        setChromosome(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius, maxStamina,  panicLevel, hungerLevel , thirstLevel);
 
         size = species.getMaxSize();
         bounds.set(position.x, position.y, size, size);//*1.5f, size*1.5f);
@@ -144,7 +144,7 @@ public class Boid extends Entity {
         thirstLevel = boid.thirstLevel;
         hungerLevel = boid.hungerLevel;
         
-        setGene(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius, maxStamina,  panicLevel, hungerLevel , thirstLevel);
+        setChromosome(cohesion,separation,alignment,wander,flockRadius, nearRadius, sightRadius, maxStamina,  panicLevel, hungerLevel , thirstLevel);
 
 
     }
@@ -359,27 +359,27 @@ public class Boid extends Entity {
     	this.tracked = tracked;
     }
 
-    public void setGene(float cohesion, float separation, float alignment, float wander, float flockRadius, float nearRadius, float sightRadius,
+    public void setChromosome(float cohesion, float separation, float alignment, float wander, float flockRadius, float nearRadius, float sightRadius,
     		float maxStamina, float hungerLevel, float thirstLevel, float panicLevel) {
 
-    	gene[0] = cohesion;
-    	gene[1] = separation;
-    	gene[2] = alignment;
-    	gene[3] = wander;
-    	gene[4] = flockRadius; 
-    	gene[5]	= nearRadius; 
-    	gene[6]	= sightRadius;
-    	gene[7] = maxStamina;
-    	gene[8] = hungerLevel;
-    	gene[9] = thirstLevel;
-    	gene[10] = panicLevel;
+    	chromosome[0] = cohesion;
+    	chromosome[1] = separation;
+    	chromosome[2] = alignment;
+    	chromosome[3] = wander;
+    	chromosome[4] = flockRadius; 
+    	chromosome[5]	= nearRadius; 
+    	chromosome[6]	= sightRadius;
+    	chromosome[7] = maxStamina;
+    	chromosome[8] = hungerLevel;
+    	chromosome[9] = thirstLevel;
+    	chromosome[10] = panicLevel;
     				
     	
     }      
     
-    public void setGene(Float[] newGene ) {
-    	for(int i = 0 ; i<geneSize; i++){
-    		gene[i] = newGene[i];
+    public void setChromosome(Float[] newGene ) {
+    	for(int i = 0 ; i<chromosomeSize; i++){
+    		chromosome[i] = newGene[i];
     	}
     	setCohesion(newGene[0]); 
     	setSpearation(newGene[1]);
@@ -394,8 +394,8 @@ public class Boid extends Entity {
     	setPanicLevel(newGene[10]);
     }  
     
-    public Float[] getGene() {
-    	return gene;
+    public Float[] getChromosome() {
+    	return chromosome;
     }
       
     public void setCohesion( float cohesion) {
