@@ -83,7 +83,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
 
     private Actor infoItemSelected;
 
-	private RenderOptionsWindow renderOptions;
     private EnvironmentFileWindow environmentOptions;
 
     private final Table legend = new Table();
@@ -131,18 +130,10 @@ public class SimScreenGUI extends Stage implements HoverListener {
 			}
 		});
 
-        renderOptions = new RenderOptionsWindow("Render Options", skin, null, null, null, stage);
-        renderOptions.addSelectionListener(new MenuSelectListener(){
-        	public void selectionMade(java.lang.Object menu, java.lang.Object object) {
-//        		System.out.println();
-        		RenderOptionsWindow window = (RenderOptionsWindow) menu;
-        		RenderState.changeTileState(RenderState.TILESTATE.stateName, window.getRenderType());
-        	}
-        });
+
         environmentOptions = new EnvironmentFileWindow("Environment Options", skin, stage);
         environmentOptions.addSelectionListener(new MenuSelectListener(){
             public void selectionMade(java.lang.Object menu, java.lang.Object object) {
-        		System.out.println("istener triggered");
                EnvironmentFileWindow window = (EnvironmentFileWindow) menu;
                 HashMap<String, File> files = new HashMap<String, File>();
                 if(window.fromPackFile()) {
@@ -296,15 +287,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
         });
         menuTable.add(button).padLeft(5);
 
-        //RENDER OPTIONS
-//        button = new TextButton("Render Options", skin);
-//    	button.addListener(new ClickListener() {
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                renderOptions.open(stage);
-//            }
-//        });
-//    	menuTable.add(button).padLeft(5);
 
         //Render type
 //        MenuDropdown renderSelection = new MenuDropdown(skin, "Environment Render Type", "rendertype");
