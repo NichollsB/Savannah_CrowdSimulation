@@ -17,7 +17,7 @@ import java.util.Random;
 
 /**
  * @author James
- * A number of static methods used to detect and avoid collisions 
+ * A number of static methods used to detect and avoid collisions
  */
 public class Collision extends Behaviour {
 
