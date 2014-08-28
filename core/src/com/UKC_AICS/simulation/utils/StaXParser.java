@@ -300,9 +300,6 @@ public class StaXParser {
                         	  }
                               species.setRGB(rgb);
                             }
-//                            event = eventReader.nextEvent();
-                            
-//                            species.setSpriteLocation(event.asCharacters().getData());
                             continue;
                         }
                     }
@@ -384,41 +381,6 @@ public class StaXParser {
                         }
                     }
 
-                    /////////////////////////////////////////////////////
-                    //Added by Ben Nicholls for graphics purposes
-//                    if (event.isStartElement()) {
-//                        if (event.asStartElement().getName().getLocalPart()
-//                                .equals(SPRITERGB)) {
-//                            float rgb[] = {0f, 0f, 0f};
-//                            Iterator iterator = event.asStartElement().getAttributes();
-//                            while (iterator.hasNext()) {
-//                                Attribute attribute = (Attribute) iterator.next();
-//                                String name = attribute.getName().toString();
-//                                String value = attribute.getValue();
-//                                try {
-//                                    if(name == "r"){
-//                                        rgb[0] = Float.parseFloat(value);
-//
-//                                    }
-//                                    else if(name == "g"){
-//                                        rgb[1] = Float.parseFloat(attribute.getValue());
-//                                    }
-//                                    else if(name == "b"){
-//                                        rgb[2] = Float.parseFloat(attribute.getValue());
-//                                    }
-//                                }
-//                                catch (NumberFormatException nfe) {
-//                                    System.out.println("Non-numeric value in "+ name + " colour attribute of species xml");
-//                                }
-//                                species.setRGB(rgb);
-//                            }
-////                            event = eventReader.nextEvent();
-//
-////                            species.setSpriteLocation(event.asCharacters().getData());
-//                            continue;
-//                        }
-//                    }
-                    ////////////////////////////////////////////////
                 }
                 // If we reach the end of an item element, we add it to the list
                 if (event.isEndElement()) {
@@ -427,10 +389,6 @@ public class StaXParser {
                         objectData.put(object.getSubType(), object);
                     }
                 }
-
-
-
-
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
