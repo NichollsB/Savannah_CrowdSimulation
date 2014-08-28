@@ -1,9 +1,6 @@
 package com.UKC_AICS.simulation.entity.states.carnivore;
 
-import java.util.Arrays;
-
 import EvolutionaryAlgorithm.EA2;
-
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.Arrive;
@@ -15,6 +12,8 @@ import com.UKC_AICS.simulation.managers.StateMachine;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+
+import java.util.Arrays;
 
 import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
 

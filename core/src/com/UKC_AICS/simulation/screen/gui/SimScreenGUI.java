@@ -1,20 +1,16 @@
 package com.UKC_AICS.simulation.screen.gui;
 
-import java.io.File;
-import java.util.HashMap;
-
-import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.ObjectData;
+import com.UKC_AICS.simulation.entity.Species;
+import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.UKC_AICS.simulation.screen.controlutils.HoverListener;
 import com.UKC_AICS.simulation.screen.controlutils.MenuSelectListener;
 import com.UKC_AICS.simulation.screen.controlutils.RenderState;
-import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -23,11 +19,14 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.io.File;
+import java.util.HashMap;
+
 /**
  * Created by James on 02/07/2014.
  * Class for the creation of gui for simulationScreen
- * @author ben Nicholls bn65@kent.ac.uk
- * @author James Young
+ * Initially created by James Young, but primarily developed by Ben Nicholls
+ * @author Ben Nicholls bn65@kent.ac.uk
  */
 public class SimScreenGUI extends Stage implements HoverListener {
 	final private ScreenViewport uiViewport = new ScreenViewport();
@@ -83,7 +82,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
 
     private Actor infoItemSelected;
 
-	private RenderOptionsWindow renderOptions;
     private EnvironmentFileWindow environmentOptions;
 
     private final Table legend = new Table();
@@ -131,18 +129,10 @@ public class SimScreenGUI extends Stage implements HoverListener {
 			}
 		});
 
-        renderOptions = new RenderOptionsWindow("Render Options", skin, null, null, null, stage);
-        renderOptions.addSelectionListener(new MenuSelectListener(){
-        	public void selectionMade(java.lang.Object menu, java.lang.Object object) {
-//        		System.out.println();
-        		RenderOptionsWindow window = (RenderOptionsWindow) menu;
-        		RenderState.changeTileState(RenderState.TILESTATE.stateName, window.getRenderType());
-        	}
-        });
+
         environmentOptions = new EnvironmentFileWindow("Environment Options", skin, stage);
         environmentOptions.addSelectionListener(new MenuSelectListener(){
             public void selectionMade(java.lang.Object menu, java.lang.Object object) {
-        		System.out.println("istener triggered");
                EnvironmentFileWindow window = (EnvironmentFileWindow) menu;
                 HashMap<String, File> files = new HashMap<String, File>();
                 if(window.fromPackFile()) {
@@ -296,15 +286,6 @@ public class SimScreenGUI extends Stage implements HoverListener {
         });
         menuTable.add(button).padLeft(5);
 
-        //RENDER OPTIONS
-//        button = new TextButton("Render Options", skin);
-//    	button.addListener(new ClickListener() {
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                renderOptions.open(stage);
-//            }
-//        });
-//    	menuTable.add(button).padLeft(5);
 
         //Render type
 //        MenuDropdown renderSelection = new MenuDropdown(skin, "Environment Render Type", "rendertype");
@@ -346,27 +327,7 @@ public class SimScreenGUI extends Stage implements HoverListener {
     	return menuTable;
     }
 	
-	private MenuDropdown createFileMenu(final String options[], final String optionsText[], String name, final String identifier){
-    	final MenuDropdown menu = new MenuDropdown(skin, name, identifier);  
-//    	String items[] = {"Load", "Save"};
-    	menu.addItems(optionsText, true);
-    	
-    	menu.addSelectionListener(new MenuSelectListener(){
-    		@Override
-    		public void selectionMade(java.lang.Object menu, java.lang.Object object){
-    			for(int i = 0; i < options.length; i ++){
-    				String option = options[i];
-    				if(option.equalsIgnoreCase((String)object)){
-    					fileChooser.setOptionsText(optionsText[i], "Cancel");
-    					fileChooser.setCommand(option);
-    					fileChooser.setIdentifier(identifier);
-    					fileChooser.open(stage);
-    				}
-    			}
-    		}
-    	});
-    	return menu;
-	}
+	
 
     /**
      * Create the south Table. Consists of buttons for controlling the simulation, including: a play/pause button that will

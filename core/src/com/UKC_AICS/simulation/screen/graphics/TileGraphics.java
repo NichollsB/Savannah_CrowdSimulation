@@ -1,18 +1,15 @@
 package com.UKC_AICS.simulation.screen.graphics;
 
-import java.util.Arrays;
-import java.util.HashMap;
-
-import com.UKC_AICS.simulation.Constants;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteCache;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+
+import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * Used to draw tiles representing dynamic layers of the simulation environment.

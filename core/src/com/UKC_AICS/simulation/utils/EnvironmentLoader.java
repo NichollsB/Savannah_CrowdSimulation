@@ -1,8 +1,5 @@
 package com.UKC_AICS.simulation.utils;
 
-import java.io.File;
-import java.util.HashMap;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -11,7 +8,10 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
-import static com.UKC_AICS.simulation.Constants.*;
+import java.io.File;
+import java.util.HashMap;
+
+import static com.UKC_AICS.simulation.Constants.TILE_SIZE;
 
 /**
  * Class for the loading of external texture sheets that may be used as large graphics layers or for initialising simulation world values

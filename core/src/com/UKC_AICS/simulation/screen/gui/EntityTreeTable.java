@@ -1,5 +1,6 @@
 package com.UKC_AICS.simulation.screen.gui;
 
+import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.screen.controlutils.ControlState;
 import com.UKC_AICS.simulation.screen.controlutils.HoverListener;
 import com.UKC_AICS.simulation.screen.controlutils.SelectedEntity;
@@ -13,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.UKC_AICS.simulation.entity.*;
 
 
 /**

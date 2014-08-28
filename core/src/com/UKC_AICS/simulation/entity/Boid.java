@@ -211,9 +211,9 @@ public class Boid extends Entity {
                 stamina = maxStamina;
         }
         else {
-            System.out.print("run out of stamina, old speed " + speed);
+//            System.out.print("run out of stamina, old speed " + speed);
             velocity.scl(sprintThreshold/speed*0.8f);
-            System.out.println(" ,new speed = " + velocity.len());
+//            System.out.println(" ,new speed = " + velocity.len());
         }
         return stamina > 0;
     }

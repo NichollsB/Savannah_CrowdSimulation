@@ -22,7 +22,7 @@ public class Cohesion extends Behaviour {
         int num = 0; //hold how many same specie boids in list.
         //loop through boids and add their position to the vector
 
-        if (boids.size > 0 ) {
+        if (boids.size > 0) {
             //check if its not you and check to see if same subType. TODO: multi - subType herding.
             Boid otherBoid;
             for (int i = 0; i < boids.size; i++) {
@@ -40,7 +40,7 @@ public class Cohesion extends Behaviour {
                 }
             }
             //find the average position.
-            if(num > 0) {
+            if (num > 0) {
 
                 tmpVec2.scl(1.0f / num);
                 tmpVec.set(Seek.act(boid, tmpVec2)); // limits and .scl() are done in seek.

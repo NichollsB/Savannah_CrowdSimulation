@@ -1,7 +1,6 @@
 package com.UKC_AICS.simulation.entity.states.herbivore;
 
 import EvolutionaryAlgorithm.EA2;
-
 import com.UKC_AICS.simulation.entity.Boid;
 import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.behaviours.Collision;

@@ -1,11 +1,10 @@
 package com.UKC_AICS.simulation.screen;
 
 import EvolutionaryAlgorithm.EvolutionaryAlgorithmGUI;
-
 import com.UKC_AICS.simulation.Constants;
 import com.UKC_AICS.simulation.Simulation;
 import com.UKC_AICS.simulation.entity.Entity;
-import com.UKC_AICS.simulation.entity.Species;
+import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.UKC_AICS.simulation.screen.controlutils.ControlState;
 import com.UKC_AICS.simulation.screen.controlutils.RenderState;
 import com.UKC_AICS.simulation.screen.controlutils.SelectedEntity;
@@ -16,7 +15,9 @@ import com.UKC_AICS.simulation.screen.gui.SimViewport;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
@@ -24,7 +25,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.UKC_AICS.simulation.managers.SimulationManager;
 
 import java.util.HashMap;
 

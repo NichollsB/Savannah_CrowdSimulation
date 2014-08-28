@@ -1,7 +1,6 @@
 package com.UKC_AICS.simulation.utils;
 
 import com.UKC_AICS.simulation.managers.BoidManager;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -9,10 +8,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-
-
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

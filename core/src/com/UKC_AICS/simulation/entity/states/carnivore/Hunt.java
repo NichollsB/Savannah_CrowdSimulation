@@ -1,16 +1,13 @@
 package com.UKC_AICS.simulation.entity.states.carnivore;
 
-import com.UKC_AICS.simulation.Simulation;
-import com.UKC_AICS.simulation.entity.*;
+import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.Entity;
 import com.UKC_AICS.simulation.entity.Object;
-import com.UKC_AICS.simulation.entity.behaviours.Behaviour;
 import com.UKC_AICS.simulation.entity.behaviours.Collision;
-import com.UKC_AICS.simulation.entity.behaviours.Seek;
 import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.UKC_AICS.simulation.managers.SimulationManager;
 import com.UKC_AICS.simulation.managers.StateMachine;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;

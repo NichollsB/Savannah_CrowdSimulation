@@ -1,31 +1,19 @@
 package com.UKC_AICS.simulation.managers;
 
 import EvolutionaryAlgorithm.EA2;
-
-
-
-
-
 import com.UKC_AICS.simulation.Constants;
-import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.entity.*;
 import com.UKC_AICS.simulation.entity.Object;
-import com.UKC_AICS.simulation.entity.ObjectData;
-import com.UKC_AICS.simulation.entity.Species;
 import com.UKC_AICS.simulation.screen.SimulationScreen;
 import com.UKC_AICS.simulation.utils.EnvironmentLoader;
-import com.UKC_AICS.simulation.utils.Outputter;
 import com.UKC_AICS.simulation.utils.StaXParser;
 import com.UKC_AICS.simulation.utils.StaXParserLoad;
 import com.UKC_AICS.simulation.utils.StaxWriter;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.sun.corba.se.impl.orbutil.closure.Constant;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -66,7 +54,6 @@ public class SimulationManager extends Manager {
     HashMap<Byte, String> fileLocations;
     HashMap<Byte, float[]> speciesRGB = new HashMap<Byte, float[]>(); 
     
-    private Outputter recorder = new Outputter();
     
     /**
      * Added by ben nicholls - for the creation of objects from ObjectData type/ creation of ObjectData types...
@@ -237,19 +224,7 @@ public class SimulationManager extends Manager {
         boidManager.update(dayIncrement);
         worldManager.update(dayIncrement);
 
-        if(recordSimulation ){
-            try{
-//                simRecorder.recordSim(frames, stateMachine);
-            	System.out.println("Appending record");
-            	recorder.appendOutput(frames, new File("testxml.xml"));
-            }
-            catch (Exception e){
-                System.out.println("Could not record simulation" + e.toString() );
-                e.printStackTrace();
-                stopSimRecording();
-            }
-
-        }
+  
     }
 
     /**
