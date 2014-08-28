@@ -7,8 +7,8 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  * @author Emily
- *
- * Evade is the opposite of pursuit, so the Boid will attempt to evade the FUTURE position of the target.
+ *         <p/>
+ *         Evade is the opposite of pursuit, so the Boid will attempt to evade the FUTURE position of the target.
  */
 public class Evade extends Behaviour {
 

@@ -1,7 +1,7 @@
 package com.UKC_AICS.simulation.entity;
 
 /**
- * Created by james on 03/07/2014.
+ * @author James
  */
 public class Species {
     private String name;

@@ -1,22 +1,24 @@
 package com.UKC_AICS.simulation.screen.graphics;
 
-import java.util.Arrays;
-import java.util.HashMap;
-
 import com.UKC_AICS.simulation.Constants;
+import com.UKC_AICS.simulation.entity.Boid;
+import com.UKC_AICS.simulation.entity.Entity;
+import com.UKC_AICS.simulation.screen.controlutils.RenderState;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.SpriteCache;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Array;
-import com.UKC_AICS.simulation.entity.*;
-import com.UKC_AICS.simulation.screen.controlutils.RenderState;
+
+import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * 

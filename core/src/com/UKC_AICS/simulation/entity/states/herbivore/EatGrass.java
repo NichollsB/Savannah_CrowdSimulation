@@ -11,8 +11,6 @@ import com.UKC_AICS.simulation.managers.WorldManager;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
-import static com.UKC_AICS.simulation.managers.StateMachine.behaviours;
-
 /**
  * Created by Emily on 10/07/2014.
  */

@@ -16,7 +16,8 @@ public abstract class Behaviour {
 
     /**
      * Boid manager will pass the behaviour the list of boids AND objects in sight and the boid in question.
-     *  @param boids   : this list will contain relevant(line of sight wise) boids.
+     *
+     * @param boids   : this list will contain relevant(line of sight wise) boids.
      * @param objects : this list will contain relevant(line of sight wise) objects.
      * @param boid    : the boid that the behaviour is being run for.
      */

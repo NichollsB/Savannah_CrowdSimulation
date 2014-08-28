@@ -1,23 +1,23 @@
 package com.UKC_AICS.simulation.utils;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
-
-import javax.xml.stream.events.StartElement;
-import javax.xml.transform.*;
-import javax.xml.transform.stream.*;
-import javax.xml.transform.dom.*;
-
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
-
 import com.UKC_AICS.simulation.entity.Boid;
-import com.UKC_AICS.simulation.entity.states.State;
 import com.UKC_AICS.simulation.managers.BoidManager;
 import com.badlogic.gdx.math.Vector3;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
-import javax.xml.parsers.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.File;
+import java.io.IOException;
 
 public class Outputter {
 	private File file;
