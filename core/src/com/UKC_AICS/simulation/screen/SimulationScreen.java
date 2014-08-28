@@ -30,7 +30,9 @@ import java.util.HashMap;
 
 
 /**
- * @author Emily
+ * Main screen for the application. Passes update calls to the simulation itself, the gui,
+ * and the graphical view
+ * @author Emily Johnson
  */
 public class SimulationScreen implements Screen{
 
@@ -72,7 +74,10 @@ public class SimulationScreen implements Screen{
 
 
 
-
+    /**
+     * Initialises the screen	
+     * @param simulation The root of the simulation
+     */
     public SimulationScreen(Simulation simulation) {
         this.simulation = simulation;
         gui = new SimScreenGUI(this, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -114,7 +119,9 @@ public class SimulationScreen implements Screen{
     	}
         renderUIBatch(true, update);
     }
-
+    /**
+     * Calls the update method to trigger the rendering calls in the gui 
+     */
     private void renderUIBatch(boolean render, boolean update){
     	simBatch.begin();
     	gui.fps.setText(getFPSString() + simulationManager.getTime());
@@ -130,7 +137,7 @@ public class SimulationScreen implements Screen{
     
     boolean uiComplete = false;
     /**
-     * Calls the update method to trigger the rendering calls in the gui and simulation view
+     * Calls the update method to trigger the rendering calls in the simulation view
      */
     private void renderSpriteBatches(boolean render, boolean update) {
     	//Update the simulation view and render, clipping to the scissor rectangle provided by the specified gui
@@ -175,8 +182,8 @@ public class SimulationScreen implements Screen{
     /**
      * Create and set up the cameras and viewports for the user interface and simulation view
      *
-     * @param width
-     * @param height
+     * @param width Camera width		
+     * @param height Camera Height
      */
     private void initialiseCameras(int width, int height) {
         //create a camera. perspective? orthographic? etc etc.
@@ -202,13 +209,16 @@ public class SimulationScreen implements Screen{
         resize(width, height);
 
     }
-
+    
+    /**
+     * Initialises various components - passing parameters to the GUI
+     */
     public void setupUI(){
     	gui.createBoidTree(simulationManager.getSpeciesInfo(), simulationManager.getBoids());
         gui.createObjectTree(simulationManager.getObjectDataInfo(), simulationManager.getObjects());
     }
     /**
-     * 
+     * Initialises various components - passing parameters to the graphics classes
      */
     public void setup() {
 //    	EnvironmentLoader.loadMaps();
